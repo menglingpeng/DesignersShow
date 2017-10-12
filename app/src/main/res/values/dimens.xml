@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recycler_item_footer_loading_load_layout">50dp</dimen>
+    <dimen name="recycler_item_footer_loading_load_layout_padding">15dp</dimen>
+    <dimen name="recycler_item_footer_loading_more_loading_layout_margin_left">15dp</dimen>
+    <dimen name="recycler_item_footer_loading_more_loading_text_size">15dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

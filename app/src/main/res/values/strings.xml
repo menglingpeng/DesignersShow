@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">DesignersShow</string>
+    <string name="recycler_item_footer_more_loading_text">正在加载更多。。。</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="home_toolbar_title">Home</string>
+    <string name="explore_toolbar_title">Explore</string>
+    <string name="toobar_overflow_small_with_infos">有说明小图</string>
+    <string name="toobar_overflow_large_with_infos">有说明大图</string>
+    <string name="toobar_overflow_small_without_infos">无说明小图</string>
+    <string name="toobar_overflow_large_without_infos">无说明大图</string>
+
+
 </resources>
