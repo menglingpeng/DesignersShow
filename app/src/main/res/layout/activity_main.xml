@@ -10,7 +10,32 @@
     tools:openDrawer="start"
     tools:context="com.menglingpeng.designersshow.MainActivity">
 
-    <include layout="@layout/fragment_container"></include>
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:theme="@style/ToolbarTheme"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/PopupTheme">
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <include layout="@layout/fragment_container"></include>
+
+
+    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

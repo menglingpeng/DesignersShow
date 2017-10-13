@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/overflow_date"
+        android:icon="@mipmap/ic_toolbar_time_menu"
+        android:title=""
+        app:showAsAction="always"
+        >
+    </item>
+
+    <item
+        android:id="@+id/overflow_small"
+        android:title="@string/toobar_overflow_small_with_infos"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/overflow_large"
+        android:title="@string/toobar_overflow_large_with_infos"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/overflow_small_without_infos"
+        android:title="@string/toobar_overflow_small_without_infos"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/overflow_large_without_infos"
+        android:title="@string/toobar_overflow_large_without_infos"
+        app:showAsAction="never">
+    </item>
 
 </menu>
