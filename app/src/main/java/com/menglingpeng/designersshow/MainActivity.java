@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow;
 
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.menglingpeng.designersshow.mvp.view.HomeFragment;
+import com.menglingpeng.designersshow.utils.SnackUI;
 
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -21,6 +23,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private String toolbarTitle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private boolean backPressed;
 
     @Override
     protected void initLayoutId() {
@@ -173,4 +176,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            doubleBackToQuit();
+        }
+    }
+
+    private void doubleBackToQuit(){
+        if(backPressed){
+          super.onBackPressed();
+        }
+        backPressed = true;
+        SnackUI.showSnackShort(drawerLayout, R.string.double_back_quit);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                backPressed = false;
+            }
+        }, 2000);
+    }
+
 }

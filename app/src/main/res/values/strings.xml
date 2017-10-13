@@ -22,5 +22,6 @@
     <string name="home_popular">最热</string>
     <string name="home_recent">最新</string>
     <string name="home_following">关注</string>
+    <string name="double_back_quit">再次点击离开应用</string>
 
 </resources>

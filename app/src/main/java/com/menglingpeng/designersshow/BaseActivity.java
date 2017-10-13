@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,8 +11,6 @@ import android.support.v7.widget.Toolbar;
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected int layoutId = R.layout.activity_base;
-    /*protected Toolbar toolbar;
-    protected String toolbarTitle;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

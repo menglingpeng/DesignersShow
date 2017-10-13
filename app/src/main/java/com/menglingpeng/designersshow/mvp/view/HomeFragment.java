@@ -51,7 +51,6 @@ public class HomeFragment extends BaseFragment {
             layoutId = R.layout.fragment_home;
         }else {
         }
-
     }
 
     @Override
@@ -77,7 +76,6 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 /*scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());*/
-
             }
         });
     }
