@@ -22,7 +22,7 @@ public abstract class BaseFragment extends Fragment {
         if (rootView == null) {
             initLayoutId();
             rootView = inflater.inflate(layoutId, container, false);
-            //initView();
+            initView();
         }
         return rootView;
     }

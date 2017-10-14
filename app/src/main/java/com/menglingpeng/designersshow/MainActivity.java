@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -138,6 +139,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawerLayout.addDrawerListener(toggle);
         navigationView.inflateMenu(R.menu.nav_content_menu);
         navigationView.getMenu().getItem(0).setChecked(true);
+        ColorStateList csl = getResources().getColorStateList(R.color.navigationview_menu_item_color);
+        navigationView.setItemIconTintList(csl);
+        navigationView.setItemTextColor(csl);
         navigationView.setNavigationItemSelectedListener(this);
     }
 

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.R;
@@ -30,8 +31,8 @@ public class HomeFragment extends BaseFragment {
     private static final int SMOOTHSCROLL_TOP_POSITION = 50;
     private String menuType;
 
-    private TabLayout tabs;
-    private ViewPager pager;
+    private TabLayout tabLayout;
+    private ViewPager pagerView;
     private List<RecyclerFragment> fragments;
     private TabPagerAdapter adapter;
     private boolean isLogin = false;
@@ -47,25 +48,22 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initLayoutId() {
         menuType = getArguments().getString(Constants.TYPE);
-        if(MENU_HOME.equals(menuType)){
             layoutId = R.layout.fragment_home;
-        }else {
-        }
     }
 
     @Override
     protected void initView() {
-        tabs = (TabLayout)rootView.findViewById(R.id.tabs);
-        pager = (ViewPager)rootView.findViewById(R.id.pager);
+        tabLayout = (TabLayout)rootView.findViewById(R.id.tab_layout);
+        pagerView = (ViewPager)rootView.findViewById(R.id.pager_view);
         fragments = new ArrayList<>();
         adapter = new TabPagerAdapter(getChildFragmentManager());
         initFragments();
-        pager.setAdapter(adapter);
-        tabs.setupWithViewPager(pager);
-        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        pagerView.setAdapter(adapter);
+        tabLayout.setupWithViewPager(pagerView);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                pager.setCurrentItem(tab.getPosition());
+                pagerView.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -75,7 +73,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                /*scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());*/
+                scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());
             }
         });
     }
@@ -86,15 +84,15 @@ public class HomeFragment extends BaseFragment {
             titles.add(getString(R.string.home_following));
             titles.add(getString(R.string.home_popular));
             titles.add(getString(R.string.home_recent));
-            fragments.add(new PopRecFragment().newInstance(PopRecFragment.FOLLOWING));
-            fragments.add(new PopRecFragment().newInstance(PopRecFragment.POPULAR));
-            fragments.add(new PopRecFragment().newInstance(PopRecFragment.RECENT));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.FOLLOWING));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.POPULAR));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.RECENT));
 
         } else {
             titles.add(getString(R.string.home_popular));
             titles.add(getString(R.string.home_recent));
-            fragments.add(new PopRecFragment().newInstance(PopRecFragment.POPULAR));
-            fragments.add(new PopRecFragment().newInstance(PopRecFragment.RECENT));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.POPULAR));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.RECENT));
         }
         adapter.setFragments(fragments, titles);
     }

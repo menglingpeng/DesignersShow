@@ -32,7 +32,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/fragment_container"></include>
+        <include layout="@layout/container"></include>
 
 
     </android.support.design.widget.CoordinatorLayout>
