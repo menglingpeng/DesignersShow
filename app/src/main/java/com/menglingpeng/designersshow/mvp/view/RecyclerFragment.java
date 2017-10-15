@@ -1,7 +1,9 @@
 package com.menglingpeng.designersshow.mvp.view;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.R;
@@ -13,10 +15,13 @@ import com.menglingpeng.designersshow.utils.Constants;
 
 public class RecyclerFragment extends BaseFragment {
 
-    RecyclerView recyclerView;
-    public static final String POPULAR = "Popular";
-    public static final String RECENT = "Recent";
-    public static final String FOLLOWING = "Following";
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefresh;
+    private ProgressBar progressBar;
+    private String Type;
+    public static final String TAB_POPULAR = "Popular";
+    public static final String TAB_RECENT = "Recent";
+    public static final String TAB_FOLLOWING = "Following";
 
     public static RecyclerFragment newInstance(String type){
         Bundle bundle = new Bundle();
@@ -33,6 +38,23 @@ public class RecyclerFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        swipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh);
+        progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
+        initFragments();
+
+    }
+
+    private void initFragments(){
+        Type = getArguments().get(Constants.TYPE).toString();
+        switch (Type){
+            case TAB_FOLLOWING:
+                break;
+            case TAB_POPULAR:
+                break;
+            case TAB_RECENT:
+                break;
+        }
 
     }
 

@@ -7,4 +7,5 @@ package com.menglingpeng.designersshow.utils;
 public class Constants {
 
     public static final String TYPE = "type";
+    public static final String POSITION = "position";
 }

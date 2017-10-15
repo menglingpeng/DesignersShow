@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DesignersShow</string>
+    <string name="app_name">设计师</string>
     <string name="nav_home_menu">首页</string>
     <string name="nav_explore_menu">寻找</string>
     <string name="toolbar_my_likes">我喜欢的作品</string>

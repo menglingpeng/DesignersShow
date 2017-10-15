@@ -48,7 +48,12 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initLayoutId() {
         menuType = getArguments().getString(Constants.TYPE);
+        if(menuType.equals(MENU_HOME)){
             layoutId = R.layout.fragment_home;
+        }else {
+            layoutId = R.layout.fragment_explore;
+        }
+
     }
 
     @Override
@@ -84,15 +89,15 @@ public class HomeFragment extends BaseFragment {
             titles.add(getString(R.string.home_following));
             titles.add(getString(R.string.home_popular));
             titles.add(getString(R.string.home_recent));
-            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.FOLLOWING));
-            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.POPULAR));
-            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.RECENT));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_FOLLOWING));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_POPULAR));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_RECENT));
 
         } else {
             titles.add(getString(R.string.home_popular));
             titles.add(getString(R.string.home_recent));
-            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.POPULAR));
-            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.RECENT));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_POPULAR));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_RECENT));
         }
         adapter.setFragments(fragments, titles);
     }

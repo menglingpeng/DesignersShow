@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void initToolbar(){
         switch (currentType){
             case HomeFragment.MENU_HOME:
-                toolbarTitle = getString(R.string.nav_home_menu);
+                toolbarTitle = getString(R.string.app_name);
                 break;
             case HomeFragment.MENU_EXPLORE:
                 toolbarTitle = getString(R.string.nav_explore_menu);
@@ -139,6 +139,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawerLayout.addDrawerListener(toggle);
         navigationView.inflateMenu(R.menu.nav_content_menu);
         navigationView.getMenu().getItem(0).setChecked(true);
+        //修改NavigationView选中的Icon和Text颜色，默认是跟随主题颜色。
         ColorStateList csl = getResources().getColorStateList(R.color.navigationview_menu_item_color);
         navigationView.setItemIconTintList(csl);
         navigationView.setItemTextColor(csl);
