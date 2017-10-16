@@ -8,13 +8,13 @@ import java.util.List;
 
 public class Tags {
 
-    private List<String> tags;
+    private Tags[] tags;
 
-    public void setTags(List<String> tags) {
+    public void setTags(Tags[] tags) {
         this.tags = tags;
     }
 
-    public List<String> getTags() {
+    public Tags[] getTags() {
         return tags;
     }
 }

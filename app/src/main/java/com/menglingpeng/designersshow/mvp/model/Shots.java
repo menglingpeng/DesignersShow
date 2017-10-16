@@ -1,10 +1,12 @@
 package com.menglingpeng.designersshow.mvp.model;
 
+import com.menglingpeng.designersshow.mvp.other.Data;
+
 /**
  * Created by mengdroid on 2017/10/15.
  */
 
-public class Shots {
+public class Shots implements Data {
 
     private int id;
 
