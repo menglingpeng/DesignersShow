@@ -6,4 +6,4 @@
    
 * Android Design库的使用
 * 应用MVP模式
-* 自定义基类Activity和Fragment
+* Rxjava的使用
