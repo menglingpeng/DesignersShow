@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.menglingpeng.designersshow.mvp.view.HomeFragment;
+import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
 import com.menglingpeng.designersshow.utils.SnackUI;
 
 
@@ -50,13 +51,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case HomeFragment.MENU_EXPLORE:
                 toolbarTitle = getString(R.string.nav_explore_menu);
                 break;
-            case HomeFragment.MENU_MY_LIKES:
+            case RecyclerFragment.MENU_MY_LIKES:
                 toolbarTitle = getString(R.string.toolbar_my_likes);
                 break;
-            case HomeFragment.MENU_MY_BUCKETS:
+            case RecyclerFragment.MENU_MY_BUCKETS:
                 toolbarTitle = getString(R.string.nav_my_buckets_menu);
                 break;
-            case HomeFragment.MENU_MY_SHOTS:
+            case RecyclerFragment.MENU_MY_SHOTS:
                 toolbarTitle = getString(R.string.nav_my_shots_menu);
                 break;
         }
@@ -126,7 +127,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void replace(String type){
         if(!type.equals(currentType)){
             currentType = type;
-            replaceFragment(HomeFragment.newInstance(type), type);
+            if(type != HomeFragment.MENU_HOME && type != HomeFragment.MENU_EXPLORE){
+                replaceFragment(RecyclerFragment.newInstance(type), type);
+            }else {
+                replaceFragment(HomeFragment.newInstance(type), type);
+            }
         }
     }
 
@@ -161,17 +166,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 invalidateOptionsMenu();
                 break;
             case R.id.nav_likes:
-                replace(HomeFragment.MENU_MY_LIKES);
+                replace(RecyclerFragment.MENU_MY_LIKES);
                 initToolbar();
                 invalidateOptionsMenu();
                 break;
             case R.id.nav_buckets:
-                replace(HomeFragment.MENU_MY_BUCKETS);
+                replace(RecyclerFragment.MENU_MY_BUCKETS);
                 initToolbar();
                 invalidateOptionsMenu();
                 break;
             case R.id.nav_shots:
-                replace(HomeFragment.MENU_MY_SHOTS);
+                replace(RecyclerFragment.MENU_MY_SHOTS);
                 initToolbar();
                 invalidateOptionsMenu();
                 break;

@@ -1,5 +1,7 @@
 package com.menglingpeng.designersshow.net;
 
+import com.menglingpeng.designersshow.utils.Constants;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -16,7 +18,7 @@ public class HttpUtils {
     public static String get(String token, String list, String timoframe, String date, String sort){
         String shotsJson = null;
         OkHttpClient client = new OkHttpClient();
-        HttpUrl.Builder builder = HttpUrl.parse(API.SHOTS).newBuilder();
+        HttpUrl.Builder builder = HttpUrl.parse(Constants.SHOTS).newBuilder();
         //参数list,timeframe,sort缺省状态有默认值，所以需要判定。
         if(token != null){
             builder.addQueryParameter("access_token", token);
@@ -24,7 +26,7 @@ public class HttpUtils {
         if(list != null){
             builder.addQueryParameter("list", list);
         }
-        if(timoframe != null || sort != API.SORT_RECENT){
+        if(timoframe != null || sort != Constants.SORT_RECENT){
             builder.addQueryParameter("timeframe", timoframe);
         }
         if(date != null){

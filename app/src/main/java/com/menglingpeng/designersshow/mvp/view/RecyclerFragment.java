@@ -1,26 +1,15 @@
 package com.menglingpeng.designersshow.mvp.view;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 
-import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.R;
-import com.menglingpeng.designersshow.net.API;
-import com.menglingpeng.designersshow.net.HttpUtils;
-import com.menglingpeng.designersshow.net.Json;
 import com.menglingpeng.designersshow.utils.Constants;
 
-import java.io.IOException;
+import okhttp3.HttpUrl;
 
 
 /**
@@ -40,6 +29,9 @@ public class RecyclerFragment extends BaseFragment {
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
     public static final String TAB_FOLLOWING = "Following";
+    public static final String MENU_MY_LIKES = "My likes";
+    public static final String MENU_MY_BUCKETS = "My buckets";
+    public static final String MENU_MY_SHOTS = "My shots";;
 
     public static RecyclerFragment newInstance(String type){
         Bundle bundle = new Bundle();
@@ -59,11 +51,8 @@ public class RecyclerFragment extends BaseFragment {
         swipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh);
         progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
-        new GetShotsTask().execute(API.ACESS_TOKEN);
         initFragments();
-
     }
-
     private void initFragments(){
         Type = getArguments().get(Constants.TYPE).toString();
         switch (Type){
@@ -73,17 +62,6 @@ public class RecyclerFragment extends BaseFragment {
                 break;
             case TAB_RECENT:
                 break;
-        }
-
-    }
-
-    class GetShotsTask extends AsyncTask<String, Void, String>{
-
-        @Override
-        protected String doInBackground(String... params) {
-            Json.parseShots(HttpUtils.get(API.ACESS_TOKEN, list, timeframe, date, sort));
-
-            return null;
         }
     }
 

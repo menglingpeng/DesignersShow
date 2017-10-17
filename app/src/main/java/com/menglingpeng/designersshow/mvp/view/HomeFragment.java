@@ -24,9 +24,6 @@ public class HomeFragment extends BaseFragment {
 
     public static final String MENU_HOME = "Home";
     public static final String MENU_EXPLORE = "Explore";
-    public static final String MENU_MY_LIKES = "My likes";
-    public static final String MENU_MY_BUCKETS = "My buckets";
-    public static final String MENU_MY_SHOTS = "My shots";
     private static final int SMOOTHSCROLL_TOP_POSITION = 50;
     private String menuType;
 
@@ -57,6 +54,13 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        if(menuType.equals(MENU_HOME)){
+            initTabPager();
+        }else {
+        }
+    }
+
+    private void initTabPager(){
         tabLayout = (TabLayout)rootView.findViewById(R.id.tab_layout);
         pagerView = (ViewPager)rootView.findViewById(R.id.pager_view);
         fragments = new ArrayList<>();
