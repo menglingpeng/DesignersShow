@@ -1,5 +1,7 @@
 package com.menglingpeng.designersshow.mvp.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -8,13 +10,13 @@ import java.util.List;
 
 public class Tags {
 
-    private Tags[] tags;
+    private List<String> tags;
 
-    public void setTags(Tags[] tags) {
-        this.tags = tags;
+    public List<String> getTagsX() {
+        return tags;
     }
 
-    public Tags[] getTags() {
-        return tags;
+    public void setTagsX(List<String> tagsX) {
+        this.tags = tagsX;
     }
 }

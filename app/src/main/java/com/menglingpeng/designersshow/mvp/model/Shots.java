@@ -2,6 +2,8 @@ package com.menglingpeng.designersshow.mvp.model;
 
 import com.menglingpeng.designersshow.mvp.other.Data;
 
+import java.util.List;
+
 /**
  * Created by mengdroid on 2017/10/15.
  */
@@ -25,6 +27,8 @@ public class Shots implements Data {
     private int comments_count;
 
     private int views_count;
+
+    private List<String> tags;
 
     public int getId() {
         return id;
@@ -96,5 +100,13 @@ public class Shots implements Data {
 
     public void setViews_count(int views_count) {
         this.views_count = views_count;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public List<String> getTags() {
+        return tags;
     }
 }

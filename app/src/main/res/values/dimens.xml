@@ -6,4 +6,10 @@
     <dimen name="recycler_item_footer_loading_more_loading_text_size">15dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="nav_view_header_height">200dp</dimen>
+    <dimen name="nav_view_header_paddingLeft">30dp</dimen>
+    <dimen name="nav_view_header_login_avatar_layout_width">80dp</dimen>
+    <dimen name="nav_view_header_login_avatar_layout_height">80dp</dimen>
+    <dimen name="nav_view_header_login_avatar_layout_marginTop">30dp</dimen>
+    <dimen name="nav_view_header_nav_view_name_layout_marginTop">20dp</dimen>
+
 </resources>
