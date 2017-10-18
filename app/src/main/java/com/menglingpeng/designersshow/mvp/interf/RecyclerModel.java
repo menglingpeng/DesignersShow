@@ -5,5 +5,5 @@ package com.menglingpeng.designersshow.mvp.interf;
  */
 
 public interface RecyclerModel {
-    void getShots(int type, OnloadShotsListener listener);
+    void getShots( OnloadShotsListener listener);
 }

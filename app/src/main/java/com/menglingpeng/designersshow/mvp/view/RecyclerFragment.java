@@ -7,6 +7,7 @@ import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.R;
+import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 
 import okhttp3.HttpUrl;
@@ -26,6 +27,9 @@ public class RecyclerFragment extends BaseFragment {
     private String timeframe = null;
     private String date = null;
     private String sort = null;
+    private int page = 1;
+    private String ACESS_TOKEN  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
+    private RecyclerPresenter recyclerPresenter;
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
     public static final String TAB_FOLLOWING = "Following";

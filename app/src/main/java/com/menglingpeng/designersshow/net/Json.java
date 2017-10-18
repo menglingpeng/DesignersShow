@@ -29,7 +29,6 @@ public class Json {
     public static ArrayList<Shots> parseShots(String shotsJson){
 
         //替换Sting类型null为"".
-        //gson =
         JsonParser parser = new JsonParser();
         JsonArray jsonArray = parser.parse(shotsJson).getAsJsonArray();
         ArrayList<Shots> shotsList = new ArrayList<>();

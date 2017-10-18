@@ -8,12 +8,11 @@ public class Constants {
 
     public static final String TYPE = "type";
     public static final String POSITION = "position";
-    public static final int TYPE_SHOTS = 0;
-    public static final int TYPE_USER = 1;
+    public static final int TYPE_LATEST_shots = 0;
+    public static final int TYPE_BEFORE_shots = 1;
     /**
      * Dribbble API
      */
-    public static final String ACESS_TOKEN  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     public static final String BASE_URL = "https://api.dribbble.com/v1/";
     public static final String SHOTS = "https://api.dribbble.com/v1/shots";
     public static final String USER = "";

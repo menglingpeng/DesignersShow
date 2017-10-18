@@ -4,6 +4,7 @@ import com.menglingpeng.designersshow.utils.Constants;
 
 import java.io.IOException;
 
+import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -15,8 +16,7 @@ import okhttp3.Response;
 
 public class HttpUtils {
 
-    public static String get(String token, String list, String timoframe, String date, String sort){
-        String shotsJson = null;
+    public static void get(String token, String list, String timoframe, String date, String sort, String page, Callback callback){
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder builder = HttpUrl.parse(Constants.SHOTS).newBuilder();
         //参数list,timeframe,sort缺省状态有默认值，所以需要判定。
@@ -35,20 +35,13 @@ public class HttpUtils {
         if(sort != null){
             builder.addQueryParameter("sort", sort);
         }
+        builder.addQueryParameter("page", page);
         HttpUrl httpUrl =  builder.build();
         Request request = new Request.Builder()
                 .url(httpUrl)
                 .get()
                 .build();
-        try {
-            Response response = client.newCall(request).execute();
-            if(response.isSuccessful()){
-                shotsJson = response.body().string();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return  shotsJson;
+        client.newCall(request).enqueue(callback);
     }
 
 }

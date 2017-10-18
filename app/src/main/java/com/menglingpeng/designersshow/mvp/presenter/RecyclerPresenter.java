@@ -34,6 +34,8 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadShotsListen
 
     @Override
     public void loadShots() {
-
+        recyclerView.showProgress();
+        recyclerModel.getShots(this);
     }
+
 }
