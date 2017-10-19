@@ -9,5 +9,5 @@ import java.util.ArrayList;
  */
 
 public interface RecyclerModel {
-    ArrayList<Shots> getShots(OnloadShotsListener listener);
+    void getShots(OnloadShotsListener listener);
 }

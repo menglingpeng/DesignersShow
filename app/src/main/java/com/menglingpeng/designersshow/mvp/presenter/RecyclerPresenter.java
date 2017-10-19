@@ -24,11 +24,14 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadShotsListen
 
     @Override
     public void onSuccess() {
+        recyclerView.hideProgress();
 
     }
 
     @Override
     public void onFailure(String msg) {
+        recyclerView.hideProgress();
+        recyclerView.loadFailed(msg);
 
     }
 

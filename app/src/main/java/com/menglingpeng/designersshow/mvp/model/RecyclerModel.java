@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import com.menglingpeng.designersshow.mvp.interf.OnloadShotsListener;
 import com.menglingpeng.designersshow.net.HttpUtils;
-import com.menglingpeng.designersshow.net.Json;
+import com.menglingpeng.designersshow.utils.SharedPreUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +24,6 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
     private String date;
     private String sort;
     private String page;
-    private ArrayList<Shots> shotsList;
 
     public RecyclerModel(String token, String list, String timoframe, String date, String sort, String page){
         this.token = token;
@@ -36,41 +35,38 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
     }
 
     @Override
-    public ArrayList<Shots> getShots(OnloadShotsListener listener) {
+    public void getShots(OnloadShotsListener listener) {
          new GetDataTask().execute();
-        return shotsList;
     }
 
-    class GetDataTask extends AsyncTask<Void, Void, ArrayList<Shots>>{
-        ArrayList<Shots> sList = new ArrayList<>();
+    class GetDataTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected ArrayList<Shots> doInBackground(Void... params) {
+        protected Void doInBackground(Void... params) {
 
             Callback callback = new Callback() {
 
                 @Override
                 public void onFailure(Call call, IOException e) {
-
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String shotsJson = response.body().string();
-                    sList = Json.parseShots(shotsJson);
-
+                    saveData(page, shotsJson);
                 }
             };
             HttpUtils.get(token, list, timeframe, date, sort, page, callback);
-            return sList;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Shots> shotses) {
-            super.onPostExecute(shotses);
-            shotsList = shotses;
+            return null;
         }
     }
 
-
+    private void saveData(String page, String json){
+        //加载更多时，Json字符串需要拼接保存。
+        if(Integer.valueOf(page) == 1){
+            SharedPreUtil.saveShotsJson(json);
+        }else {
+            SharedPreUtil.saveMoreShotsJson(json);
+        }
+    }
 }

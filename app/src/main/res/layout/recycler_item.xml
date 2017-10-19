@@ -103,7 +103,7 @@
             android:src="@mipmap/ic_item_views"/>
 
         <TextView
-            android:id="@+id/item_view_count"
+            android:id="@+id/item_view_count_tx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
