@@ -7,7 +7,6 @@
     android:background="@color/colorPrimary">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/login_avatar"
         android:layout_width="@dimen/nav_view_header_login_avatar_layout_width"
         android:layout_height="@dimen/nav_view_header_login_avatar_layout_height"

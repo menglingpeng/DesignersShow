@@ -3,4 +3,6 @@
     <color name="colorPrimary">#575757</color>
     <color name="colorPrimaryDark">#454545</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="imageview_background">#ADD8E6</color>
+    <color name="shots_username">#0000FF</color>
 </resources>

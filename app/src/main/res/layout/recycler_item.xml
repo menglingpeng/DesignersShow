@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/recycler_view_item_layout_marginTop"
+    android:paddingTop="@dimen/recycler_view_item_padding"
+    android:clickable="true"
+    >
+
+    <RelativeLayout
+        android:id="@+id/desc_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/recycler_view_item_desc_layout_layout_height"
+        android:gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/recycler_view_item_avatar_layout_width"
+            android:layout_height="@dimen/recycler_view_item_avatar_layout_height"
+            android:layout_marginRight="@dimen/recycler_view_item_avatar_layout_marginLeft"
+            android:src="@drawable/ic_avatar"/>
+
+        <TextView
+            android:id="@+id/shots_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/avatar"
+            />
+
+        <TextView
+            android:id="@+id/shots_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/shots_title"
+            android:layout_toRightOf="@+id/avatar"
+            android:textColor="@color/shots_username"
+            style="@style/Base.TextAppearance.AppCompat.Subhead"/>
+
+        <TextView
+            android:id="@+id/shots_create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/shots_title"
+            android:layout_toRightOf="@+id/avatar"
+            />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/shots_im"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avatar"
+        android:background="@color/imageview_background"/>
+
+    <RelativeLayout
+        android:id="@+id/comments_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/recycler_view_item_comments_layout_layout_height"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:id="@+id/item_likes_count_im"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
+            android:src="@mipmap/ic_item_likes"/>
+
+        <TextView
+            android:id="@+id/item_likes_count_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
+            android:layout_toRightOf="@+id/item_likes_count_im"/>
+
+        <ImageView
+            android:id="@+id/item_comments_count_im"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
+            android:layout_toRightOf="@+id/item_likes_count_tx"
+            android:src="@mipmap/ic_item_comments"/>
+
+        <TextView
+            android:id="@+id/item_comments_count_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
+            android:layout_toRightOf="@+id/item_comments_count_im"/>
+
+        <ImageView
+            android:id="@+id/item_views_count_im"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
+            android:layout_toRightOf="@+id/item_comments_count_tx"
+            android:src="@mipmap/ic_item_views"/>
+
+        <TextView
+            android:id="@+id/item_view_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
+            android:layout_toRightOf="@+id/item_views_count_im"/>
+
+
+
+
+    </RelativeLayout>
+
+r</android.support.v7.widget.CardView>

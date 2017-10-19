@@ -11,5 +11,15 @@
     <dimen name="nav_view_header_login_avatar_layout_height">80dp</dimen>
     <dimen name="nav_view_header_login_avatar_layout_marginTop">30dp</dimen>
     <dimen name="nav_view_header_nav_view_name_layout_marginTop">20dp</dimen>
+    <dimen name="recycler_view_item_padding">30dp</dimen>
+    <dimen name="recycler_view_item_layout_marginTop">10dp</dimen>
+    <dimen name="recycler_view_item_avatar_layout_width">30dp</dimen>
+    <dimen name="recycler_view_item_avatar_layout_height">30dp</dimen>
+    <dimen name="recycler_view_item_avatar_layout_marginLeft">10dp</dimen>
+    <dimen name="recycler_view_item_iamgeview_layout_height">300dp</dimen>
+    <dimen name="recycler_view_item_desc_layout_layout_height">50dp</dimen>
+    <dimen name="recycler_view_item_comments_layout_layout_height">30dp</dimen>
+    <dimen name="recycler_view_item_comments_layout_layout_imageview_layout_marginLeft">20dp</dimen>
+    <dimen name="recycler_view_item_comments_layout_layout_textview_layout_marginLeft">10dp</dimen>
 
 </resources>

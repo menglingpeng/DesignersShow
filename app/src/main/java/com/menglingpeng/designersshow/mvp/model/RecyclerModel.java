@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import com.menglingpeng.designersshow.mvp.interf.OnloadShotsListener;
 import com.menglingpeng.designersshow.net.HttpUtils;
 import com.menglingpeng.designersshow.net.Json;
-import com.menglingpeng.designersshow.utils.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
     private String date;
     private String sort;
     private String page;
+    private ArrayList<Shots> shotsList;
 
     public RecyclerModel(String token, String list, String timoframe, String date, String sort, String page){
         this.token = token;
@@ -36,12 +36,13 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
     }
 
     @Override
-    public void getShots( OnloadShotsListener listener) {
-        new GetDataTask().execute();
+    public ArrayList<Shots> getShots(OnloadShotsListener listener) {
+         new GetDataTask().execute();
+        return shotsList;
     }
 
     class GetDataTask extends AsyncTask<Void, Void, ArrayList<Shots>>{
-        ArrayList<Shots> shotsList = new ArrayList<>();
+        ArrayList<Shots> sList = new ArrayList<>();
 
         @Override
         protected ArrayList<Shots> doInBackground(Void... params) {
@@ -56,12 +57,18 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String shotsJson = response.body().string();
-                    shotsList = Json.parseShots(shotsJson);
+                    sList = Json.parseShots(shotsJson);
 
                 }
             };
             HttpUtils.get(token, list, timeframe, date, sort, page, callback);
-            return shotsList;
+            return sList;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Shots> shotses) {
+            super.onPostExecute(shotses);
+            shotsList = shotses;
         }
     }
 
