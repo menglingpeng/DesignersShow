@@ -5,8 +5,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 
+import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.R;
+import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
+import com.menglingpeng.designersshow.mvp.other.Data;
+import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 
@@ -17,10 +21,11 @@ import okhttp3.HttpUrl;
  * Created by mengdroid on 2017/10/13.
  */
 
-public class RecyclerFragment extends BaseFragment {
+public class RecyclerFragment extends BaseFragment implements com.menglingpeng.designersshow.mvp.interf.RecyclerView, OnRecyclerListItemListener, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefresh;
+    private RecyclerPresenter presenter;
     private ProgressBar progressBar;
     private String Type;
     private String list= null;
@@ -71,10 +76,48 @@ public class RecyclerFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
+        presenter = new RecyclerPresenter(this, (BaseActivity)getActivity());
     }
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
+    }
+
+    @Override
+    public void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder) {
+        if(viewHolder instanceof RecyclerAdapter.ViewHolder){
+
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.loadShots();
+    }
+
+    @Override
+    public void showProgress() {
+        showProgress(true);
+    }
+
+    @Override
+    public void hideProgress() {
+        showProgress(false);
+    }
+
+    @Override
+    public void addShots(Data shots) {
+
+    }
+
+    @Override
+    public void loadFailed(String msg) {
+
+    }
+
+    public void showProgress(final boolean refreshState){
+        if(swipeRefresh != null){
+            swipeRefresh.setRefreshing(refreshState);
+        }
     }
 }

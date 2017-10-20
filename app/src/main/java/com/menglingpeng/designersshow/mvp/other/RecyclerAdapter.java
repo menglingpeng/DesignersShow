@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow.mvp.other;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.menglingpeng.designersshow.R;
-import com.menglingpeng.designersshow.mvp.interf.OnRecyclerFragmentListListener;
+import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.net.Json;
+import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
 
 import java.util.ArrayList;
@@ -25,12 +27,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
-    private OnRecyclerFragmentListListener mListener;
-    private int page;
+    private OnRecyclerListItemListener mListener;
     private ArrayList<Shots> shotses;
 
 
-    public RecyclerAdapter(OnRecyclerFragmentListListener listener){
+    public RecyclerAdapter(OnRecyclerListItemListener listener){
         this.mListener = listener;
         shotses = Json.parseShots(SharedPreUtil.getShotsJson());
     }
@@ -60,11 +61,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+        Context context = holder.itemView.getContext();
         if(holder instanceof ViewHolder){
             final ViewHolder viewHolder = (ViewHolder)holder;
+            ImageLoader.load(context, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatar);
             viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(shotses.get(position).getUpdated_at());
+            ImageLoader.load(context, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
             viewHolder.itemLikesCountTx.setText(String.valueOf(shotses.get(position).getLikes_count()));
             viewHolder.itemCommentsCountTx.setText(String.valueOf(shotses.get(position).getComments_count()));
             viewHolder.itemCommentsCountTx.setText(String.valueOf(shotses.get(position).getViews_count()));
