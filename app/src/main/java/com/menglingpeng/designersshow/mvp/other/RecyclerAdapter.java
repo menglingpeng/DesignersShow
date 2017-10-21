@@ -69,6 +69,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(shotses.get(position).getUpdated_at());
             ImageLoader.load(context, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
+            if(shotses.get(position).isAnimated()){
+                viewHolder.shotsGifTx.setVisibility(TextView.VISIBLE);
+            }
             viewHolder.itemLikesCountTx.setText(String.valueOf(shotses.get(position).getLikes_count()));
             viewHolder.itemCommentsCountTx.setText(String.valueOf(shotses.get(position).getComments_count()));
             viewHolder.itemCommentsCountTx.setText(String.valueOf(shotses.get(position).getViews_count()));
@@ -76,12 +79,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View v) {
                     if(mListener != null){
-                        mListener.onRecyclerFragmentListListener();
+                        mListener.onRecyclerFragmentListListener(viewHolder);
                     }
                 }
             });
         }
 
+    }
+
+    public void addShots(Shots shots){
+        notifyDataSetChanged();
     }
 
     @Override
@@ -94,6 +101,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public final CircleImageView avatar;
         public final TextView shotsTitleTx, shots_userTx, shotsCreatedTimeTx;
         public final ImageView shotsIm;
+        public final TextView shotsGifTx;
         public final TextView itemLikesCountTx, itemCommentsCountTx, itemViewsCountTx;
 
         public ViewHolder(View view) {
@@ -103,6 +111,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             shots_userTx = (TextView) view.findViewById(R.id.shots_user);
             shotsCreatedTimeTx = (TextView) view.findViewById(R.id.shots_create_time);
             shotsIm = (ImageView) view.findViewById(R.id.shots_im);
+            shotsGifTx = (TextView)view.findViewById(R.id.shots_gif_tx);
             itemLikesCountTx = (TextView) view.findViewById(R.id.item_likes_count_tx);
             itemCommentsCountTx = (TextView) view.findViewById(R.id.item_comments_count_tx);
             itemViewsCountTx = (TextView) view.findViewById(R.id.item_view_count_tx);

@@ -51,12 +51,24 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/shots_im"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/avatar"
-        android:background="@color/imageview_background"/>
+        android:layout_below="@+id/avatar">
+        <ImageView
+            android:id="@+id/shots_im"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/imageview_background"/>
+
+        <TextView
+            android:id="@+id/shots_gif_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:visibility="gone"
+            android:text="@string/shots_gif_tx"/>
+    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/comments_layout"

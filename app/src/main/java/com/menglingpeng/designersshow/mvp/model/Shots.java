@@ -30,6 +30,8 @@ public class Shots implements Data {
 
     private List<String> tags;
 
+    private boolean animated;
+
     public int getId() {
         return id;
     }
@@ -108,6 +110,14 @@ public class Shots implements Data {
 
     public List<String> getTags() {
         return tags;
+    }
+
+    public boolean isAnimated() {
+        return animated;
+    }
+
+    public void setAnimated(boolean animated) {
+        this.animated = animated;
     }
 
     public class Images {
@@ -242,6 +252,7 @@ public class Shots implements Data {
         public void setProject_count(int project_count) {
             this.project_count = project_count;
         }
-
     }
+
+
 }

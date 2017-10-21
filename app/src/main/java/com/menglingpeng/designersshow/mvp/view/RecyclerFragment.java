@@ -9,6 +9,7 @@ import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
+import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.other.Data;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
@@ -21,11 +22,12 @@ import okhttp3.HttpUrl;
  * Created by mengdroid on 2017/10/13.
  */
 
-public class RecyclerFragment extends BaseFragment implements com.menglingpeng.designersshow.mvp.interf.RecyclerView, OnRecyclerListItemListener, SwipeRefreshLayout.OnRefreshListener {
+public class RecyclerFragment extends BaseFragment implements com.menglingpeng.designersshow.mvp.interf.RecyclerView<Shots>, OnRecyclerListItemListener, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerPresenter presenter;
+    private RecyclerAdapter adapter;
     private ProgressBar progressBar;
     private String Type;
     private String list= null;
@@ -33,7 +35,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String date = null;
     private String sort = null;
     private int page = 1;
-    private String ACESS_TOKEN  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
+    private String ACCESS_TOKEN  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     private RecyclerPresenter recyclerPresenter;
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
@@ -60,6 +62,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         swipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh);
         progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
+        adapter = new RecyclerAdapter(this);
         initFragments();
     }
     private void initFragments(){
@@ -86,7 +89,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     public void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder) {
         if(viewHolder instanceof RecyclerAdapter.ViewHolder){
-
         }
     }
 
@@ -106,8 +108,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     }
 
     @Override
-    public void addShots(Data shots) {
-
+    public void addShots(Shots shots) {
+        adapter.addShots(shots);
     }
 
     @Override
