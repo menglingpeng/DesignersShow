@@ -2,6 +2,9 @@ package com.menglingpeng.designersshow.mvp.model;
 
 import android.os.AsyncTask;
 
+import com.bumptech.glide.load.engine.Resource;
+import com.menglingpeng.designersshow.BaseActivity;
+import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadShotsListener;
 import com.menglingpeng.designersshow.net.HttpUtils;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
@@ -24,14 +27,12 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
     private String date;
     private String sort;
     private String page;
+    private ArrayList<String> parametersList;
+    private BaseActivity baseActivity;
 
-    public RecyclerModel(String token, String list, String timoframe, String date, String sort, String page){
-        this.token = token;
-        this.list = list;
-        this.timeframe = timoframe;
-        this.date = date;
-        this.sort = sort;
-        this.page = page;
+    public RecyclerModel(ArrayList<String> parametersList, BaseActivity baseActivity){
+        this.parametersList = parametersList;
+        this.baseActivity = baseActivity;
     }
 
     @Override
@@ -39,24 +40,26 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
          new GetDataTask().execute();
     }
 
-    class GetDataTask extends AsyncTask<Void, Void, Void> {
+    class GetDataTask extends AsyncTask<OnloadShotsListener, Void, Void> {
 
         @Override
-        protected Void doInBackground(Void... params) {
-
+        protected Void doInBackground(OnloadShotsListener... params) {
+            final OnloadShotsListener listener = params[0];
             Callback callback = new Callback() {
 
                 @Override
                 public void onFailure(Call call, IOException e) {
+                    listener.onFailure(baseActivity.getString(R.string.on_load_shots_listener_failed_msg));
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String shotsJson = response.body().string();
                     saveData(page, shotsJson);
+                    listener.onSuccess();
                 }
             };
-            HttpUtils.get(token, list, timeframe, date, sort, page, callback);
+            HttpUtils.get(parametersList, callback);
             return null;
         }
     }

@@ -2,6 +2,7 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 
@@ -14,6 +15,8 @@ import com.menglingpeng.designersshow.mvp.other.Data;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
+
+import java.util.ArrayList;
 
 import okhttp3.HttpUrl;
 
@@ -28,7 +31,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerPresenter presenter;
     private RecyclerAdapter adapter;
+    private LinearLayoutManager linearLayoutManager;
     private ProgressBar progressBar;
+    private BaseActivity mActivity;
+    private ArrayList<String> parametersList;
     private String Type;
     private String list= null;
     private String timeframe = null;
@@ -36,7 +42,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String sort = null;
     private int page = 1;
     private String ACCESS_TOKEN  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
-    private RecyclerPresenter recyclerPresenter;
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
     public static final String TAB_FOLLOWING = "Following";
@@ -62,7 +67,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         swipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh);
         progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
+        linearLayoutManager = new LinearLayoutManager(mActivity);
         adapter = new RecyclerAdapter(this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
         initFragments();
     }
     private void initFragments(){
@@ -71,15 +79,30 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case TAB_FOLLOWING:
                 break;
             case TAB_POPULAR:
+                sort = Constants.SORT_POPULAR;
                 break;
             case TAB_RECENT:
+                sort = Constants.SORT_RECENT;
                 break;
+        }
+        listAddNotNull(ACCESS_TOKEN);
+        listAddNotNull(list);
+        listAddNotNull(timeframe);
+        listAddNotNull(date);
+        listAddNotNull(sort);
+        listAddNotNull(String.valueOf(page));
+    }
+
+    private void listAddNotNull(String parameters){
+        if(parameters != null){
+            parametersList.add(parameters);
         }
     }
 
     @Override
     protected void initData() {
-        presenter = new RecyclerPresenter(this, (BaseActivity)getActivity());
+        presenter = new RecyclerPresenter(this, parametersList, (BaseActivity)getActivity());
+        onRefresh();
     }
 
     public RecyclerView getRecyclerView() {

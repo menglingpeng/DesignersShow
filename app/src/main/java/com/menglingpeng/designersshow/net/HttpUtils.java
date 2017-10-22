@@ -3,6 +3,7 @@ package com.menglingpeng.designersshow.net;
 import com.menglingpeng.designersshow.utils.Constants;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -16,26 +17,12 @@ import okhttp3.Response;
 
 public class HttpUtils {
 
-    public static void get(String token, String list, String timoframe, String date, String sort, String page, Callback callback){
+    public static void get(ArrayList<String> parametersList, Callback callback){
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder builder = HttpUrl.parse(Constants.SHOTS).newBuilder();
-        //参数list,timeframe,sort缺省状态有默认值，所以需要判定。
-        if(token != null){
-            builder.addQueryParameter("access_token", token);
+        for(int i=0;i<parametersList.size()-1;i++){
+            builder.addQueryParameter("\" + p + \"", parametersList.get(i));
         }
-        if(list != null){
-            builder.addQueryParameter("list", list);
-        }
-        if(timoframe != null || sort != Constants.SORT_RECENT){
-            builder.addQueryParameter("timeframe", timoframe);
-        }
-        if(date != null){
-            builder.addQueryParameter("date", date);
-        }
-        if(sort != null){
-            builder.addQueryParameter("sort", sort);
-        }
-        builder.addQueryParameter("page", page);
         HttpUrl httpUrl =  builder.build();
         Request request = new Request.Builder()
                 .url(httpUrl)
