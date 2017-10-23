@@ -36,7 +36,6 @@ public class Json {
             Shots shots = gson.fromJson(element, Shots.class);
             shotsList.add(shots);
         }
-        Log.i("response", shotsList.get(0).getTitle());
         return shotsList;
     }
 

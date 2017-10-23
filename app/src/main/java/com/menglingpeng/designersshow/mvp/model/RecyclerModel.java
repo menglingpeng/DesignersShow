@@ -24,10 +24,12 @@ import okhttp3.Response;
  */
 
 public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.RecyclerModel{
+    private String type;
     private HashMap<String, String> map;
     private BaseActivity baseActivity;
 
-    public RecyclerModel(HashMap<String, String> map, BaseActivity baseActivity){
+    public RecyclerModel(String type, HashMap<String, String> map, BaseActivity baseActivity){
+        this.type = type;
         this.map = map;
         this.baseActivity = baseActivity;
     }
@@ -64,10 +66,12 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
 
     private void saveData(String page, String json){
         //加载更多时，Json字符串需要拼接保存。
+
         if(Integer.valueOf(page) == 1){
-            SharedPreUtil.saveShotsJson(json);
+            SharedPreUtil.saveShotsJson(type, json);
         }else {
-            SharedPreUtil.saveMoreShotsJson(json);
+            SharedPreUtil.saveMoreShotsJson(type, json);
         }
+        Log.i("SP", SharedPreUtil.getShotsJson(type));
     }
 }

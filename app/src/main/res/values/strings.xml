@@ -24,6 +24,6 @@
     <string name="home_following">关注</string>
     <string name="double_back_quit">再次点击离开应用</string>
     <string name="shots_gif_tx">GIF</string>
-    <string name="on_load_shots_listener_failed_msg">laod dribbble shots failed</string>
+    <string name="on_load_shots_listener_failed_msg">load dribbble shots failed</string>
 
 </resources>

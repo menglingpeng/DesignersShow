@@ -2,6 +2,7 @@ package com.menglingpeng.designersshow.mvp.other;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +32,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private ArrayList<Shots> shotses;
 
 
-    public RecyclerAdapter(OnRecyclerListItemListener listener){
-        this.mListener = listener;
-        shotses = Json.parseShots(SharedPreUtil.getShotsJson());
+    public RecyclerAdapter(String type, OnRecyclerListItemListener listener){
+        mListener = listener;
+        shotses = Json.parseShots(SharedPreUtil.getShotsJson(type));
+        Log.i("type", type);
+        Log.i("ShotsJson", shotses.get(0).getTitle());
     }
 
     @Override

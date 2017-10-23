@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
+import com.menglingpeng.designersshow.mvp.interf.RecyclerPresenterIf;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.other.Data;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
@@ -31,13 +33,13 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefresh;
-    private RecyclerPresenter presenter;
+    private RecyclerPresenterIf presenter;
     private RecyclerAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private ProgressBar progressBar;
     private BaseActivity mActivity;
     private HashMap<String, String> map;
-    private String Type;
+    private String type;
     private String list= null;
     private String timeframe = null;
     private String date = null;
@@ -70,17 +72,17 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
         initFragments();
-        presenter = new RecyclerPresenter(this, map, (BaseActivity)getActivity());
-        presenter.loadShots();
         linearLayoutManager = new LinearLayoutManager(mActivity);
-        adapter = new RecyclerAdapter(this);
+        swipeRefresh.setOnRefreshListener(this);
+        adapter = new RecyclerAdapter(type,this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
+
     private void initFragments(){
         map = new HashMap<>();
-        Type = getArguments().get(Constants.TYPE).toString();
-        switch (Type){
+        type = getArguments().get(Constants.TYPE).toString();
+        switch (type){
             case TAB_FOLLOWING:
                 break;
             case TAB_POPULAR:
@@ -90,6 +92,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 sort = Constants.SORT_RECENT;
                 break;
         }
+        //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
         map.put("access_token", access_token);
         if(list != null){
             map.put("list", list);
@@ -104,13 +107,14 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             map.put("sort", sort);
         }
         map.put("page", String.valueOf(page));
+        presenter = new RecyclerPresenter(this, type, map, (BaseActivity)getActivity());
+        presenter.loadShots();
+        Log.i("type", type);
     }
 
     @Override
     protected void initData() {
-        /*initFragments();
-        presenter = new RecyclerPresenter(this, map, (BaseActivity)getActivity());
-        onRefresh();*/
+
     }
 
     public RecyclerView getRecyclerView() {
@@ -130,12 +134,14 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void showProgress() {
-        showProgress(true);
+        progressBar.setVisibility(ProgressBar.GONE);
+        //showProgress(true);
     }
 
     @Override
     public void hideProgress() {
-        showProgress(false);
+        progressBar.setVisibility(ProgressBar.GONE);
+        //showProgress(false);
     }
 
     @Override

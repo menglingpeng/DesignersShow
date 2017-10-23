@@ -20,11 +20,13 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadShotsListen
 
     private RecyclerView<Shots> recyclerView;
     private RecyclerModel recyclerModel;
+    private String type;
     private HashMap<String, String> map;
-    public RecyclerPresenter(RecyclerView<Shots> recyclerView, HashMap<String, String> map, BaseActivity activity){
+    public RecyclerPresenter(RecyclerView<Shots> recyclerView,String type, HashMap<String, String> map, BaseActivity activity){
         this.recyclerView = recyclerView;
+        this.type = type;
         this.map = map;
-        recyclerModel = new com.menglingpeng.designersshow.mvp.model.RecyclerModel(map, activity);
+        recyclerModel = new com.menglingpeng.designersshow.mvp.model.RecyclerModel(type, map, activity);
     }
 
     @Override
