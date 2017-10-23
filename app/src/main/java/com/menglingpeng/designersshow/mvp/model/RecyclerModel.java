@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow.mvp.model;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.bumptech.glide.load.engine.Resource;
 import com.menglingpeng.designersshow.BaseActivity;
@@ -11,6 +12,8 @@ import com.menglingpeng.designersshow.utils.SharedPreUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -21,23 +24,17 @@ import okhttp3.Response;
  */
 
 public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.RecyclerModel{
-    private String token;
-    private String list;
-    private String timeframe;
-    private String date;
-    private String sort;
-    private String page;
-    private ArrayList<String> parametersList;
+    private HashMap<String, String> map;
     private BaseActivity baseActivity;
 
-    public RecyclerModel(ArrayList<String> parametersList, BaseActivity baseActivity){
-        this.parametersList = parametersList;
+    public RecyclerModel(HashMap<String, String> map, BaseActivity baseActivity){
+        this.map = map;
         this.baseActivity = baseActivity;
     }
 
     @Override
     public void getShots(OnloadShotsListener listener) {
-         new GetDataTask().execute();
+         new GetDataTask().execute(listener);
     }
 
     class GetDataTask extends AsyncTask<OnloadShotsListener, Void, Void> {
@@ -55,11 +52,12 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String shotsJson = response.body().string();
-                    saveData(page, shotsJson);
+                    Log.i("Response", shotsJson);
+                    saveData(map.get("page"), shotsJson);
                     listener.onSuccess();
                 }
             };
-            HttpUtils.get(parametersList, callback);
+            HttpUtils.get(map, callback);
             return null;
         }
     }

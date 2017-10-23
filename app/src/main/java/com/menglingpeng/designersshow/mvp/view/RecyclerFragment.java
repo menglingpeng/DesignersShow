@@ -17,6 +17,8 @@ import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.HttpUrl;
 
@@ -34,14 +36,14 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private LinearLayoutManager linearLayoutManager;
     private ProgressBar progressBar;
     private BaseActivity mActivity;
-    private ArrayList<String> parametersList;
+    private HashMap<String, String> map;
     private String Type;
     private String list= null;
     private String timeframe = null;
     private String date = null;
     private String sort = null;
     private int page = 1;
-    private String ACCESS_TOKEN  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
+    private String access_token  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
     public static final String TAB_FOLLOWING = "Following";
@@ -67,42 +69,48 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         swipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh);
         progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
+        initFragments();
+        presenter = new RecyclerPresenter(this, map, (BaseActivity)getActivity());
+        presenter.loadShots();
         linearLayoutManager = new LinearLayoutManager(mActivity);
         adapter = new RecyclerAdapter(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-        initFragments();
     }
     private void initFragments(){
+        map = new HashMap<>();
         Type = getArguments().get(Constants.TYPE).toString();
         switch (Type){
             case TAB_FOLLOWING:
                 break;
             case TAB_POPULAR:
-                sort = Constants.SORT_POPULAR;
+                sort = null;
                 break;
             case TAB_RECENT:
                 sort = Constants.SORT_RECENT;
                 break;
         }
-        listAddNotNull(ACCESS_TOKEN);
-        listAddNotNull(list);
-        listAddNotNull(timeframe);
-        listAddNotNull(date);
-        listAddNotNull(sort);
-        listAddNotNull(String.valueOf(page));
-    }
-
-    private void listAddNotNull(String parameters){
-        if(parameters != null){
-            parametersList.add(parameters);
+        map.put("access_token", access_token);
+        if(list != null){
+            map.put("list", list);
         }
+        if(timeframe != null){
+            map.put("timeframe", timeframe);
+        }
+        if(date != null){
+            map.put("date", date);
+        }
+        if(sort != null){
+            map.put("sort", sort);
+        }
+        map.put("page", String.valueOf(page));
     }
 
     @Override
     protected void initData() {
-        presenter = new RecyclerPresenter(this, parametersList, (BaseActivity)getActivity());
-        onRefresh();
+        /*initFragments();
+        presenter = new RecyclerPresenter(this, map, (BaseActivity)getActivity());
+        onRefresh();*/
     }
 
     public RecyclerView getRecyclerView() {
