@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.R;
@@ -49,7 +50,6 @@ public class HomeFragment extends BaseFragment {
         }else {
             layoutId = R.layout.fragment_explore;
         }
-
     }
 
     @Override
@@ -81,7 +81,11 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+<<<<<<< HEAD
                 scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());
+=======
+                /*scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());*/
+>>>>>>> a874dd0... feat:add double back press quit application function
             }
         });
     }
@@ -127,6 +131,7 @@ public class HomeFragment extends BaseFragment {
 
         private List<RecyclerFragment> fragments;
         private List<String> titles;
+        private static RecyclerFragment fragment;
 
         public TabPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -155,6 +160,16 @@ public class HomeFragment extends BaseFragment {
         @Override
         public float getPageWidth(int position) {
             return super.getPageWidth(position);
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            fragment = (RecyclerFragment)object;
+            super.setPrimaryItem(container, position, object);
+        }
+
+        public static RecyclerFragment getCurrentFragment(){
+            return  fragment;
         }
     }
 }

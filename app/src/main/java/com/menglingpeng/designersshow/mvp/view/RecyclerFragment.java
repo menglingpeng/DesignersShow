@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow.mvp.view;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +34,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefresh;
-    private RecyclerPresenterIf presenter;
+    private RecyclerPresenter presenter;
     private RecyclerAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private ProgressBar progressBar;
@@ -75,7 +76,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         linearLayoutManager = new LinearLayoutManager(mActivity);
         swipeRefresh.setColorSchemeResources(R.color.colorAccent);
         swipeRefresh.setOnRefreshListener(this);
-        adapter = new RecyclerAdapter(type,this);
+        presenter = new RecyclerPresenter(this, type, map, (BaseActivity)getActivity());
+        presenter.loadShots();
+        adapter = new RecyclerAdapter(HomeFragment.TabPagerAdapter.getCurrentFragment(), type,this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
@@ -113,8 +116,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     protected void initData() {
-        presenter = new RecyclerPresenter(this, type, map, (BaseActivity)getActivity());
-        presenter.loadShots();
     }
 
     public RecyclerView getRecyclerView() {
@@ -135,6 +136,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void showProgress() {
+        progressBar.setVisibility(ProgressBar.VISIBLE);
     }
 
     @Override

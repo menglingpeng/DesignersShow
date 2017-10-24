@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow.mvp.other;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,9 +31,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_FOOTER = 1;
     private OnRecyclerListItemListener mListener;
     private ArrayList<Shots> shotses;
+    private Fragment fragment;
 
 
-    public RecyclerAdapter(String type, OnRecyclerListItemListener listener){
+    public RecyclerAdapter(Fragment fragment, String type, OnRecyclerListItemListener listener){
+        this.fragment = fragment;
         mListener = listener;
         shotses = Json.parseShots(SharedPreUtil.getShotsJson(type));
         Log.i("type", type);
@@ -63,15 +66,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        Context context = holder.itemView.getContext();
         if(holder instanceof ViewHolder){
             final ViewHolder viewHolder = (ViewHolder)holder;
-            ImageLoader.load(context, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatar);
+            ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatar);
             viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(shotses.get(position).getUpdated_at());
-            ImageLoader.load(context, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
+            ImageLoader.load(fragment, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
             if(shotses.get(position).isAnimated()){
                 viewHolder.shotsGifTx.setVisibility(TextView.VISIBLE);
             }

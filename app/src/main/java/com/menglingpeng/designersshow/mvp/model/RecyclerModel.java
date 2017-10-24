@@ -39,16 +39,18 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
          new GetDataTask().execute(listener);
     }
 
-    class GetDataTask extends AsyncTask<OnloadShotsListener, Void, Void> {
+    class GetDataTask extends AsyncTask<OnloadShotsListener, Void, Boolean> {
+        OnloadShotsListener listener;
+        boolean isSuccess;
 
         @Override
-        protected Void doInBackground(OnloadShotsListener... params) {
-            final OnloadShotsListener listener = params[0];
+        protected Boolean doInBackground(OnloadShotsListener... params) {
+            listener = params[0];
             Callback callback = new Callback() {
 
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    listener.onFailure(baseActivity.getString(R.string.on_load_shots_listener_failed_msg));
+                    isSuccess = false;
                 }
 
                 @Override
@@ -56,11 +58,21 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
                     String shotsJson = response.body().string();
                     Log.i("Response", shotsJson);
                     saveData(map.get("page"), shotsJson);
-                    listener.onSuccess();
+                    isSuccess = true;
                 }
             };
             HttpUtils.get(map, callback);
-            return null;
+            return isSuccess;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            super.onPostExecute(isSuccess);
+            if(isSuccess){
+                listener.onSuccess();
+            }else {
+                listener.onFailure(baseActivity.getString(R.string.on_load_shots_listener_failed_msg));
+            }
         }
     }
 
@@ -72,6 +84,5 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
         }else {
             SharedPreUtil.saveMoreShotsJson(type, json);
         }
-        Log.i("SP", SharedPreUtil.getShotsJson(type));
     }
 }

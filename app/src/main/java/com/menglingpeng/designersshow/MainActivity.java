@@ -14,7 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.menglingpeng.designersshow.mvp.view.HomeFragment;
+<<<<<<< HEAD
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
+=======
+>>>>>>> a874dd0... feat:add double back press quit application function
 import com.menglingpeng.designersshow.utils.SnackUI;
 
 
