@@ -73,6 +73,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
         initFragments();
         linearLayoutManager = new LinearLayoutManager(mActivity);
+        swipeRefresh.setColorSchemeResources(R.color.colorAccent);
         swipeRefresh.setOnRefreshListener(this);
         adapter = new RecyclerAdapter(type,this);
         recyclerView.setHasFixedSize(true);
@@ -107,14 +108,13 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             map.put("sort", sort);
         }
         map.put("page", String.valueOf(page));
-        presenter = new RecyclerPresenter(this, type, map, (BaseActivity)getActivity());
-        presenter.loadShots();
         Log.i("type", type);
     }
 
     @Override
     protected void initData() {
-
+        presenter = new RecyclerPresenter(this, type, map, (BaseActivity)getActivity());
+        presenter.loadShots();
     }
 
     public RecyclerView getRecyclerView() {
@@ -130,18 +130,17 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     public void onRefresh() {
         presenter.loadShots();
+        showProgress(false);
     }
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(ProgressBar.GONE);
-        //showProgress(true);
     }
 
     @Override
     public void hideProgress() {
         progressBar.setVisibility(ProgressBar.GONE);
-        //showProgress(false);
+
     }
 
     @Override
