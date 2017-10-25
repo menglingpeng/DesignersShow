@@ -81,11 +81,8 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-<<<<<<< HEAD
                 scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());
-=======
                 /*scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());*/
->>>>>>> a874dd0... feat:add double back press quit application function
             }
         });
     }

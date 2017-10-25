@@ -8,16 +8,15 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.menglingpeng.designersshow.mvp.view.HomeFragment;
-<<<<<<< HEAD
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
-=======
->>>>>>> a874dd0... feat:add double back press quit application function
 import com.menglingpeng.designersshow.utils.SnackUI;
 
 
@@ -28,6 +27,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private String toolbarTitle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private Menu toolbarMenu;
     private boolean backPressed;
 
     @Override
@@ -89,6 +89,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.explore_overflow_menu, menu);
+        toolbarMenu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -110,6 +111,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.overflow_date:
+                showToolbarDateMenu(toolbarMenu.findItem(R.id.overflow_date).getActionView());
                 break;
             case R.id.overflow_small:
                 break;
@@ -122,6 +124,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showToolbarDateMenu(View view){
+        //View contentView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.toolbar_date_menu,null);
+        PopupMenu menu = new PopupMenu(getApplicationContext(),view);
+        menu.getMenuInflater().inflate(R.menu.toolbar_date_menu_item, menu.getMenu());
+        menu.show();
     }
 
     /**

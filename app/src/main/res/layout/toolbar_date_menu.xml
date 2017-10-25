@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/toolbar_date_menu_padding_top"
+        android:paddingLeft="@dimen/toolbar_date_menu_padding_left"
+        android:text="@string/toolbar_date_menu_item_now"/>
+
+    <TextView
+        android:id="@+id/week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/toolbar_date_menu_padding_top"
+        android:paddingLeft="@dimen/toolbar_date_menu_padding_left"
+        android:layout_below="@+id/now"
+        android:text="@string/toolbar_date_menu_item_past_week"/>
+
+    <TextView
+        android:id="@+id/month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/toolbar_date_menu_padding_top"
+        android:paddingLeft="@dimen/toolbar_date_menu_padding_left"
+        android:layout_below="@+id/week"
+        android:text="@string/toolbar_date_menu_item_past_month"/>
+
+    <TextView
+        android:id="@+id/year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/toolbar_date_menu_padding_top"
+        android:paddingLeft="@dimen/toolbar_date_menu_padding_left"
+        android:layout_below="@+id/month"
+        android:text="@string/toolbar_date_menu_item_past_year"/>
+
+    <TextView
+        android:id="@+id/all_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/toolbar_date_menu_padding_top"
+        android:paddingLeft="@dimen/toolbar_date_menu_padding_left"
+        android:layout_below="@+id/year"
+        android:text="@string/toolbar_date_menu_item_all_time"/>
+
+</RelativeLayout>

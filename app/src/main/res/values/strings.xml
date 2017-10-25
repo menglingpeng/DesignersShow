@@ -11,6 +11,11 @@
     <string name="title_activity_base">BaseActivity</string>
     <string name="home_toolbar_title">Home</string>
     <string name="explore_toolbar_title">Explore</string>
+    <string name="toolbar_date_menu_item_now">目前</string>
+    <string name="toolbar_date_menu_item_past_week">一周之内</string>
+    <string name="toolbar_date_menu_item_past_month">一月之内</string>
+    <string name="toolbar_date_menu_item_past_year">一年之内</string>
+    <string name="toolbar_date_menu_item_all_time">时间不限</string>
     <string name="toobar_overflow_small_with_infos">有说明小图</string>
     <string name="toobar_overflow_large_with_infos">有说明大图</string>
     <string name="toobar_overflow_small_without_infos">无说明小图</string>
@@ -23,10 +28,7 @@
     <string name="home_recent">最新</string>
     <string name="home_following">关注</string>
     <string name="double_back_quit">再次点击离开应用</string>
-<<<<<<< HEAD
     <string name="shots_gif_tx">GIF</string>
     <string name="on_load_shots_listener_failed_msg">load dribbble shots failed</string>
-=======
->>>>>>> a874dd0... feat:add double back press quit application function
 
 </resources>

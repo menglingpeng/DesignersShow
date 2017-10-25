@@ -21,5 +21,7 @@
     <dimen name="recycler_view_item_comments_layout_layout_height">30dp</dimen>
     <dimen name="recycler_view_item_comments_layout_layout_imageview_layout_marginLeft">20dp</dimen>
     <dimen name="recycler_view_item_comments_layout_layout_textview_layout_marginLeft">10dp</dimen>
+    <dimen name="toolbar_date_menu_padding_top">20dp</dimen>
+    <dimen name="toolbar_date_menu_padding_left">10dp</dimen>
 
 </resources>
