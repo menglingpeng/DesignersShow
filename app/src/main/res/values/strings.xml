@@ -20,6 +20,10 @@
     <string name="toobar_overflow_large_with_infos">有说明大图</string>
     <string name="toobar_overflow_small_without_infos">无说明小图</string>
     <string name="toobar_overflow_large_without_infos">无说明大图</string>
+    <string name="expore_spinner_sort_popular">最热</string>
+    <string name="expore_spinner_sort_comments">评论最多</string>
+    <string name="expore_spinner_sort_recent">最新</string>
+    <string name="expore_spinner_sort_views">浏览最多</string>
     <string name="nav_view_name">登陆</string>
     <string name="nav_view_desc">使用你的Dribbble帐号登陆</string>
     <string name="nav_drawer_open">open drawer</string>

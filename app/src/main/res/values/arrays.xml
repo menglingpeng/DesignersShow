@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort">
+        <item>@string/expore_spinner_sort_popular</item>
+        <item>@string/expore_spinner_sort_comments</item>
+        <item>@string/expore_spinner_sort_recent</item>
+        <item>@string/expore_spinner_sort_views</item>
+    </string-array>
+</resources>

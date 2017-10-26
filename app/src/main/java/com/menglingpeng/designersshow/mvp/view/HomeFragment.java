@@ -8,8 +8,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
+import com.menglingpeng.designersshow.BaseApplication;
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.utils.Constants;
@@ -32,6 +37,7 @@ public class HomeFragment extends BaseFragment {
     private ViewPager pagerView;
     private List<RecyclerFragment> fragments;
     private TabPagerAdapter adapter;
+    private Spinner sortSpinner, listSpinner;
     private boolean isLogin = false;
 
    public static HomeFragment newInstance(String type){
@@ -57,6 +63,7 @@ public class HomeFragment extends BaseFragment {
         if(menuType.equals(MENU_HOME)){
             initTabPager();
         }else {
+            initSpinner();
         }
     }
 
@@ -117,7 +124,30 @@ public class HomeFragment extends BaseFragment {
                 list.scrollToPosition(0);
             }
         }
-        }
+    }
+
+    private void initSpinner(){
+        sortSpinner = (Spinner)rootView.findViewById(R.id.sort_spinner);
+        String[] sort = getResources().getStringArray(R.array.sort);
+        ArrayAdapter<String> sortAdapter = new ArrayAdapter<String>(BaseApplication.getContext(), android.R.layout.simple_spinner_item, sort);
+        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortSpinner.setAdapter(sortAdapter);
+        sortSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
+            }
+        });
+    }
 
     @Override
     protected void initData() {
