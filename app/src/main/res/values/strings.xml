@@ -24,6 +24,14 @@
     <string name="expore_spinner_sort_comments">评论最多</string>
     <string name="expore_spinner_sort_recent">最新</string>
     <string name="expore_spinner_sort_views">浏览最多</string>
+    <string name="explore_spinner_list_shots">作品</string>
+    <string name="explore_spinner_list_animated">GIF动画</string>
+    <string name="explore_spinner_list_attachments">带有附件</string>
+    <string name="explore_spinner_list_debuts">首秀作品</string>
+    <string name="explore_spinner_list_playoffs">赛季精品</string>
+    <string name="explore_spinner_list_rebounds">二次创作</string>
+    <string name="explore_spinner_list_teams">团队作品</string>
+
     <string name="nav_view_name">登陆</string>
     <string name="nav_view_desc">使用你的Dribbble帐号登陆</string>
     <string name="nav_drawer_open">open drawer</string>

@@ -128,10 +128,15 @@ public class HomeFragment extends BaseFragment {
 
     private void initSpinner(){
         sortSpinner = (Spinner)rootView.findViewById(R.id.sort_spinner);
+        listSpinner = (Spinner)rootView.findViewById(R.id.list_spinner);
         String[] sort = getResources().getStringArray(R.array.sort);
+        String[] list = getResources().getStringArray(R.array.list);
         ArrayAdapter<String> sortAdapter = new ArrayAdapter<String>(BaseApplication.getContext(), android.R.layout.simple_spinner_item, sort);
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(BaseApplication.getContext(), android.R.layout.simple_spinner_item, list);
+        listAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSpinner.setAdapter(sortAdapter);
+        listSpinner.setAdapter(listAdapter);
         sortSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -143,6 +148,27 @@ public class HomeFragment extends BaseFragment {
                     case 2:
                         break;
                     case 3:
+                        break;
+                }
+            }
+        });
+        listSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
                         break;
                 }
             }

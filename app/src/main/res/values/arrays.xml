@@ -6,4 +6,14 @@
         <item>@string/expore_spinner_sort_recent</item>
         <item>@string/expore_spinner_sort_views</item>
     </string-array>
+
+    <string-array name="list">
+        <item>@string/explore_spinner_list_shots</item>
+        <item>@string/explore_spinner_list_animated</item>
+        <item>@string/explore_spinner_list_attachments</item>
+        <item>@string/explore_spinner_list_debuts</item>
+        <item>@string/explore_spinner_list_playoffs</item>
+        <item>@string/explore_spinner_list_rebounds</item>
+        <item>@string/explore_spinner_list_teams</item>
+    </string-array>
 </resources>
