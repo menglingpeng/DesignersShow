@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -142,12 +143,16 @@ public class HomeFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_POPULAR));
                         break;
                     case 1:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_COMMENTS));
                         break;
                     case 2:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_RECENT));
                         break;
                     case 3:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_VIEWS));
                         break;
                 }
             }
@@ -173,6 +178,11 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container, fragment);
     }
 
     @Override

@@ -95,6 +95,18 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case TAB_RECENT:
                 sort = Constants.SORT_RECENT;
                 break;
+            case Constants.SORT_POPULAR:
+                sort = Constants.SORT_POPULAR;
+                break;
+            case Constants.SORT_COMMENTS:
+                sort = Constants.SORT_COMMENTS;
+                break;
+            case Constants.SORT_RECENT:
+                sort = Constants.SORT_RECENT;
+                break;
+            case Constants.SORT_VIEWS:
+                sort = Constants.SORT_VIEWS;
+                break;
         }
         //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
         map.put("access_token", access_token);
