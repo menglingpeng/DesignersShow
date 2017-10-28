@@ -20,6 +20,7 @@ public class Constants {
     public static final String SORT_RECENT = "recent";
     public static final String SORT_COMMENTS = "comments";
     public static final String SORT_VIEWS = "views";
+    public static final String LIST_SHOTS = "shots";
     public static final String LIST_ANIMTED = "animated";
     public static final String LIST_ATTACHMENTS = "attachments";
     public static final String LIST_DEBUTS = "debuts";

@@ -96,7 +96,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 sort = Constants.SORT_RECENT;
                 break;
             case Constants.SORT_POPULAR:
-                sort = Constants.SORT_POPULAR;
+                sort = null;
                 break;
             case Constants.SORT_COMMENTS:
                 sort = Constants.SORT_COMMENTS;
@@ -106,6 +106,27 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
             case Constants.SORT_VIEWS:
                 sort = Constants.SORT_VIEWS;
+                break;
+            case Constants.LIST_SHOTS:
+                list = null;
+                break;
+            case Constants.LIST_ANIMTED:
+                list = Constants.LIST_ANIMTED;
+                break;
+            case Constants.LIST_ATTACHMENTS:
+                list = Constants.LIST_ATTACHMENTS;
+                break;
+            case Constants.LIST_DEBUTS:
+                list = Constants.LIST_DEBUTS;
+                break;
+            case Constants.LIST_PLAYOFFS:
+                list = Constants.LIST_PLAYOFFS;
+                break;
+            case Constants.LIST_REBOUNDS:
+                list = Constants.LIST_REBOUNDS;
+                break;
+            case Constants.LIST_TEAM:
+                list = Constants.LIST_TEAM;
                 break;
         }
         //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值

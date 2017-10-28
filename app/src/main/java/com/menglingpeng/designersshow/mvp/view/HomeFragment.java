@@ -162,18 +162,25 @@ public class HomeFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_SHOTS));
                         break;
                     case 1:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_ANIMTED));
                         break;
                     case 2:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_ATTACHMENTS));
                         break;
                     case 3:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_DEBUTS));
                         break;
                     case 4:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_PLAYOFFS));
                         break;
                     case 5:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_REBOUNDS));
                         break;
                     case 6:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_TEAM));
                         break;
                 }
             }
