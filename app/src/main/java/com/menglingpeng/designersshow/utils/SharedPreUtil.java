@@ -8,6 +8,7 @@ import com.menglingpeng.designersshow.BaseApplication;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by mengdroid on 2017/10/19.
@@ -37,9 +38,28 @@ public class SharedPreUtil {
         editor.putString(type, shotsJson);
         return editor.commit();
     }
+
     //获取保存的数据
     public static String getShotsJson(String type){
         return sp.getString(type, null);
+    }
+
+    public static boolean saveParameters(HashMap<String, String> map){
+        for(String key : map.keySet()){
+            editor.putString(key, map.get(key));
+        }
+        return editor.commit();
+    }
+
+    public static HashMap<String, String> getParameters(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("access_token", sp.getString("access_token", null));
+        map.put("list", sp.getString("list", null));
+        map.put("timeframe", sp.getString("timeframe", null));
+        map.put("date", sp.getString("date", null));
+        map.put("sort", sp.getString("sort", null));
+        map.put("page", sp.getString("page", null));
+        return map;
     }
 
 }

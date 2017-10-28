@@ -18,6 +18,7 @@ import com.menglingpeng.designersshow.mvp.other.Data;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
+import com.menglingpeng.designersshow.utils.SharedPreUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,13 +91,16 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case TAB_FOLLOWING:
                 break;
             case TAB_POPULAR:
-                sort = null;
+                map.put("access_token", access_token);
+                map.put("page", String.valueOf(page));
+                SharedPreUtil.saveParameters(map);
                 break;
             case TAB_RECENT:
                 sort = Constants.SORT_RECENT;
                 break;
+            case HomeFragment.MENU_EXPLORE:
+                break;
             case Constants.SORT_POPULAR:
-                sort = null;
                 break;
             case Constants.SORT_COMMENTS:
                 sort = Constants.SORT_COMMENTS;
@@ -108,7 +112,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 sort = Constants.SORT_VIEWS;
                 break;
             case Constants.LIST_SHOTS:
-                list = null;
                 break;
             case Constants.LIST_ANIMTED:
                 list = Constants.LIST_ANIMTED;
@@ -130,6 +133,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
         }
         //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
+        map = SharedPreUtil.getParameters();
         map.put("access_token", access_token);
         if(list != null){
             map.put("list", list);
@@ -144,6 +148,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             map.put("sort", sort);
         }
         map.put("page", String.valueOf(page));
+        SharedPreUtil.saveParameters(map);
         Log.i("type", type);
     }
 

@@ -56,6 +56,7 @@ public class HomeFragment extends BaseFragment {
             layoutId = R.layout.fragment_home;
         }else {
             layoutId = R.layout.fragment_explore;
+            replaceFragment(RecyclerFragment.newInstance(MENU_EXPLORE));
         }
     }
 
