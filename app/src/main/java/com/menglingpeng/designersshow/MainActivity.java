@@ -131,6 +131,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         PopupMenu menu = new PopupMenu(getApplicationContext(),view);
         menu.getMenuInflater().inflate(R.menu.toolbar_date_menu_item, menu.getMenu());
         menu.show();
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.now:
+                        break;
+                    case R.id.week:
+                        break;
+                    case R.id.month:
+                        break;
+                    case R.id.year:
+                        break;
+                    case R.id.allTime:
+                        break;
+                }
+                return onMenuItemClick(item);
+            }
+        });
     }
 
     /**
