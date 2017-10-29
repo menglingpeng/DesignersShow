@@ -31,7 +31,6 @@
     <string name="explore_spinner_list_playoffs">赛季精品</string>
     <string name="explore_spinner_list_rebounds">二次创作</string>
     <string name="explore_spinner_list_teams">团队作品</string>
-
     <string name="nav_view_name">登陆</string>
     <string name="nav_view_desc">使用你的Dribbble帐号登陆</string>
     <string name="nav_drawer_open">open drawer</string>
@@ -42,5 +41,10 @@
     <string name="double_back_quit">再次点击离开应用</string>
     <string name="shots_gif_tx">GIF</string>
     <string name="on_load_shots_listener_failed_msg">load dribbble shots failed</string>
+    <string name="shots_create_at_time_minutes">分钟前</string>
+    <string name="shots_create_at_time_hours">小时前</string>
+    <string name="shots_create_at_time_one_day">昨天</string>
+    <string name="shots_create_at_time_two_days">前天</string>
+    <string name="shots_create_at_time_days">yyyy年MM月dd日</string>
 
 </resources>

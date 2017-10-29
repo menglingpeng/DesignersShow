@@ -16,6 +16,7 @@ import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.net.Json;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.TimeUtil;
 
 import java.util.ArrayList;
 
@@ -71,7 +72,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatar);
             viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
-            viewHolder.shotsCreatedTimeTx.setText(shotses.get(position).getUpdated_at());
+            viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shotses.get(position).getUpdated_at()));
             ImageLoader.load(fragment, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
             if(shotses.get(position).isAnimated()){
                 viewHolder.shotsGifTx.setVisibility(TextView.VISIBLE);
