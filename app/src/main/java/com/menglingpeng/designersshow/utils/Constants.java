@@ -27,8 +27,10 @@ public class Constants {
     public static final String LIST_PLAYOFFS = "playoffs";
     public static final String LIST_REBOUNDS = "rebounds";
     public static final String LIST_TEAM = "team";
+    public static final String TIMEFRAME_NOW = "now";
     public static final String TIMEFRAME_WEEK = "week";
     public static final String TIMEFRAME_MONTH = "month";
     public static final String TIMEFRAME_YEAR = "year";
     public static final String TIMEFRAME_EVER = "ever";
+
 }

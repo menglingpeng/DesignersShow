@@ -17,6 +17,7 @@ import android.view.View;
 
 import com.menglingpeng.designersshow.mvp.view.HomeFragment;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
+import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.SnackUI;
 
 
@@ -136,14 +137,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.now:
+                        replace(Constants.TIMEFRAME_NOW);
                         break;
                     case R.id.week:
+                        replace(Constants.TIMEFRAME_WEEK);
                         break;
                     case R.id.month:
+                        replace(Constants.TIMEFRAME_MONTH);
                         break;
                     case R.id.year:
+                        replace(Constants.TIMEFRAME_YEAR);
                         break;
                     case R.id.allTime:
+                        replace(Constants.TIMEFRAME_EVER);
                         break;
                 }
                 return onMenuItemClick(item);

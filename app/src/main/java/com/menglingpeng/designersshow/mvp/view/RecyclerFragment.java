@@ -131,6 +131,21 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.LIST_TEAM:
                 list = Constants.LIST_TEAM;
                 break;
+            case Constants.TIMEFRAME_NOW:
+                timeframe = null;
+                break;
+            case Constants.TIMEFRAME_WEEK:
+                timeframe = Constants.TIMEFRAME_WEEK;
+                break;
+            case Constants.TIMEFRAME_MONTH:
+                timeframe = Constants.TIMEFRAME_MONTH;
+                break;
+            case Constants.TIMEFRAME_YEAR:
+                timeframe = Constants.TIMEFRAME_YEAR;
+                break;
+            case Constants.TIMEFRAME_EVER:
+                timeframe = Constants.TIMEFRAME_EVER;
+                break;
         }
         //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
         map = SharedPreUtil.getParameters();
