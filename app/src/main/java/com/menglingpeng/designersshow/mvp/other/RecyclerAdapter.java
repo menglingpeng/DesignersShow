@@ -75,7 +75,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shotses.get(position).getUpdated_at()));
             ImageLoader.load(fragment, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
             if(shotses.get(position).isAnimated()){
-                viewHolder.shotsGifTx.setVisibility(TextView.VISIBLE);
+                viewHolder.shotsGifIm.setVisibility(TextView.VISIBLE);
             }
             viewHolder.itemLikesCountTx.setText(String.valueOf(shotses.get(position).getLikes_count()));
             viewHolder.itemCommentsCountTx.setText(String.valueOf(shotses.get(position).getComments_count()));
@@ -103,20 +103,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public final CircleImageView avatar;
+        public final ImageView avatar;
         public final TextView shotsTitleTx, shots_userTx, shotsCreatedTimeTx;
-        public final ImageView shotsIm;
-        public final TextView shotsGifTx;
+        public final ImageView shotsIm, shotsGifIm;
         public final TextView itemLikesCountTx, itemCommentsCountTx, itemViewsCountTx;
 
         public ViewHolder(View view) {
             super(view);
-            avatar = (CircleImageView) view.findViewById(R.id.avatar);
+            avatar = (ImageView) view.findViewById(R.id.avatar);
             shotsTitleTx = (TextView) view.findViewById(R.id.shots_title);
             shots_userTx = (TextView) view.findViewById(R.id.shots_user);
             shotsCreatedTimeTx = (TextView) view.findViewById(R.id.shots_create_time);
             shotsIm = (ImageView) view.findViewById(R.id.shots_im);
-            shotsGifTx = (TextView)view.findViewById(R.id.shots_gif_tx);
+            shotsGifIm = (ImageView) view.findViewById(R.id.shots_gif_im);
             itemLikesCountTx = (TextView) view.findViewById(R.id.item_likes_count_tx);
             itemCommentsCountTx = (TextView) view.findViewById(R.id.item_comments_count_tx);
             itemViewsCountTx = (TextView) view.findViewById(R.id.item_view_count_tx);

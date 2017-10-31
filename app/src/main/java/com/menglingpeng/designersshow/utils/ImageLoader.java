@@ -33,7 +33,7 @@ public class ImageLoader {
     }
 
     public static void loadCricleImage(Fragment fragment, String url, ImageView imageView){
-        RequestOptions requestOptions = new RequestOptions().transform(new GlideCircleTransform());
+        RequestOptions requestOptions = new RequestOptions().transform(new GlideCircleTransform()).placeholder(R.drawable.ic_avatar);
         Glide.with(fragment)
                 .load(url)
                 .apply(requestOptions)
