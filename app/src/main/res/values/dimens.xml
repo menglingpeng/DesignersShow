@@ -23,5 +23,7 @@
     <dimen name="recycler_view_item_comments_layout_layout_textview_layout_marginLeft">10dp</dimen>
     <dimen name="toolbar_date_menu_padding_top">20dp</dimen>
     <dimen name="toolbar_date_menu_padding_left">10dp</dimen>
+    <dimen name="detail_appbar_layout_height">260dp</dimen>
+    <dimen name="detail_im_layout_collapse_parallax_multiplier">0.2</dimen>
 
 </resources>

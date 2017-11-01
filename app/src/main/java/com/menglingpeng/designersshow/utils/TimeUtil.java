@@ -1,5 +1,7 @@
 package com.menglingpeng.designersshow.utils;
 
+import android.util.Log;
+
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.BaseApplication;
 import com.menglingpeng.designersshow.R;
@@ -79,6 +81,7 @@ public class TimeUtil {
                 differ = format.format(cetateDate);
                 break;
         }
+        Log.i("Diff", differ);
         return differ;
     }
 
