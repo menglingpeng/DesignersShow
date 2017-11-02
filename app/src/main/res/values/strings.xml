@@ -46,5 +46,8 @@
     <string name="shots_create_at_time_one_day">昨天</string>
     <string name="shots_create_at_time_two_days">前天</string>
     <string name="shots_create_at_time_days">yyyy年MM月dd日</string>
+    <string name="detail_toolbar_overflow_menu_share">共享</string>
+    <string name="detail_toolbar_overflow_menu_open_in_browser">在浏览器打开</string>
+    <string name="detail_toolbar_overflow_menu_download">下载</string>
 
 </resources>

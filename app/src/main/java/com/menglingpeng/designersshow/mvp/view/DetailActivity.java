@@ -1,6 +1,8 @@
 package com.menglingpeng.designersshow.mvp.view;
 
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.menglingpeng.designersshow.BaseActivity;
@@ -29,5 +31,24 @@ public class DetailActivity extends BaseActivity {
         //设置透明度
         toolbar.getBackground().setAlpha(1);
         toolbar.setNavigationIcon(R.drawable.ic_back);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_toolbar_overflow_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.share:
+                break;
+            case R.id.open_in_browser:
+                break;
+            case R.id.download:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
