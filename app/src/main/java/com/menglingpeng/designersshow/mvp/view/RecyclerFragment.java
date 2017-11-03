@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow.mvp.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -176,8 +177,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     }
 
     @Override
-    public void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder) {
+    public void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, Shots shots) {
         if(viewHolder instanceof RecyclerAdapter.ViewHolder){
+            Intent intent = new Intent(getActivity(), DetailActivity.class);
+            intent.putExtra("shots", shots);
+            startActivity(intent);
         }
     }
 

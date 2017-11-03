@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
+import com.menglingpeng.designersshow.mvp.model.Shots;
 
 /**
  * Created by mengdroid on 2017/11/1.
@@ -16,6 +17,7 @@ public class DetailActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private ImageView imageView;
+    private Shots shots;
 
     @Override
     protected void initLayoutId() {
@@ -25,6 +27,7 @@ public class DetailActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
+        shots = (Shots) getIntent().getSerializableExtra("shots");
         imageView = (ImageView)findViewById(R.id.detail_im);
         toolbar = (Toolbar)findViewById(R.id.detail_tb);
         setSupportActionBar(toolbar);

@@ -2,13 +2,14 @@ package com.menglingpeng.designersshow.mvp.model;
 
 import com.menglingpeng.designersshow.mvp.other.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by mengdroid on 2017/10/15.
  */
 
-public class Shots implements Data {
+public class Shots implements Data, Serializable {
 
     private int id;
 

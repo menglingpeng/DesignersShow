@@ -2,6 +2,7 @@ package com.menglingpeng.designersshow.mvp.interf;
 
 import android.support.v7.widget.*;
 
+import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 
 /**
@@ -9,5 +10,5 @@ import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
  */
 
 public interface OnRecyclerListItemListener {
-    void onRecyclerFragmentListListener(android.support.v7.widget.RecyclerView.ViewHolder viewHolder);
+    void onRecyclerFragmentListListener(android.support.v7.widget.RecyclerView.ViewHolder viewHolder, Shots shots);
 }
