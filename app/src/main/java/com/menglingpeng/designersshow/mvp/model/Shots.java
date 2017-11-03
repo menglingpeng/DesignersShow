@@ -19,6 +19,20 @@ public class Shots implements Data, Serializable {
 
     private String updated_at;
 
+    private String html_url;
+
+    private String attachments_url;
+
+    private String buckets_url;
+
+    private String comments_url;
+
+    private String likes_url;
+
+    private String rebounds_url;
+
+    private String projects_url;
+
     private Images images;
 
     private int attachments_count;
@@ -47,6 +61,62 @@ public class Shots implements Data, Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getHtml_url() {
+        return html_url;
+    }
+
+    public void setHtml_url(String html_url) {
+        this.html_url = html_url;
+    }
+
+    public String getAttachments_url() {
+        return attachments_url;
+    }
+
+    public void setAttachments_url(String attachments_url) {
+        this.attachments_url = attachments_url;
+    }
+
+    public String getComments_url() {
+        return comments_url;
+    }
+
+    public void setComments_url(String comments_url) {
+        this.comments_url = comments_url;
+    }
+
+    public String getLikes_url() {
+        return likes_url;
+    }
+
+    public void setLikes_url(String likes_url) {
+        this.likes_url = likes_url;
+    }
+
+    public String getBuckets_url() {
+        return buckets_url;
+    }
+
+    public void setBuckets_url(String buckets_url) {
+        this.buckets_url = buckets_url;
+    }
+
+    public String getRebounds_url() {
+        return rebounds_url;
+    }
+
+    public void setRebounds_url(String rebounds_url) {
+        this.rebounds_url = rebounds_url;
+    }
+
+    public String getProjects_url() {
+        return projects_url;
+    }
+
+    public void setProjects_url(String projects_url) {
+        this.projects_url = projects_url;
     }
 
     public User getUser() {

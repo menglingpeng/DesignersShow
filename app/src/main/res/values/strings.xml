@@ -49,5 +49,5 @@
     <string name="detail_toolbar_overflow_menu_share">共享</string>
     <string name="detail_toolbar_overflow_menu_open_in_browser">在浏览器打开</string>
     <string name="detail_toolbar_overflow_menu_download">下载</string>
-
+    <string name="detail_toolbar_overflow_menu_share_create_chooser_title">分享</string>
 </resources>
