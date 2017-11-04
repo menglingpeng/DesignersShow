@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ public class DetailActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
+        //获取序列化对象
         shots = (Shots) getIntent().getSerializableExtra("shots");
         imageView = (ImageView)findViewById(R.id.detail_im);
         toolbar = (Toolbar)findViewById(R.id.detail_tb);
@@ -57,6 +59,7 @@ public class DetailActivity extends BaseActivity {
                 shareShots();
                 break;
             case R.id.open_in_browser:
+                openInBrowser();
                 break;
             case R.id.download:
                 break;
@@ -69,5 +72,14 @@ public class DetailActivity extends BaseActivity {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, shots.getTitle()+ shots.getHtml_url());
         startActivity(Intent.createChooser(intent, getResources().getString(R.string.detail_toolbar_overflow_menu_share_create_chooser_title)));
+    }
+
+    private void openInBrowser(){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse(shots.getHtml_url());
+        intent.setData(uri);
+        if(intent.resolveActivity(getPackageManager()) != null){
+            startActivity(Intent.createChooser(intent, getResources().getString(R.string.detail_toolbar_overflow_menu_open_in_browser_create_chooser_title)));
+        }
     }
 }
