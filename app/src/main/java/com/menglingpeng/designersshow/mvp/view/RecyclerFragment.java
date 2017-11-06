@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.BaseFragment;
+import com.menglingpeng.designersshow.MainActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerPresenterIf;
@@ -54,7 +55,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     public static final String TAB_FOLLOWING = "Following";
     public static final String MENU_MY_LIKES = "My likes";
     public static final String MENU_MY_BUCKETS = "My buckets";
-    public static final String MENU_MY_SHOTS = "My shots";;
+    public static final String MENU_MY_SHOTS = "My shots";
 
     public static RecyclerFragment newInstance(String type){
         Bundle bundle = new Bundle();
@@ -80,7 +81,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         swipeRefresh.setOnRefreshListener(this);
         presenter = new RecyclerPresenter(this, type, map, (BaseActivity)getActivity());
         presenter.loadShots();
-        adapter = new RecyclerAdapter(HomeFragment.TabPagerAdapter.getCurrentFragment(), type,this);
+        adapter = new RecyclerAdapter(MainActivity.TabPagerAdapter.getCurrentFragment(), type,this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
@@ -98,8 +99,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
             case TAB_RECENT:
                 sort = Constants.SORT_RECENT;
-                break;
-            case HomeFragment.MENU_EXPLORE:
                 break;
             case Constants.SORT_POPULAR:
                 break;

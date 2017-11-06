@@ -26,9 +26,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(layoutId);
     }
 
-    public void replaceFragment(Fragment fragment, String tag){
+    /*public void replaceFragment(Fragment fragment, String tag){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment, tag);
         transaction.commit();
-    }
+    }*/
 }

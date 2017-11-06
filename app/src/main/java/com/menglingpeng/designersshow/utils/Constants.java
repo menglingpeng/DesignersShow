@@ -16,6 +16,11 @@ public class Constants {
     public static final String BASE_URL = "https://api.dribbble.com/v1/";
     public static final String SHOTS = "https://api.dribbble.com/v1/shots";
     public static final String USER = "";
+    public static final String MENU_HOME = "Home";
+    public static final String MENU_EXPLORE = "Explore";
+    public static final String MENU_MY_LIKES = "My likes";
+    public static final String MENU_MY_BUCKETS = "My buckets";
+    public static final String MENU_MY_SHOTS = "My shots";
     public static final String SORT_POPULAR = "popular";
     public static final String SORT_RECENT = "recent";
     public static final String SORT_COMMENTS = "comments";

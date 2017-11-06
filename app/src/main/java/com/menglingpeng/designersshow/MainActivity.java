@@ -5,20 +5,35 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 
-import com.menglingpeng.designersshow.mvp.view.HomeFragment;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.SnackUI;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -28,8 +43,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private String toolbarTitle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private LinearLayout exploreLl;
+    private List<RecyclerFragment> fragments;
+    private TabPagerAdapter adapter;
+    private Spinner sortSpinner, listSpinner;
     private Menu toolbarMenu;
     private boolean backPressed;
+    private boolean isLogin = false;
+    private static final int SMOOTHSCROLL_TOP_POSITION = 50;
 
     @Override
     protected void initLayoutId() {
@@ -41,18 +64,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.initViews();
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         navigationView = (NavigationView)findViewById(R.id.nav_view);
-        replace(HomeFragment.MENU_HOME);
+        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
+        viewPager = (ViewPager)findViewById(R.id.view_pager);
+        exploreLl = (LinearLayout)findViewById(R.id.explore_ll);
+        currentType = Constants.MENU_HOME;
         initToolbar();
         initNavigationView();
+        initTabPager();
 
     }
 
     private void initToolbar(){
         switch (currentType){
-            case HomeFragment.MENU_HOME:
+            case Constants.MENU_HOME:
                 toolbarTitle = getString(R.string.app_name);
                 break;
-            case HomeFragment.MENU_EXPLORE:
+            case Constants.MENU_EXPLORE:
                 toolbarTitle = getString(R.string.nav_explore_menu);
                 break;
             case RecyclerFragment.MENU_MY_LIKES:
@@ -99,7 +126,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(HomeFragment.MENU_EXPLORE.equals(currentType)){
+        if(Constants.MENU_EXPLORE.equals(currentType)){
             menu.findItem(R.id.overflow_date).setVisible(true);
         }else {
             menu.findItem(R.id.overflow_date).setVisible(false);
@@ -137,38 +164,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.now:
-                        replace(Constants.TIMEFRAME_NOW);
+                        replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_NOW));
                         break;
                     case R.id.week:
-                        replace(Constants.TIMEFRAME_WEEK);
+                        replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_WEEK));
                         break;
                     case R.id.month:
-                        replace(Constants.TIMEFRAME_MONTH);
+                        replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_WEEK));
                         break;
                     case R.id.year:
-                        replace(Constants.TIMEFRAME_YEAR);
+                        replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_YEAR));
                         break;
                     case R.id.allTime:
-                        replace(Constants.TIMEFRAME_EVER);
+                        replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_EVER));
                         break;
                 }
                 return onMenuItemClick(item);
             }
         });
-    }
-
-    /**
-     * 切换Fragment，同时传递Type达到复用的目的。
-     */
-    private void replace(String type){
-        if(!type.equals(currentType)){
-            currentType = type;
-            if(type != HomeFragment.MENU_HOME && type != HomeFragment.MENU_EXPLORE){
-                replaceFragment(RecyclerFragment.newInstance(type), type);
-            }else {
-                replaceFragment(HomeFragment.newInstance(type), type);
-            }
-        }
     }
 
     private void initNavigationView(){
@@ -192,35 +205,237 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (item.getItemId()){
             case R.id.nav_home:
-                replace(HomeFragment.MENU_HOME);
-                initToolbar();
-                invalidateOptionsMenu();
+                currentType = Constants.MENU_HOME;
+                initSelectedNavigationItemView(currentType);
                 break;
             case R.id.nav_explore:
-                replace(HomeFragment.MENU_EXPLORE);
-                initToolbar();
-                invalidateOptionsMenu();
+                currentType = Constants.MENU_EXPLORE;
+                initSelectedNavigationItemView(currentType);
                 break;
             case R.id.nav_likes:
-                replace(RecyclerFragment.MENU_MY_LIKES);
-                initToolbar();
-                invalidateOptionsMenu();
+                currentType = Constants.MENU_MY_LIKES;
+                initSelectedNavigationItemView(currentType);
                 break;
             case R.id.nav_buckets:
-                replace(RecyclerFragment.MENU_MY_BUCKETS);
-                initToolbar();
-                invalidateOptionsMenu();
+                currentType = Constants.MENU_MY_BUCKETS;
+                initSelectedNavigationItemView(currentType);
                 break;
             case R.id.nav_shots:
-                replace(RecyclerFragment.MENU_MY_SHOTS);
-                initToolbar();
-                invalidateOptionsMenu();
+                currentType = Constants.MENU_MY_SHOTS;
+                initSelectedNavigationItemView(currentType);
                 break;
             case R.id.nav_settings:
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void initSelectedNavigationItemView(String menuType){
+        initToolbar();
+        invalidateOptionsMenu();
+        switch (menuType){
+            case Constants.MENU_HOME:
+                exploreLl.setVisibility(LinearLayout.GONE);
+                initTabPager();
+                break;
+            case Constants.MENU_EXPLORE:
+                tabLayout.setVisibility(TabLayout.GONE);
+                viewPager.setVisibility(ViewPager.GONE);
+                initSpinner();
+                break;
+            default:
+                tabLayout.setVisibility(TabLayout.GONE);
+                viewPager.setVisibility(ViewPager.GONE);
+                exploreLl.setVisibility(LinearLayout.GONE);
+                replaceFragment(RecyclerFragment.newInstance(menuType));
+                break;
+        }
+
+    }
+
+    private void initTabPager(){
+        tabLayout.setVisibility(TabLayout.VISIBLE);
+        viewPager.setVisibility(ViewPager.VISIBLE);
+        fragments = new ArrayList<>();
+        adapter = new TabPagerAdapter(getSupportFragmentManager());
+        initFragments();
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());
+                /*scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());*/
+            }
+        });
+    }
+
+    private void initFragments() {
+        List<String> titles = new ArrayList<>();
+        if (isLogin) {
+            titles.add(getString(R.string.home_following));
+            titles.add(getString(R.string.home_popular));
+            titles.add(getString(R.string.home_recent));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_FOLLOWING));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_POPULAR));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_RECENT));
+
+        } else {
+            titles.add(getString(R.string.home_popular));
+            titles.add(getString(R.string.home_recent));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_POPULAR));
+            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_RECENT));
+        }
+        adapter.setFragments(fragments, titles);
+    }
+
+    private void scrollToTop(RecyclerView list) {
+        int lastPosition;
+        if (null != list) {
+            LinearLayoutManager manager = (LinearLayoutManager) list.getLayoutManager();
+            lastPosition = manager.findLastVisibleItemPosition();
+            if (lastPosition < SMOOTHSCROLL_TOP_POSITION) {
+                list.smoothScrollToPosition(0);
+            } else {
+                list.scrollToPosition(0);
+            }
+        }
+    }
+
+    private void initSpinner(){
+        exploreLl.setVisibility(LinearLayout.VISIBLE);
+        sortSpinner = (Spinner)findViewById(R.id.sort_spinner);
+        listSpinner = (Spinner)findViewById(R.id.list_spinner);
+        String[] sort = getResources().getStringArray(R.array.sort);
+        String[] list = getResources().getStringArray(R.array.list);
+        ArrayAdapter<String> sortAdapter = new ArrayAdapter<String>(BaseApplication.getContext(), android.R.layout.simple_spinner_item, sort);
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(BaseApplication.getContext(), android.R.layout.simple_spinner_item, list);
+        listAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sortSpinner.setAdapter(sortAdapter);
+        listSpinner.setAdapter(listAdapter);
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_POPULAR));
+                        break;
+                    case 1:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_COMMENTS));
+                        break;
+                    case 2:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_RECENT));
+                        break;
+                    case 3:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_VIEWS));
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        listSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_SHOTS));
+                        break;
+                    case 1:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_ANIMTED));
+                        break;
+                    case 2:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_ATTACHMENTS));
+                        break;
+                    case 3:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_DEBUTS));
+                        break;
+                    case 4:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_PLAYOFFS));
+                        break;
+                    case 5:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_REBOUNDS));
+                        break;
+                    case 6:
+                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_TEAM));
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    public static class TabPagerAdapter extends FragmentPagerAdapter {
+
+        private List<RecyclerFragment> fragments;
+        private List<String> titles;
+        private static RecyclerFragment fragment;
+
+        public TabPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        private void setFragments(List<RecyclerFragment> fragments, List<String> titles){
+            this.fragments = fragments;
+            this.titles = titles;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles.get(position);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Override
+        public float getPageWidth(int position) {
+            return super.getPageWidth(position);
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            fragment = (RecyclerFragment)object;
+            super.setPrimaryItem(container, position, object);
+        }
+
+        public static RecyclerFragment getCurrentFragment(){
+            return  fragment;
+        }
+    }
+
+    /**
+     * 切换Fragment，同时传递Type达到复用的目的。
+     */
+    private void replaceFragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container, fragment);
     }
 
     @Override
