@@ -2,6 +2,7 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.utils.ImageLoader;
 
 /**
  * Created by mengdroid on 2017/11/1.
@@ -20,7 +22,9 @@ public class DetailActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private ImageView imageView;
+    private CoordinatorLayout coordinatorLayout;
     private Shots shots;
+    private String htmlUrl, imageUrl, imageName;
 
     @Override
     protected void initLayoutId() {
@@ -32,6 +36,10 @@ public class DetailActivity extends BaseActivity {
         super.initViews();
         //获取序列化对象
         shots = (Shots) getIntent().getSerializableExtra("shots");
+        htmlUrl = shots.getHtml_url();
+        imageName = shots.getTitle();
+        imageUrl = shots.getImages().getNormal();
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator_layout);
         imageView = (ImageView)findViewById(R.id.detail_im);
         toolbar = (Toolbar)findViewById(R.id.detail_tb);
         setSupportActionBar(toolbar);
@@ -62,6 +70,7 @@ public class DetailActivity extends BaseActivity {
                 openInBrowser();
                 break;
             case R.id.download:
+                download();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -70,16 +79,21 @@ public class DetailActivity extends BaseActivity {
     private void shareShots(){
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, shots.getTitle()+ shots.getHtml_url());
+        String text = new StringBuilder().append(imageName).append(htmlUrl).toString();
+        intent.putExtra(Intent.EXTRA_TEXT, text);
         startActivity(Intent.createChooser(intent, getResources().getString(R.string.detail_toolbar_overflow_menu_share_create_chooser_title)));
     }
 
     private void openInBrowser(){
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = Uri.parse(shots.getHtml_url());
+        Uri uri = Uri.parse(htmlUrl);
         intent.setData(uri);
         if(intent.resolveActivity(getPackageManager()) != null){
             startActivity(Intent.createChooser(intent, getResources().getString(R.string.detail_toolbar_overflow_menu_open_in_browser_create_chooser_title)));
         }
+    }
+
+    private void download(){
+        ImageLoader.downloadImage(getApplicationContext(), coordinatorLayout, imageUrl, imageName);
     }
 }

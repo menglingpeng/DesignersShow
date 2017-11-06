@@ -14,11 +14,11 @@ import com.menglingpeng.designersshow.MainActivity;
 
 public class SnackUI {
 
-    public static void showSnackShort(View rootView, int textId){
-        Snackbar.make(rootView, textId, Snackbar.LENGTH_SHORT).show();
+    public static void showSnackShort(View rootView, CharSequence text){
+        Snackbar.make(rootView, text, Snackbar.LENGTH_SHORT).show();
     }
 
-    public static void showSnackLong(View rootView, int textId){
-        Snackbar.make(rootView, textId, Snackbar.LENGTH_LONG).show();
+    public static void showSnackLong(View rootView, CharSequence text){
+        Snackbar.make(rootView, text, Snackbar.LENGTH_LONG).show();
     }
 }
