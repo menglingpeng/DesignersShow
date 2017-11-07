@@ -21,14 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initLayoutId();
 
-
     protected void initViews() {
         setContentView(layoutId);
     }
-
-    /*public void replaceFragment(Fragment fragment, String tag){
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment, tag);
-        transaction.commit();
-    }*/
 }

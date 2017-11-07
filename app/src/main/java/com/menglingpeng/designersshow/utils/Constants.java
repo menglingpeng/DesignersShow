@@ -21,6 +21,7 @@ public class Constants {
     public static final String MENU_MY_LIKES = "My likes";
     public static final String MENU_MY_BUCKETS = "My buckets";
     public static final String MENU_MY_SHOTS = "My shots";
+    public static final String MENU_SETTING = "Setting";
     public static final String SORT_POPULAR = "popular";
     public static final String SORT_RECENT = "recent";
     public static final String SORT_COMMENTS = "comments";

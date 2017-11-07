@@ -15,10 +15,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,7 +47,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private List<RecyclerFragment> fragments;
     private TabPagerAdapter adapter;
     private Spinner sortSpinner, listSpinner;
-    private Menu toolbarMenu;
     private boolean backPressed;
     private boolean isLogin = false;
     private static final int SMOOTHSCROLL_TOP_POSITION = 50;
@@ -71,7 +68,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         initToolbar();
         initNavigationView();
         initTabPager();
-
     }
 
     private void initToolbar(){
@@ -117,7 +113,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.explore_overflow_menu, menu);
-        toolbarMenu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -130,7 +125,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             menu.findItem(R.id.overflow_date).setVisible(true);
         }else {
             menu.findItem(R.id.overflow_date).setVisible(false);
-
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -138,8 +132,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.overflow_date:
-                showToolbarDateMenu(toolbarMenu.findItem(R.id.overflow_date).getActionView());
+            case R.id.now:
+                replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_NOW));
+                break;
+            case R.id.week:
+                replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_WEEK));
+                break;
+            case R.id.month:
+                replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_WEEK));
+                break;
+            case R.id.year:
+                replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_YEAR));
+                break;
+            case R.id.allTime:
+                replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_EVER));
                 break;
             case R.id.overflow_small:
                 break;
@@ -150,38 +156,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.overflow_large_without_infos:
                 break;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    private void showToolbarDateMenu(View view){
-        //View contentView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.toolbar_date_menu,null);
-        PopupMenu menu = new PopupMenu(getApplicationContext(),view);
-        menu.getMenuInflater().inflate(R.menu.toolbar_date_menu_item, menu.getMenu());
-        menu.show();
-        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.now:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_NOW));
-                        break;
-                    case R.id.week:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_WEEK));
-                        break;
-                    case R.id.month:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_WEEK));
-                        break;
-                    case R.id.year:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_YEAR));
-                        break;
-                    case R.id.allTime:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_EVER));
-                        break;
-                }
-                return onMenuItemClick(item);
-            }
-        });
     }
 
     private void initNavigationView(){
@@ -202,31 +177,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         switch (item.getItemId()){
             case R.id.nav_home:
                 currentType = Constants.MENU_HOME;
-                initSelectedNavigationItemView(currentType);
                 break;
             case R.id.nav_explore:
                 currentType = Constants.MENU_EXPLORE;
-                initSelectedNavigationItemView(currentType);
                 break;
             case R.id.nav_likes:
                 currentType = Constants.MENU_MY_LIKES;
-                initSelectedNavigationItemView(currentType);
                 break;
             case R.id.nav_buckets:
                 currentType = Constants.MENU_MY_BUCKETS;
-                initSelectedNavigationItemView(currentType);
                 break;
             case R.id.nav_shots:
                 currentType = Constants.MENU_MY_SHOTS;
-                initSelectedNavigationItemView(currentType);
                 break;
             case R.id.nav_settings:
+                currentType = Constants.MENU_SETTING;
                 break;
         }
+        initSelectedNavigationItemView(currentType);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -244,6 +215,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 viewPager.setVisibility(ViewPager.GONE);
                 initSpinner();
                 break;
+            case Constants.MENU_SETTING:
+                break;
             default:
                 tabLayout.setVisibility(TabLayout.GONE);
                 viewPager.setVisibility(ViewPager.GONE);
@@ -251,7 +224,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 replaceFragment(RecyclerFragment.newInstance(menuType));
                 break;
         }
-
     }
 
     private void initTabPager(){
@@ -276,7 +248,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());
-                /*scrollToTop(fragments.get(tab.getPosition()).getRecyclerView());*/
             }
         });
     }

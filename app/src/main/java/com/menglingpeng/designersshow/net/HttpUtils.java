@@ -19,7 +19,9 @@ import okhttp3.Response;
  * Created by mengdroid on 2017/10/16.
  */
 
-public class HttpUtils {
+public class
+
+HttpUtils {
 
     public static void get(HashMap<String, String> map, Callback callback){
         OkHttpClient client = new OkHttpClient();
