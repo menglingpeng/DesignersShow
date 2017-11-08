@@ -22,7 +22,8 @@ public abstract class BaseFragment extends Fragment {
         if (rootView == null) {
             initLayoutId();
             rootView = inflater.inflate(layoutId, container, false);
-            //initView();
+            initData();
+            initView();
         }
         return rootView;
     }
@@ -33,7 +34,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
     }
     protected abstract void initLayoutId();
 

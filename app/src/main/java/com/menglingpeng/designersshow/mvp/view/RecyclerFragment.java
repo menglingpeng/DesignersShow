@@ -49,6 +49,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String date = null;
     private String sort = null;
     private int page = 1;
+    private int firstPosition;
+    private int lastPosition;
     private String access_token  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
@@ -71,31 +73,32 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     }
 
     @Override
+    protected void initData() {
+        initParameters();
+        presenter = new RecyclerPresenter(this, type, map, (BaseActivity)getActivity());
+        presenter.loadShots();
+    }
+
+    @Override
     protected void initView() {
         swipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh);
         progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
-        initFragments();
-        linearLayoutManager = new LinearLayoutManager(mActivity);
+        linearLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
         swipeRefresh.setColorSchemeResources(R.color.colorAccent);
         swipeRefresh.setOnRefreshListener(this);
-        presenter = new RecyclerPresenter(this, type, map, (BaseActivity)getActivity());
-        presenter.loadShots();
-        adapter = new RecyclerAdapter(MainActivity.TabPagerAdapter.getCurrentFragment(), type,this);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
     }
 
-    private void initFragments(){
+    private void initParameters(){
         map = new HashMap<>();
         type = getArguments().get(Constants.TYPE).toString();
         switch (type){
             case TAB_FOLLOWING:
                 break;
             case TAB_POPULAR:
-                map.put("access_token", access_token);
-                map.put("page", String.valueOf(page));
-                SharedPreUtil.saveParameters(map);
                 break;
             case TAB_RECENT:
                 sort = Constants.SORT_RECENT;
@@ -148,7 +151,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
         }
         //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
-        map = SharedPreUtil.getParameters();
+        if(!type.equals(TAB_POPULAR) && !type.equals(TAB_RECENT)){
+            map = SharedPreUtil.getParameters();
+        }
         map.put("access_token", access_token);
         if(list != null){
             map.put("list", list);
@@ -168,31 +173,13 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     }
 
     @Override
-    protected void initData() {
-    }
-
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
-    }
-
-    @Override
-    public void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, Shots shots) {
-        if(viewHolder instanceof RecyclerAdapter.ViewHolder){
-            Intent intent = new Intent(getActivity(), DetailActivity.class);
-            intent.putExtra("shots", shots);
-            startActivity(intent);
-        }
-    }
-
-    @Override
     public void onRefresh() {
         presenter.loadShots();
-        showProgress(false);
+        showRefreshProgress(false);
     }
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(ProgressBar.VISIBLE);
     }
 
     @Override
@@ -208,12 +195,52 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void loadFailed(String msg) {
+    showRefreshProgress(false);
+    }
+
+    @Override
+    public void loadSuccess(String shotsjson) {
+        adapter = new RecyclerAdapter(MainActivity.TabPagerAdapter.getCurrentFragment(),shotsjson, type,this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                    onLoadingMore();
+                }
+            }
+        });
+    }
+
+    private void onLoadingMore(){
+        firstPosition = linearLayoutManager.findFirstVisibleItemPosition();
+        lastPosition = linearLayoutManager.findLastVisibleItemPosition();
+        if((firstPosition + lastPosition) > adapter.getItemCount()) {
+            page += 1;
+            initParameters();
+            initData();
+        }
 
     }
 
-    public void showProgress(final boolean refreshState){
+    @Override
+    public void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, Shots shots) {
+        if(viewHolder instanceof RecyclerAdapter.ViewHolder){
+            Intent intent = new Intent(getActivity(), DetailActivity.class);
+            intent.putExtra("shots", shots);
+            startActivity(intent);
+        }
+    }
+
+    public void showRefreshProgress(final boolean refreshState){
         if(swipeRefresh != null){
             swipeRefresh.setRefreshing(refreshState);
         }
     }
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
 }

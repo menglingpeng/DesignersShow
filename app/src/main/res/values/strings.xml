@@ -41,6 +41,7 @@
     <string name="double_back_quit">再次点击离开应用</string>
     <string name="shots_gif_tx">GIF</string>
     <string name="on_load_shots_listener_failed_msg">load dribbble shots failed</string>
+    <string name="shots_create_at_time_now">刚刚</string>
     <string name="shots_create_at_time_minutes">分钟前</string>
     <string name="shots_create_at_time_hours">小时前</string>
     <string name="shots_create_at_time_one_day">昨天</string>

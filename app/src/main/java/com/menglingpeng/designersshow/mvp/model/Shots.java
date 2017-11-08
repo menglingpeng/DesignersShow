@@ -193,15 +193,15 @@ public class Shots implements Data, Serializable {
 
     public class Images {
 
-        private Object hidpi;
+        private String hidpi;
         private String normal;
         private String teaser;
 
-        public Object getHidpi() {
+        public  String getHidpi() {
             return hidpi;
         }
 
-        public void setHidpi(Object hidpi) {
+        public void setHidpi(String hidpi) {
             this.hidpi = hidpi;
         }
 

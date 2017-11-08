@@ -3,20 +3,24 @@ package com.menglingpeng.designersshow.mvp.model;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.bumptech.glide.load.engine.Resource;
 import com.menglingpeng.designersshow.BaseActivity;
+import com.menglingpeng.designersshow.MainActivity;
 import com.menglingpeng.designersshow.R;
+import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
 import com.menglingpeng.designersshow.mvp.interf.OnloadShotsListener;
+import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 import com.menglingpeng.designersshow.net.HttpUtils;
+import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 
 /**
@@ -24,52 +28,39 @@ import okhttp3.Response;
  */
 
 public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.RecyclerModel{
+
     private String type;
     private HashMap<String, String> map;
     private BaseActivity baseActivity;
 
-    public RecyclerModel(String type, HashMap<String, String> map, BaseActivity baseActivity){
-        this.type = type;
-        this.map = map;
+    public RecyclerModel(BaseActivity baseActivity){
         this.baseActivity = baseActivity;
+
     }
 
     @Override
-    public void getShots(OnloadShotsListener listener) {
-         new GetDataTask().execute(listener);
+    public void getShots(String type, HashMap<String, String> map, OnloadShotsListener listener) {
+        this.map = map;
+        this.type = type;
+        new GetDataTask().execute(listener);
     }
 
-    class GetDataTask extends AsyncTask<OnloadShotsListener, Void, Boolean> {
+    class GetDataTask extends AsyncTask<OnloadShotsListener, Void, String> {
         OnloadShotsListener listener;
-        boolean isSuccess;
+        String shotsJson;
 
         @Override
-        protected Boolean doInBackground(OnloadShotsListener... params) {
+        protected String doInBackground(OnloadShotsListener... params) {
             listener = params[0];
-            Callback callback = new Callback() {
-
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    isSuccess = false;
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String shotsJson = response.body().string();
-                    Log.i("Response", shotsJson);
-                    saveData(map.get("page"), shotsJson);
-                    isSuccess = true;
-                }
-            };
-            HttpUtils.get(map, callback);
-            return isSuccess;
+            shotsJson = HttpUtils.getJson(map);
+            return shotsJson;
         }
 
         @Override
-        protected void onPostExecute(Boolean isSuccess) {
-            super.onPostExecute(isSuccess);
-            if(isSuccess){
-                listener.onSuccess();
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            if(json != null){
+                listener.onSuccess(shotsJson);
             }else {
                 listener.onFailure(baseActivity.getString(R.string.on_load_shots_listener_failed_msg));
             }

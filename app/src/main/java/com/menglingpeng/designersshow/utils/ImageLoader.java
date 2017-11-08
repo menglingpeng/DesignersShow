@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
@@ -40,10 +41,15 @@ import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
 public class ImageLoader {
 
     public static void load(Fragment fragment, String  url, ImageView imageView){
-        RequestOptions requestOptions = new RequestOptions().centerCrop().placeholder(R.drawable.empty).diskCacheStrategy(DiskCacheStrategy.ALL);
+        RequestOptions requestOptionsHigh = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.HIGH);
+        RequestOptions requestOptionsNormal = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.NORMAL);
         Glide.with(fragment)
                 .load(url)
-                .apply(requestOptions)
+                .apply(requestOptionsHigh)
+                .into(imageView);
+        Glide.with(fragment)
+                .load(url)
+                .apply(requestOptionsNormal)
                 .into(imageView);
     }
 

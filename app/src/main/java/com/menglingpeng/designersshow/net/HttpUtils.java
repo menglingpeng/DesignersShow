@@ -23,19 +23,29 @@ public class
 
 HttpUtils {
 
-    public static void get(HashMap<String, String> map, Callback callback){
+    public static String getJson(HashMap<String, String> map){
+        String shotsJson = null;
         OkHttpClient client = new OkHttpClient();
-        HttpUrl.Builder builder = HttpUrl.parse(Constants.SHOTS).newBuilder();
+        HttpUrl.Builder builder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
         for(String key : map.keySet()){
             builder.addQueryParameter(key, map.get(key));
-            Log.i(key, map.get(key));
+            //Log.i(key, map.get(key));
         }
         HttpUrl httpUrl =  builder.build();
         Request request = new Request.Builder()
                 .url(httpUrl)
                 .get()
                 .build();
-        client.newCall(request).enqueue(callback);
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            shotsJson = response.body().string();
+            Log.i("Response", shotsJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return shotsJson;
     }
+
 
 }

@@ -35,10 +35,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Fragment fragment;
 
 
-    public RecyclerAdapter(Fragment fragment, String type, OnRecyclerListItemListener listener){
+    public RecyclerAdapter(Fragment fragment, String shotsJson, String type, OnRecyclerListItemListener listener){
         this.fragment = fragment;
         mListener = listener;
-        shotses = Json.parseShots(SharedPreUtil.getShotsJson(type));
+        shotses = Json.parseShots(shotsJson);
         Log.i("type", type);
         Log.i("ShotsJson", shotses.get(0).getTitle());
     }
@@ -69,17 +69,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof ViewHolder){
             final ViewHolder viewHolder = (ViewHolder)holder;
-            ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatar);
+            ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
             viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shotses.get(position).getUpdated_at()));
-            ImageLoader.load(fragment, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
+            if(shotses.get(position).getImages().getHidpi() != null){
+                ImageLoader.load(fragment, shotses.get(position).getImages().getHidpi(), viewHolder.shotsIm);
+            }else {
+                ImageLoader.load(fragment, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
+            }
             if(shotses.get(position).isAnimated()){
                 viewHolder.shotsGifIm.setVisibility(TextView.VISIBLE);
             }
             viewHolder.itemLikesCountTx.setText(String.valueOf(shotses.get(position).getLikes_count()));
             viewHolder.itemCommentsCountTx.setText(String.valueOf(shotses.get(position).getComments_count()));
-            viewHolder.itemCommentsCountTx.setText(String.valueOf(shotses.get(position).getViews_count()));
+            viewHolder.itemViewsCountTx.setText(String.valueOf(shotses.get(position).getViews_count()));
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -103,14 +107,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public final ImageView avatar;
+        public final CircleImageView avatarIv;
         public final TextView shotsTitleTx, shots_userTx, shotsCreatedTimeTx;
         public final ImageView shotsIm, shotsGifIm;
         public final TextView itemLikesCountTx, itemCommentsCountTx, itemViewsCountTx;
 
         public ViewHolder(View view) {
             super(view);
-            avatar = (ImageView) view.findViewById(R.id.avatar);
+            avatarIv = (CircleImageView) view.findViewById(R.id.avatar);
             shotsTitleTx = (TextView) view.findViewById(R.id.shots_title);
             shots_userTx = (TextView) view.findViewById(R.id.shots_user);
             shotsCreatedTimeTx = (TextView) view.findViewById(R.id.shots_create_time);

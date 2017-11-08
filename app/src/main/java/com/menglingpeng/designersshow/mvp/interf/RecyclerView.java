@@ -11,4 +11,5 @@ public interface RecyclerView<T extends Data> {
     void hideProgress();
     void addShots(T shots);
     void loadFailed(String msg);
+    void loadSuccess(String shotsJson);
 }
