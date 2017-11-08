@@ -69,16 +69,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof ViewHolder){
             final ViewHolder viewHolder = (ViewHolder)holder;
+            boolean isGif = shotses.get(position).isAnimated();
             ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
             viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shotses.get(position).getUpdated_at()));
-            if(shotses.get(position).getImages().getHidpi() != null){
-                ImageLoader.load(fragment, shotses.get(position).getImages().getHidpi(), viewHolder.shotsIm);
-            }else {
-                ImageLoader.load(fragment, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
-            }
-            if(shotses.get(position).isAnimated()){
+            ImageLoader.load(fragment, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm, isGif);
+            if(isGif){
                 viewHolder.shotsGifIm.setVisibility(TextView.VISIBLE);
             }
             viewHolder.itemLikesCountTx.setText(String.valueOf(shotses.get(position).getLikes_count()));
