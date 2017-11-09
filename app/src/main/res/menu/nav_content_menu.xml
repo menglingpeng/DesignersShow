@@ -7,17 +7,17 @@
 
         <item
             android:id="@+id/nav_home"
-            android:icon="@mipmap/ic_action_home"
+            android:icon="@drawable/ic_home_grey_600"
             android:title="@string/nav_home_menu"/>
 
         <item
             android:id="@+id/nav_explore"
-            android:icon="@mipmap/ic_action_explore"
+            android:icon="@drawable/ic_explore_grey_600"
             android:title="@string/nav_explore_menu"/>
 
         <item
             android:id="@+id/nav_likes"
-            android:icon="@mipmap/ic_action_likes"
+            android:icon="@drawable/ic_favorite_grey_600_36dp"
             android:title="@string/nav_my_likes_menu"/>
 
         <item
@@ -34,7 +34,7 @@
     <group android:id="@+id/group2">
         <item
             android:id="@+id/nav_settings"
-            android:icon="@mipmap/ic_action_settings"
+            android:icon="@drawable/ic_settings_grey_600"
             android:title="@string/nav_settings_menu"/>
     </group>
 

@@ -112,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
-                android:src="@mipmap/ic_item_likes"/>
+                android:src="@drawable/ic_favorite_grey_600"/>
 
             <TextView
                 android:id="@+id/item_likes_count_tx"
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
                 android:layout_toRightOf="@+id/item_likes_count_tx"
-                android:src="@mipmap/ic_item_comments"/>
+                android:src="@drawable/ic_mode_comment_grey_600"/>
 
             <TextView
                 android:id="@+id/item_comments_count_tx"
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
                 android:layout_toRightOf="@+id/item_comments_count_tx"
-                android:src="@mipmap/ic_item_views"/>
+                android:src="@drawable/ic_view"/>
 
             <TextView
                 android:id="@+id/item_view_count_tx"
