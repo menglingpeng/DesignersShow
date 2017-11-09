@@ -59,35 +59,34 @@ public class TimeUtil {
 
     public static String diffToString(Date cretateDate ,Date currentDate, long diff){
         String differ;
-        int day,trueDay,hours,minutes;
+        int day, hours, minutes, seconds;
+        StringBuilder builder = new StringBuilder();
+        SimpleDateFormat yesterdayFormat = new SimpleDateFormat(" HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_days));
         day =currentDate.getDay() - cretateDate.getDay();
-        trueDay = (int)diff/(1000*60*60*24);
-        hours =(int)diff/(1000*60*60)-trueDay*24;
-        minutes = (int)diff/(1000*60)-trueDay*24*60-hours*60;
+        hours =(int)diff/(1000*60*60);
+        minutes = (int)diff/(1000*60);
+        seconds = (int)diff/1000;
         switch (day){
             case 0:
-                if(hours == 0){
-                    if(minutes == 0){
-                        differ = BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_now);
-                    }else {
-                        differ =  new StringBuilder().append(String.valueOf(minutes)).append(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_minutes)).toString();
-                    }
+                if(seconds < 60){
+                    differ = BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_now);
+                }else if(seconds > 60 && seconds <3600){
+                    differ =  builder.append(String.valueOf(minutes)).append(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_minutes)).toString();
                 }else {
-                    differ =  new StringBuilder().append(String.valueOf(minutes)).append(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_hours)).toString();
+                    differ =  builder.append(String.valueOf(hours)).append(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_hours)).toString();
                 }
                 break;
             case 1:
-                differ = BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_one_day);
+                differ = builder.append(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_one_day)).append(yesterdayFormat.format(cretateDate)).toString();
                 break;
-            case 2:
+            /*case 2:
                 differ = BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_two_days);
-                break;
+                break;*/
             default:
-                SimpleDateFormat format = new SimpleDateFormat(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_days));
                 differ = format.format(cretateDate);
                 break;
         }
-        Log.i("Diff", differ);
         return differ;
     }
 

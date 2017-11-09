@@ -1,6 +1,5 @@
 package com.menglingpeng.designersshow.mvp.other;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,9 +12,8 @@ import android.widget.TextView;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
 import com.menglingpeng.designersshow.mvp.model.Shots;
-import com.menglingpeng.designersshow.net.Json;
+import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.ImageLoader;
-import com.menglingpeng.designersshow.utils.SharedPreUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
 
 import java.util.ArrayList;
@@ -111,10 +109,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public ViewHolder(View view) {
             super(view);
-            avatarIv = (CircleImageView) view.findViewById(R.id.avatar);
-            shotsTitleTx = (TextView) view.findViewById(R.id.shots_title);
-            shots_userTx = (TextView) view.findViewById(R.id.shots_user);
-            shotsCreatedTimeTx = (TextView) view.findViewById(R.id.shots_create_time);
+            avatarIv = (CircleImageView) view.findViewById(R.id.avatar_im);
+            shotsTitleTx = (TextView) view.findViewById(R.id.shots_title_tx);
+            shots_userTx = (TextView) view.findViewById(R.id.shots_user_name_tx);
+            shotsCreatedTimeTx = (TextView) view.findViewById(R.id.shots_create_time_tx);
             shotsIm = (ImageView) view.findViewById(R.id.shots_im);
             shotsGifIm = (ImageView) view.findViewById(R.id.shots_gif_im);
             itemLikesCountTx = (TextView) view.findViewById(R.id.item_likes_count_tx);

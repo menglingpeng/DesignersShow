@@ -1,4 +1,4 @@
-package com.menglingpeng.designersshow.net;
+package com.menglingpeng.designersshow.utils;
 
 import android.util.Log;
 
@@ -28,7 +28,7 @@ public class Json {
 
     public static ArrayList<Shots> parseShots(String shotsJson){
 
-        //替换Sting类型null为"".
+        //替换Sting值null为"".
         JsonParser parser = new JsonParser();
         JsonArray jsonArray = parser.parse(shotsJson).getAsJsonArray();
         ArrayList<Shots> shotsList = new ArrayList<>();

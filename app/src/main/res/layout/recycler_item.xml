@@ -25,7 +25,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/avatar"
+                android:id="@+id/avatar_im"
                 android:layout_width="@dimen/recycler_view_item_avatar_layout_width"
                 android:layout_height="@dimen/recycler_view_item_avatar_layout_height"
                 android:layout_marginRight="@dimen/recycler_view_item_avatar_layout_marginLeft"
@@ -39,27 +39,40 @@
                 />-->
 
             <TextView
-                android:id="@+id/shots_title"
+                android:id="@+id/shots_title_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/avatar"
+                android:layout_toRightOf="@+id/avatar_im"
+                android:textSize="18dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                style="@style/TextAppearance.AppCompat.Title"
                 />
 
             <TextView
-                android:id="@+id/shots_user"
+                android:id="@+id/shots_user_name_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shots_title"
-                android:layout_toRightOf="@+id/avatar"
+                android:layout_below="@+id/shots_title_tx"
+                android:layout_toRightOf="@+id/avatar_im"
                 android:textColor="@color/shots_username"
-                style="@style/Base.TextAppearance.AppCompat.Subhead"/>
+                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"/>
 
             <TextView
-                android:id="@+id/shots_create_time"
+                android:id="@+id/comma"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shots_title"
-                android:layout_toRightOf="@+id/shots_user"
+                android:layout_below="@+id/shots_title_tx"
+                android:layout_toRightOf="@+id/shots_user_name_tx"
+                android:text=","/>
+
+            <TextView
+                android:id="@+id/shots_create_time_tx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shots_title_tx"
+                android:layout_toRightOf="@+id/comma"
+                android:layout_marginLeft="@dimen/recycler_view_item_shots_create_time_tx_layout_marginLeft"
                 />
 
         </RelativeLayout>
@@ -91,6 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/recycler_view_item_comments_layout_layout_height"
             android:layout_below="@+id/shots_fl"
+            android:gravity="center_vertical"
             >
 
             <ImageView
