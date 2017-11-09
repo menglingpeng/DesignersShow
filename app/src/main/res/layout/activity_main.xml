@@ -24,9 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
-                android:theme="@style/ToolbarTheme"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/PopupTheme">
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_scrollFlags="scroll|enterAlways">
             </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout

@@ -38,27 +38,38 @@
     </item>
 
     <item
-        android:id="@+id/overflow_small"
-        android:title="@string/toobar_overflow_small_with_infos"
-        app:showAsAction="never">
-    </item>
+        android:icon="@mipmap/ic_toolbar_overflow"
+        android:title=""
+        app:showAsAction="always">
 
-    <item
-        android:id="@+id/overflow_large"
-        android:title="@string/toobar_overflow_large_with_infos"
-        app:showAsAction="never">
-    </item>
+        <menu>
 
-    <item
-        android:id="@+id/overflow_small_without_infos"
-        android:title="@string/toobar_overflow_small_without_infos"
-        app:showAsAction="never">
-    </item>
+            <item
+                android:id="@+id/overflow_small"
+                android:title="@string/toobar_overflow_small_with_infos"
+                app:showAsAction="never">
+            </item>
 
-    <item
-        android:id="@+id/overflow_large_without_infos"
-        android:title="@string/toobar_overflow_large_without_infos"
-        app:showAsAction="never">
+            <item
+                android:id="@+id/overflow_large"
+                android:title="@string/toobar_overflow_large_with_infos"
+                app:showAsAction="never">
+            </item>
+
+            <item
+                android:id="@+id/overflow_small_without_infos"
+                android:title="@string/toobar_overflow_small_without_infos"
+                app:showAsAction="never">
+            </item>
+
+            <item
+                android:id="@+id/overflow_large_without_infos"
+                android:title="@string/toobar_overflow_large_without_infos"
+                app:showAsAction="never">
+            </item>
+
+        </menu>
+
     </item>
 
 </menu>

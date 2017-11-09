@@ -3,24 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/share"
-        android:icon="@drawable/ic_share"
-        android:title="@string/detail_toolbar_overflow_menu_share"
-        app:showAsAction="never">
-    </item>
+        android:id="@+id/more_menu"
+        android:icon="@drawable/ic_more_menu"
+        android:title=""
+        app:showAsAction="always">
 
-    <item
-        android:id="@+id/open_in_browser"
-        android:icon="@drawable/ic_open_in_browser"
-        android:title="@string/detail_toolbar_overflow_menu_open_in_browser"
-        app:showAsAction="never">
-    </item>
+        <menu>
+            <item
+                android:id="@+id/share"
+                android:icon="@drawable/ic_share"
+                android:title="@string/detail_toolbar_overflow_menu_share"
+                app:showAsAction="never">
+            </item>
 
-    <item
-        android:id="@+id/download"
-        android:icon="@drawable/ic_file_download"
-        android:title="@string/detail_toolbar_overflow_menu_download"
-        app:showAsAction="never">
+            <item
+                android:id="@+id/open_in_browser"
+                android:icon="@drawable/ic_open_in_browser"
+                android:title="@string/detail_toolbar_overflow_menu_open_in_browser"
+                app:showAsAction="never">
+            </item>
+
+            <item
+                android:id="@+id/download"
+                android:icon="@drawable/ic_file_download"
+                android:title="@string/detail_toolbar_overflow_menu_download"
+                app:showAsAction="never">
+            </item>
+        </menu>
+
     </item>
 
 </menu>
