@@ -68,7 +68,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(holder instanceof ViewHolder){
             final ViewHolder viewHolder = (ViewHolder)holder;
             boolean isGif = shotses.get(position).isAnimated();
-            ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
+            //ImageLoader.load(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv, isGif);
             viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shotses.get(position).getUpdated_at()));
@@ -102,14 +102,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public final CircleImageView avatarIv;
+        //public final CircleImageView avatarIv;
+        public final ImageView avatarIv;
         public final TextView shotsTitleTx, shots_userTx, shotsCreatedTimeTx;
         public final ImageView shotsIm, shotsGifIm;
         public final TextView itemLikesCountTx, itemCommentsCountTx, itemViewsCountTx;
 
         public ViewHolder(View view) {
             super(view);
-            avatarIv = (CircleImageView) view.findViewById(R.id.avatar_im);
+            avatarIv = (ImageView) view.findViewById(R.id.avatar_im);
             shotsTitleTx = (TextView) view.findViewById(R.id.shots_title_tx);
             shots_userTx = (TextView) view.findViewById(R.id.shots_user_name_tx);
             shotsCreatedTimeTx = (TextView) view.findViewById(R.id.shots_create_time_tx);

@@ -34,6 +34,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                app:tabTextAppearance="@style/TabLayoutTheme"
+                app:tabTextColor="#BDBDBD"
+                app:tabSelectedTextColor="@android:color/white"
                 />
 
             <LinearLayout
@@ -49,14 +52,21 @@
                     android:id="@+id/sort_spinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:dropDownWidth="@dimen/spinner_drop_down_width"
+                    android:backgroundTint="@android:color/white"
+                    android:popupBackground="@color/colorPrimary">
                 </Spinner>
 
                 <Spinner
                     android:id="@+id/list_spinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:dropDownWidth="@dimen/spinner_drop_down_width"
+                    android:backgroundTint="@android:color/white"
+                    android:popupBackground="@color/colorPrimary"
+                    >
                 </Spinner>
 
             </LinearLayout>

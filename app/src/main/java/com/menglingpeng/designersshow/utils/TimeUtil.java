@@ -33,7 +33,6 @@ public class TimeUtil {
             currentDate = localFormat.parse(current);
             createDate = localFormat.parse(create);
             diff = currentDate.getTime()-createDate.getTime();
-            Log.i("long diff", String.valueOf(diff));
             diffString = diffToString(createDate, currentDate, diff);
         } catch (ParseException e) {
             e.printStackTrace();

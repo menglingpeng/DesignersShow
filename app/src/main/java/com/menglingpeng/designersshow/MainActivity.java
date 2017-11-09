@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.menglingpeng.designersshow.mvp.other.SpinnerAdapter;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.SnackUI;
@@ -288,12 +289,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         exploreLl.setVisibility(LinearLayout.VISIBLE);
         sortSpinner = (Spinner)findViewById(R.id.sort_spinner);
         listSpinner = (Spinner)findViewById(R.id.list_spinner);
-        String[] sort = getResources().getStringArray(R.array.sort);
-        String[] list = getResources().getStringArray(R.array.list);
-        ArrayAdapter<String> sortAdapter = new ArrayAdapter<String>(BaseApplication.getContext(), android.R.layout.simple_spinner_item, sort);
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(BaseApplication.getContext(), android.R.layout.simple_spinner_item, list);
-        listAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> sortAdapter, listAdapter;
+        String[] sortArray = getResources().getStringArray(R.array.sort);
+        String[] listArray = getResources().getStringArray(R.array.list);
+        sortAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.custom_spinner_text, sortArray);
+        listAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.custom_spinner_text, listArray);
+        listAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
+        sortAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         sortSpinner.setAdapter(sortAdapter);
         listSpinner.setAdapter(listAdapter);
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

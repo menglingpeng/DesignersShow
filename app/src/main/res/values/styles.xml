@@ -16,6 +16,7 @@
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- 设置文字颜色 -->
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
         <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
     </style>
 
@@ -34,8 +35,13 @@
         <!-- 设置弹出菜单文字颜色 -->
         <item name="android:textColor">@android:color/black</item>
     </style>
+
+    <style name="TabLayoutTheme">
+        <item name="android:textSize">20dp</item>
+    </style>
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>
