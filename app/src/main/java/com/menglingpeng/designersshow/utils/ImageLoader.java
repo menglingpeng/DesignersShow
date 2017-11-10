@@ -61,9 +61,9 @@ public class ImageLoader {
                     .into(imageView);
         }
     }
-    
+
     public static void loadCricleImage(Fragment fragment, String url, ImageView imageView){
-        RequestOptions requestOptions = new RequestOptions().circleCrop();
+        RequestOptions requestOptions = new RequestOptions().circleCrop().placeholder(R.drawable.ic_avatar);
         Glide.with(fragment)
                 .load(url)
                 .apply(requestOptions)
