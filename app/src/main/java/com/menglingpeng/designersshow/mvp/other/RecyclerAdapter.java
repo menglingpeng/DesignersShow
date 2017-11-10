@@ -66,7 +66,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(holder instanceof ViewHolder){
             final ViewHolder viewHolder = (ViewHolder)holder;
             boolean isGif = shotses.get(position).isAnimated();
-            //ImageLoader.load(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv, isGif);
+            ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
             viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shotses.get(position).getUpdated_at()));

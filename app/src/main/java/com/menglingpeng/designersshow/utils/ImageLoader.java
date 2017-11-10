@@ -41,15 +41,14 @@ import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
 
 public class ImageLoader {
 
-    public static void load(Fragment fragment, String  url, ImageView imageView, Boolean isGif){
-        //RequestOptions requestOptionsHigh = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.HIGH);
-        RequestOptions requestOptionsNormal = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.NORMAL);
+    public static void load(Fragment fragment, String  url, ImageView imageView, boolean isFirst){
+        RequestOptions requestOptions = new RequestOptions().centerCrop();
         RequestBuilder<Bitmap> requestBuilder = Glide.with(fragment).asBitmap();
-        //加载GIF图片时不播放
-        if(isGif){
+        //第一次加载GIF图片时不播放
+        if(isFirst){
             /*requestBuilder.apply(requestOptionsHigh);
             requestBuilder.load(url).into(imageView);*/
-            requestBuilder.apply(requestOptionsNormal);
+            requestBuilder.apply(requestOptions);
             requestBuilder.load(url).into(imageView);
         }else {
             /*Glide.with(fragment)
@@ -58,57 +57,18 @@ public class ImageLoader {
                     .into(imageView);*/
             Glide.with(fragment)
                     .load(url)
-                    .apply(requestOptionsNormal)
+                    .apply(requestOptions)
                     .into(imageView);
         }
     }
-
+    
     public static void loadCricleImage(Fragment fragment, String url, ImageView imageView){
-        RequestOptions requestOptions = new RequestOptions().transform(new GlideCircleTransform()).placeholder(R.drawable.ic_avatar);
+        RequestOptions requestOptions = new RequestOptions().circleCrop();
         Glide.with(fragment)
                 .load(url)
                 .apply(requestOptions)
                 .into(imageView);
 
-    }
-
-    public static class GlideCircleTransform extends BitmapTransformation{
-
-        public GlideCircleTransform() {
-            super();
-        }
-
-        @Override
-        protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-            return null;
-        }
-
-        private static Bitmap circleCrop(BitmapPool pool, Bitmap source) {
-            if (source == null) return null;
-            int size = Math.min(source.getWidth(), source.getHeight());
-            int x = (source.getWidth() - size) / 2;
-            int y = (source.getHeight() - size) / 2;
-            // TODO this could be acquired from the pool too
-            Bitmap squared = Bitmap.createBitmap(source, x, y, size, size);
-
-            Bitmap result = pool.get(size, size, Bitmap.Config.ARGB_8888);
-            if (result == null) {
-                result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-            }
-
-            Canvas canvas = new Canvas(result);
-            Paint paint = new Paint();
-            paint.setShader(new BitmapShader(squared, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
-            paint.setAntiAlias(true);
-            float r = size / 2f;
-            canvas.drawCircle(r, r, r, paint);
-            return result;
-        }
-
-        @Override
-        public void updateDiskCacheKey(MessageDigest messageDigest) {
-
-        }
     }
 
     public static void downloadImage(Context context, CoordinatorLayout coordinatorLayout, String url, String imageName){
