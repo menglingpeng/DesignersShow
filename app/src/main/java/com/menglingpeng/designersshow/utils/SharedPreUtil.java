@@ -62,4 +62,12 @@ public class SharedPreUtil {
         return map;
     }
 
+    public static void  deletedParameters(){
+        String[] parameters = {"list","timeframe", "date", "sort", "page"};
+        for (int i=0;i<parameters.length-1;i++){
+            editor.remove(parameters[i]);
+        }
+        editor.commit();
+    }
+
 }

@@ -2,6 +2,7 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseActivity;
+import com.menglingpeng.designersshow.BaseApplication;
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.MainActivity;
 import com.menglingpeng.designersshow.R;
@@ -18,12 +20,14 @@ import com.menglingpeng.designersshow.mvp.interf.RecyclerPresenterIf;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.other.Data;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
+import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.HttpUrl;
@@ -168,8 +172,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             map.put("sort", sort);
         }
         map.put("page", String.valueOf(page));
-        SharedPreUtil.saveParameters(map);
-        Log.i("type", type);
+        if(!type.equals(TAB_POPULAR) && !type.equals(TAB_RECENT)) {
+            SharedPreUtil.saveParameters(map);
+        }
+
     }
 
     @Override
@@ -200,7 +206,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void loadSuccess(String shotsjson) {
-        adapter = new RecyclerAdapter(MainActivity.TabPagerAdapter.getCurrentFragment(),shotsjson, type,this);
+        if(type.equals(TAB_POPULAR) || type.equals(TAB_RECENT)){
+            adapter = new RecyclerAdapter(TabPagerFragmentAdapter.getCurrentPagerViewFragment(), shotsjson, type, this);
+        }else {
+            adapter = new RecyclerAdapter(MainActivity.getCurrentFragment(), shotsjson, type, this);
+        }
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -221,7 +231,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             initParameters();
             initData();
         }
-
     }
 
     @Override

@@ -41,7 +41,7 @@
     </style>
 
     <style name="TabLayoutTheme">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">16dp</item>
     </style>
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

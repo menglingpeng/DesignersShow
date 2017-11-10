@@ -37,8 +37,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.fragment = fragment;
         mListener = listener;
         shotses = Json.parseShots(shotsJson);
-        Log.i("type", type);
-        Log.i("ShotsJson", shotses.get(0).getTitle());
     }
 
     @Override

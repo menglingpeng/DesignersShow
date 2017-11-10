@@ -49,19 +49,20 @@
 
                 <Spinner
                     android:id="@+id/sort_spinner"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/spinner_layout_width"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="@dimen/spinner_List_layout_weight"
                     android:dropDownWidth="@dimen/spinner_drop_down_width"
                     android:backgroundTint="@android:color/white"
-                    android:popupBackground="@color/colorPrimary">
+                    android:popupBackground="@color/colorPrimary"
+                    android:backgroundTintMode="src_atop">
                 </Spinner>
 
                 <Spinner
                     android:id="@+id/list_spinner"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/spinner_layout_width"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="@dimen/spinner_sort_layout_weight"
                     android:dropDownWidth="@dimen/spinner_drop_down_width"
                     android:backgroundTint="@android:color/white"
                     android:popupBackground="@color/colorPrimary"

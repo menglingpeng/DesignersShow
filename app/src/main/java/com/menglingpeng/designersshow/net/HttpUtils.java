@@ -40,7 +40,6 @@ HttpUtils {
         try {
             response = client.newCall(request).execute();
             shotsJson = response.body().string();
-            Log.i("Response", shotsJson);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow;
 
+import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +28,10 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
 import com.menglingpeng.designersshow.utils.Constants;
+import com.menglingpeng.designersshow.utils.SharedPreUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 
 import java.util.ArrayList;
@@ -44,8 +49,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private ViewPager viewPager;
     private LinearLayout exploreLl;
     private List<RecyclerFragment> fragments;
-    private TabPagerAdapter adapter;
+    private TabPagerFragmentAdapter adapter;
     private Spinner sortSpinner, listSpinner;
+    private static RecyclerFragment currentFragment = null;
     private boolean backPressed;
     private boolean isLogin = false;
     private static final int SMOOTHSCROLL_TOP_POSITION = 50;
@@ -132,19 +138,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.now:
-                replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_NOW));
+                replaceFragment(newFragment(Constants.TIMEFRAME_NOW));
                 break;
             case R.id.week:
-                replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_WEEK));
+                replaceFragment(newFragment(Constants.TIMEFRAME_WEEK));
                 break;
             case R.id.month:
-                replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_WEEK));
+                replaceFragment(newFragment(Constants.TIMEFRAME_WEEK));
                 break;
             case R.id.year:
-                replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_YEAR));
+                replaceFragment(newFragment(Constants.TIMEFRAME_YEAR));
                 break;
             case R.id.allTime:
-                replaceFragment(RecyclerFragment.newInstance(Constants.TIMEFRAME_EVER));
+                replaceFragment(newFragment(Constants.TIMEFRAME_EVER));
                 break;
             case R.id.overflow_small:
                 break;
@@ -158,6 +164,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("RestrictedApi")
     private void initNavigationView(){
         //设置打开和关闭Drawer的特效
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
@@ -207,11 +214,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (menuType){
             case Constants.MENU_HOME:
                 exploreLl.setVisibility(LinearLayout.GONE);
+                if(currentFragment != null) {
+                    removeCurrentFragment(currentFragment);
+                }
                 initTabPager();
                 break;
             case Constants.MENU_EXPLORE:
                 tabLayout.setVisibility(TabLayout.GONE);
                 viewPager.setVisibility(ViewPager.GONE);
+                SharedPreUtil.deletedParameters();
                 initSpinner();
                 break;
             case Constants.MENU_SETTING:
@@ -229,7 +240,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         tabLayout.setVisibility(TabLayout.VISIBLE);
         viewPager.setVisibility(ViewPager.VISIBLE);
         fragments = new ArrayList<>();
-        adapter = new TabPagerAdapter(getSupportFragmentManager());
+        adapter = new TabPagerFragmentAdapter(getSupportFragmentManager());
         initFragments();
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -301,16 +312,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_POPULAR));
+                        replaceFragment(newFragment(Constants.SORT_POPULAR));
                         break;
                     case 1:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_COMMENTS));
+                        replaceFragment(newFragment(Constants.SORT_COMMENTS));
                         break;
                     case 2:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_RECENT));
+                        replaceFragment(newFragment(Constants.SORT_RECENT));
                         break;
                     case 3:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.SORT_VIEWS));
+                        replaceFragment(newFragment(Constants.SORT_VIEWS));
                         break;
                 }
             }
@@ -325,25 +336,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_SHOTS));
+                        replaceFragment(newFragment(Constants.LIST_SHOTS));
                         break;
                     case 1:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_ANIMTED));
+                        replaceFragment(newFragment(Constants.LIST_ANIMTED));
                         break;
                     case 2:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_ATTACHMENTS));
+                        replaceFragment(newFragment(Constants.LIST_ATTACHMENTS));
                         break;
                     case 3:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_DEBUTS));
+                        replaceFragment(newFragment(Constants.LIST_DEBUTS));
                         break;
                     case 4:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_PLAYOFFS));
+                        replaceFragment(newFragment(Constants.LIST_PLAYOFFS));
                         break;
                     case 5:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_REBOUNDS));
+                        replaceFragment(newFragment(Constants.LIST_REBOUNDS));
                         break;
                     case 6:
-                        replaceFragment(RecyclerFragment.newInstance(Constants.LIST_TEAM));
+                        replaceFragment(newFragment(Constants.LIST_TEAM));
                         break;
                 }
             }
@@ -355,50 +366,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
     }
 
-    public static class TabPagerAdapter extends FragmentPagerAdapter {
+    private RecyclerFragment newFragment(String type){
+        currentFragment = RecyclerFragment.newInstance(type);
+        return currentFragment;
+    }
 
-        private List<RecyclerFragment> fragments;
-        private List<String> titles;
-        private static RecyclerFragment fragment;
+    public static RecyclerFragment getCurrentFragment(){
+        return currentFragment;
+    }
 
-        public TabPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        private void setFragments(List<RecyclerFragment> fragments, List<String> titles){
-            this.fragments = fragments;
-            this.titles = titles;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titles.get(position);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        @Override
-        public float getPageWidth(int position) {
-            return super.getPageWidth(position);
-        }
-
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            fragment = (RecyclerFragment)object;
-            super.setPrimaryItem(container, position, object);
-        }
-
-        public static RecyclerFragment getCurrentFragment(){
-            return  fragment;
-        }
+    public void removeCurrentFragment(Fragment fragment){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.remove(fragment);
+        transaction.commit();
     }
 
     @Override
@@ -424,4 +405,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }, 2000);
     }
 
+    @Override
+    protected void onDestroy() {
+        SharedPreUtil.deletedParameters();
+        super.onDestroy();
+
+    }
 }

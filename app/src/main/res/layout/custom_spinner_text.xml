@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/spinner_tv"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/spinner_text_layout_height"
     android:paddingLeft="@dimen/spinner_text_paddingLeft"
+    android:gravity="center_vertical"
     android:textSize="@dimen/spinner_text_size"
     android:textColor="@android:color/white">
 
