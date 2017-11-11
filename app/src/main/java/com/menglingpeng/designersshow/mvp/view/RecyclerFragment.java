@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ProgressBar;
 
+import com.bumptech.glide.Glide;
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.BaseApplication;
 import com.menglingpeng.designersshow.BaseFragment;
@@ -23,6 +24,7 @@ import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
+import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
 
 import java.util.ArrayList;
@@ -47,14 +49,15 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private ProgressBar progressBar;
     private BaseActivity mActivity;
     private HashMap<String, String> map;
+    private ArrayList<Shots> dataList;
     private String type;
     private String list= null;
     private String timeframe = null;
     private String date = null;
     private String sort = null;
     private int page = 1;
-    private int firstPosition;
-    private int lastPosition;
+    private int currentpage = 0;
+    private ArrayList<Shots> shotsList;
     private String access_token  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
@@ -90,6 +93,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+        //确保item大小固定，可以提升性能
         recyclerView.setHasFixedSize(true);
         swipeRefresh.setColorSchemeResources(R.color.colorAccent);
         swipeRefresh.setOnRefreshListener(this);
@@ -196,7 +200,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void addShots(Shots shots) {
-        adapter.addShots(shots);
     }
 
     @Override
@@ -206,30 +209,32 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void loadSuccess(String shotsjson) {
-        if(type.equals(TAB_POPULAR) || type.equals(TAB_RECENT)){
-            adapter = new RecyclerAdapter(TabPagerFragmentAdapter.getCurrentPagerViewFragment(), shotsjson, type, this);
+        currentpage++;
+        Fragment fragment;
+        shotsList = Json.parseShots(shotsjson);
+        if(currentpage == 1) {
+            if (type.equals(TAB_POPULAR) || type.equals(TAB_RECENT)) {
+                fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
+            } else {
+                fragment = MainActivity.getCurrentFragment();
+            }
+            adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
+            recyclerView.setAdapter(adapter);
         }else {
-            adapter = new RecyclerAdapter(MainActivity.getCurrentFragment(), shotsjson, type, this);
+            adapter.setLoading(false);
         }
-        recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+        adapter.setLoadingMore(new RecyclerAdapter.onLoadingMore() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(newState == RecyclerView.SCROLL_STATE_IDLE){
-                    onLoadingMore();
-                }
+            public void onLoadMore() {
+                adapter.setLoading(true);
+                page += 1;
+                map.put("page", String.valueOf(page));
+                initData();
             }
         });
-    }
-
-    private void onLoadingMore(){
-        firstPosition = linearLayoutManager.findFirstVisibleItemPosition();
-        lastPosition = linearLayoutManager.findLastVisibleItemPosition();
-        if((firstPosition + lastPosition) > adapter.getItemCount()) {
-            page += 1;
-            initParameters();
-            initData();
+        for(int i=0; i<shotsList.size(); i++) {
+            adapter.addData(shotsList.get(i));
         }
     }
 

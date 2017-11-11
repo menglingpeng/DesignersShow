@@ -1,12 +1,14 @@
 package com.menglingpeng.designersshow.mvp.other;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.menglingpeng.designersshow.R;
@@ -29,14 +31,38 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
     private OnRecyclerListItemListener mListener;
-    private ArrayList<Shots> shotses;
+    private ArrayList<Shots> shotses = new ArrayList<Shots>();
     private Fragment fragment;
+    private boolean isLoading;
+    onLoadingMore loadingMore;
+    //加载更多的提前量
+    private int visibleThreshold = 2;
 
 
-    public RecyclerAdapter(Fragment fragment, String shotsJson, String type, OnRecyclerListItemListener listener){
+    public RecyclerAdapter(RecyclerView recyclerView, Fragment fragment, String type, OnRecyclerListItemListener listener){
         this.fragment = fragment;
         mListener = listener;
-        shotses = Json.parseShots(shotsJson);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+                int itemcount = layoutManager.getItemCount();
+                int lastPosition = layoutManager.findLastVisibleItemPosition();
+                if(!isLoading && lastPosition >= (itemcount - visibleThreshold)){
+                    if(loadingMore != null){
+                        isLoading = true;
+                        loadingMore.onLoadMore();
+                    }
+                }
+            }
+        });
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return shotses.size() + 1;
     }
 
     @Override
@@ -67,6 +93,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             final ViewHolder viewHolder = (ViewHolder)holder;
             boolean isGif = shotses.get(position).isAnimated();
             ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
+            /*if(!isScrolling) {
+                ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
+            }else {
+                viewHolder.avatarIv.setImageResource(R.drawable.ic_avatar);
+            }*/
             viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shotses.get(position).getUpdated_at()));
@@ -86,21 +117,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
         }
-
-    }
-
-    public void addShots(Shots shots){
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        return shotses.size() + 1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        //public final CircleImageView avatarIv;
         public final ImageView avatarIv;
         public final TextView shotsTitleTx, shots_userTx, shotsCreatedTimeTx;
         public final ImageView shotsIm, shotsGifIm;
@@ -125,6 +144,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public FooterViewHolder(View itemView) {
             super(itemView);
         }
+    }
+
+    public void addData(Shots data){
+        shotses.add(data);
+        notifyDataSetChanged();
+    }
+
+    public void setLoading(boolean isLoading){
+        this.isLoading = isLoading;
+    }
+
+    public void setLoadingMore(onLoadingMore loadingMore){
+        this.loadingMore = loadingMore;
+    }
+
+    public interface onLoadingMore{
+        void onLoadMore();
     }
 
 }

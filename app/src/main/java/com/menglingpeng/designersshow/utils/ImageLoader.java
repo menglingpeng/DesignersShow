@@ -42,19 +42,13 @@ import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
 public class ImageLoader {
 
     public static void load(Fragment fragment, String  url, ImageView imageView, boolean isFirst){
-        RequestOptions requestOptions = new RequestOptions().centerCrop();
+        RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL);
         RequestBuilder<Bitmap> requestBuilder = Glide.with(fragment).asBitmap();
         //第一次加载GIF图片时不播放
         if(isFirst){
-            /*requestBuilder.apply(requestOptionsHigh);
-            requestBuilder.load(url).into(imageView);*/
             requestBuilder.apply(requestOptions);
             requestBuilder.load(url).into(imageView);
         }else {
-            /*Glide.with(fragment)
-                    .load(url)
-                    .apply(requestOptionsHigh)
-                    .into(imageView);*/
             Glide.with(fragment)
                     .load(url)
                     .apply(requestOptions)
@@ -63,7 +57,7 @@ public class ImageLoader {
     }
 
     public static void loadCricleImage(Fragment fragment, String url, ImageView imageView){
-        RequestOptions requestOptions = new RequestOptions().circleCrop().placeholder(R.drawable.ic_avatar);
+        RequestOptions requestOptions = new RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         Glide.with(fragment)
                 .load(url)
                 .apply(requestOptions)
