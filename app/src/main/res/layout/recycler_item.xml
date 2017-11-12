@@ -23,14 +23,6 @@
             android:layout_height="@dimen/recycler_view_item_desc_layout_layout_height"
             android:gravity="center_vertical">
 
-            <!--<de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/avatar_im"
-                android:layout_width="@dimen/recycler_view_item_avatar_layout_width"
-                android:layout_height="@dimen/recycler_view_item_avatar_layout_height"
-                android:layout_marginRight="@dimen/recycler_view_item_avatar_layout_marginLeft"
-                android:src="@drawable/ic_avatar"/>-->
-
             <ImageView
                 android:id="@+id/avatar_im"
                 android:layout_width="@dimen/recycler_view_item_avatar_layout_width"
@@ -83,12 +75,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/desc_layout">
+
             <ImageView
                 android:id="@+id/shots_im"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/recycler_view_item_shots_im__layout_height"
-                android:background="@color/imageview_background"
-                android:scaleType="centerCrop"/>
+                android:background="@color/colorPrimary"
+                android:scaleType="centerCrop" />
 
             <ImageView
                 android:id="@+id/shots_gif_im"

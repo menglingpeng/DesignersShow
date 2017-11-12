@@ -2,6 +2,7 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,6 +24,7 @@ public class DetailActivity extends BaseActivity {
     private Toolbar toolbar;
     private ImageView imageView;
     private CoordinatorLayout coordinatorLayout;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
     private Shots shots;
     private String htmlUrl, imageUrl, imageName;
 
@@ -40,11 +42,11 @@ public class DetailActivity extends BaseActivity {
         imageName = shots.getTitle();
         imageUrl = shots.getImages().getNormal();
         coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator_layout);
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar_layout);
         imageView = (ImageView)findViewById(R.id.detail_im);
         toolbar = (Toolbar)findViewById(R.id.detail_tb);
+        toolbar.setTitle(shots.getTitle());
         setSupportActionBar(toolbar);
-        //设置透明度
-        toolbar.getBackground().setAlpha(1);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

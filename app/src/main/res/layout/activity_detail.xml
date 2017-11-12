@@ -18,12 +18,14 @@
             android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
 
             <ImageView
                 android:id="@+id/detail_im"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/recycler_view_item_shots_im__layout_height"
+                android:background="@color/colorPrimary"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="@dimen/detail_im_layout_collapse_parallax_multiplier"/>
@@ -32,9 +34,14 @@
                 android:id="@+id/detail_tb"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_collapseMode="pin">
-
             </android.support.v7.widget.Toolbar>
+
+           <ProgressBar
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

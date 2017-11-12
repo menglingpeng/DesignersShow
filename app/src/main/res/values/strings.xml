@@ -11,7 +11,7 @@
     <string name="title_activity_base">BaseActivity</string>
     <string name="home_toolbar_title">Home</string>
     <string name="explore_toolbar_title">Explore</string>
-    <string name="toolbar_date_menu_item_now">目前</string>
+    <string name="toolbar_date_menu_item_now">当前</string>
     <string name="toolbar_date_menu_item_past_week">一周之内</string>
     <string name="toolbar_date_menu_item_past_month">一月之内</string>
     <string name="toolbar_date_menu_item_past_year">一年之内</string>

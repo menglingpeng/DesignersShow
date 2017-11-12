@@ -25,7 +25,7 @@
     <dimen name="recycler_view_item_comments_layout_layout_textview_layout_marginLeft">10dp</dimen>
     <dimen name="toolbar_date_menu_padding_top">20dp</dimen>
     <dimen name="toolbar_date_menu_padding_left">10dp</dimen>
-    <dimen name="detail_appbar_layout_height">260dp</dimen>
+    <dimen name="detail_appbar_layout_height">300dp</dimen>
     <item name="detail_im_layout_collapse_parallax_multiplier" type="dimen" format="float">0.2</item>
     <dimen name="spinner_drop_down_width">180dp</dimen>
     <dimen name="spinner_drop_down_item_text_paddingTop">10dp</dimen>

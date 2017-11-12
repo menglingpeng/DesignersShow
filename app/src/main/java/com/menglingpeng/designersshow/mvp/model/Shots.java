@@ -191,7 +191,7 @@ public class Shots implements Data, Serializable {
         this.animated = animated;
     }
 
-    public class Images {
+    public class Images implements Serializable{
 
         private String hidpi;
         private String normal;
@@ -222,7 +222,7 @@ public class Shots implements Data, Serializable {
         }
     }
 
-    public class User {
+    public class User implements Serializable{
 
         private int id;
         private String username;
