@@ -9,7 +9,6 @@ import com.menglingpeng.designersshow.mvp.other.Data;
 public interface RecyclerView<T extends Data> {
     void showProgress();
     void hideProgress();
-    void addShots(T shots);
     void loadFailed(String msg);
-    void loadSuccess(String shotsJson);
+    void loadSuccess(String shotsJson, String requestType);
 }

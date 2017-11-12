@@ -49,14 +49,13 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private ProgressBar progressBar;
     private BaseActivity mActivity;
     private HashMap<String, String> map;
-    private ArrayList<Shots> dataList;
+    private String mRequestType = Constants.REQUEST_NORMAL;
     private String type;
     private String list= null;
     private String timeframe = null;
     private String date = null;
     private String sort = null;
     private int page = 1;
-    private int currentpage = 0;
     private ArrayList<Shots> shotsList;
     private String access_token  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     public static final String TAB_POPULAR = "Popular";
@@ -82,7 +81,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     protected void initData() {
         initParameters();
-        presenter = new RecyclerPresenter(this, type, map, (BaseActivity)getActivity());
+        presenter = new RecyclerPresenter(this, mRequestType, map, (BaseActivity)getActivity());
         presenter.loadShots();
     }
 
@@ -184,8 +183,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void onRefresh() {
-        presenter.loadShots();
-        showRefreshProgress(false);
     }
 
     @Override
@@ -199,37 +196,35 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     }
 
     @Override
-    public void addShots(Shots shots) {
-    }
-
-    @Override
     public void loadFailed(String msg) {
     showRefreshProgress(false);
     }
 
     @Override
-    public void loadSuccess(String shotsjson) {
-        currentpage++;
+    public void loadSuccess(String shotsjson, String requestType) {
         Fragment fragment;
         shotsList = Json.parseShots(shotsjson);
-        if(currentpage == 1) {
-            if (type.equals(TAB_POPULAR) || type.equals(TAB_RECENT)) {
-                fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-            } else {
-                fragment = MainActivity.getCurrentFragment();
-            }
-            adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
-            recyclerView.setAdapter(adapter);
-        }else {
-            adapter.setLoading(false);
+        if (type.equals(TAB_POPULAR) || type.equals(TAB_RECENT)) {
+            fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
+        } else {
+            fragment = MainActivity.getCurrentFragment();
         }
-
+        switch (requestType){
+            case Constants.REQUEST_NORMAL:
+                adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
+                recyclerView.setAdapter(adapter);
+                break;
+            case Constants.REQUEST_LOAD_MORE:
+                adapter.setLoading(false);
+                break;
+        }
         adapter.setLoadingMore(new RecyclerAdapter.onLoadingMore() {
             @Override
             public void onLoadMore() {
                 adapter.setLoading(true);
                 page += 1;
                 map.put("page", String.valueOf(page));
+                mRequestType = Constants.REQUEST_LOAD_MORE;
                 initData();
             }
         });

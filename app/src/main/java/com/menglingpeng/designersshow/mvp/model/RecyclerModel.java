@@ -39,9 +39,9 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
     }
 
     @Override
-    public void getShots(String type, HashMap<String, String> map, OnloadShotsListener listener) {
+    public void getShots(String requestType, HashMap<String, String> map, OnloadShotsListener listener) {
         this.map = map;
-        this.type = type;
+        this.type = requestType;
         new GetDataTask().execute(listener);
     }
 
@@ -60,20 +60,10 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
             if(json != null){
-                listener.onSuccess(shotsJson);
+                listener.onSuccess(shotsJson, type);
             }else {
                 listener.onFailure(baseActivity.getString(R.string.on_load_shots_listener_failed_msg));
             }
-        }
-    }
-
-    private void saveData(String page, String json){
-        //加载更多时，Json字符串需要拼接保存。
-
-        if(Integer.valueOf(page) == 1){
-            SharedPreUtil.saveShotsJson(type, json);
-        }else {
-            SharedPreUtil.saveMoreShotsJson(type, json);
         }
     }
 }

@@ -8,6 +8,9 @@ public class Constants {
 
     public static final String TYPE = "type";
     public static final String POSITION = "position";
+    public static final String REQUEST_NORMAL = "normal";
+    public static final String REQUEST_REFRESH = "refresh";
+    public static final String REQUEST_LOAD_MORE ="loadmore";
     /**
      * Dribbble API
      */

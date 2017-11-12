@@ -26,17 +26,17 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadShotsListen
     private RecyclerModel recyclerModel;
     private String type;
     private HashMap<String, String> map;
-    public RecyclerPresenter(RecyclerView<Shots> recyclerViewIf, String type, HashMap<String, String> map, BaseActivity activity){
+    public RecyclerPresenter(RecyclerView<Shots> recyclerViewIf, String requestType, HashMap<String, String> map, BaseActivity activity){
         this.recyclerViewIf = recyclerViewIf;
-        this.type = type;
+        this.type = requestType;
         this.map = map;
         recyclerModel = new com.menglingpeng.designersshow.mvp.model.RecyclerModel(activity);
     }
 
     @Override
-    public void onSuccess(String shotsJson) {
+    public void onSuccess(String shotsJson, String requestType) {
         recyclerViewIf.hideProgress();
-        recyclerViewIf.loadSuccess(shotsJson);
+        recyclerViewIf.loadSuccess(shotsJson, requestType);
     }
 
     @Override
