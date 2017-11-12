@@ -9,9 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
+import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 
@@ -19,14 +21,15 @@ import com.menglingpeng.designersshow.utils.ImageLoader;
  * Created by mengdroid on 2017/11/1.
  */
 
-public class DetailActivity extends BaseActivity {
+public class DetailActivity extends BaseActivity implements OnloadDetailImageListener {
 
     private Toolbar toolbar;
     private ImageView imageView;
     private CoordinatorLayout coordinatorLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private ProgressBar progressBar;
     private Shots shots;
-    private String htmlUrl, imageUrl, imageName;
+    private String htmlUrl, hidpiUrl, imageUrl, imageName;
 
     @Override
     protected void initLayoutId() {
@@ -40,11 +43,15 @@ public class DetailActivity extends BaseActivity {
         shots = (Shots) getIntent().getSerializableExtra("shots");
         htmlUrl = shots.getHtml_url();
         imageName = shots.getTitle();
+        if(hidpiUrl != null) {
+            imageUrl = shots.getImages().getHidpi();
+        }
         imageUrl = shots.getImages().getNormal();
         coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar_layout);
         imageView = (ImageView)findViewById(R.id.detail_im);
         toolbar = (Toolbar)findViewById(R.id.detail_tb);
+        progressBar = (ProgressBar)findViewById(R.id.progress_bar);
         toolbar.setTitle(shots.getTitle());
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -54,6 +61,7 @@ public class DetailActivity extends BaseActivity {
 
             }
         });
+        ImageLoader.loadDetailImage(getApplicationContext(), imageUrl, imageView, this);
     }
 
     @Override
@@ -97,5 +105,15 @@ public class DetailActivity extends BaseActivity {
 
     private void download(){
         ImageLoader.downloadImage(getApplicationContext(), coordinatorLayout, imageUrl, imageName);
+    }
+
+    @Override
+    public void onSuccess() {
+        progressBar.setVisibility(ProgressBar.GONE);
+    }
+
+    @Override
+    public void onFailure(String msg) {
+
     }
 }

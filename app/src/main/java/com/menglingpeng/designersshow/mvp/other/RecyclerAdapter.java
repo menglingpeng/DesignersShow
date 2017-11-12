@@ -101,7 +101,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shotses.get(position).getUpdated_at()));
-            ImageLoader.load(fragment, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm, isGif);
+            ImageLoader.load(fragment, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
             if(isGif){
                 viewHolder.shotsGifIm.setVisibility(TextView.VISIBLE);
             }

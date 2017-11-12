@@ -38,10 +38,7 @@
                 app:layout_collapseMode="pin">
             </android.support.v7.widget.Toolbar>
 
-           <ProgressBar
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_gravity="center"/>
+            <include layout="@layout/progress_bar"></include>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow.utils;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -8,26 +9,33 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.FutureTarget;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.menglingpeng.designersshow.R;
+import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -41,19 +49,13 @@ import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
 
 public class ImageLoader {
 
-    public static void load(Fragment fragment, String  url, ImageView imageView, boolean isFirst){
+    public static void load(Fragment fragment, String  url, ImageView imageView){
         RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL);
-        RequestBuilder<Bitmap> requestBuilder = Glide.with(fragment).asBitmap();
         //第一次加载GIF图片时不播放
-        if(isFirst){
+        RequestBuilder<Bitmap> requestBuilder = Glide.with(fragment).asBitmap();
             requestBuilder.apply(requestOptions);
-            requestBuilder.load(url).into(imageView);
-        }else {
-            Glide.with(fragment)
-                    .load(url)
-                    .apply(requestOptions)
-                    .into(imageView);
-        }
+            requestBuilder.load(url).apply(requestOptions).into(imageView);
+
     }
 
     public static void loadCricleImage(Fragment fragment, String url, ImageView imageView){
@@ -61,6 +63,27 @@ public class ImageLoader {
         Glide.with(fragment)
                 .load(url)
                 .apply(requestOptions)
+                .into(imageView);
+    }
+
+    public static void loadDetailImage(final Context context, String url, ImageView imageView, final OnloadDetailImageListener listener){
+        RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+        Glide.with(context)
+                .load(url)
+                .apply(requestOptions)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        listener.onFailure(context.getResources().getString(R.string.on_load_detail_image_listener_failed_msg));
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        listener.onSuccess();
+                        return false;
+                    }
+                })
                 .into(imageView);
 
     }
@@ -81,6 +104,10 @@ public class ImageLoader {
         request.setDestinationInExternalFilesDir(context, appDir.getAbsolutePath(), imageName);
         //获取DownloadManager实例
         DownloadManager dm = (DownloadManager)context.getSystemService(Context.DOWNLOAD_SERVICE);
+
+
+
+
         //将下载请求添加到下载队列，返回一个下载ID
         long downloadId = dm.enqueue(request);
         //根据ID过滤下载结果
