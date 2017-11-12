@@ -94,7 +94,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         recyclerView.setLayoutManager(linearLayoutManager);
         //确保item大小固定，可以提升性能
         recyclerView.setHasFixedSize(true);
-        swipeRefresh.setColorSchemeResources(R.color.colorAccent);
+        swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark, R.color.colorPrimary);
         swipeRefresh.setOnRefreshListener(this);
         recyclerView.setHasFixedSize(true);
     }
@@ -183,6 +183,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void onRefresh() {
+        mRequestType = Constants.REQUEST_REFRESH;
+        initData();
     }
 
     @Override
@@ -214,6 +216,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
                 recyclerView.setAdapter(adapter);
                 break;
+            case Constants.REQUEST_REFRESH:
+                showRefreshProgress(false);
+                adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
+                recyclerView.setAdapter(adapter);
             case Constants.REQUEST_LOAD_MORE:
                 adapter.setLoading(false);
                 break;
