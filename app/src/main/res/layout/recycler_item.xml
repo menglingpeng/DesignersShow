@@ -139,11 +139,26 @@
                 android:src="@drawable/ic_view"/>
 
             <TextView
-                android:id="@+id/item_view_count_tx"
+                android:id="@+id/item_views_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
                 android:layout_toRightOf="@+id/item_views_count_im"/>
+
+            <ImageView
+                android:id="@+id/item_attachments_count_im"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
+                android:layout_toRightOf="@+id/item_views_count_tx"
+                android:src="@drawable/ic_attachment_24dp"/>
+
+            <TextView
+                android:id="@+id/item_attachments_count_tx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
+                android:layout_toRightOf="@+id/item_attachments_count_im"/>
 
         </RelativeLayout>
 

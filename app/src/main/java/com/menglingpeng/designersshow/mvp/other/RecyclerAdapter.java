@@ -92,6 +92,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(holder instanceof ViewHolder){
             final ViewHolder viewHolder = (ViewHolder)holder;
             boolean isGif = shotses.get(position).isAnimated();
+            int attachments = shotses.get(position).getAttachments_count();
             ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
             /*if(!isScrolling) {
                 ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
@@ -108,6 +109,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.itemLikesCountTx.setText(String.valueOf(shotses.get(position).getLikes_count()));
             viewHolder.itemCommentsCountTx.setText(String.valueOf(shotses.get(position).getComments_count()));
             viewHolder.itemViewsCountTx.setText(String.valueOf(shotses.get(position).getViews_count()));
+            if(attachments ==0){
+                viewHolder.itemAttachmentsCountIm.setVisibility(ImageView.GONE);
+                viewHolder.itemAttachmentsCountTx.setVisibility(TextView.GONE);
+            }else {
+                viewHolder.itemAttachmentsCountTx.setText(String.valueOf(attachments));
+            }
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -122,9 +129,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageView avatarIv;
         public final TextView shotsTitleTx, shots_userTx, shotsCreatedTimeTx;
-        public final ImageView shotsIm, shotsGifIm;
-        public final TextView itemLikesCountTx, itemCommentsCountTx, itemViewsCountTx;
-
+        public final ImageView shotsIm, shotsGifIm, itemAttachmentsCountIm;
+        public final TextView itemLikesCountTx, itemCommentsCountTx, itemViewsCountTx, itemAttachmentsCountTx;
         public ViewHolder(View view) {
             super(view);
             avatarIv = (ImageView) view.findViewById(R.id.avatar_im);
@@ -135,7 +141,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             shotsGifIm = (ImageView) view.findViewById(R.id.shots_gif_im);
             itemLikesCountTx = (TextView) view.findViewById(R.id.item_likes_count_tx);
             itemCommentsCountTx = (TextView) view.findViewById(R.id.item_comments_count_tx);
-            itemViewsCountTx = (TextView) view.findViewById(R.id.item_view_count_tx);
+            itemViewsCountTx = (TextView) view.findViewById(R.id.item_views_count_tx);
+            itemAttachmentsCountIm = (ImageView)view.findViewById(R.id.item_attachments_count_im);
+            itemAttachmentsCountTx = (TextView)view.findViewById(R.id.item_attachments_count_tx);
         }
     }
 
