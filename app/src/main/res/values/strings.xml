@@ -47,10 +47,11 @@
     <string name="shots_create_at_time_one_day">昨天</string>
     <string name="shots_create_at_time_two_days">前天</string>
     <string name="shots_create_at_time_days">yyyy年MM月dd日</string>
-    <string name="detail_toolbar_overflow_menu_share">共享</string>
+    <string name="detail_toolbar_overflow_menu_share">分享</string>
     <string name="detail_toolbar_overflow_menu_open_in_browser">在浏览器打开</string>
     <string name="detail_toolbar_overflow_menu_download">下载</string>
     <string name="detail_toolbar_overflow_menu_share_create_chooser_title">分享</string>
+    <string name="detail_toolbar_overflow_menu_share_footer_text">来自Dribbble的分享</string>
     <string name="detail_toolbar_overflow_menu_open_in_browser_create_chooser_title">请选择浏览器</string>
     <string name="detail_toolbar_overflow_menu_download_snackbar_text">正在下载</string>
     <string name="on_load_detail_image_listener_failed_msg">load failed</string>

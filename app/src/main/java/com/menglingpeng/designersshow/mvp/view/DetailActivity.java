@@ -43,10 +43,12 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
         shots = (Shots) getIntent().getSerializableExtra("shots");
         htmlUrl = shots.getHtml_url();
         imageName = shots.getTitle();
+        hidpiUrl = shots.getImages().getHidpi();
         if(hidpiUrl != null) {
-            imageUrl = shots.getImages().getHidpi();
+            imageUrl = hidpiUrl;
+        }else {
+            imageUrl = shots.getImages().getNormal();
         }
-        imageUrl = shots.getImages().getNormal();
         coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar_layout);
         imageView = (ImageView)findViewById(R.id.detail_im);
@@ -58,7 +60,7 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                DetailActivity.this.finish();
             }
         });
         ImageLoader.loadDetailImage(getApplicationContext(), imageUrl, imageView, this);
@@ -89,7 +91,10 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
     private void shareShots(){
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        String text = new StringBuilder().append(imageName).append(htmlUrl).toString();
+        String text = new StringBuilder().append(imageName).append("\n")
+                .append(htmlUrl).append("\n")
+                .append(getResources().getString(R.string.detail_toolbar_overflow_menu_share_footer_text))
+                .toString();
         intent.putExtra(Intent.EXTRA_TEXT, text);
         startActivity(Intent.createChooser(intent, getResources().getString(R.string.detail_toolbar_overflow_menu_share_create_chooser_title)));
     }

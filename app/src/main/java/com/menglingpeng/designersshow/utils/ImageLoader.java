@@ -50,7 +50,7 @@ import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
 public class ImageLoader {
 
     public static void load(Fragment fragment, String  url, ImageView imageView){
-        RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL);
+        RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         //第一次加载GIF图片时不播放
         RequestBuilder<Bitmap> requestBuilder = Glide.with(fragment).asBitmap();
             requestBuilder.apply(requestOptions);
@@ -67,7 +67,7 @@ public class ImageLoader {
     }
 
     public static void loadDetailImage(final Context context, String url, ImageView imageView, final OnloadDetailImageListener listener){
-        RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+        RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         Glide.with(context)
                 .load(url)
                 .apply(requestOptions)
