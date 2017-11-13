@@ -8,8 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
@@ -28,6 +30,11 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
     private CoordinatorLayout coordinatorLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ProgressBar progressBar;
+    private TextView detailTitleTx, detailUpdateTimeTx, detailUserNameTx, detailUserLocation;
+    private ImageView detailAvatarIm, detailLikesIm, detailCommentsIm, detailBucketsIm, detailViewsIm;
+    private TextView detailAvatarCountTx, detailLikesCountTx, detailCommentsCountTx, detailBucketsCountTx, detailViewsCountTx;
+    private Button detailAttachmentsBt;
+    private TextView detailDescTx;
     private Shots shots;
     private String htmlUrl, hidpiUrl, imageUrl, imageName;
 

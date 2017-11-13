@@ -109,10 +109,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.itemLikesCountTx.setText(String.valueOf(shotses.get(position).getLikes_count()));
             viewHolder.itemCommentsCountTx.setText(String.valueOf(shotses.get(position).getComments_count()));
             viewHolder.itemViewsCountTx.setText(String.valueOf(shotses.get(position).getViews_count()));
-            if(attachments ==0){
-                viewHolder.itemAttachmentsCountIm.setVisibility(ImageView.GONE);
-                viewHolder.itemAttachmentsCountTx.setVisibility(TextView.GONE);
-            }else {
+            if(attachments !=0){
+                viewHolder.itemAttachmentsCountIm.setVisibility(ImageView.VISIBLE);
+                viewHolder.itemAttachmentsCountTx.setVisibility(TextView.VISIBLE);
                 viewHolder.itemAttachmentsCountTx.setText(String.valueOf(attachments));
             }
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
