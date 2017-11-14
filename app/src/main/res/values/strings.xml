@@ -54,5 +54,11 @@
     <string name="detail_toolbar_overflow_menu_share_footer_text">来自Dribbble的分享</string>
     <string name="detail_toolbar_overflow_menu_open_in_browser_create_chooser_title">请选择浏览器</string>
     <string name="detail_toolbar_overflow_menu_download_snackbar_text">正在下载</string>
+    <string name="detail_likes_tx">喜欢</string>
+    <string name="detail_comments_tx">评论</string>
+    <string name="detail_buckets_tx">作品集</string>
+    <string name="detail_views_tx">浏览</string>
+    <string name="detail_attachmets_bt_tx">附件</string>
     <string name="on_load_detail_image_listener_failed_msg">load failed</string>
+
 </resources>

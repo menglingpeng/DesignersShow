@@ -18,6 +18,7 @@ import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.TimeUtil;
 
 /**
  * Created by mengdroid on 2017/11/1.
@@ -30,9 +31,9 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
     private CoordinatorLayout coordinatorLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ProgressBar progressBar;
-    private TextView detailTitleTx, detailUpdateTimeTx, detailUserNameTx, detailUserLocation;
+    private TextView detailTitleTx, detailUpdateTimeTx, detailUserNameTx, detailUserLocationTx;
     private ImageView detailAvatarIm, detailLikesIm, detailCommentsIm, detailBucketsIm, detailViewsIm;
-    private TextView detailAvatarCountTx, detailLikesCountTx, detailCommentsCountTx, detailBucketsCountTx, detailViewsCountTx;
+    private TextView  detailLikesCountTx, detailCommentsCountTx, detailBucketsCountTx, detailViewsCountTx;
     private Button detailAttachmentsBt;
     private TextView detailDescTx;
     private Shots shots;
@@ -71,6 +72,48 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
             }
         });
         ImageLoader.loadDetailImage(getApplicationContext(), imageUrl, imageView, this);
+        initDescription();
+    }
+
+    private void initDescription(){
+
+        detailTitleTx = (TextView)findViewById(R.id.detail_title_tx);
+        detailTitleTx.setText(shots.getTitle());
+        detailUpdateTimeTx = (TextView)findViewById(R.id.detail_header_update_time_tx);
+        detailUpdateTimeTx.setText(TimeUtil.getTimeDifference(shots.getUpdated_at()));
+        detailAvatarIm = (ImageView)findViewById(R.id.detail_avatar_im);
+        ImageLoader.loadCricleImage(getApplicationContext(), shots.getUser().getAvatar_url(), detailAvatarIm);
+        detailUserNameTx = (TextView)findViewById(R.id.detail_user_name_tx);
+        detailUserNameTx.setText(shots.getUser().getUsername());
+        detailUserLocationTx = (TextView)findViewById(R.id.detail_header_user_location_tx);
+        detailUserLocationTx.setText(shots.getUser().getLocation());
+        detailLikesIm = (ImageView)findViewById(R.id.detail_likes_im);
+        detailLikesCountTx = (TextView)findViewById(R.id.detail_likes_count_tx);
+        detailLikesCountTx.setText(String.valueOf(shots.getLikes_count()));
+        detailCommentsIm = (ImageView)findViewById(R.id.detail_comments_im);
+        detailCommentsCountTx= (TextView)findViewById(R.id.detail_comments_tx);
+        detailCommentsCountTx.setText(String.valueOf(shots.getComments_count()));
+        detailBucketsIm = (ImageView)findViewById(R.id.detail_buckets_im);
+        detailBucketsCountTx = (TextView)findViewById(R.id.detail_buckets_count_tx);
+        detailBucketsCountTx.setText(String.valueOf(shots.getBuckets_count()));
+        detailViewsCountTx = (TextView)findViewById(R.id.detail_views_count_tx);
+        detailViewsCountTx.setText(String.valueOf(shots.getViews_count()));
+        detailAttachmentsBt = (Button)findViewById(R.id.detail_attachment_bt);
+        if(shots.getAttachments_count() != 0){
+            detailAttachmentsBt.setVisibility(Button.VISIBLE);
+            String attachments = new StringBuilder().append(String.valueOf(shots.getAttachments_count()))
+                    .append(getResources().getString(R.string.detail_attachmets_bt_tx)).toString();
+            detailAttachmentsBt.setText(attachments);
+            detailAttachmentsBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
+
+        detailDescTx = (TextView)findViewById(R.id.detail_desc_tx);
+        detailDescTx.setText(shots.getDescription());
     }
 
     @Override

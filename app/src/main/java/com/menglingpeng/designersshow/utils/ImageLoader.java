@@ -66,6 +66,14 @@ public class ImageLoader {
                 .into(imageView);
     }
 
+    public static void loadCricleImage(Context context, String url, ImageView imageView){
+        RequestOptions requestOptions = new RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+        Glide.with(context)
+                .load(url)
+                .apply(requestOptions)
+                .into(imageView);
+    }
+
     public static void loadDetailImage(final Context context, String url, ImageView imageView, final OnloadDetailImageListener listener){
         RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         Glide.with(context)

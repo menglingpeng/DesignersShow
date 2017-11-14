@@ -19,6 +19,8 @@ public class Shots implements Data, Serializable {
 
     private String updated_at;
 
+    private String description;
+
     private String html_url;
 
     private String attachments_url;
@@ -43,6 +45,8 @@ public class Shots implements Data, Serializable {
 
     private int views_count;
 
+    private int buckets_count;
+
     private List<String> tags;
 
     private boolean animated;
@@ -61,6 +65,14 @@ public class Shots implements Data, Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getHtml_url() {
@@ -163,6 +175,14 @@ public class Shots implements Data, Serializable {
         return comments_count;
     }
 
+    public int getBuckets_count() {
+        return buckets_count;
+    }
+
+    public void setBuckets_count(int buckets_count) {
+        this.buckets_count = buckets_count;
+    }
+
     public void setComments_count(int comments_count) {
         this.comments_count = comments_count;
     }
@@ -229,6 +249,7 @@ public class Shots implements Data, Serializable {
         private String html_url;
         private String avatar_url;
         private String bio;
+        private String location;
         private int buckets_count;
         private int shots_count;
         private int likes_count;
@@ -282,6 +303,14 @@ public class Shots implements Data, Serializable {
 
         public void setBio(String bio) {
             this.bio = bio;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
         }
 
         public int getShots_count() {

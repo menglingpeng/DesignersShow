@@ -44,19 +44,23 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/detail_title_rl"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:background="#757575">
+            android:background="#C5CAE9">
 
             <TextView
                 android:id="@+id/detail_title_tx"
@@ -229,5 +233,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"/>
     </RelativeLayout>
+
+    </ScrollView>
+
 
 </android.support.design.widget.CoordinatorLayout>
