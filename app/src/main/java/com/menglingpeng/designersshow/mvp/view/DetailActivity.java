@@ -2,9 +2,12 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +21,7 @@ import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
 
 /**
@@ -89,15 +93,15 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
         detailUserLocationTx.setText(shots.getUser().getLocation());
         detailLikesIm = (ImageView)findViewById(R.id.detail_likes_im);
         detailLikesCountTx = (TextView)findViewById(R.id.detail_likes_count_tx);
-        detailLikesCountTx.setText(String.valueOf(shots.getLikes_count()));
+        detailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count()), getResources().getString(R.string.detail_likes_tx)));
         detailCommentsIm = (ImageView)findViewById(R.id.detail_comments_im);
         detailCommentsCountTx= (TextView)findViewById(R.id.detail_comments_tx);
-        detailCommentsCountTx.setText(String.valueOf(shots.getComments_count()));
+        detailCommentsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getComments_count()), getResources().getString(R.string.detail_comments_tx)));
         detailBucketsIm = (ImageView)findViewById(R.id.detail_buckets_im);
         detailBucketsCountTx = (TextView)findViewById(R.id.detail_buckets_count_tx);
-        detailBucketsCountTx.setText(String.valueOf(shots.getBuckets_count()));
+        detailBucketsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getBuckets_count()), getResources().getString(R.string.detail_buckets_tx)));
         detailViewsCountTx = (TextView)findViewById(R.id.detail_views_count_tx);
-        detailViewsCountTx.setText(String.valueOf(shots.getViews_count()));
+        detailViewsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getViews_count()), getResources().getString(R.string.detail_views_tx)));
         detailAttachmentsBt = (Button)findViewById(R.id.detail_attachment_bt);
         if(shots.getAttachments_count() != 0){
             detailAttachmentsBt.setVisibility(Button.VISIBLE);
@@ -113,7 +117,12 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
         }
 
         detailDescTx = (TextView)findViewById(R.id.detail_desc_tx);
-        detailDescTx.setText(shots.getDescription());
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            detailDescTx.setText(Html.fromHtml(shots.getDescription(), Html.FROM_HTML_MODE_LEGACY));
+        }else {
+            detailDescTx.setText(Html.fromHtml(shots.getDescription()));
+        }
+        detailDescTx.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override

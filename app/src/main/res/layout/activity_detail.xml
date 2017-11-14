@@ -60,7 +60,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:background="#C5CAE9">
+            android:background="#EEEEEE">
 
             <TextView
                 android:id="@+id/detail_title_tx"
@@ -117,10 +117,10 @@
             <FrameLayout
                 android:id="@+id/detail_likes_fl"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_weight="1"
                 android:paddingTop="10dp"
-                android:paddingLeft="10dp">
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/detail_likes_im"
@@ -140,10 +140,10 @@
             <FrameLayout
                 android:id="@+id/detail_comments_fl"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_weight="1"
                 android:paddingTop="10dp"
-                android:paddingLeft="10dp">
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/detail_comments_im"
@@ -163,10 +163,10 @@
             <FrameLayout
                 android:id="@+id/detail_buckets_fl"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_weight="1"
                 android:paddingTop="10dp"
-                android:paddingLeft="10dp">
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/detail_buckets_im"
@@ -186,10 +186,10 @@
             <FrameLayout
                 android:id="@+id/detail_views_fl"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_weight="1"
                 android:paddingTop="10dp"
-                android:paddingLeft="10dp">
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/detail_views_im"
@@ -231,7 +231,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:linksClickable="true" />
     </RelativeLayout>
 
     </ScrollView>
