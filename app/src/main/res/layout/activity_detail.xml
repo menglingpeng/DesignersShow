@@ -56,10 +56,10 @@
         <RelativeLayout
             android:id="@+id/detail_title_rl"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/detail_title_rl_layout_height"
             android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="@dimen/detail_title_rl_paddingLeft"
+            android:paddingRight="@dimen/detail_title_rl_paddingRight"
             android:background="#EEEEEE">
 
             <TextView
@@ -69,37 +69,37 @@
                 style="@style/Base.TextAppearance.AppCompat.Title"/>
 
             <TextView
-                android:id="@+id/detail_header_update_time_tx"
+                android:id="@+id/detail_update_time_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/detail_title_tx"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="@dimen/detail_update_time_tx_layout_marginTop"/>
 
             <ImageView
                 android:id="@+id/detail_avatar_im"
                 android:layout_width="@dimen/recycler_view_item_avatar_layout_width"
                 android:layout_height="@dimen/recycler_view_item_avatar_layout_height"
-                android:layout_below="@+id/detail_header_update_time_tx"
-                android:layout_marginTop="10dp" />
+                android:layout_below="@+id/detail_update_time_tx"
+                android:layout_marginTop="@dimen/detail_avatar_im_layout_marginTop" />
 
             <TextView
                 android:id="@+id/detail_user_name_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/detail_avatar_im"
-                android:layout_below="@+id/detail_header_update_time_tx"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/detail_update_time_tx"
+                android:layout_marginTop="@dimen/detail_user_name_tx_layout_marginTop"
+                android:layout_marginLeft="@dimen/detail_user_name_tx_layout_marginLeft"
                 style="@style/TextAppearance.AppCompat.Title"/>
 
             <TextView
-                android:id="@+id/detail_header_user_location_tx"
+                android:id="@+id/detail_user_location_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/detail_user_name_tx"
                 android:layout_toRightOf="@+id/detail_avatar_im"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginTop="@dimen/detail_user_location_tx_layout_marginTop"
+                android:layout_marginLeft="@dimen/detail_user_location_tx_layout_marginLeft"/>
 
         </RelativeLayout>
 
@@ -109,18 +109,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/detail_title_rl"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingLeft="@dimen/detail_desc_ll_paddingRight"
+            android:paddingRight="@dimen/detail_desc_ll_paddingRight"
+            android:paddingTop="@dimen/detail_desc_ll_paddingTop"
+            android:paddingBottom="@dimen/detail_desc_ll_paddingBottom">
 
             <FrameLayout
                 android:id="@+id/detail_likes_fl"
-                android:layout_width="0dp"
-                android:layout_height="75dp"
-                android:layout_weight="1"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:layout_width="@dimen/detail_desc_ll_fl_layout_width"
+                android:layout_height="@dimen/detail_desc_ll_fl_layout_height"
+                android:layout_weight="@dimen/detail_desc_ll_fl_layout_weight"
+                android:paddingTop="@dimen/detail_desc_ll_fl_paddingTop"
+                android:paddingBottom="@dimen/detail_desc_ll_fl_paddingBottom">
 
                 <ImageView
                     android:id="@+id/detail_likes_im"
@@ -139,11 +139,11 @@
 
             <FrameLayout
                 android:id="@+id/detail_comments_fl"
-                android:layout_width="0dp"
-                android:layout_height="75dp"
-                android:layout_weight="1"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:layout_width="@dimen/detail_desc_ll_fl_layout_width"
+                android:layout_height="@dimen/detail_desc_ll_fl_layout_height"
+                android:layout_weight="@dimen/detail_desc_ll_fl_layout_weight"
+                android:paddingTop="@dimen/detail_desc_ll_fl_paddingTop"
+                android:paddingBottom="@dimen/detail_desc_ll_fl_paddingBottom">
 
                 <ImageView
                     android:id="@+id/detail_comments_im"
@@ -162,11 +162,11 @@
 
             <FrameLayout
                 android:id="@+id/detail_buckets_fl"
-                android:layout_width="0dp"
-                android:layout_height="75dp"
-                android:layout_weight="1"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:layout_width="@dimen/detail_desc_ll_fl_layout_width"
+                android:layout_height="@dimen/detail_desc_ll_fl_layout_height"
+                android:layout_weight="@dimen/detail_desc_ll_fl_layout_weight"
+                android:paddingTop="@dimen/detail_desc_ll_fl_paddingTop"
+                android:paddingBottom="@dimen/detail_desc_ll_fl_paddingBottom">
 
                 <ImageView
                     android:id="@+id/detail_buckets_im"
@@ -185,11 +185,11 @@
 
             <FrameLayout
                 android:id="@+id/detail_views_fl"
-                android:layout_width="0dp"
-                android:layout_height="75dp"
-                android:layout_weight="1"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:layout_width="@dimen/detail_desc_ll_fl_layout_width"
+                android:layout_height="@dimen/detail_desc_ll_fl_layout_height"
+                android:layout_weight="@dimen/detail_desc_ll_fl_layout_weight"
+                android:paddingTop="@dimen/detail_desc_ll_fl_paddingTop"
+                android:paddingBottom="@dimen/detail_desc_ll_fl_paddingBottom">
 
                 <ImageView
                     android:id="@+id/detail_views_im"
@@ -213,10 +213,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/detail_desc_ll"
-            android:paddingLeft="5dp"
-            android:drawablePadding="5dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
+            android:paddingLeft="@dimen/detail_attachment_bt_paddingLeft"
+            android:drawablePadding="@dimen/detail_attachment_bt_drawablePadding"
+            android:layout_marginTop="@dimen/detail_attachment_bt_layout_marginTop"
+            android:layout_marginLeft="@dimen/detail_attachment_bt_layout_marginLeft"
             android:gravity="left|center_vertical"
             android:drawableStart="@drawable/ic_attachment_24dp"
             android:background="@color/colorAccent"
@@ -228,10 +228,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/detail_attachment_bt"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="@dimen/detail_desc_tx_layout_marginLeft"
+            android:layout_marginTop="@dimen/detail_desc_tx_layout_marginTop"
+            android:layout_marginRight="@dimen/detail_desc_tx_layout_marginRight"
+            android:layout_marginBottom="@dimen/detail_desc_tx_layout_marginBottom"
             android:linksClickable="true" />
     </RelativeLayout>
 

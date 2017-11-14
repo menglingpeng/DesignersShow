@@ -83,13 +83,13 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
 
         detailTitleTx = (TextView)findViewById(R.id.detail_title_tx);
         detailTitleTx.setText(shots.getTitle());
-        detailUpdateTimeTx = (TextView)findViewById(R.id.detail_header_update_time_tx);
+        detailUpdateTimeTx = (TextView)findViewById(R.id.detail_update_time_tx);
         detailUpdateTimeTx.setText(TimeUtil.getTimeDifference(shots.getUpdated_at()));
         detailAvatarIm = (ImageView)findViewById(R.id.detail_avatar_im);
         ImageLoader.loadCricleImage(getApplicationContext(), shots.getUser().getAvatar_url(), detailAvatarIm);
         detailUserNameTx = (TextView)findViewById(R.id.detail_user_name_tx);
         detailUserNameTx.setText(shots.getUser().getUsername());
-        detailUserLocationTx = (TextView)findViewById(R.id.detail_header_user_location_tx);
+        detailUserLocationTx = (TextView)findViewById(R.id.detail_user_location_tx);
         detailUserLocationTx.setText(shots.getUser().getLocation());
         detailLikesIm = (ImageView)findViewById(R.id.detail_likes_im);
         detailLikesCountTx = (TextView)findViewById(R.id.detail_likes_count_tx);
