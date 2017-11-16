@@ -7,6 +7,6 @@ import com.menglingpeng.designersshow.mvp.model.Shots;
  */
 
 public interface OnloadShotsListener {
-    void onSuccess(String shotsJson, String requestType);
+    void onSuccess(String json, String requestType);
     void onFailure(String msg);
 }
