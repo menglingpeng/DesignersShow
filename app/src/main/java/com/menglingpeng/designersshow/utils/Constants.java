@@ -11,6 +11,7 @@ public class Constants {
     public static final String REQUEST_NORMAL = "normal";
     public static final String REQUEST_REFRESH = "refresh";
     public static final String REQUEST_LOAD_MORE ="loadmore";
+    public static final String REQUEST_COMMENTS = "comments";
     /**
      * Dribbble API
      */

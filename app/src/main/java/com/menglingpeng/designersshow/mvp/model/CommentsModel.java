@@ -3,23 +3,23 @@ package com.menglingpeng.designersshow.mvp.model;
 import android.os.AsyncTask;
 
 import com.menglingpeng.designersshow.mvp.interf.OnloadShotsListener;
-import com.menglingpeng.designersshow.mvp.interf.ShotsSubcontentModelIf;
+import com.menglingpeng.designersshow.mvp.interf.CommentsModelIf;
 import com.menglingpeng.designersshow.net.HttpUtils;
 
 /**
  * Created by mengdroid on 2017/11/16.
  */
 
-public class ShotsSubcontentModel implements ShotsSubcontentModelIf {
+public class CommentsModel implements CommentsModelIf {
 
     private String requestType;
     private int id;
 
-    public ShotsSubcontentModel(){
+    public CommentsModel(){
     }
 
     @Override
-    public void getShotsSubContent(int id, String requestType, OnloadShotsListener listener) {
+    public void getComments(int id, String requestType, OnloadShotsListener listener) {
         this.id = id;
         this.requestType = requestType;
         new GetShotsSubContentJsonTask().execute(listener);
