@@ -52,7 +52,11 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
         @Override
         protected String doInBackground(OnloadShotsListener... params) {
             listener = params[0];
-            shotsJson = HttpUtils.getShotsJson(map);
+            if(type != Constants.REQUEST_COMMENTS) {
+                shotsJson = HttpUtils.getShotsJson(map);
+            }else {
+                shotsJson = HttpUtils.getCommentsJson(Integer.valueOf(map.get(Constants.REQUEST_COMMENTS)), Constants.REQUEST_COMMENTS);
+            }
             return shotsJson;
         }
 
@@ -67,16 +71,4 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
         }
     }
 
-    class GetSubContentJsonTask extends AsyncTask<OnloadShotsListener, Void, String>{
-
-        @Override
-        protected String doInBackground(OnloadShotsListener... onloadShotsListeners) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    }
 }

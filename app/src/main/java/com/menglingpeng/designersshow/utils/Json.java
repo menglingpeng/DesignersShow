@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 
 import java.io.IOException;
@@ -37,6 +38,19 @@ public class Json {
             shotsList.add(shots);
         }
         return shotsList;
+    }
+
+    public static ArrayList<Comments> parseComments(String shotsJson){
+
+        //替换Sting值null为"".
+        JsonParser parser = new JsonParser();
+        JsonArray jsonArray = parser.parse(shotsJson).getAsJsonArray();
+        ArrayList<Comments> commentsList = new ArrayList<>();
+        for(JsonElement element : jsonArray){
+            Comments comments = gson.fromJson(element, Comments.class);
+            commentsList.add(comments);
+        }
+        return commentsList;
     }
 
     public static class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {

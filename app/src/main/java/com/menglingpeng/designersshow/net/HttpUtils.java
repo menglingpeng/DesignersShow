@@ -47,7 +47,7 @@ HttpUtils {
         return shotsJson;
     }
 
-    public static String getSubcontentJson(int id, String requestType){
+    public static String getCommentsJson(int id, String requestType){
         String subContentJson = null;
         String url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(String.valueOf(id))
                 .append("/").append(requestType).toString();

@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow.mvp.other;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,9 @@ import android.widget.TextView;
 
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
+import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.TimeUtil;
@@ -32,7 +35,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_FOOTER = 1;
     private OnRecyclerListItemListener mListener;
     private ArrayList<Shots> shotses = new ArrayList<Shots>();
+    private ArrayList<Comments> comments = new ArrayList<Comments>();
     private Fragment fragment;
+    private Context context;
+    private String type;
     private boolean isLoading;
     onLoadingMore loadingMore;
     //加载更多的提前量
@@ -42,6 +48,28 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerAdapter(RecyclerView recyclerView, Fragment fragment, String type, OnRecyclerListItemListener listener){
         this.fragment = fragment;
         mListener = listener;
+        this.type = type;
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+                int itemcount = layoutManager.getItemCount();
+                int lastPosition = layoutManager.findLastVisibleItemPosition();
+                if(!isLoading && lastPosition >= (itemcount - visibleThreshold)){
+                    if(loadingMore != null){
+                        isLoading = true;
+                        loadingMore.onLoadMore();
+                    }
+                }
+            }
+        });
+    }
+
+    public RecyclerAdapter(RecyclerView recyclerView, Context context, String type, OnRecyclerListItemListener listener){
+        this.context = context;
+        mListener = listener;
+        this.type = type;
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -82,8 +110,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             view = inflater.inflate(R.layout.recycler_item_footer_loading, parent, false);
             return new FooterViewHolder(view);
         }else {
-            view = inflater.inflate(R.layout.recycler_item, parent, false);
-            return  new ViewHolder(view);
+            if (type != Constants.REQUEST_COMMENTS) {
+                view = inflater.inflate(R.layout.recycler_item, parent, false);
+                return new ViewHolder(view);
+            } else {
+                view = inflater.inflate(R.layout.comments_recycler_view_item, parent, false);
+                return new CommentsViewHolder(view);
+            }
         }
     }
 
@@ -94,11 +127,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             boolean isGif = shotses.get(position).isAnimated();
             int attachments = shotses.get(position).getAttachments_count();
             ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
-            /*if(!isScrolling) {
-                ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
-            }else {
-                viewHolder.avatarIv.setImageResource(R.drawable.ic_avatar);
-            }*/
             viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
             viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shotses.get(position).getUpdated_at()));
@@ -122,6 +150,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             });
+        }else if(holder instanceof CommentsViewHolder){
+
         }
     }
 
@@ -146,6 +176,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+    public class CommentsViewHolder extends RecyclerView.ViewHolder{
+        public final  ImageView commentsAvatarIm, commentsLikesIm;
+        public final  TextView commentsUsernameTv, commentsContentTv, commentsCreateAtTv
+                ,commentsLikesCountTv;
+        public CommentsViewHolder(View view) {
+            super(view);
+            commentsAvatarIm = (ImageView)view.findViewById(R.id.detail_comments_avatar_im);
+            commentsUsernameTv= (TextView)view.findViewById(R.id.detail_comments_username_tx);
+            commentsContentTv = (TextView)view.findViewById(R.id.detail_comments_content_tx);
+            commentsCreateAtTv = (TextView)view.findViewById(R.id.detail_comments_create_at_tx);
+            commentsLikesIm = (ImageView)view.findViewById(R.id.detail_comments_likes_im);
+            commentsLikesCountTv = (TextView)view.findViewById(R.id.detail_comments_likes_count_tx);
+        }
+    }
+
     public class FooterViewHolder extends RecyclerView.ViewHolder{
 
         public FooterViewHolder(View itemView) {
@@ -153,9 +198,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void addData(Shots data){
+    public void addShotsData(Shots data){
         shotses.add(data);
         notifyDataSetChanged();
+    }
+
+    public void addCommentsData(Comments data){
+        comments.add(data);
     }
 
     public void setLoading(boolean isLoading){
