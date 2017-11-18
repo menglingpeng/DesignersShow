@@ -52,11 +52,7 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
         @Override
         protected String doInBackground(OnloadShotsListener... params) {
             listener = params[0];
-            if(type != Constants.REQUEST_COMMENTS) {
-                shotsJson = HttpUtils.getShotsJson(map);
-            }else {
-                shotsJson = HttpUtils.getCommentsJson(Integer.valueOf(map.get(Constants.REQUEST_COMMENTS)), Constants.REQUEST_COMMENTS);
-            }
+            shotsJson = HttpUtils.getJson(map, type);
             return shotsJson;
         }
 

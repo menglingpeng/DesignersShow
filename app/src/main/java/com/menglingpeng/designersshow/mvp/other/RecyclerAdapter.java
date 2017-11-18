@@ -124,19 +124,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof ViewHolder){
             final ViewHolder viewHolder = (ViewHolder)holder;
-            boolean isGif = shotses.get(position).isAnimated();
-            int attachments = shotses.get(position).getAttachments_count();
-            ImageLoader.loadCricleImage(fragment, shotses.get(position).getUser().getAvatar_url(), viewHolder.avatarIv);
-            viewHolder.shotsTitleTx.setText(shotses.get(position).getTitle());
-            viewHolder.shots_userTx.setText(shotses.get(position).getUser().getUsername());
-            viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shotses.get(position).getUpdated_at()));
-            ImageLoader.load(fragment, shotses.get(position).getImages().getNormal(), viewHolder.shotsIm);
+            final Shots shots = shotses.get(position);
+            boolean isGif = shots.isAnimated();
+            int attachments = shots.getAttachments_count();
+            ImageLoader.loadCricleImage(fragment, shots.getUser().getAvatar_url(), viewHolder.avatarIv);
+            viewHolder.shotsTitleTx.setText(shots.getTitle());
+            viewHolder.shots_userTx.setText(shots.getUser().getUsername());
+            viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shots.getUpdated_at()));
+            ImageLoader.load(fragment, shots.getImages().getNormal(), viewHolder.shotsIm);
             if(isGif){
                 viewHolder.shotsGifIm.setVisibility(TextView.VISIBLE);
             }
-            viewHolder.itemLikesCountTx.setText(String.valueOf(shotses.get(position).getLikes_count()));
-            viewHolder.itemCommentsCountTx.setText(String.valueOf(shotses.get(position).getComments_count()));
-            viewHolder.itemViewsCountTx.setText(String.valueOf(shotses.get(position).getViews_count()));
+            viewHolder.itemLikesCountTx.setText(String.valueOf(shots.getLikes_count()));
+            viewHolder.itemCommentsCountTx.setText(String.valueOf(shots.getComments_count()));
+            viewHolder.itemViewsCountTx.setText(String.valueOf(shots.getViews_count()));
             if(attachments !=0){
                 viewHolder.itemAttachmentsCountIm.setVisibility(ImageView.VISIBLE);
                 viewHolder.itemAttachmentsCountTx.setVisibility(TextView.VISIBLE);
@@ -146,12 +147,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View v) {
                     if(mListener != null){
-                        mListener.onRecyclerFragmentListListener(viewHolder, shotses.get(position));
+                        mListener.onRecyclerFragmentListListener(viewHolder, shots);
                     }
                 }
             });
         }else if(holder instanceof CommentsViewHolder){
-
+            CommentsViewHolder viewHolder = (CommentsViewHolder)holder;
+            Comments comment = comments.get(position);
+            ImageLoader.loadCricleImage(context, comment.getUser().getAvatar_url(), viewHolder.commentsAvatarIm);
+            viewHolder.commentsContentTv.setText(comment.getBody());
+            viewHolder.commentsUsernameTv.setText(comment.getUser().getUsername());
+            viewHolder.commentsCreateAtTv.setText(comment.getCreated_at());
+            viewHolder.commentsLikesCountTv.setText(comment.getLikes_count());
         }
     }
 
@@ -205,6 +212,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public void addCommentsData(Comments data){
         comments.add(data);
+        notifyDataSetChanged();
     }
 
     public void setLoading(boolean isLoading){

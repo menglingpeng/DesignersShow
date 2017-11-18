@@ -20,6 +20,7 @@ import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
 import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
@@ -95,6 +96,14 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
         detailLikesCountTx = (TextView)findViewById(R.id.detail_likes_count_tx);
         detailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count()), getResources().getString(R.string.detail_likes_tx)));
         detailCommentsIm = (ImageView)findViewById(R.id.detail_comments_im);
+        detailCommentsIm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, CommentsActivity.class);
+                intent.putExtra(Constants.REQUEST_COMMENTS, shots.getId());
+                startActivity(intent);
+            }
+        });
         detailCommentsCountTx= (TextView)findViewById(R.id.detail_comments_tx);
         detailCommentsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getComments_count()), getResources().getString(R.string.detail_comments_tx)));
         detailBucketsIm = (ImageView)findViewById(R.id.detail_buckets_im);

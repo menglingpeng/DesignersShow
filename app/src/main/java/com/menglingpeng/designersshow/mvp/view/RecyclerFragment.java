@@ -249,6 +249,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
             case Constants.REQUEST_COMMENTS:
                 adapter = new RecyclerAdapter(recyclerView, context, mRequestType, this);
+                recyclerView.setAdapter(adapter);
                 break;
         }
         adapter.setLoadingMore(new RecyclerAdapter.onLoadingMore() {

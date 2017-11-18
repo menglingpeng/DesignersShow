@@ -2,6 +2,7 @@ package com.menglingpeng.designersshow.net;
 
 import android.util.Log;
 
+import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.utils.Constants;
 
 import java.io.IOException;
@@ -23,15 +24,22 @@ public class
 
 HttpUtils {
 
-    public static String getShotsJson(HashMap<String, String> map){
-        String shotsJson = null;
+    public static String getJson(HashMap<String, String> map, String requestType){
+        String json = null;
+        HttpUrl httpUrl = null;
         OkHttpClient client = new OkHttpClient();
-        HttpUrl.Builder builder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
-        for(String key : map.keySet()){
-            builder.addQueryParameter(key, map.get(key));
-            //Log.i(key, map.get(key));
+        if(requestType != Constants.REQUEST_COMMENTS) {
+            HttpUrl.Builder builder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
+            for (String key : map.keySet()) {
+                builder.addQueryParameter(key, map.get(key));
+                //Log.i(key, map.get(key));
+            }
+            httpUrl = builder.build();
+        }else {
+            String url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(requestType))
+                    .append("/").append(requestType).toString();
+            httpUrl = HttpUrl.parse(url);
         }
-        HttpUrl httpUrl =  builder.build();
         Request request = new Request.Builder()
                 .url(httpUrl)
                 .get()
@@ -39,32 +47,12 @@ HttpUtils {
         Response response = null;
         try {
             response = client.newCall(request).execute();
-            shotsJson = response.body().string();
+            json = response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
-            shotsJson = null;
+            json = null;
         }
-        return shotsJson;
+        return json;
     }
-
-    public static String getCommentsJson(int id, String requestType){
-        String subContentJson = null;
-        String url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(String.valueOf(id))
-                .append("/").append(requestType).toString();
-        OkHttpClient client = new OkHttpClient();
-        HttpUrl httpUrl = HttpUrl.parse(url);
-        Request request = new Request.Builder()
-                .url(httpUrl)
-                .get()
-                .build();
-        Response response = null;
-        try {
-            response = client.newCall(request).execute();
-            subContentJson = response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-            subContentJson = null;
-        }
-        return subContentJson;
-    }
+    
 }
