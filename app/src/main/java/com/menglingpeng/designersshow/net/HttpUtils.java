@@ -28,17 +28,17 @@ HttpUtils {
         String json = null;
         HttpUrl httpUrl = null;
         OkHttpClient client = new OkHttpClient();
-        if(!requestType.equals(Constants.REQUEST_COMMENTS)) {
+        if(map.get(Constants.SHOTS) != null) {
+            String url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.SHOTS))
+                    .append("/").append(requestType).toString();
+            httpUrl = HttpUrl.parse(url);
+        }else {
             HttpUrl.Builder builder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
             for (String key : map.keySet()) {
                 builder.addQueryParameter(key, map.get(key));
                 //Log.i(key, map.get(key));
             }
             httpUrl = builder.build();
-        }else {
-            String url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(requestType))
-                    .append("/").append(requestType).toString();
-            httpUrl = HttpUrl.parse(url);
         }
         Request request = new Request.Builder()
                 .url(httpUrl)
@@ -54,5 +54,6 @@ HttpUtils {
         }
         return json;
     }
+
     
 }

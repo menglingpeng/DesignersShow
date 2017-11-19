@@ -2,6 +2,7 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -20,10 +21,13 @@ import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
 import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.net.HttpUtils;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
+
+import java.util.HashMap;
 
 /**
  * Created by mengdroid on 2017/11/1.
@@ -76,12 +80,13 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
                 DetailActivity.this.finish();
             }
         });
+        detailLikesIm = (ImageView)findViewById(R.id.detail_likes_im);
+        new CheckIfLikeShotTask().execute(String.valueOf(shots.getId()));
         ImageLoader.loadDetailImage(getApplicationContext(), imageUrl, imageView, this);
         initDescription();
     }
 
     private void initDescription(){
-
         detailTitleTx = (TextView)findViewById(R.id.detail_title_tx);
         detailTitleTx.setText(shots.getTitle());
         detailUpdateTimeTx = (TextView)findViewById(R.id.detail_update_time_tx);
@@ -92,7 +97,6 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
         detailUserNameTx.setText(shots.getUser().getUsername());
         detailUserLocationTx = (TextView)findViewById(R.id.detail_user_location_tx);
         detailUserLocationTx.setText(shots.getUser().getLocation());
-        detailLikesIm = (ImageView)findViewById(R.id.detail_likes_im);
         detailLikesCountTx = (TextView)findViewById(R.id.detail_likes_count_tx);
         detailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count()), getResources().getString(R.string.detail_likes_tx)));
         detailCommentsIm = (ImageView)findViewById(R.id.detail_comments_im);
@@ -189,4 +193,27 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
     public void onFailure(String msg) {
 
     }
+
+    class CheckIfLikeShotTask extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected String doInBackground(String... id) {
+            String likeJson = null;
+            HashMap<String, String> map = new HashMap<>();
+            map.put(Constants.SHOTS, id[0]);
+            HttpUtils.getJson(map, Constants.REQUEST_CHECK_IF_LIKE_SHOT);
+            return likeJson;
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            if(json != null){
+                detailLikesIm.setImageResource(R.drawable.ic_favorite_red_600_24dp);
+            }else {
+                detailLikesIm.setImageResource(R.drawable.ic_favorite_grey_600);
+            }
+        }
+    }
+
 }

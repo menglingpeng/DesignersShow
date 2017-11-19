@@ -8,10 +8,13 @@ public class Constants {
 
     public static final String TYPE = "type";
     public static final String POSITION = "position";
+    public static final String SHOTS = "shots";
     public static final String REQUEST_NORMAL = "normal";
     public static final String REQUEST_REFRESH = "refresh";
     public static final String REQUEST_LOAD_MORE ="loadmore";
     public static final String REQUEST_COMMENTS = "comments";
+    public static final String REQUEST_CHECK_IF_LIKE_SHOT = "like";
+    public static final String REQUEST_SHOTS_ATTACHMENTS = "attachments";
     /**
      * Dribbble API
      */

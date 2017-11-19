@@ -117,7 +117,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private void initParameters(){
         map = new HashMap<>();
         if(getArguments().get(Constants.REQUEST_COMMENTS) != null){
-            map.put(Constants.REQUEST_COMMENTS, getArguments().get(Constants.REQUEST_COMMENTS).toString());
+            map.put(Constants.SHOTS, getArguments().get(Constants.REQUEST_COMMENTS).toString());
             mRequestType = Constants.REQUEST_COMMENTS;
         }else {
             type = getArguments().get(Constants.TYPE).toString();
