@@ -14,7 +14,7 @@ import com.menglingpeng.designersshow.utils.Constants;
 public class CommentsActivity extends BaseActivity {
 
     private android.support.v7.widget.Toolbar toolbar;
-    private int id;
+    private String id;
 
     @Override
     protected void initLayoutId() {
@@ -33,7 +33,7 @@ public class CommentsActivity extends BaseActivity {
                 CommentsActivity.this.finish();
             }
         });
-        id = Integer.valueOf(getIntent().getStringExtra(Constants.REQUEST_COMMENTS).toString());
+        id = getIntent().getStringExtra(Constants.REQUEST_COMMENTS).toString();
         replaceFragment(RecyclerFragment.newInstance(id, Constants.REQUEST_COMMENTS));
     }
 

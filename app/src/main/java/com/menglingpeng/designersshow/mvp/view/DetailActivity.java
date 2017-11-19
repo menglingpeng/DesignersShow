@@ -100,7 +100,7 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailActivity.this, CommentsActivity.class);
-                intent.putExtra(Constants.REQUEST_COMMENTS, shots.getId());
+                intent.putExtra(Constants.REQUEST_COMMENTS, String.valueOf(shots.getId()));
                 startActivity(intent);
             }
         });

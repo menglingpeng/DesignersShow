@@ -76,9 +76,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         return fragment;
     }
 
-    public static RecyclerFragment newInstance(int id, String type){
+    public static RecyclerFragment newInstance(String id, String type){
         Bundle bundle = new Bundle();
-        bundle.putString(type, String.valueOf(id));
+        bundle.putString(type, id);
         RecyclerFragment fragment = new RecyclerFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -116,7 +116,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     private void initParameters(){
         map = new HashMap<>();
-        if(getArguments().get(Constants.REQUEST_COMMENTS).toString() != null){
+        if(getArguments().get(Constants.REQUEST_COMMENTS) != null){
             map.put(Constants.REQUEST_COMMENTS, getArguments().get(Constants.REQUEST_COMMENTS).toString());
             mRequestType = Constants.REQUEST_COMMENTS;
         }else {
@@ -226,14 +226,17 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     public void loadSuccess(String shotsjson, String requestType) {
         Fragment fragment = null;
         Context context = null;
-        shotsList = Json.parseShots(shotsjson);
-        if (type.equals(TAB_POPULAR) || type.equals(TAB_RECENT)) {
-            fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-        }else if(mRequestType == Constants.REQUEST_COMMENTS){
+        if(!mRequestType.equals(Constants.REQUEST_COMMENTS)) {
+            if (type.equals(TAB_POPULAR) || type.equals(TAB_RECENT)) {
+                fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
+                shotsList = Json.parseShots(shotsjson);
+            } else {
+                fragment = MainActivity.getCurrentFragment();
+                shotsList = Json.parseShots(shotsjson);
+            }
+        }else {
             context = getActivity().getApplicationContext();
             commmentsList = Json.parseComments(shotsjson);
-        } else {
-            fragment = MainActivity.getCurrentFragment();
         }
         switch (requestType){
             case Constants.REQUEST_NORMAL:

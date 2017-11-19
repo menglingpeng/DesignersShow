@@ -28,7 +28,7 @@ HttpUtils {
         String json = null;
         HttpUrl httpUrl = null;
         OkHttpClient client = new OkHttpClient();
-        if(requestType != Constants.REQUEST_COMMENTS) {
+        if(!requestType.equals(Constants.REQUEST_COMMENTS)) {
             HttpUrl.Builder builder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
             for (String key : map.keySet()) {
                 builder.addQueryParameter(key, map.get(key));

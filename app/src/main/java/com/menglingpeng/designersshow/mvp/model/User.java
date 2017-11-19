@@ -239,7 +239,7 @@ public class User implements Serializable {
         this.created_at = created_at;
     }
 
-    public class Links{
+    public class Links implements Serializable{
         private String web;
 
         private String twitter;
