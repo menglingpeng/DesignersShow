@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".mvp.view.DetailActivity" />
-        <activity android:name=".mvp.view.CommentsActivity"></activity>
+        <activity android:name=".mvp.view.CommentsActivity" />
+        <activity android:name=".UserProfileActivity"></activity>
     </application>
 
 </manifest>

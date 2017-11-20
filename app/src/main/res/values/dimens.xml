@@ -69,6 +69,9 @@
     <dimen name="detail_comments_likes_im_layout_marginEnd">28dp</dimen>
     <dimen name="detail_comments_likes_count_tx_layout_marginEnd">10dp</dimen>
     <dimen name="detail_comments_dividing_line_layout_height">1dp</dimen>
+    <dimen name="user_profile_ctb_layout_height">400dp</dimen>
+    <dimen name="user_profile_avatar_im_layout_width">80dp</dimen>
+    <dimen name="user_profile_avatar_im_layout_height">80dp</dimen>
 
 
 
