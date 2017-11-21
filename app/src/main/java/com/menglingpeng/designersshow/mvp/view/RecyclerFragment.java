@@ -60,7 +60,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private int page = 1;
     private ArrayList<Shots> shotsList;
     private ArrayList<Comments> commmentsList;
-    private String access_token  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
     public static final String TAB_FOLLOWING = "Following";
@@ -180,7 +179,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             if(!type.equals(TAB_POPULAR) && !type.equals(TAB_RECENT)){
                 map = SharedPreUtil.getParameters();
             }
-            map.put("access_token", access_token);
+            map.put("access_token", Constants.ACCESS_TOKEN);
             if(list != null){
                 map.put("list", list);
             }
