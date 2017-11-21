@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
@@ -19,14 +20,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,6 +46,7 @@ import com.menglingpeng.designersshow.utils.SnackUI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -51,6 +59,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private RelativeLayout navHeaderRl;
     private ImageView navAvatarIm;
     private TextView navNameTx, navDescTx;
+    private ImageView loginDialogCloseIm;
+    private Button loginDialogLoginBt;
+    private ProgressBar loginDialogPb;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private LinearLayout exploreLl;
@@ -199,6 +210,37 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setItemIconTintList(csl);
         navigationView.setItemTextColor(csl);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void showLoginDialog(){
+        final Dialog dialog = new Dialog(this, R.style.Theme_AppCompat_Dialog);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_login, null);
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+        window.setWindowAnimations(R.style.LoginDialog);
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(layoutParams);
+        dialog.setContentView(dialogView);
+        loginDialogCloseIm = (ImageView)dialogView.findViewById(R.id.dialog_login_close_im);
+        loginDialogLoginBt = (Button)dialogView.findViewById(R.id.dialog_login_bt);
+        loginDialogPb = (ProgressBar)dialogView.findViewById(R.id.dialog_login_pb);
+        dialog.show();
+        loginDialogCloseIm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        loginDialogLoginBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+
     }
 
     @Override

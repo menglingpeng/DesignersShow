@@ -43,6 +43,12 @@
     <style name="TabLayoutTheme">
         <item name="android:textSize">16dp</item>
     </style>
+    
+    <style name="LoginDialog" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/dialog_login_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_login_exit</item>
+    </style>
+    
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
