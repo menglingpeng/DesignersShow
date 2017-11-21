@@ -25,8 +25,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
@@ -45,6 +48,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private String toolbarTitle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private RelativeLayout navHeaderRl;
+    private ImageView navAvatarIm;
+    private TextView navNameTx, navDescTx;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private LinearLayout exploreLl;
@@ -166,6 +172,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @SuppressLint("RestrictedApi")
     private void initNavigationView(){
+        View headerView = navigationView.getHeaderView(0);
+        navHeaderRl = (RelativeLayout)headerView.findViewById(R.id.nav_view_header_rl);
+        navAvatarIm = (ImageView)headerView.findViewById(R.id.login_avatar_im);
+        navNameTx = (TextView)headerView.findViewById(R.id.nav_view_desc_tx);
+        navDescTx = (TextView)headerView.findViewById(R.id.nav_view_desc_tx);
+        navHeaderRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isLogin){
+                }else {
+
+                }
+            }
+        });
         //设置打开和关闭Drawer的特效
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
         getSupportActionBar().setHomeButtonEnabled(true);

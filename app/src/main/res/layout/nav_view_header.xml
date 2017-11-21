@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_view_header_rl"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_view_header_height"
-    android:paddingLeft="@dimen/nav_view_header_paddingLeft"
+    android:layout_height="@dimen/nav_view_header_rl_layout_height"
+    android:paddingLeft="@dimen/nav_view_header_rl_paddingLeft"
     android:background="@color/colorPrimary">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/login_avatar"
-        android:layout_width="@dimen/nav_view_header_login_avatar_layout_width"
-        android:layout_height="@dimen/nav_view_header_login_avatar_layout_height"
-        android:layout_marginTop="@dimen/nav_view_header_login_avatar_layout_marginTop"
+    <ImageView
+        android:id="@+id/login_avatar_im"
+        android:layout_width="@dimen/nav_view_header_login_avatar_im_layout_width"
+        android:layout_height="@dimen/nav_view_header_login_avatar_im_layout_height"
+        android:layout_marginTop="@dimen/nav_view_header_login_avatar_im_layout_marginTop"
         android:src="@drawable/ic_avatar"/>
     <TextView
-        android:id="@+id/nav_view_name"
+        android:id="@+id/nav_view_name_tx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/nav_view_header_nav_view_name_layout_marginTop"
-        android:layout_below="@+id/login_avatar"
-        android:text="@string/nav_view_name"
-        android:textSize="20dp"
+        android:layout_marginTop="@dimen/nav_view_header_nav_view_name_tx_layout_marginTop"
+        android:layout_below="@+id/login_avatar_im"
+        android:text="@string/nav_view_name_tx"
         android:textColor="@android:color/white"
-        android:textStyle="bold"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
     <TextView
-        android:id="@+id/nav_view_desc"
+        android:id="@+id/nav_view_desc_tx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_below="@+id/nav_view_name"
-        android:text="@string/nav_view_desc"
-        android:textSize="14dp"
+        android:layout_marginTop="@dimen/nav_view_header_nav_view_desc_tx_layout_marginTop"
+        android:layout_below="@+id/nav_view_name_tx"
+        android:text="@string/nav_view_desc_tx"
+        android:textColor="@color/nav_header_desc_tx"
         />
 
 </RelativeLayout>

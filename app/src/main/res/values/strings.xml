@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dribbble</string>
+    <string name="app_name">shots</string>
     <string name="nav_home_menu">首页</string>
     <string name="nav_explore_menu">发现</string>
     <string name="toolbar_my_likes">我喜欢的作品</string>
@@ -31,8 +31,10 @@
     <string name="explore_spinner_list_playoffs">赛季精品</string>
     <string name="explore_spinner_list_rebounds">二次创作</string>
     <string name="explore_spinner_list_teams">团队作品</string>
-    <string name="nav_view_name">登陆</string>
-    <string name="nav_view_desc">使用你的Dribbble帐号登陆</string>
+    <string name="nav_view_name_tx">登陆</string>
+    <string name="nav_view_desc_tx">使用你的Dribbble帐号登陆</string>
+    <string name="dialog_login_bt">登陆Dribbble</string>
+    <string name="dialog_login_desc">登陆你的Dribbble帐号使用shots的全部功能</string>
     <string name="nav_drawer_open">open drawer</string>
     <string name="nav_drawer_close">close drawer</string>
     <string name="home_popular">最热</string>

@@ -5,12 +5,13 @@
     <dimen name="recycler_item_footer_loading_more_loading_layout_margin_left">15dp</dimen>
     <dimen name="recycler_item_footer_loading_more_loading_text_size">15dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="nav_view_header_height">200dp</dimen>
-    <dimen name="nav_view_header_paddingLeft">30dp</dimen>
-    <dimen name="nav_view_header_login_avatar_layout_width">80dp</dimen>
-    <dimen name="nav_view_header_login_avatar_layout_height">80dp</dimen>
-    <dimen name="nav_view_header_login_avatar_layout_marginTop">30dp</dimen>
-    <dimen name="nav_view_header_nav_view_name_layout_marginTop">20dp</dimen>
+    <dimen name="nav_view_header_rl_layout_height">200dp</dimen>
+    <dimen name="nav_view_header_rl_paddingLeft">30dp</dimen>
+    <dimen name="nav_view_header_login_avatar_im_layout_width">80dp</dimen>
+    <dimen name="nav_view_header_login_avatar_im_layout_height">80dp</dimen>
+    <dimen name="nav_view_header_login_avatar_im_layout_marginTop">30dp</dimen>
+    <dimen name="nav_view_header_nav_view_name_tx_layout_marginTop">20dp</dimen>
+    <dimen name="nav_view_header_nav_view_desc_tx_layout_marginTop">3dp</dimen>
     <dimen name="recycler_view_item_padding">10dp</dimen>
     <dimen name="recycler_view_item_layout_marginTop">10dp</dimen>
     <dimen name="recycler_view_item_card_view_card_corner_radius">5dp</dimen>
@@ -72,7 +73,11 @@
     <dimen name="user_profile_ctb_layout_height">400dp</dimen>
     <dimen name="user_profile_avatar_im_layout_width">80dp</dimen>
     <dimen name="user_profile_avatar_im_layout_height">80dp</dimen>
-
-
-
+    <dimen name="dialog_login_app_icon_im_ayout_width">80dp</dimen>
+    <dimen name="dialog_login_app_icon_im_layout_height">80dp</dimen>
+    <dimen name="dialog_login_app_icon_im_layout_marginBottom">40dp</dimen>
+    <dimen name="dialog_login_app_name_tx_layout_marginBottom">20dp</dimen>
+    <dimen name="dialog_login_desc_layout_margin">20dp</dimen>
+    <dimen name="dialog_login_desc_layout_marginBottom">30dp</dimen>
+    <dimen name="dialog_login_bt_padding">10dp</dimen>
 </resources>
