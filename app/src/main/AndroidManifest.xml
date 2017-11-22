@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.menglingpeng.designersshow">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,14 +16,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!--URL Scheme启动-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <!--该应用可以通过浏览器的连接启动-->
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <!--该页面可以被隐式调用-->
+                <category android:name="android.intent.category.DEFAULT"/>
+                <!--协议部分-->
+                <data
+                    android:scheme="@string/app_name"
+                    android:host="@string/login_call_back">
+                </data>
+            </intent-filter>
         </activity>
-        <activity android:name=".mvp.view.DetailActivity" />
+        <activity android:name=".mvp.view.DetailActivity"
+                  android:configChanges="keyboardHidden|orientation"/>
         <activity android:name=".mvp.view.CommentsActivity" />
         <activity android:name=".UserProfileActivity"></activity>
     </application>

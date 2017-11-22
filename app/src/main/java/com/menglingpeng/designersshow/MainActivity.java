@@ -2,8 +2,10 @@ package com.menglingpeng.designersshow;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -217,6 +219,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * 登陆的中转页面
+     */
     private void showLoginDialog(){
         final Dialog dialog = new Dialog(this, R.style.ThemeLoginDialog);
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_login, null);
@@ -242,7 +247,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         loginDialogLoginBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Uri uri = Uri.parse(Constants.REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL);
+                intent.setData(uri);
+                startActivity(intent);
             }
         });
 
@@ -470,6 +478,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 backPressed = false;
             }
         }, 2000);
+    }
+
+    /**
+     * URL scheme方式启动MainActivity（SingleTask）时，调用此方法
+     * 可以接收网页传递的数据
+     * @param intent
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+         loginDialogLoginBt.setVisibility(Button.GONE);
+        loginDialogPb.setVisibility(ProgressBar.VISIBLE);
+        Intent schemeIntent = getIntent();
+        Uri uri = schemeIntent.getData();
+        String code = uri.getQuery();
+        Log.i("Code", code);
     }
 
     @Override

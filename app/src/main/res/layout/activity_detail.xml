@@ -60,7 +60,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/detail_title_rl_paddingLeft"
             android:paddingRight="@dimen/detail_title_rl_paddingRight"
-            android:background="#EEEEEE">
+            android:background="@android:color/white">
 
             <TextView
                 android:id="@+id/detail_title_tx"
