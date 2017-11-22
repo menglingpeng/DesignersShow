@@ -83,12 +83,12 @@ public class SharedPreUtil {
      */
     public static HashMap<String, String> getParameters(){
         HashMap<String, String> map = new HashMap<>();
-        map.put("access_token", sp.getString("access_token", null));
-        map.put("list", sp.getString("list", null));
-        map.put("timeframe", sp.getString("timeframe", null));
-        map.put("date", sp.getString("date", null));
-        map.put("sort", sp.getString("sort", null));
-        map.put("page", sp.getString("page", null));
+        map.put(Constants.ACCESS_TOKEN, sp.getString(Constants.ACCESS_TOKEN, null));
+        map.put(Constants.LIST, sp.getString(Constants.LIST, null));
+        map.put(Constants.TIMEFRAME, sp.getString(Constants.TIMEFRAME, null));
+        map.put(Constants.DATE, sp.getString(Constants.DATE, null));
+        map.put(Constants.SORT, sp.getString(Constants.SORT, null));
+        map.put(Constants.PAGE, sp.getString(Constants.PAGE, null));
         return map;
     }
 
@@ -96,7 +96,7 @@ public class SharedPreUtil {
      * 退出应用时，需要删除发现页面参数
      */
     public static void  deletedParameters(){
-        String[] parameters = {"list","timeframe", "date", "sort", "page"};
+        String[] parameters = {Constants.LIST,Constants.TIMEFRAME, Constants.DATE, Constants.SORT, Constants.PAGE};
         for (int i=0;i<parameters.length-1;i++){
             editor.remove(parameters[i]);
         }
@@ -109,7 +109,7 @@ public class SharedPreUtil {
      * @return
      */
     public static String getAuthToken(){
-        String accessToken = sp.getString("access_token", null);
+        String accessToken = sp.getString(Constants.ACCESS_TOKEN, null);
         return accessToken;
     }
 
@@ -117,7 +117,7 @@ public class SharedPreUtil {
      *退出登陆
      */
     public static Boolean DeleteAuthToken(){
-        editor.putString("access_token", Constants.ACCESS_TOKEN);
+        editor.putString(Constants.ACCESS_TOKEN, Constants.APP_ACCESS_TOKEN);
         return editor.commit();
     }
 

@@ -60,12 +60,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private int page = 1;
     private ArrayList<Shots> shotsList;
     private ArrayList<Comments> commmentsList;
-    public static final String TAB_POPULAR = "Popular";
-    public static final String TAB_RECENT = "Recent";
-    public static final String TAB_FOLLOWING = "Following";
-    public static final String MENU_MY_LIKES = "My likes";
-    public static final String MENU_MY_BUCKETS = "My buckets";
-    public static final String MENU_MY_SHOTS = "My shots";
 
     public static RecyclerFragment newInstance(String type){
         Bundle bundle = new Bundle();
@@ -121,11 +115,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         }else {
             type = getArguments().get(Constants.TYPE).toString();
             switch (type){
-                case TAB_FOLLOWING:
+                case Constants.TAB_FOLLOWING:
                     break;
-                case TAB_POPULAR:
+                case Constants.TAB_POPULAR:
                     break;
-                case TAB_RECENT:
+                case Constants.TAB_RECENT:
                     sort = Constants.SORT_RECENT;
                     break;
                 case Constants.SORT_POPULAR:
@@ -176,24 +170,24 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     break;
             }
             //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
-            if(!type.equals(TAB_POPULAR) && !type.equals(TAB_RECENT)){
+            if(!type.equals(Constants.TAB_POPULAR) && !type.equals(Constants.TAB_RECENT) && !type.equals(Constants.TAB_FOLLOWING)){
                 map = SharedPreUtil.getParameters();
             }
-            map.put("access_token", Constants.ACCESS_TOKEN);
+            map.put(Constants.ACCESS_TOKEN, Constants.APP_ACCESS_TOKEN);
             if(list != null){
-                map.put("list", list);
+                map.put(Constants.LIST, list);
             }
             if(timeframe != null){
-                map.put("timeframe", timeframe);
+                map.put(Constants.TIMEFRAME, timeframe);
             }
             if(date != null){
-                map.put("date", date);
+                map.put(Constants.DATE, date);
             }
             if(sort != null){
-                map.put("sort", sort);
+                map.put(Constants.SORT, sort);
             }
-            map.put("page", String.valueOf(page));
-            if(!type.equals(TAB_POPULAR) && !type.equals(TAB_RECENT)) {
+            map.put(Constants.PAGE, String.valueOf(page));
+            if(!type.equals(Constants.TAB_POPULAR) && !type.equals(Constants.TAB_RECENT) && !type.equals(Constants.TAB_FOLLOWING)) {
                 SharedPreUtil.saveParameters(map);
             }
         }
@@ -226,7 +220,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         Fragment fragment = null;
         Context context = null;
         if(!mRequestType.equals(Constants.REQUEST_COMMENTS)) {
-            if (type.equals(TAB_POPULAR) || type.equals(TAB_RECENT)) {
+            if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
                 fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
                 shotsList = Json.parseShots(shotsjson);
             } else {

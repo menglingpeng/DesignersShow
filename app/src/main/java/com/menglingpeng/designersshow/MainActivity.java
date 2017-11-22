@@ -104,13 +104,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case Constants.MENU_EXPLORE:
                 toolbarTitle = getString(R.string.nav_explore_menu);
                 break;
-            case RecyclerFragment.MENU_MY_LIKES:
+            case Constants.MENU_MY_LIKES:
                 toolbarTitle = getString(R.string.toolbar_my_likes);
                 break;
-            case RecyclerFragment.MENU_MY_BUCKETS:
+            case Constants.MENU_MY_BUCKETS:
                 toolbarTitle = getString(R.string.nav_my_buckets_menu);
                 break;
-            case RecyclerFragment.MENU_MY_SHOTS:
+            case Constants.MENU_MY_SHOTS:
                 toolbarTitle = getString(R.string.nav_my_shots_menu);
                 break;
         }
@@ -195,7 +195,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navHeaderRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isLogin){
+                if(SharedPreUtil.getIsLogin()){
 
                 }else {
                     showLoginDialog();
@@ -335,15 +335,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             titles.add(getString(R.string.home_following));
             titles.add(getString(R.string.home_popular));
             titles.add(getString(R.string.home_recent));
-            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_FOLLOWING));
-            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_POPULAR));
-            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_RECENT));
+            fragments.add(new RecyclerFragment().newInstance(Constants.TAB_FOLLOWING));
+            fragments.add(new RecyclerFragment().newInstance(Constants.TAB_POPULAR));
+            fragments.add(new RecyclerFragment().newInstance(Constants.TAB_RECENT));
 
         } else {
             titles.add(getString(R.string.home_popular));
             titles.add(getString(R.string.home_recent));
-            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_POPULAR));
-            fragments.add(new RecyclerFragment().newInstance(RecyclerFragment.TAB_RECENT));
+            fragments.add(new RecyclerFragment().newInstance(Constants.TAB_POPULAR));
+            fragments.add(new RecyclerFragment().newInstance(Constants.TAB_RECENT));
         }
         adapter.setFragments(fragments, titles);
     }
