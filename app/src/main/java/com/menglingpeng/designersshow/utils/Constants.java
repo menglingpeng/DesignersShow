@@ -9,6 +9,7 @@ public class Constants {
     public static final String TYPE = "type";
     public static final String POSITION = "position";
     public static final String IS_FIRST_START = "is_first_start";
+    public static final String IS_LOGIN = "is_login";
     /**
      * Dribbble API
      */

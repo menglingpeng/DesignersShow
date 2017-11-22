@@ -70,12 +70,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Spinner sortSpinner, listSpinner;
     private static RecyclerFragment currentFragment = null;
     private Boolean backPressed;
-    private Boolean isLogin = false;
     private static final int SMOOTHSCROLL_TOP_POSITION = 50;
 
     @Override
     protected void initLayoutId() {
         layoutId = R.layout.activity_main;
+        //先判断是否第一次启动应用
         if(SharedPreUtil.getIsFirstStart()){
             showLoginDialog();
             SharedPreUtil.saveIsFirstStart(false);
@@ -331,7 +331,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void initFragments() {
         List<String> titles = new ArrayList<>();
-        if (isLogin) {
+        if (SharedPreUtil.getIsLogin()) {
             titles.add(getString(R.string.home_following));
             titles.add(getString(R.string.home_popular));
             titles.add(getString(R.string.home_recent));

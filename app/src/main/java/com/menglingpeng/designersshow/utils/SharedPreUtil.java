@@ -27,7 +27,7 @@ public class SharedPreUtil {
      * @return
      */
     public static boolean saveIsFirstStart(Boolean isFirstStart){
-        editor.putBoolean("isFirstStart", isFirstStart);
+        editor.putBoolean(Constants.IS_FIRST_START, isFirstStart);
         return editor.commit();
     }
 
@@ -36,8 +36,30 @@ public class SharedPreUtil {
      */
     public static boolean getIsFirstStart(){
         Boolean isFirstStart = false;
-        isFirstStart = sp.getBoolean("isFirstStart", true);
+        isFirstStart = sp.getBoolean(Constants.IS_FIRST_START, true);
         return isFirstStart;
+    }
+
+    /**
+     * 获取用户登陆状态
+     * @return
+     *        是否登陆
+     */
+    public static boolean getIsLogin(){
+        Boolean isLogin = false;
+        isLogin = sp.getBoolean(Constants.IS_LOGIN, false);
+        return isLogin;
+    }
+
+    /**
+     * 保存用户登陆状态
+     * @param isLogin
+     *              用户登陆状态
+     * @return
+     */
+    public static boolean saveIsLogin(Boolean isLogin){
+        editor.putBoolean(Constants.IS_LOGIN, isLogin);
+        return editor.commit();
     }
 
     /**
@@ -71,7 +93,7 @@ public class SharedPreUtil {
     }
 
     /**
-     * 退出应用时，需要删除参数
+     * 退出应用时，需要删除发现页面参数
      */
     public static void  deletedParameters(){
         String[] parameters = {"list","timeframe", "date", "sort", "page"};
@@ -82,7 +104,7 @@ public class SharedPreUtil {
     }
 
     /**
-     * list comments，user等网络请求需要单独的授权token
+     * list comments，user等网络请求需要授权token
      * 获取保存的授权token
      * @return
      */
