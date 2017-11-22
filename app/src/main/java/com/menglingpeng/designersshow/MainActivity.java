@@ -69,13 +69,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TabPagerFragmentAdapter adapter;
     private Spinner sortSpinner, listSpinner;
     private static RecyclerFragment currentFragment = null;
-    private boolean backPressed;
-    private boolean isLogin = false;
+    private Boolean backPressed;
+    private Boolean isLogin = false;
     private static final int SMOOTHSCROLL_TOP_POSITION = 50;
 
     @Override
     protected void initLayoutId() {
         layoutId = R.layout.activity_main;
+        if(SharedPreUtil.getIsFirstStart()){
+            showLoginDialog();
+            SharedPreUtil.saveIsFirstStart(false);
+        }
     }
 
     @Override
@@ -192,8 +196,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View v) {
                 if(isLogin){
-                }else {
 
+                }else {
+                    showLoginDialog();
                 }
             }
         });
@@ -213,7 +218,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void showLoginDialog(){
-        final Dialog dialog = new Dialog(this, R.style.Theme_AppCompat_Dialog);
+        final Dialog dialog = new Dialog(this, R.style.ThemeLoginDialog);
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_login, null);
         Window window = dialog.getWindow();
         window.setGravity(Gravity.BOTTOM);
