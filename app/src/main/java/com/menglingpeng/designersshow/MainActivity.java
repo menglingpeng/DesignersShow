@@ -41,10 +41,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.menglingpeng.designersshow.mvp.model.AuthToken;
+import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
 import com.menglingpeng.designersshow.utils.Constants;
+import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
@@ -196,13 +198,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         View headerView = navigationView.getHeaderView(0);
         navHeaderRl = (RelativeLayout)headerView.findViewById(R.id.nav_view_header_rl);
         navAvatarIm = (ImageView)headerView.findViewById(R.id.login_avatar_im);
-        navNameTx = (TextView)headerView.findViewById(R.id.nav_view_desc_tx);
+        navNameTx = (TextView)headerView.findViewById(R.id.nav_view_name_tx);
         navDescTx = (TextView)headerView.findViewById(R.id.nav_view_desc_tx);
+        if(SharedPreUtil.getIsLogin()){
+
+        }else {
+            navAvatarIm.setImageResource(R.drawable.ic_avatar);
+            navNameTx.setText(getResources().getString(R.string.nav_view_name_tx));
+            navDescTx.setText(getResources().getString(R.string.nav_view_desc_tx));
+        }
         navHeaderRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(SharedPreUtil.getIsLogin()){
-
+                    ImageLoader.loadCricleImage(getApplicationContext(), SharedPreUtil.getLoginData(Constants.AUTH_USER_AVATAR_URL), navAvatarIm);
+                    navNameTx.setText(SharedPreUtil.getLoginData(Constants.AUTH_USER_NAME));
+                    navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
                 }else {
                     showLoginDialog();
                 }
@@ -524,10 +535,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void loadSuccess(String shotsJson, String requestType) {
+    public void loadSuccess(String json, String requestType) {
+        HashMap<String, String> map = new HashMap<>();
         if(requestType.equals(Constants.REQUEST_AUTH_TOKEN)){
-            AuthToken authToken = Json.parseAuthToken(shotsJson);
+            loginDialogPb.setVisibility(ProgressBar.VISIBLE);
+            AuthToken authToken = Json.parseAuthToken(json);
             Log.i("authToken", authToken.getAccess_token());
+            map.put(Constants.ACCESS_TOKEN, authToken.getAccess_token());
+            SharedPreUtil.saveParameters(map);
+            SharedPreUtil.saveIsLogin(true);
+            RecyclerPresenter presenter = new RecyclerPresenter(this, Constants.REQUEST_AUTH_USER, map,this);
+            presenter.loadShots();
+        }else {
+            User authUser = Json.parseUser(json);
+            ImageLoader.loadCricleImage(getApplicationContext(), authUser.getAvatar_url(), navAvatarIm);
+            navNameTx.setText(authUser.getUsername());
+            navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
+            map.put(Constants.AUTH_USER_AVATAR_URL, authUser.getAvatar_url());
+            map.put(Constants.AUTH_USER_NAME, authUser.getUsername());
+            SharedPreUtil.saveParameters(map);
         }
     }
 }

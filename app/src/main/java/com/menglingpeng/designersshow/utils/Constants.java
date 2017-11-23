@@ -20,6 +20,8 @@ public class Constants {
     public static final String CLIENT_ID_VALUE = "2824a0365fffaa9fe9b74dce83921d185e5a45ad6c879a06f83399a25ce128a0";
     public static final String CLIENT_SECRET_VALUE = "e23e3697dfa339210452f4e8b72fef47e8b1a5373b236f09a66fa6a892d1c5a2";
     public static final String SCOPE_VALUE = "public+write+comment+upload";
+    public static final String AUTH_USER_NAME = "user_name";
+    public static final String AUTH_USER_AVATAR_URL = "avatar_url";
     public static final String BASE_URL = "https://api.dribbble.com/v1/";
     public static final String AUTHENTICATED_USER_URL = "https://api.dribbble.com/v1/user";
     public static final String SHOTS_URL = "https://api.dribbble.com/v1/shots";
@@ -66,7 +68,7 @@ public class Constants {
     public static final String REQUEST_COMMENTS = "comments";
     public static final String REQUEST_CHECK_IF_LIKE_SHOT = "like";
     public static final String REQUEST_SHOTS_ATTACHMENTS = "attachments";
-    public static final String REQUEST_AUTHENTICATED_USER = "authenticated";
-    public static final String REQUEST_SINGLE_USER = "single";
+    public static final String REQUEST_AUTH_USER = "auth_user";
+    public static final String REQUEST_SINGLE_USER = "single_user";
 
 }

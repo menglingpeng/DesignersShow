@@ -16,6 +16,7 @@ import com.google.gson.stream.JsonWriter;
 import com.menglingpeng.designersshow.mvp.model.AuthToken;
 import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.mvp.model.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,6 +57,10 @@ public class Json {
 
     public static AuthToken parseAuthToken(String json){
         return gson.fromJson(json, AuthToken.class);
+    }
+
+    public static User parseUser(String json){
+        return gson.fromJson(json, User.class);
     }
 
     public static class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {

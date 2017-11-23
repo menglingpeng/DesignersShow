@@ -48,6 +48,13 @@ HttpUtils {
                 }
                 requestBody = bodyBuilder.build();
                 break;
+            case Constants.REQUEST_AUTH_USER:
+                urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
+                for (String key : map.keySet()) {
+                    urlBuilder.addQueryParameter(key, map.get(key));
+                }
+                httpUrl = urlBuilder.build();
+                break;
             default:
                 urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
                 for (String key : map.keySet()) {

@@ -200,11 +200,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     }
 
     @Override
-    public void showProgress() {
-
-    }
-
-    @Override
     public void hideProgress() {
         progressBar.setVisibility(ProgressBar.GONE);
 

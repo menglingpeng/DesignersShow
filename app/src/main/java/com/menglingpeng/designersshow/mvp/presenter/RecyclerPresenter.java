@@ -42,7 +42,6 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadJsonListene
 
     @Override
     public void loadShots() {
-        recyclerViewIf.showProgress();
         recyclerModel.getShots(type, map, this);
     }
 

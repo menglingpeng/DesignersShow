@@ -91,6 +91,10 @@ public class SharedPreUtil {
         return map;
     }
 
+    public static String getLoginData(String key){
+        return sp.getString(key, null);
+    }
+
     /**
      * 退出应用时，需要删除发现页面参数。
      */
