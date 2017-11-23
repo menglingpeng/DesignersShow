@@ -1,26 +1,20 @@
 package com.menglingpeng.designersshow.mvp.presenter;
 
-import android.widget.RemoteViews;
-
 import com.menglingpeng.designersshow.BaseActivity;
-import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
-import com.menglingpeng.designersshow.mvp.interf.OnloadShotsListener;
+import com.menglingpeng.designersshow.mvp.interf.OnloadJsonListener;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerModel;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerPresenterIf;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerView;
 import com.menglingpeng.designersshow.mvp.model.Shots;
-import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 
 /**
  * Created by mengdroid on 2017/10/15.
  */
 
-public class RecyclerPresenter implements RecyclerPresenterIf, OnloadShotsListener {
+public class RecyclerPresenter implements RecyclerPresenterIf, OnloadJsonListener {
 
     private RecyclerView<Shots> recyclerViewIf;
     private RecyclerModel recyclerModel;

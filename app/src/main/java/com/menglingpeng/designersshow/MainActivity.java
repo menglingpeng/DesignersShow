@@ -40,18 +40,22 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.menglingpeng.designersshow.mvp.model.AuthToken;
 import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
+import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
 import com.menglingpeng.designersshow.utils.Constants;
+import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.zip.Inflater;
 
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, com.menglingpeng.designersshow.mvp.interf.RecyclerView{
 
     private String currentType;
     private Toolbar toolbar;
@@ -488,12 +492,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        HashMap<String, String> map = new HashMap<>();
          loginDialogLoginBt.setVisibility(Button.GONE);
         loginDialogPb.setVisibility(ProgressBar.VISIBLE);
         Intent schemeIntent = getIntent();
         Uri uri = schemeIntent.getData();
         String code = uri.getQuery();
+        map.put(Constants.CLIENT_ID, Constants.CLIENT_ID_VALUE);
+        map.put(Constants.CLIENT_SECRET, Constants.CLIENT_SECRET_VALUE);
+        map.put(Constants.CODE, code);
         Log.i("Code", code);
+        RecyclerPresenter presenter = new RecyclerPresenter(this, Constants.REQUEST_AUTH_TOKEN, map,this);
+        presenter.loadShots();
     }
 
     @Override
@@ -501,5 +511,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         SharedPreUtil.deletedParameters();
         super.onDestroy();
 
+    }
+
+    @Override
+    public void hideProgress() {
+        loginDialogPb.setVisibility(ProgressBar.GONE);
+    }
+
+    @Override
+    public void loadFailed(String msg) {
+
+    }
+
+    @Override
+    public void loadSuccess(String shotsJson, String requestType) {
+        if(requestType.equals(Constants.REQUEST_AUTH_TOKEN)){
+            AuthToken authToken = Json.parseAuthToken(shotsJson);
+            Log.i("authToken", authToken.getAccess_token());
+        }
     }
 }

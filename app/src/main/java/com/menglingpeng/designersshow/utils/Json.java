@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import com.menglingpeng.designersshow.mvp.model.AuthToken;
 import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 
@@ -51,6 +52,10 @@ public class Json {
             commentsList.add(comments);
         }
         return commentsList;
+    }
+
+    public static AuthToken parseAuthToken(String json){
+        return gson.fromJson(json, AuthToken.class);
     }
 
     public static class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {

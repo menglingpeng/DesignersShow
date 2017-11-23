@@ -13,6 +13,13 @@ public class Constants {
     /**
      * Dribbble API
      */
+    public static final String CLIENT_ID = "client_id";
+    public static final String CLIENT_SECRET = "client_secret";
+    public static final String SCOPE = "scope";
+    public static final String CODE = "code";
+    public static final String CLIENT_ID_VALUE = "2824a0365fffaa9fe9b74dce83921d185e5a45ad6c879a06f83399a25ce128a0";
+    public static final String CLIENT_SECRET_VALUE = "e23e3697dfa339210452f4e8b72fef47e8b1a5373b236f09a66fa6a892d1c5a2";
+    public static final String SCOPE_VALUE = "public+write+comment+upload";
     public static final String BASE_URL = "https://api.dribbble.com/v1/";
     public static final String AUTHENTICATED_USER_URL = "https://api.dribbble.com/v1/user";
     public static final String SHOTS_URL = "https://api.dribbble.com/v1/shots";

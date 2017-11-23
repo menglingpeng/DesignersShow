@@ -1,8 +1,5 @@
 package com.menglingpeng.designersshow.mvp.interf;
 
-import com.menglingpeng.designersshow.mvp.model.Shots;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -10,5 +7,5 @@ import java.util.HashMap;
  */
 
 public interface RecyclerModel {
-    void getShots(String type, HashMap<String, String> map, OnloadShotsListener listener);
+    void getShots(String type, HashMap<String, String> map, OnloadJsonListener listener);
 }
