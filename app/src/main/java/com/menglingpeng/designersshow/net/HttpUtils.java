@@ -35,39 +35,39 @@ HttpUtils {
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder bodyBuilder = new FormBody.Builder();
         RequestBody requestBody = null;
-        if(requestType.equals(Constants.REQUEST_AUTH_TOKEN)){
+        if(type.equals(Constants.REQUEST_AUTH_TOKEN)){
             for (String key : map.keySet()){
                 bodyBuilder.add(key, map.get(key)) ;
             }
             requestBody = bodyBuilder.build();
+            request = new Request.Builder()
+                    .url(Constants.REQUEST_AUTH_TOKEN_URL)
+                    .post(requestBody)
+                    .build();
         }else {
-            switch (requestType) {
+            switch (type) {
                 case Constants.REQUEST_COMMENTS:
                     String url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.SHOTS))
                             .append("/").append(requestType).toString();
+                    urlBuilder = HttpUrl.parse(url).newBuilder();
                     break;
                 case Constants.REQUEST_AUTH_USER:
                     urlBuilder = HttpUrl.parse(Constants.AUTHENTICATED_USER_URL).newBuilder();
                     break;
+                case Constants.TAB_FOLLOWING:
+                    urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL).newBuilder();
+                    break;
+                case Constants.MENU_MY_LIKES:
+                    urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES).newBuilder();
+                    break;
                 default:
-                    if(type.equals(Constants.TAB_FOLLOWING)){
-                        urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL).newBuilder();
-                    }else {
-                        urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
-                    }
+                    urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
                     break;
             }
             for (String key : map.keySet()) {
                 urlBuilder.addQueryParameter(key, map.get(key));
             }
             httpUrl = urlBuilder.build();
-        }
-        if (requestType.equals(Constants.REQUEST_AUTH_TOKEN)){
-            request = new Request.Builder()
-                    .url(Constants.REQUEST_AUTH_TOKEN_URL)
-                    .post(requestBody)
-                    .build();
-        } else {
             request = new Request.Builder()
                     .url(httpUrl)
                     .get()

@@ -15,11 +15,14 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.menglingpeng.designersshow.mvp.model.AuthToken;
 import com.menglingpeng.designersshow.mvp.model.Comments;
+import com.menglingpeng.designersshow.mvp.model.Likes;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.model.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by mengdroid on 2017/10/17.
@@ -29,30 +32,22 @@ public class Json {
 
     public static Gson gson = new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create();
 
-    public static ArrayList<Shots> parseShots(String shotsJson){
+    public static <T> ArrayList<T> parseArrayJson(String json, Class<T> type){
 
         //替换Sting值null为"".
         JsonParser parser = new JsonParser();
-        JsonArray jsonArray = parser.parse(shotsJson).getAsJsonArray();
-        ArrayList<Shots> shotsList = new ArrayList<>();
+        JsonArray jsonArray = parser.parse(json).getAsJsonArray();
+        ArrayList<T> list = new ArrayList<>();
         for(JsonElement element : jsonArray){
-            Shots shots = gson.fromJson(element, Shots.class);
-            shotsList.add(shots);
+            T t = gson.fromJson(element, type);
+            list.add(t);
         }
-        return shotsList;
+        return list;
     }
 
-    public static ArrayList<Comments> parseComments(String shotsJson){
-
-        //替换Sting值null为"".
-        JsonParser parser = new JsonParser();
-        JsonArray jsonArray = parser.parse(shotsJson).getAsJsonArray();
-        ArrayList<Comments> commentsList = new ArrayList<>();
-        for(JsonElement element : jsonArray){
-            Comments comments = gson.fromJson(element, Comments.class);
-            commentsList.add(comments);
-        }
-        return commentsList;
+    public static <T> T parseJson(String json, Class<T> type){
+        T t = gson.fromJson(json, type);
+        return t;
     }
 
     public static AuthToken parseAuthToken(String json){

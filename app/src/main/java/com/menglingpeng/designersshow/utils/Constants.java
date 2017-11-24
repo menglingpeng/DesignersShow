@@ -22,7 +22,9 @@ public class Constants {
     public static final String SCOPE_VALUE = "public+write+comment+upload";
     public static final String AUTH_USER_NAME = "user_name";
     public static final String AUTH_USER_AVATAR_URL = "avatar_url";
+    public static final String AUTH_USER_ID = "user_id";
     public static final String LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL = "https://api.dribbble.com/v1/user/following/shots";
+    public static final String LIST_SHOTS_FOR_AUTH_USER_LIKES = "https://api.dribbble.com/v1/user/likes";
     public static final String AUTHENTICATED_USER_URL = "https://api.dribbble.com/v1/user";
     public static final String SHOTS_URL = "https://api.dribbble.com/v1/shots";
     public static final String REQUEST_AUTH_TOKEN_URL = "https://dribbble.com/oauth/token";

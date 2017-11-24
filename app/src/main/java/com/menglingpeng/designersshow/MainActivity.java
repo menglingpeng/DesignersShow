@@ -60,6 +60,7 @@ import java.util.zip.Inflater;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, com.menglingpeng.designersshow.mvp.interf.RecyclerView{
 
     private String currentType;
+    private String authType;
     private Toolbar toolbar;
     private String toolbarTitle;
     private DrawerLayout drawerLayout;
@@ -214,6 +215,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View v) {
                 if(SharedPreUtil.getState(Constants.IS_LOGIN)){
+                    //SharedPreUtil.saveState(Constants.IS_LOGIN, false);
                 }else {
                     showLoginDialog();
                 }
@@ -321,7 +323,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 tabLayout.setVisibility(TabLayout.GONE);
                 viewPager.setVisibility(ViewPager.GONE);
                 exploreLl.setVisibility(LinearLayout.GONE);
-                replaceFragment(RecyclerFragment.newInstance(menuType));
+                replaceFragment(newFragment(menuType));
                 break;
         }
     }
@@ -472,7 +474,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         transaction.commit();
     }
 
-    @Override
+   /* @Override
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -493,7 +495,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 backPressed = false;
             }
         }, 2000);
-    }
+    }*/
 
     /**
      * URL scheme方式启动MainActivity（SingleTask）时，调用此方法
@@ -513,7 +515,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         map.put(Constants.CLIENT_SECRET, Constants.CLIENT_SECRET_VALUE);
         //code字符串前面带有code=,需要去掉。
         map.put(Constants.CODE, code.replace("code=", ""));
-        RecyclerPresenter presenter = new RecyclerPresenter(this, Constants.REQUEST_NORMAL, Constants.REQUEST_AUTH_TOKEN, map,this);
+        authType = Constants.REQUEST_AUTH_TOKEN;
+        RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, map,this);
         presenter.loadShots();
     }
 
@@ -542,22 +545,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if(json.indexOf("error") != -1) {
                 Log.i("error", json);
             }else {
-                AuthToken authToken = Json.parseAuthToken(json);
+                AuthToken authToken = Json.parseJson(json, AuthToken.class);
                 Log.i("authToken", authToken.getAccess_token());
                 map.put(Constants.ACCESS_TOKEN, authToken.getAccess_token());
                 SharedPreUtil.saveParameters(map);
                 SharedPreUtil.saveState(Constants.IS_LOGIN, true);
-                RecyclerPresenter presenter = new RecyclerPresenter(this, Constants.REQUEST_NORMAL, Constants.REQUEST_AUTH_USER, map, this);
+                authType = Constants.REQUEST_AUTH_USER;
+                RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, map, this);
                 presenter.loadShots();
             }
         }else {
-            User authUser = Json.parseUser(json);
+            User authUser = Json.parseJson(json, User.class);
             ImageLoader.loadCricleImage(getApplicationContext(), authUser.getAvatar_url(), navAvatarIm);
             navNameTx.setText(authUser.getUsername());
             navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
             map.put(Constants.AUTH_USER_AVATAR_URL, authUser.getAvatar_url());
             map.put(Constants.AUTH_USER_NAME, authUser.getUsername());
+            map.put(Constants.AUTH_USER_ID, String.valueOf(authUser.getId()));
             SharedPreUtil.saveParameters(map);
+            Log.i("buckets", authUser.getBuckets_url());
             dialog.cancel();
             initTabPager();
         }

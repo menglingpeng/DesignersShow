@@ -20,6 +20,7 @@ import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerPresenterIf;
 import com.menglingpeng.designersshow.mvp.model.Comments;
+import com.menglingpeng.designersshow.mvp.model.Likes;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.other.Data;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
@@ -59,6 +60,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String sort = null;
     private int page = 1;
     private ArrayList<Shots> shotsList;
+    private ArrayList<Likes> likesList;
     private ArrayList<Comments> commmentsList;
 
     public static RecyclerFragment newInstance(String type){
@@ -112,10 +114,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         map = new HashMap<>();
         if(getArguments().get(Constants.REQUEST_COMMENTS) != null){
             map.put(Constants.SHOTS, getArguments().get(Constants.REQUEST_COMMENTS).toString());
-            mRequestType = Constants.REQUEST_COMMENTS;
+            type = Constants.REQUEST_COMMENTS;
         }else {
             switch (type){
                 case Constants.TAB_FOLLOWING:
+                    sort = Constants.SORT_RECENT;
                     break;
                 case Constants.TAB_POPULAR:
                     break;
@@ -168,6 +171,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 case Constants.TIMEFRAME_EVER:
                     timeframe = Constants.TIMEFRAME_EVER;
                     break;
+                case Constants.MENU_MY_LIKES:
+                    sort = Constants.SORT_RECENT;
+                    break;
             }
             //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
             if(!type.equals(Constants.TAB_POPULAR) && !type.equals(Constants.TAB_RECENT) && !type.equals(Constants.TAB_FOLLOWING)){
@@ -215,20 +221,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     }
 
     @Override
-    public void loadSuccess(String shotsjson, String requestType) {
+    public void loadSuccess(String json, String requestType) {
         Fragment fragment = null;
         Context context = null;
-        if(!mRequestType.equals(Constants.REQUEST_COMMENTS)) {
-            if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
-                fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-            } else {
-                fragment = MainActivity.getCurrentFragment();
-            }
-            shotsList = Json.parseShots(shotsjson);
-        }else {
-            context = getActivity().getApplicationContext();
-            commmentsList = Json.parseComments(shotsjson);
-        }
         switch (requestType){
             case Constants.REQUEST_REFRESH:
                 showRefreshProgress(false);
@@ -237,14 +232,37 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_LOAD_MORE:
                 adapter.setLoading(false);
                 break;
-            case Constants.REQUEST_COMMENTS:
-                adapter = new RecyclerAdapter(recyclerView, context, mRequestType, this);
-                recyclerView.setAdapter(adapter);
+            case Constants.REQUEST_NORMAL:
+                if(type.equals(Constants.REQUEST_COMMENTS)) {
+                    context = getActivity().getApplicationContext();
+                    commmentsList = Json.parseArrayJson(json, Comments.class);
+                    adapter = new RecyclerAdapter(recyclerView, context, mRequestType, this);
+                    recyclerView.setAdapter(adapter);
+                }else {
+                    if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
+                        fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
+                    } else {
+                        fragment = MainActivity.getCurrentFragment();
+                    }
+                    switch (type){
+                        case Constants.MENU_MY_LIKES:
+                            shotsList = new ArrayList<>();
+                            likesList = Json.parseArrayJson(json, Likes.class);
+                            for(int i = 0; i < likesList.size(); i++){
+                                shotsList.add(likesList.get(i).getShot());
+                            }
+                            break;
+                        case Constants.MENU_MY_SHOTS:
+                            break;
+                        default:
+                            shotsList = Json.parseArrayJson(json, Shots.class);
+                            break;
+                    }
+                    adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
+                    recyclerView.setAdapter(adapter);
+                }
                 break;
-            default:
-                adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
-                recyclerView.setAdapter(adapter);
-                break;
+
         }
         adapter.setLoadingMore(new RecyclerAdapter.onLoadingMore() {
             @Override
@@ -256,7 +274,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 initData();
             }
         });
-        if(mRequestType != Constants.REQUEST_COMMENTS) {
+        switch (type){
+            case Constants.MENU_MY_LIKES:
+
+        }
+        if(type != Constants.REQUEST_COMMENTS) {
             for (int i = 0; i < shotsList.size(); i++) {
                 adapter.addShotsData(shotsList.get(i));
             }
