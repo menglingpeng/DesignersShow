@@ -79,7 +79,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Spinner sortSpinner, listSpinner;
     private Dialog dialog;
     private static RecyclerFragment currentFragment = null;
-    private Boolean backPressed;
+    private Boolean isLogin;
+    private Boolean backPressed = false;
     private static final int SMOOTHSCROLL_TOP_POSITION = 50;
 
     @Override
@@ -95,6 +96,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void initViews() {
         super.initViews();
+        isLogin = SharedPreUtil.getState(Constants.IS_LOGIN);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         navigationView = (NavigationView)findViewById(R.id.nav_view);
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
@@ -202,7 +204,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navAvatarIm = (ImageView)headerView.findViewById(R.id.login_avatar_im);
         navNameTx = (TextView)headerView.findViewById(R.id.nav_view_name_tx);
         navDescTx = (TextView)headerView.findViewById(R.id.nav_view_desc_tx);
-        if(SharedPreUtil.getState(Constants.IS_LOGIN)){
+        if(isLogin){
             ImageLoader.loadCricleImage(getApplicationContext(), SharedPreUtil.getLoginData(Constants.AUTH_USER_AVATAR_URL), navAvatarIm);
             navNameTx.setText(SharedPreUtil.getLoginData(Constants.AUTH_USER_NAME));
             navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
@@ -214,7 +216,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navHeaderRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(SharedPreUtil.getState(Constants.IS_LOGIN)){
+                if(isLogin){
                     //SharedPreUtil.saveState(Constants.IS_LOGIN, false);
                 }else {
                     showLoginDialog();
@@ -229,6 +231,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawerLayout.addDrawerListener(toggle);
         navigationView.inflateMenu(R.menu.nav_content_menu);
         navigationView.getMenu().getItem(0).setChecked(true);
+        //API 23.0.0 method
+        //navigationView.setCheckedItem(R.id.nav_home);
         //修改NavigationView选中的Icon和Text颜色，默认是跟随主题颜色。
         ColorStateList csl = getResources().getColorStateList(R.color.navigationview_menu_item_color);
         navigationView.setItemIconTintList(csl);
@@ -274,30 +278,46 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.nav_home:
-                currentType = Constants.MENU_HOME;
-                break;
-            case R.id.nav_explore:
-                currentType = Constants.MENU_EXPLORE;
-                break;
-            case R.id.nav_likes:
-                currentType = Constants.MENU_MY_LIKES;
-                break;
-            case R.id.nav_buckets:
-                currentType = Constants.MENU_MY_BUCKETS;
-                break;
-            case R.id.nav_shots:
-                currentType = Constants.MENU_MY_SHOTS;
-                break;
-            case R.id.nav_settings:
-                currentType = Constants.MENU_SETTING;
-                break;
-        }
-        initSelectedNavigationItemView(currentType);
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+    public boolean onNavigationItemSelected(@NonNull MenuItem item){
+            switch (item.getItemId()) {
+                case R.id.nav_home:
+                    currentType = Constants.MENU_HOME;
+                    initSelectedNavigationItemView(currentType);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    break;
+                case R.id.nav_explore:
+                    currentType = Constants.MENU_EXPLORE;
+                    initSelectedNavigationItemView(currentType);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    break;
+                default:
+                    //后面的MenuItem需要登陆
+                    if(!isLogin){
+                        for (int i = 2; i < 6; i++) {
+                            navigationView.getMenu().getItem(i).setCheckable(false);
+                        }
+                        showLoginDialog();
+                    }else {
+                        switch (item.getItemId()) {
+                            case R.id.nav_likes:
+                                currentType = Constants.MENU_MY_LIKES;
+                                break;
+                            case R.id.nav_buckets:
+                                currentType = Constants.MENU_MY_BUCKETS;
+                                break;
+                            case R.id.nav_shots:
+                                currentType = Constants.MENU_MY_SHOTS;
+                                break;
+                            case R.id.nav_settings:
+                                currentType = Constants.MENU_SETTING;
+                                break;
+                        }
+                        initSelectedNavigationItemView(currentType);
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                    }
+                    break;
+            }
+            return true;
     }
 
     private void initSelectedNavigationItemView(String menuType){
@@ -320,10 +340,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case Constants.MENU_SETTING:
                 break;
             default:
-                tabLayout.setVisibility(TabLayout.GONE);
-                viewPager.setVisibility(ViewPager.GONE);
-                exploreLl.setVisibility(LinearLayout.GONE);
-                replaceFragment(newFragment(menuType));
+                    tabLayout.setVisibility(TabLayout.GONE);
+                    viewPager.setVisibility(ViewPager.GONE);
+                    exploreLl.setVisibility(LinearLayout.GONE);
+                    replaceFragment(newFragment(menuType));
                 break;
         }
     }
@@ -356,7 +376,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void initFragments() {
         List<String> titles = new ArrayList<>();
-        if (SharedPreUtil.getState(Constants.IS_LOGIN)) {
+        if (isLogin) {
             titles.add(getString(R.string.home_following));
             titles.add(getString(R.string.home_popular));
             titles.add(getString(R.string.home_recent));
@@ -474,7 +494,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         transaction.commit();
     }
 
-   /* @Override
+    @Override
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -495,7 +515,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 backPressed = false;
             }
         }, 2000);
-    }*/
+    }
 
     /**
      * URL scheme方式启动MainActivity（SingleTask）时，调用此方法
@@ -540,16 +560,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void loadSuccess(String json, String requestType) {
         HashMap<String, String> map = new HashMap<>();
-        if(requestType.equals(Constants.REQUEST_AUTH_TOKEN)){
+        if(authType.equals(Constants.REQUEST_AUTH_TOKEN)){
             loginDialogPb.setVisibility(ProgressBar.VISIBLE);
             if(json.indexOf("error") != -1) {
-                Log.i("error", json);
+
             }else {
                 AuthToken authToken = Json.parseJson(json, AuthToken.class);
                 Log.i("authToken", authToken.getAccess_token());
                 map.put(Constants.ACCESS_TOKEN, authToken.getAccess_token());
                 SharedPreUtil.saveParameters(map);
                 SharedPreUtil.saveState(Constants.IS_LOGIN, true);
+                isLogin = true;
                 authType = Constants.REQUEST_AUTH_USER;
                 RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, map, this);
                 presenter.loadShots();
