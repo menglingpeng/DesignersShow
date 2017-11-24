@@ -10,6 +10,11 @@ public class Constants {
     public static final String POSITION = "position";
     public static final String IS_FIRST_START = "is_first_start";
     public static final String IS_LOGIN = "is_login";
+    public static final String ID = "id";
+    public static final String REQUEST_GET_MEIHOD = "get";
+    public static final String REQUEST_POST_MEIHOD = "post";
+    public static final String REQUEST_PUT_MEIHOD = "put";
+    public static final String REQUEST_DELETE_MEIHOD = "delete";
     /**
      * Dribbble API
      */
@@ -66,9 +71,12 @@ public class Constants {
     public static final String REQUEST_NORMAL = "normal";
     public static final String REQUEST_REFRESH = "refresh";
     public static final String REQUEST_LOAD_MORE ="loadmore";
-    public static final String REQUEST_AUTH_TOKEN = "token";
-    public static final String REQUEST_COMMENTS = "comments";
-    public static final String REQUEST_CHECK_IF_LIKE_SHOT = "like";
+    public static final String REQUEST_AUTH_TOKEN = "auth_token";
+    public static final String REQUEST_COMMENTS = "list_comments";
+    public static final String LIKE = "like";
+    public static final String REQUEST_LIKE_A_SHOT = "like_a_shot";
+    public static final String REQUEST_UNLIKE_A_SHOT = "unlike_a_shot";
+    public static final String REQUEST_CHECK_IF_LIKE_SHOT = "is_liked";
     public static final String REQUEST_SHOTS_ATTACHMENTS = "attachments";
     public static final String REQUEST_AUTH_USER = "auth_user";
     public static final String REQUEST_SINGLE_USER = "single_user";

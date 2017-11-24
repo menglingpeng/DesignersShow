@@ -20,11 +20,13 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadJsonListene
     private RecyclerModel recyclerModel;
     private String type;
     private String requestType;
+    private String requestMethod;
     private HashMap<String, String> map;
-    public RecyclerPresenter(RecyclerView<Shots> recyclerViewIf, String type, String requestType, HashMap<String, String> map, BaseActivity activity){
+    public RecyclerPresenter(RecyclerView<Shots> recyclerViewIf, String type, String requestType, String requestMethod, HashMap<String, String> map, BaseActivity activity){
         this.recyclerViewIf = recyclerViewIf;
         this.type = type;
         this.requestType = requestType;
+        this.requestMethod = requestMethod;
         this.map = map;
         recyclerModel = new com.menglingpeng.designersshow.mvp.model.RecyclerModel(activity);
     }
@@ -44,7 +46,7 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadJsonListene
 
     @Override
     public void loadShots() {
-        recyclerModel.getShots(type, requestType, map, this);
+        recyclerModel.getJson(type, requestType, requestMethod, map, this);
     }
 
 }

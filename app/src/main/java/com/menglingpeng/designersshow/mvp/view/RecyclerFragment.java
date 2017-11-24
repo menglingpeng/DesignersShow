@@ -88,7 +88,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     protected void initData() {
         initParameters();
-        presenter = new RecyclerPresenter(this, type, mRequestType, map, (BaseActivity)getActivity());
+        presenter = new RecyclerPresenter(this, type, mRequestType, Constants.REQUEST_GET_MEIHOD, map, (BaseActivity)getActivity());
         presenter.loadShots();
     }
 
@@ -224,45 +224,49 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     public void loadSuccess(String json, String requestType) {
         Fragment fragment = null;
         Context context = null;
+        if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
+            fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
+        } else if(type.equals(Constants.REQUEST_COMMENTS)) {
+            context = getActivity().getApplicationContext();
+        }else {
+            fragment = MainActivity.getCurrentFragment();
+        }
         switch (requestType){
             case Constants.REQUEST_REFRESH:
                 showRefreshProgress(false);
                 adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
                 recyclerView.setAdapter(adapter);
+                shotsList = Json.parseArrayJson(json, Shots.class);
+                break;
             case Constants.REQUEST_LOAD_MORE:
                 adapter.setLoading(false);
+                shotsList = Json.parseArrayJson(json, Shots.class);
                 break;
             case Constants.REQUEST_NORMAL:
-                if(type.equals(Constants.REQUEST_COMMENTS)) {
-                    context = getActivity().getApplicationContext();
-                    commmentsList = Json.parseArrayJson(json, Comments.class);
-                    adapter = new RecyclerAdapter(recyclerView, context, mRequestType, this);
-                    recyclerView.setAdapter(adapter);
-                }else {
-                    if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
-                        fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-                    } else {
-                        fragment = MainActivity.getCurrentFragment();
-                    }
-                    switch (type){
-                        case Constants.MENU_MY_LIKES:
-                            shotsList = new ArrayList<>();
-                            likesList = Json.parseArrayJson(json, Likes.class);
-                            for(int i = 0; i < likesList.size(); i++){
-                                shotsList.add(likesList.get(i).getShot());
-                            }
-                            break;
-                        case Constants.MENU_MY_SHOTS:
-                            break;
-                        default:
-                            shotsList = Json.parseArrayJson(json, Shots.class);
-                            break;
-                    }
-                    adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
-                    recyclerView.setAdapter(adapter);
+                switch (type){
+                    case Constants.MENU_MY_LIKES:
+                        shotsList = new ArrayList<>();
+                        likesList = Json.parseArrayJson(json, Likes.class);
+                        for(int i = 0; i < likesList.size(); i++){
+                            shotsList.add(likesList.get(i).getShot());
+                        }
+                        break;
+                    case Constants.MENU_MY_SHOTS:
+                        break;
+                    case Constants.REQUEST_COMMENTS:
+                        commmentsList = Json.parseArrayJson(json, Comments.class);
+                        break;
+                    default:
+                        shotsList = Json.parseArrayJson(json, Shots.class);
+                        break;
                 }
+                if(type.equals(Constants.REQUEST_COMMENTS)){
+                    adapter = new RecyclerAdapter(recyclerView, context, mRequestType, this);
+                }else {
+                    adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
+                }
+                recyclerView.setAdapter(adapter);
                 break;
-
         }
         adapter.setLoadingMore(new RecyclerAdapter.onLoadingMore() {
             @Override
@@ -274,10 +278,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 initData();
             }
         });
-        switch (type){
-            case Constants.MENU_MY_LIKES:
 
-        }
         if(type != Constants.REQUEST_COMMENTS) {
             for (int i = 0; i < shotsList.size(); i++) {
                 adapter.addShotsData(shotsList.get(i));

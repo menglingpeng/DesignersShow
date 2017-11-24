@@ -7,5 +7,5 @@ import java.util.HashMap;
  */
 
 public interface RecyclerModel {
-    void getShots(String type, String requestType, HashMap<String, String> map, OnloadJsonListener listener);
+    void getJson(String type, String requestType, String requestMethod, HashMap<String, String> map, OnloadJsonListener listener);
 }

@@ -27,51 +27,70 @@ public class
 
 HttpUtils {
 
-    public static String getJson(HashMap<String, String> map, String type, String requestType) {
+    public static String getJson(HashMap<String, String> map, String type, String requestType, String requestMethod) {
         String json = null;
         Request request = null;
         HttpUrl httpUrl = null;
+        String url = null;
         HttpUrl.Builder urlBuilder = null;
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder bodyBuilder = new FormBody.Builder();
         RequestBody requestBody = null;
-        if(type.equals(Constants.REQUEST_AUTH_TOKEN)){
-            for (String key : map.keySet()){
-                bodyBuilder.add(key, map.get(key)) ;
-            }
-            requestBody = bodyBuilder.build();
-            request = new Request.Builder()
-                    .url(Constants.REQUEST_AUTH_TOKEN_URL)
-                    .post(requestBody)
-                    .build();
-        }else {
-            switch (type) {
-                case Constants.REQUEST_COMMENTS:
-                    String url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.SHOTS))
-                            .append("/").append(requestType).toString();
-                    urlBuilder = HttpUrl.parse(url).newBuilder();
-                    break;
-                case Constants.REQUEST_AUTH_USER:
-                    urlBuilder = HttpUrl.parse(Constants.AUTHENTICATED_USER_URL).newBuilder();
-                    break;
-                case Constants.TAB_FOLLOWING:
-                    urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL).newBuilder();
-                    break;
-                case Constants.MENU_MY_LIKES:
-                    urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES).newBuilder();
-                    break;
-                default:
-                    urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
-                    break;
-            }
-            for (String key : map.keySet()) {
-                urlBuilder.addQueryParameter(key, map.get(key));
-            }
-            httpUrl = urlBuilder.build();
-            request = new Request.Builder()
-                    .url(httpUrl)
-                    .get()
-                    .build();
+        switch (requestMethod){
+            case Constants.REQUEST_GET_MEIHOD:
+                switch (type) {
+                    case Constants.REQUEST_COMMENTS:
+                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.SHOTS))
+                                .append("/").append(requestType).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
+                    case Constants.REQUEST_AUTH_USER:
+                        urlBuilder = HttpUrl.parse(Constants.AUTHENTICATED_USER_URL).newBuilder();
+                        break;
+                    case Constants.TAB_FOLLOWING:
+                        urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL).newBuilder();
+                        break;
+                    case Constants.MENU_MY_LIKES:
+                        urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES).newBuilder();
+                        break;
+                    default:
+                        urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
+                        break;
+                }
+                for (String key : map.keySet()) {
+                    urlBuilder.addQueryParameter(key, map.get(key));
+                }
+                httpUrl = urlBuilder.build();
+                request = new Request.Builder()
+                        .url(httpUrl)
+                        .get()
+                        .build();
+                break;
+            case Constants.REQUEST_POST_MEIHOD:
+                switch (type){
+                    case Constants.REQUEST_AUTH_TOKEN:
+                        for (String key : map.keySet()){
+                            bodyBuilder.add(key, map.get(key)) ;
+                        }
+                        requestBody = bodyBuilder.build();
+                        url = Constants.REQUEST_AUTH_TOKEN_URL;
+                        break;
+                    case Constants.REQUEST_LIKE_A_SHOT:
+                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
+                               .append("/").append(Constants.LIKE).toString();
+                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                        requestBody = bodyBuilder.build();
+                        break;
+                }
+                request = new Request.Builder()
+                        .url(url)
+                        .post(requestBody)
+                        .build();
+                break;
+            case Constants.REQUEST_PUT_MEIHOD:
+                break;
+            case Constants.REQUEST_DELETE_MEIHOD:
+                break;
         }
             Response response = null;
             try {

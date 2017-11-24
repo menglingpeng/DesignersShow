@@ -536,7 +536,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //code字符串前面带有code=,需要去掉。
         map.put(Constants.CODE, code.replace("code=", ""));
         authType = Constants.REQUEST_AUTH_TOKEN;
-        RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, map,this);
+        RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map,this);
         presenter.loadShots();
     }
 
@@ -572,7 +572,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 SharedPreUtil.saveState(Constants.IS_LOGIN, true);
                 isLogin = true;
                 authType = Constants.REQUEST_AUTH_USER;
-                RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, map, this);
+                RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, this);
                 presenter.loadShots();
             }
         }else {

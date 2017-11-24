@@ -29,6 +29,8 @@ import com.menglingpeng.designersshow.utils.TimeUtil;
 
 import java.util.HashMap;
 
+import okhttp3.HttpUrl;
+
 /**
  * Created by mengdroid on 2017/11/1.
  */
@@ -47,6 +49,7 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
     private TextView detailDescTx;
     private Shots shots;
     private String htmlUrl, hidpiUrl, imageUrl, imageName;
+    private HashMap<String, String> map = new HashMap<>();
 
     @Override
     protected void initLayoutId() {
@@ -81,6 +84,14 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
             }
         });
         detailLikesIm = (ImageView)findViewById(R.id.detail_likes_im);
+        detailLikesIm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.put(Constants.ID, String.valueOf(shots.getId()));
+                HttpUtils.getJson(map, Constants.REQUEST_LIKE_A_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD);
+                detailLikesIm.setImageResource(R.drawable.ic_favorite_red_600_36dp);
+            }
+        });
         new CheckIfLikeShotTask().execute(String.valueOf(shots.getId()));
         ImageLoader.loadDetailImage(getApplicationContext(), imageUrl, imageView, this);
         initDescription();
@@ -201,7 +212,7 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
             String likeJson = null;
             HashMap<String, String> map = new HashMap<>();
             map.put(Constants.SHOTS, id[0]);
-            HttpUtils.getJson(map,Constants.REQUEST_NORMAL, Constants.REQUEST_CHECK_IF_LIKE_SHOT);
+            HttpUtils.getJson(map,Constants.REQUEST_NORMAL, Constants.REQUEST_CHECK_IF_LIKE_SHOT, Constants.REQUEST_GET_MEIHOD);
             return likeJson;
         }
 
