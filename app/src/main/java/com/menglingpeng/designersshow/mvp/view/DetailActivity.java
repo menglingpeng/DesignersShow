@@ -201,7 +201,7 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
             String likeJson = null;
             HashMap<String, String> map = new HashMap<>();
             map.put(Constants.SHOTS, id[0]);
-            HttpUtils.getJson(map, Constants.REQUEST_CHECK_IF_LIKE_SHOT);
+            HttpUtils.getJson(map,Constants.REQUEST_NORMAL, Constants.REQUEST_CHECK_IF_LIKE_SHOT);
             return likeJson;
         }
 

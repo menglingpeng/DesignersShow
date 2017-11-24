@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private List<RecyclerFragment> fragments;
     private TabPagerFragmentAdapter adapter;
     private Spinner sortSpinner, listSpinner;
+    private Dialog dialog;
     private static RecyclerFragment currentFragment = null;
     private Boolean backPressed;
     private static final int SMOOTHSCROLL_TOP_POSITION = 50;
@@ -84,9 +85,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void initLayoutId() {
         layoutId = R.layout.activity_main;
         //先判断是否第一次启动应用
-        if(SharedPreUtil.getIsFirstStart()){
+        if(SharedPreUtil.getState(Constants.IS_FIRST_START)){
             showLoginDialog();
-            SharedPreUtil.saveIsFirstStart(false);
+            SharedPreUtil.saveState(Constants.IS_FIRST_START, false);
         }
     }
 
@@ -200,8 +201,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navAvatarIm = (ImageView)headerView.findViewById(R.id.login_avatar_im);
         navNameTx = (TextView)headerView.findViewById(R.id.nav_view_name_tx);
         navDescTx = (TextView)headerView.findViewById(R.id.nav_view_desc_tx);
-        if(SharedPreUtil.getIsLogin()){
-
+        if(SharedPreUtil.getState(Constants.IS_LOGIN)){
+            ImageLoader.loadCricleImage(getApplicationContext(), SharedPreUtil.getLoginData(Constants.AUTH_USER_AVATAR_URL), navAvatarIm);
+            navNameTx.setText(SharedPreUtil.getLoginData(Constants.AUTH_USER_NAME));
+            navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
         }else {
             navAvatarIm.setImageResource(R.drawable.ic_avatar);
             navNameTx.setText(getResources().getString(R.string.nav_view_name_tx));
@@ -210,10 +213,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navHeaderRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(SharedPreUtil.getIsLogin()){
-                    ImageLoader.loadCricleImage(getApplicationContext(), SharedPreUtil.getLoginData(Constants.AUTH_USER_AVATAR_URL), navAvatarIm);
-                    navNameTx.setText(SharedPreUtil.getLoginData(Constants.AUTH_USER_NAME));
-                    navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
+                if(SharedPreUtil.getState(Constants.IS_LOGIN)){
                 }else {
                     showLoginDialog();
                 }
@@ -238,7 +238,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 登陆的中转页面
      */
     private void showLoginDialog(){
-        final Dialog dialog = new Dialog(this, R.style.ThemeLoginDialog);
+        dialog = new Dialog(this, R.style.ThemeLoginDialog);
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_login, null);
         Window window = dialog.getWindow();
         window.setGravity(Gravity.BOTTOM);
@@ -354,7 +354,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void initFragments() {
         List<String> titles = new ArrayList<>();
-        if (SharedPreUtil.getIsLogin()) {
+        if (SharedPreUtil.getState(Constants.IS_LOGIN)) {
             titles.add(getString(R.string.home_following));
             titles.add(getString(R.string.home_popular));
             titles.add(getString(R.string.home_recent));
@@ -506,14 +506,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         HashMap<String, String> map = new HashMap<>();
          loginDialogLoginBt.setVisibility(Button.GONE);
         loginDialogPb.setVisibility(ProgressBar.VISIBLE);
-        Intent schemeIntent = getIntent();
-        Uri uri = schemeIntent.getData();
+        Uri uri = intent.getData();
+        //接收传递过来URL中的参数code
         String code = uri.getQuery();
         map.put(Constants.CLIENT_ID, Constants.CLIENT_ID_VALUE);
         map.put(Constants.CLIENT_SECRET, Constants.CLIENT_SECRET_VALUE);
-        map.put(Constants.CODE, code);
-        Log.i("Code", code);
-        RecyclerPresenter presenter = new RecyclerPresenter(this, Constants.REQUEST_AUTH_TOKEN, map,this);
+        //code字符串前面带有code=,需要去掉。
+        map.put(Constants.CODE, code.replace("code=", ""));
+        RecyclerPresenter presenter = new RecyclerPresenter(this, Constants.REQUEST_NORMAL, Constants.REQUEST_AUTH_TOKEN, map,this);
         presenter.loadShots();
     }
 
@@ -539,13 +539,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         HashMap<String, String> map = new HashMap<>();
         if(requestType.equals(Constants.REQUEST_AUTH_TOKEN)){
             loginDialogPb.setVisibility(ProgressBar.VISIBLE);
-            AuthToken authToken = Json.parseAuthToken(json);
-            Log.i("authToken", authToken.getAccess_token());
-            map.put(Constants.ACCESS_TOKEN, authToken.getAccess_token());
-            SharedPreUtil.saveParameters(map);
-            SharedPreUtil.saveIsLogin(true);
-            RecyclerPresenter presenter = new RecyclerPresenter(this, Constants.REQUEST_AUTH_USER, map,this);
-            presenter.loadShots();
+            if(json.indexOf("error") != -1) {
+                Log.i("error", json);
+            }else {
+                AuthToken authToken = Json.parseAuthToken(json);
+                Log.i("authToken", authToken.getAccess_token());
+                map.put(Constants.ACCESS_TOKEN, authToken.getAccess_token());
+                SharedPreUtil.saveParameters(map);
+                SharedPreUtil.saveState(Constants.IS_LOGIN, true);
+                RecyclerPresenter presenter = new RecyclerPresenter(this, Constants.REQUEST_NORMAL, Constants.REQUEST_AUTH_USER, map, this);
+                presenter.loadShots();
+            }
         }else {
             User authUser = Json.parseUser(json);
             ImageLoader.loadCricleImage(getApplicationContext(), authUser.getAvatar_url(), navAvatarIm);
@@ -554,6 +558,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             map.put(Constants.AUTH_USER_AVATAR_URL, authUser.getAvatar_url());
             map.put(Constants.AUTH_USER_NAME, authUser.getUsername());
             SharedPreUtil.saveParameters(map);
+            dialog.cancel();
+            initTabPager();
         }
     }
 }

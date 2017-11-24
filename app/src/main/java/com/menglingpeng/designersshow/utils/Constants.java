@@ -22,11 +22,11 @@ public class Constants {
     public static final String SCOPE_VALUE = "public+write+comment+upload";
     public static final String AUTH_USER_NAME = "user_name";
     public static final String AUTH_USER_AVATAR_URL = "avatar_url";
-    public static final String BASE_URL = "https://api.dribbble.com/v1/";
+    public static final String LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL = "https://api.dribbble.com/v1/user/following/shots";
     public static final String AUTHENTICATED_USER_URL = "https://api.dribbble.com/v1/user";
     public static final String SHOTS_URL = "https://api.dribbble.com/v1/shots";
     public static final String REQUEST_AUTH_TOKEN_URL = "https://dribbble.com/oauth/token";
-    public static final String REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL = "https://dribbble.com/oauth/authorize?client_id=2824a0365fffaa9fe9b74dce83921d185e5a45ad6c879a06f83399a25ce128a0&scope=public+write+comment+upload";
+    public static final String REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL = "https://dribbble.com/oauth/authorize?client_id=2824a0365fffaa9fe9b74dce83921d185e5a45ad6c879a06f83399a25ce128a0&redirect_uri=shots://dribbble-login-callback&scope=public+write+comment+upload";
     public static final String AUTH_TOKEN = "auth_token";
     public static final String APP_ACCESS_TOKEN  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     public static final String MENU_HOME = "Home";

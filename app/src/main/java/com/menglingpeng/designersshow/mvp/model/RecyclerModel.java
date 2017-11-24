@@ -16,6 +16,7 @@ import java.util.HashMap;
 public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.RecyclerModel{
 
     private String type;
+    private String requestType;
     private HashMap<String, String> map;
     private BaseActivity baseActivity;
 
@@ -25,9 +26,10 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
     }
 
     @Override
-    public void getShots(String requestType, HashMap<String, String> map, OnloadJsonListener listener) {
+    public void getShots(String type, String requestType, HashMap<String, String> map, OnloadJsonListener listener) {
         this.map = map;
-        this.type = requestType;
+        this.type = type;
+        this.requestType = requestType;
         new GetDataTask().execute(listener);
     }
 
@@ -38,7 +40,7 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
         @Override
         protected String doInBackground(OnloadJsonListener... params) {
             listener = params[0];
-            shotsJson = HttpUtils.getJson(map, type);
+            shotsJson = HttpUtils.getJson(map, type, requestType);
             return shotsJson;
         }
 
@@ -46,7 +48,7 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
             if(json != null){
-                listener.onSuccess(shotsJson, type);
+                listener.onSuccess(shotsJson, requestType);
             }else {
                 listener.onFailure(baseActivity.getString(R.string.on_load_shots_listener_failed_msg));
             }

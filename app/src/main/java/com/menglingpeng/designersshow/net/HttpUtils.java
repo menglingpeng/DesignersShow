@@ -27,41 +27,40 @@ public class
 
 HttpUtils {
 
-    public static String getJson(HashMap<String, String> map, String requestType) {
+    public static String getJson(HashMap<String, String> map, String type, String requestType) {
         String json = null;
+        Request request = null;
         HttpUrl httpUrl = null;
         HttpUrl.Builder urlBuilder = null;
-        Request request = null;
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder bodyBuilder = new FormBody.Builder();
         RequestBody requestBody = null;
-        switch (requestType) {
-            case Constants.REQUEST_COMMENTS:
-                String url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.SHOTS))
-                        .append("/").append(requestType).toString();
-                urlBuilder = HttpUrl.parse(url).newBuilder();
-                httpUrl = urlBuilder.build();
-                break;
-            case Constants.REQUEST_AUTH_TOKEN:
-                for (String key : map.keySet()){
-                   bodyBuilder.add(key, map.get(key)) ;
-                }
-                requestBody = bodyBuilder.build();
-                break;
-            case Constants.REQUEST_AUTH_USER:
-                urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
-                for (String key : map.keySet()) {
-                    urlBuilder.addQueryParameter(key, map.get(key));
-                }
-                httpUrl = urlBuilder.build();
-                break;
-            default:
-                urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
-                for (String key : map.keySet()) {
-                    urlBuilder.addQueryParameter(key, map.get(key));
-                }
-                httpUrl = urlBuilder.build();
-                break;
+        if(requestType.equals(Constants.REQUEST_AUTH_TOKEN)){
+            for (String key : map.keySet()){
+                bodyBuilder.add(key, map.get(key)) ;
+            }
+            requestBody = bodyBuilder.build();
+        }else {
+            switch (requestType) {
+                case Constants.REQUEST_COMMENTS:
+                    String url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.SHOTS))
+                            .append("/").append(requestType).toString();
+                    break;
+                case Constants.REQUEST_AUTH_USER:
+                    urlBuilder = HttpUrl.parse(Constants.AUTHENTICATED_USER_URL).newBuilder();
+                    break;
+                default:
+                    if(type.equals(Constants.TAB_FOLLOWING)){
+                        urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL).newBuilder();
+                    }else {
+                        urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
+                    }
+                    break;
+            }
+            for (String key : map.keySet()) {
+                urlBuilder.addQueryParameter(key, map.get(key));
+            }
+            httpUrl = urlBuilder.build();
         }
         if (requestType.equals(Constants.REQUEST_AUTH_TOKEN)){
             request = new Request.Builder()

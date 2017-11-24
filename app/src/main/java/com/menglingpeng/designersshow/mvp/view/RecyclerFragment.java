@@ -80,12 +80,13 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     protected void initLayoutId() {
         layoutId = R.layout.fragment_recycler;
+        type = getArguments().get(Constants.TYPE).toString();
     }
 
     @Override
     protected void initData() {
         initParameters();
-        presenter = new RecyclerPresenter(this, mRequestType, map, (BaseActivity)getActivity());
+        presenter = new RecyclerPresenter(this, type, mRequestType, map, (BaseActivity)getActivity());
         presenter.loadShots();
     }
 
@@ -113,7 +114,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             map.put(Constants.SHOTS, getArguments().get(Constants.REQUEST_COMMENTS).toString());
             mRequestType = Constants.REQUEST_COMMENTS;
         }else {
-            type = getArguments().get(Constants.TYPE).toString();
             switch (type){
                 case Constants.TAB_FOLLOWING:
                     break;
@@ -173,7 +173,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             if(!type.equals(Constants.TAB_POPULAR) && !type.equals(Constants.TAB_RECENT) && !type.equals(Constants.TAB_FOLLOWING)){
                 map = SharedPreUtil.getParameters();
             }
-            map.put(Constants.ACCESS_TOKEN, Constants.APP_ACCESS_TOKEN);
+            if(SharedPreUtil.getState(Constants.IS_LOGIN)){
+                map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+            }else {
+                map.put(Constants.ACCESS_TOKEN, Constants.APP_ACCESS_TOKEN);
+            }
             if(list != null){
                 map.put(Constants.LIST, list);
             }
@@ -217,20 +221,15 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         if(!mRequestType.equals(Constants.REQUEST_COMMENTS)) {
             if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
                 fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-                shotsList = Json.parseShots(shotsjson);
             } else {
                 fragment = MainActivity.getCurrentFragment();
-                shotsList = Json.parseShots(shotsjson);
             }
+            shotsList = Json.parseShots(shotsjson);
         }else {
             context = getActivity().getApplicationContext();
             commmentsList = Json.parseComments(shotsjson);
         }
         switch (requestType){
-            case Constants.REQUEST_NORMAL:
-                adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
-                recyclerView.setAdapter(adapter);
-                break;
             case Constants.REQUEST_REFRESH:
                 showRefreshProgress(false);
                 adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
@@ -240,6 +239,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
             case Constants.REQUEST_COMMENTS:
                 adapter = new RecyclerAdapter(recyclerView, context, mRequestType, this);
+                recyclerView.setAdapter(adapter);
+                break;
+            default:
+                adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
                 recyclerView.setAdapter(adapter);
                 break;
         }

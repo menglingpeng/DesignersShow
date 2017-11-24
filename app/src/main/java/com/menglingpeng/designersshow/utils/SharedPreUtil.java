@@ -23,42 +23,31 @@ public class SharedPreUtil {
 
     /**
      * 首次启动应用后，保存标志位。
+     * 保存用户登陆状态。
      */
-    public static boolean saveIsFirstStart(Boolean isFirstStart){
-        editor.putBoolean(Constants.IS_FIRST_START, isFirstStart);
+    public static boolean saveState(String key, Boolean is){
+        if(key.equals(Constants.IS_FIRST_START)) {
+            editor.putBoolean(Constants.IS_FIRST_START, is);
+        }else {
+            editor.putBoolean(Constants.IS_LOGIN, is);
+        }
         return editor.commit();
     }
 
     /**
      * 判断应用是否第一次启动。
-     */
-    public static boolean getIsFirstStart(){
-        Boolean isFirstStart = false;
-        //isFirstStart不存在则是第一次启动，值为ture
-        isFirstStart = sp.getBoolean(Constants.IS_FIRST_START, true);
-        return isFirstStart;
-    }
-
-    /**
      * 获取用户登陆状态。
-     * @return
-     *        是否登陆。
      */
-    public static boolean getIsLogin(){
-        Boolean isLogin = false;
-        isLogin = sp.getBoolean(Constants.IS_LOGIN, false);
-        return isLogin;
-    }
-
-    /**
-     * 保存用户登陆状态。
-     * @param isLogin
-     *              用户登陆状态。
-     * @return
-     */
-    public static boolean saveIsLogin(Boolean isLogin){
-        editor.putBoolean(Constants.IS_LOGIN, isLogin);
-        return editor.commit();
+    public static boolean getState(String key){
+        Boolean is = false;
+        if(key.equals(Constants.IS_FIRST_START)) {
+            //is不存在则是第一次启动，值为ture
+            is = sp.getBoolean(Constants.IS_FIRST_START, true);
+        }else {
+            //is不存在则是没有登陆，值为false
+            is = sp.getBoolean(Constants.IS_LOGIN, false);
+        }
+        return is;
     }
 
     /**
@@ -114,14 +103,6 @@ public class SharedPreUtil {
     public static String getAuthToken(){
         String accessToken = sp.getString(Constants.ACCESS_TOKEN, null);
         return accessToken;
-    }
-
-    /**
-     *退出登陆
-     */
-    public static Boolean DeleteAuthToken(){
-        editor.putString(Constants.ACCESS_TOKEN, Constants.APP_ACCESS_TOKEN);
-        return editor.commit();
     }
 
 }
