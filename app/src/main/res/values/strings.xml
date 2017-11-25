@@ -63,7 +63,8 @@
     <string name="detail_buckets_tx">作品集</string>
     <string name="detail_views_tx">浏览</string>
     <string name="detail_attachmets_bt_tx">附件</string>
-    <string name="detail_likes_im_like_a_shot">shot liked!</string>
+    <string name="detail_likes_im_like_a_shot_snack_text">shot liked!</string>
+    <string name="detail_likes_im_unlike_a_shot_snack_text">shot unliked!</string>
     <string name="on_load_detail_image_listener_failed_msg">加载失败</string>
 
 </resources>

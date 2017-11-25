@@ -90,6 +90,7 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
                 DetailActivity.this.finish();
             }
         });
+        map.put(Constants.ID, String.valueOf(shots.getId()));
         checkIfLikeShot();
         detailLikesIm = (ImageView)findViewById(R.id.detail_likes_im);
         if(shotsIsLiked){
@@ -99,7 +100,7 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
             @Override
             public void onClick(View v) {
                 if(shotsIsLiked){
-
+                    unlikeShot();
                 }else {
                     likeShot();
                 }
@@ -225,13 +226,16 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
 
     @Override
     public void loadFailed(String msg) {
-
+        detailLikesIm.setImageResource(R.drawable.ic_favorite_grey_600_36dp);
+        SnackUI.showSnackShort(coordinatorLayout, getResources().getString(R.string.detail_likes_im_unlike_a_shot_snack_text));
+        setShotIsLiked(false);
     }
 
     @Override
     public void loadSuccess(String json, String requestType) {
         if(requestType.equals(Constants.REQUEST_LIKE_A_SHOT)){
-            SnackUI.showSnackShort(coordinatorLayout, getResources().getString(R.string.detail_likes_im_like_a_shot));
+            detailLikesIm.setImageResource(R.drawable.ic_favorite_red_600_36dp);
+            SnackUI.showSnackShort(coordinatorLayout, getResources().getString(R.string.detail_likes_im_like_a_shot_snack_text));
         }else {
             setShotIsLiked(true);
         }
@@ -242,15 +246,18 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
     }
 
     private void checkIfLikeShot(){
-        map.put(Constants.ID, String.valueOf(shots.getId()));
         presenter = new RecyclerPresenter(DetailActivity.this,Constants.REQUEST_CHECK_IF_LIKE_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, DetailActivity.this);
         presenter.loadJson();
     }
 
     private void likeShot(){
-        map.put(Constants.ID, String.valueOf(shots.getId()));
         presenter = new RecyclerPresenter(DetailActivity.this,Constants.REQUEST_LIKE_A_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, DetailActivity.this);
         presenter.loadJson();
-        detailLikesIm.setImageResource(R.drawable.ic_favorite_red_600_36dp);
+    }
+
+    private void unlikeShot(){
+        presenter = new RecyclerPresenter(DetailActivity.this, Constants.REQUEST_UNLIKE_A_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_DELETE_MEIHOD, map, DetailActivity.this);
+        presenter.loadJson();
+
     }
 }

@@ -94,10 +94,23 @@ HttpUtils {
                         .url(url)
                         .post(requestBody)
                         .build();
+
                 break;
             case Constants.REQUEST_PUT_MEIHOD:
                 break;
             case Constants.REQUEST_DELETE_MEIHOD:
+                switch (type){
+                    case Constants.REQUEST_UNLIKE_A_SHOT:
+                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
+                                .append("/").append(Constants.LIKE).toString();
+                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                        break;
+                }
+                requestBody = bodyBuilder.build();
+                request = new Request.Builder()
+                        .url(url)
+                        .delete(requestBody)
+                        .build();
                 break;
         }
             Response response = null;
