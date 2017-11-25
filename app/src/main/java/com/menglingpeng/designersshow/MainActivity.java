@@ -537,7 +537,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         map.put(Constants.CODE, code.replace("code=", ""));
         authType = Constants.REQUEST_AUTH_TOKEN;
         RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map,this);
-        presenter.loadShots();
+        presenter.loadJson();
     }
 
     @Override
@@ -573,7 +573,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 isLogin = true;
                 authType = Constants.REQUEST_AUTH_USER;
                 RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, this);
-                presenter.loadShots();
+                presenter.loadJson();
             }
         }else {
             User authUser = Json.parseJson(json, User.class);

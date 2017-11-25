@@ -53,12 +53,21 @@ HttpUtils {
                     case Constants.MENU_MY_LIKES:
                         urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES).newBuilder();
                         break;
+                    case Constants.REQUEST_CHECK_IF_LIKE_SHOT:
+                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
+                                .append("/").append(Constants.LIKE).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
                     default:
                         urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
                         break;
                 }
-                for (String key : map.keySet()) {
-                    urlBuilder.addQueryParameter(key, map.get(key));
+                if(type.equals(Constants.REQUEST_CHECK_IF_LIKE_SHOT)){
+                    urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                }else {
+                    for (String key : map.keySet()) {
+                        urlBuilder.addQueryParameter(key, map.get(key));
+                    }
                 }
                 httpUrl = urlBuilder.build();
                 request = new Request.Builder()
@@ -72,16 +81,15 @@ HttpUtils {
                         for (String key : map.keySet()){
                             bodyBuilder.add(key, map.get(key)) ;
                         }
-                        requestBody = bodyBuilder.build();
                         url = Constants.REQUEST_AUTH_TOKEN_URL;
                         break;
                     case Constants.REQUEST_LIKE_A_SHOT:
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
                                .append("/").append(Constants.LIKE).toString();
                         bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
-                        requestBody = bodyBuilder.build();
                         break;
                 }
+                requestBody = bodyBuilder.build();
                 request = new Request.Builder()
                         .url(url)
                         .post(requestBody)
@@ -98,7 +106,7 @@ HttpUtils {
                 json = response.body().string();
             } catch (IOException e) {
                 e.printStackTrace();
-                json = null;
+                json = e.getMessage();
             }
             return json;
         }

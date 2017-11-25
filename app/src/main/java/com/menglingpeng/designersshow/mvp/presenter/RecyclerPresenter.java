@@ -16,13 +16,13 @@ import java.util.HashMap;
 
 public class RecyclerPresenter implements RecyclerPresenterIf, OnloadJsonListener {
 
-    private RecyclerView<Shots> recyclerViewIf;
+    private RecyclerView recyclerViewIf;
     private RecyclerModel recyclerModel;
     private String type;
     private String requestType;
     private String requestMethod;
     private HashMap<String, String> map;
-    public RecyclerPresenter(RecyclerView<Shots> recyclerViewIf, String type, String requestType, String requestMethod, HashMap<String, String> map, BaseActivity activity){
+    public RecyclerPresenter(RecyclerView recyclerViewIf, String type, String requestType, String requestMethod, HashMap<String, String> map, BaseActivity activity){
         this.recyclerViewIf = recyclerViewIf;
         this.type = type;
         this.requestType = requestType;
@@ -45,7 +45,7 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadJsonListene
     }
 
     @Override
-    public void loadShots() {
+    public void loadJson() {
         recyclerModel.getJson(type, requestType, requestMethod, map, this);
     }
 

@@ -89,7 +89,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     protected void initData() {
         initParameters();
         presenter = new RecyclerPresenter(this, type, mRequestType, Constants.REQUEST_GET_MEIHOD, map, (BaseActivity)getActivity());
-        presenter.loadShots();
+        presenter.loadJson();
     }
 
     @Override
@@ -238,26 +238,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 showRefreshProgress(false);
                 adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
                 recyclerView.setAdapter(adapter);
-                shotsList = Json.parseArrayJson(json, Shots.class);
                 break;
             case Constants.REQUEST_LOAD_MORE:
                 adapter.setLoading(false);
-                shotsList = Json.parseArrayJson(json, Shots.class);
                 break;
             case Constants.REQUEST_NORMAL:
-                switch (type){
-                    case Constants.MENU_MY_LIKES:
-                        likesList = Json.parseArrayJson(json, Likes.class);
-                        break;
-                    case Constants.MENU_MY_SHOTS:
-                        break;
-                    case Constants.REQUEST_COMMENTS:
-                        commmentsList = Json.parseArrayJson(json, Comments.class);
-                        break;
-                    default:
-                        shotsList = Json.parseArrayJson(json, Shots.class);
-                        break;
-                }
                 if(type.equals(Constants.REQUEST_COMMENTS)){
                     adapter = new RecyclerAdapter(recyclerView, context, mRequestType, this);
                 }else {
@@ -279,16 +264,19 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
         switch (type){
             case Constants.REQUEST_COMMENTS:
+                commmentsList = Json.parseArrayJson(json, Comments.class);
                 for(int i = 0; i < commmentsList.size(); i++) {
                     adapter.addCommentsData(commmentsList.get(i));
                 }
                 break;
             case Constants.MENU_MY_LIKES:
+                likesList = Json.parseArrayJson(json, Likes.class);
                 for (int i = 0; i < likesList.size(); i++) {
                     adapter.addShotsData(likesList.get(i).getShot());
                 }
                 break;
             default:
+                shotsList = Json.parseArrayJson(json, Shots.class);
                 for (int i = 0; i < shotsList.size(); i++) {
                     adapter.addShotsData(shotsList.get(i));
                 }

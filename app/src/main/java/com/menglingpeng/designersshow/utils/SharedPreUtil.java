@@ -105,4 +105,10 @@ public class SharedPreUtil {
         return accessToken;
     }
 
+    
+    public static void deleteAuthToken(){
+        editor.putString(Constants.ACCESS_TOKEN, Constants.APP_ACCESS_TOKEN);
+        editor.commit();
+    }
+
 }

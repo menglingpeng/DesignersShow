@@ -6,5 +6,5 @@ package com.menglingpeng.designersshow.mvp.interf;
  */
 
 public interface RecyclerPresenterIf {
-    void loadShots();
+    void loadJson();
 }

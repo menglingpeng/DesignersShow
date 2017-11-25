@@ -20,10 +20,15 @@ import android.widget.TextView;
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
+import com.menglingpeng.designersshow.mvp.interf.RecyclerView;
+import com.menglingpeng.designersshow.mvp.model.Like;
 import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.net.HttpUtils;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.Json;
+import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
 
@@ -35,7 +40,7 @@ import okhttp3.HttpUrl;
  * Created by mengdroid on 2017/11/1.
  */
 
-public class DetailActivity extends BaseActivity implements OnloadDetailImageListener {
+public class DetailActivity extends BaseActivity implements OnloadDetailImageListener, com.menglingpeng.designersshow.mvp.interf.RecyclerView {
 
     private Toolbar toolbar;
     private ImageView imageView;
@@ -50,6 +55,8 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
     private Shots shots;
     private String htmlUrl, hidpiUrl, imageUrl, imageName;
     private HashMap<String, String> map = new HashMap<>();
+    private RecyclerPresenter presenter;
+    private Boolean shotsIsLiked = false;
 
     @Override
     protected void initLayoutId() {
@@ -83,16 +90,21 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
                 DetailActivity.this.finish();
             }
         });
+        checkIfLikeShot();
         detailLikesIm = (ImageView)findViewById(R.id.detail_likes_im);
+        if(shotsIsLiked){
+            detailLikesIm.setImageResource(R.drawable.ic_favorite_red_600_36dp);
+        }
         detailLikesIm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                map.put(Constants.ID, String.valueOf(shots.getId()));
-                HttpUtils.getJson(map, Constants.REQUEST_LIKE_A_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD);
-                detailLikesIm.setImageResource(R.drawable.ic_favorite_red_600_36dp);
+                if(shotsIsLiked){
+
+                }else {
+                    likeShot();
+                }
             }
         });
-        new CheckIfLikeShotTask().execute(String.valueOf(shots.getId()));
         ImageLoader.loadDetailImage(getApplicationContext(), imageUrl, imageView, this);
         initDescription();
     }
@@ -206,26 +218,39 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
 
     }
 
-    class CheckIfLikeShotTask extends AsyncTask<String, Void, String>{
+    @Override
+    public void hideProgress() {
 
-        @Override
-        protected String doInBackground(String... id) {
-            String likeJson = null;
-            HashMap<String, String> map = new HashMap<>();
-            map.put(Constants.SHOTS, id[0]);
-            HttpUtils.getJson(map,Constants.REQUEST_NORMAL, Constants.REQUEST_CHECK_IF_LIKE_SHOT, Constants.REQUEST_GET_MEIHOD);
-            return likeJson;
-        }
+    }
 
-        @Override
-        protected void onPostExecute(String json) {
-            super.onPostExecute(json);
-            if(json != null){
-                detailLikesIm.setImageResource(R.drawable.ic_favorite_red_600_24dp);
-            }else {
-                detailLikesIm.setImageResource(R.drawable.ic_favorite_grey_600);
-            }
+    @Override
+    public void loadFailed(String msg) {
+
+    }
+
+    @Override
+    public void loadSuccess(String json, String requestType) {
+        if(requestType.equals(Constants.REQUEST_LIKE_A_SHOT)){
+            SnackUI.showSnackShort(coordinatorLayout, getResources().getString(R.string.detail_likes_im_like_a_shot));
+        }else {
+            setShotIsLiked(true);
         }
     }
 
+    private void setShotIsLiked(Boolean b){
+        shotsIsLiked = b;
+    }
+
+    private void checkIfLikeShot(){
+        map.put(Constants.ID, String.valueOf(shots.getId()));
+        presenter = new RecyclerPresenter(DetailActivity.this,Constants.REQUEST_CHECK_IF_LIKE_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, DetailActivity.this);
+        presenter.loadJson();
+    }
+
+    private void likeShot(){
+        map.put(Constants.ID, String.valueOf(shots.getId()));
+        presenter = new RecyclerPresenter(DetailActivity.this,Constants.REQUEST_LIKE_A_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, DetailActivity.this);
+        presenter.loadJson();
+        detailLikesIm.setImageResource(R.drawable.ic_favorite_red_600_36dp);
+    }
 }
