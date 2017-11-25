@@ -205,6 +205,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void onRefresh() {
+        page = 1;
+        map.put("page", String.valueOf(page));
         mRequestType = Constants.REQUEST_REFRESH;
         initData();
     }
@@ -245,11 +247,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_NORMAL:
                 switch (type){
                     case Constants.MENU_MY_LIKES:
-                        shotsList = new ArrayList<>();
                         likesList = Json.parseArrayJson(json, Likes.class);
-                        for(int i = 0; i < likesList.size(); i++){
-                            shotsList.add(likesList.get(i).getShot());
-                        }
                         break;
                     case Constants.MENU_MY_SHOTS:
                         break;
@@ -279,14 +277,22 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             }
         });
 
-        if(type != Constants.REQUEST_COMMENTS) {
-            for (int i = 0; i < shotsList.size(); i++) {
-                adapter.addShotsData(shotsList.get(i));
-            }
-        }else {
-            for(int i = 0; i < commmentsList.size(); i++){
-                adapter.addCommentsData(commmentsList.get(i));
-            }
+        switch (type){
+            case Constants.REQUEST_COMMENTS:
+                for(int i = 0; i < commmentsList.size(); i++) {
+                    adapter.addCommentsData(commmentsList.get(i));
+                }
+                break;
+            case Constants.MENU_MY_LIKES:
+                for (int i = 0; i < likesList.size(); i++) {
+                    adapter.addShotsData(likesList.get(i).getShot());
+                }
+                break;
+            default:
+                for (int i = 0; i < shotsList.size(); i++) {
+                    adapter.addShotsData(shotsList.get(i));
+                }
+                break;
         }
     }
 
