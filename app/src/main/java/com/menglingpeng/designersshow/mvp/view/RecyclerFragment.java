@@ -19,6 +19,7 @@ import com.menglingpeng.designersshow.MainActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerPresenterIf;
+import com.menglingpeng.designersshow.mvp.model.Buckets;
 import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Likes;
 import com.menglingpeng.designersshow.mvp.model.Shots;
@@ -59,9 +60,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String date = null;
     private String sort = null;
     private int page = 1;
-    private ArrayList<Shots> shotsList;
-    private ArrayList<Likes> likesList;
-    private ArrayList<Comments> commmentsList;
+    private ArrayList jsonList;
 
     public static RecyclerFragment newInstance(String type){
         Bundle bundle = new Bundle();
@@ -174,6 +173,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 case Constants.MENU_MY_LIKES:
                     sort = Constants.SORT_RECENT;
                     break;
+                case Constants.MENU_MY_BUCKETS:
+                    break;
             }
             //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
             if(!type.equals(Constants.TAB_POPULAR) && !type.equals(Constants.TAB_RECENT) && !type.equals(Constants.TAB_FOLLOWING)){
@@ -264,21 +265,27 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
         switch (type){
             case Constants.REQUEST_COMMENTS:
-                commmentsList = Json.parseArrayJson(json, Comments.class);
-                for(int i = 0; i < commmentsList.size(); i++) {
-                    adapter.addCommentsData(commmentsList.get(i));
+                jsonList = Json.parseArrayJson(json, Comments.class);
+                for(int i = 0; i < jsonList.size(); i++) {
+                    adapter.addData(jsonList.get(i));
                 }
                 break;
             case Constants.MENU_MY_LIKES:
-                likesList = Json.parseArrayJson(json, Likes.class);
-                for (int i = 0; i < likesList.size(); i++) {
-                    adapter.addShotsData(likesList.get(i).getShot());
+                jsonList = Json.parseArrayJson(json, Likes.class);
+                for (int i = 0; i < jsonList.size(); i++) {
+                    adapter.addData(((Likes)jsonList.get(i)).getShot());
+                }
+                break;
+            case Constants.MENU_MY_BUCKETS:
+                jsonList = Json.parseArrayJson(json, Buckets.class);
+                for (int i = 0; i < jsonList.size(); i++) {
+                    adapter.addData(jsonList.get(i));
                 }
                 break;
             default:
-                shotsList = Json.parseArrayJson(json, Shots.class);
-                for (int i = 0; i < shotsList.size(); i++) {
-                    adapter.addShotsData(shotsList.get(i));
+                jsonList = Json.parseArrayJson(json, Shots.class);
+                for (int i = 0; i < jsonList.size(); i++) {
+                    adapter.addData(jsonList.get(i));
                 }
                 break;
         }

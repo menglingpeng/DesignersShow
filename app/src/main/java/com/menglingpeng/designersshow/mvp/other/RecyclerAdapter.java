@@ -34,7 +34,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
     private OnRecyclerListItemListener mListener;
-    private ArrayList<Shots> shotses = new ArrayList<Shots>();
+    private ArrayList list = new ArrayList<>();
     private ArrayList<Comments> comments = new ArrayList<Comments>();
     private Fragment fragment;
     private Context context;
@@ -90,12 +90,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return shotses.size() + 1;
+        return list.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position == shotses.size()){
+        if(position == list.size()){
             return TYPE_FOOTER;
         }else {
             return TYPE_ITEM;
@@ -124,7 +124,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof ViewHolder){
             final ViewHolder viewHolder = (ViewHolder)holder;
-            final Shots shots = shotses.get(position);
+            final Shots shots = (Shots)list.get(position);
             boolean isGif = shots.isAnimated();
             int attachments = shots.getAttachments_count();
             ImageLoader.loadCricleImage(fragment, shots.getUser().getAvatar_url(), viewHolder.avatarIv);
@@ -205,13 +205,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void addShotsData(Shots data){
-        shotses.add(data);
-        notifyDataSetChanged();
-    }
-
-    public void addCommentsData(Comments data){
-        comments.add(data);
+    public <T> void addData(T d){
+        list.add(d);
         notifyDataSetChanged();
     }
 

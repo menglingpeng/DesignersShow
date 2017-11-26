@@ -53,6 +53,9 @@ HttpUtils {
                     case Constants.MENU_MY_LIKES:
                         urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES).newBuilder();
                         break;
+                    case Constants.MENU_MY_BUCKETS:
+                        urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER).newBuilder();
+                        break;
                     case Constants.REQUEST_CHECK_IF_LIKE_SHOT:
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.LIKE).toString();
