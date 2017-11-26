@@ -229,7 +229,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         Context context = null;
         if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
             fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-        } else if(type.equals(Constants.REQUEST_COMMENTS)) {
+        } else if(type.equals(Constants.REQUEST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS)) {
             context = getActivity().getApplicationContext();
         }else {
             fragment = MainActivity.getCurrentFragment();
@@ -244,8 +244,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 adapter.setLoading(false);
                 break;
             case Constants.REQUEST_NORMAL:
-                if(type.equals(Constants.REQUEST_COMMENTS)){
-                    adapter = new RecyclerAdapter(recyclerView, context, mRequestType, this);
+                if(type.equals(Constants.REQUEST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS)){
+                    adapter = new RecyclerAdapter(recyclerView, context, type, this);
                 }else {
                     adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
                 }
@@ -266,28 +266,23 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         switch (type){
             case Constants.REQUEST_COMMENTS:
                 jsonList = Json.parseArrayJson(json, Comments.class);
-                for(int i = 0; i < jsonList.size(); i++) {
-                    adapter.addData(jsonList.get(i));
-                }
                 break;
             case Constants.MENU_MY_LIKES:
                 jsonList = Json.parseArrayJson(json, Likes.class);
-                for (int i = 0; i < jsonList.size(); i++) {
-                    adapter.addData(((Likes)jsonList.get(i)).getShot());
-                }
                 break;
             case Constants.MENU_MY_BUCKETS:
                 jsonList = Json.parseArrayJson(json, Buckets.class);
-                for (int i = 0; i < jsonList.size(); i++) {
-                    adapter.addData(jsonList.get(i));
-                }
                 break;
             default:
                 jsonList = Json.parseArrayJson(json, Shots.class);
-                for (int i = 0; i < jsonList.size(); i++) {
-                    adapter.addData(jsonList.get(i));
-                }
                 break;
+        }
+        for(int i = 0; i < jsonList.size(); i++) {
+            if(type.equals(Constants.MENU_MY_LIKES)){
+                adapter.addData(((Likes)jsonList.get(i)).getShot());
+            }else {
+                adapter.addData(jsonList.get(i));
+            }
         }
     }
 

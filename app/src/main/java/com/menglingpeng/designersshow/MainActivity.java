@@ -12,7 +12,6 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -27,7 +26,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -54,7 +52,6 @@ import com.menglingpeng.designersshow.utils.SnackUI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.zip.Inflater;
 
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, com.menglingpeng.designersshow.mvp.interf.RecyclerView{
@@ -150,7 +147,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.explore_toolbar_overflow_menu, menu);
+        getMenuInflater().inflate(R.menu.main_toolbar_overflow_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -161,7 +158,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onPrepareOptionsMenu(Menu menu) {
         if(Constants.MENU_EXPLORE.equals(currentType)){
             menu.findItem(R.id.overflow_date).setVisible(true);
-        }else {
+        }else if(Constants.MENU_MY_BUCKETS.equals(currentType)){
+            menu.findItem(R.id.overflow_date).setVisible(false);
+            menu.findItem(R.id.overflow_item_type).setVisible(false);
+        }
+        else {
             menu.findItem(R.id.overflow_date).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);

@@ -38,6 +38,7 @@
     </item>
 
     <item
+        android:id="@+id/overflow_item_type"
         android:icon="@mipmap/ic_toolbar_overflow"
         android:title=""
         app:showAsAction="always">

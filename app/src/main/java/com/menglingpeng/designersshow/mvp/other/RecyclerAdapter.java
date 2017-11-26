@@ -4,26 +4,23 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
+import com.menglingpeng.designersshow.mvp.model.Buckets;
 import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.utils.Constants;
-import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by mengdroid on 2017/10/19.
@@ -106,17 +103,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
+        RecyclerView.ViewHolder viewHolder = null;
         if(viewType == TYPE_FOOTER){
             view = inflater.inflate(R.layout.recycler_item_footer_loading, parent, false);
             return new FooterViewHolder(view);
         }else {
-            if (type != Constants.REQUEST_COMMENTS) {
-                view = inflater.inflate(R.layout.recycler_item, parent, false);
-                return new ViewHolder(view);
-            } else {
-                view = inflater.inflate(R.layout.comments_recycler_view_item, parent, false);
-                return new CommentsViewHolder(view);
+            switch (type) {
+                case Constants.REQUEST_COMMENTS:
+                    view = inflater.inflate(R.layout.comments_recycler_view_item, parent, false);
+                    viewHolder = new CommentsViewHolder(view);
+                    break;
+                case Constants.MENU_MY_BUCKETS:
+                    view = inflater.inflate(R.layout.user_buckets_recycler_item, parent, false);
+                    viewHolder = new BucketsViewHolder(view);
+                    break;
+                default:
+                    view = inflater.inflate(R.layout.recycler_item, parent, false);
+                    viewHolder = new ViewHolder(view);
+                    break;
             }
+            return viewHolder;
         }
     }
 
@@ -153,12 +159,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
         }else if(holder instanceof CommentsViewHolder){
             CommentsViewHolder viewHolder = (CommentsViewHolder)holder;
-            Comments comment = comments.get(position);
+            Comments comment = (Comments)list.get(position);
             ImageLoader.loadCricleImage(context, comment.getUser().getAvatar_url(), viewHolder.commentsAvatarIm);
             viewHolder.commentsContentTv.setText(comment.getBody());
             viewHolder.commentsUsernameTv.setText(comment.getUser().getUsername());
             viewHolder.commentsCreateAtTv.setText(comment.getCreated_at());
             viewHolder.commentsLikesCountTv.setText(comment.getLikes_count());
+        }else if(holder instanceof BucketsViewHolder){
+            BucketsViewHolder viewHolder = (BucketsViewHolder)holder;
+            Buckets buckets = (Buckets)list.get(position);
+            viewHolder.bucketNameTx.setText(buckets.getName());
+            viewHolder.bucketDescTx.setText(buckets.getDescription());
+            viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), "作品"));
+        }
+        else {
+
         }
     }
 
@@ -200,8 +215,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class FooterViewHolder extends RecyclerView.ViewHolder{
 
-        public FooterViewHolder(View itemView) {
-            super(itemView);
+        public FooterViewHolder(View view) {
+            super(view);
+        }
+    }
+
+    public class BucketsViewHolder extends RecyclerView.ViewHolder{
+        public final TextView bucketNameTx, bucketDescTx, bucketShotsCountTx;
+
+        public BucketsViewHolder(View view) {
+            super(view);
+            bucketNameTx = (TextView)view.findViewById(R.id.bucket_name_tx);
+            bucketDescTx = (TextView)view.findViewById(R.id.bucket_desc_tx);
+            bucketShotsCountTx = (TextView)view.findViewById(R.id.bucket_shots_count_tx);
         }
     }
 
