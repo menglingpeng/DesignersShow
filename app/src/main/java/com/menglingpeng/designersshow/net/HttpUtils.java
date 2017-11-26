@@ -39,7 +39,7 @@ HttpUtils {
         switch (requestMethod){
             case Constants.REQUEST_GET_MEIHOD:
                 switch (type) {
-                    case Constants.REQUEST_COMMENTS:
+                    case Constants.REQUEST_LIST_COMMENTS:
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.SHOTS))
                                 .append("/").append(requestType).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
@@ -51,10 +51,15 @@ HttpUtils {
                         urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL).newBuilder();
                         break;
                     case Constants.MENU_MY_LIKES:
-                        urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES).newBuilder();
+                        urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES_URL).newBuilder();
                         break;
                     case Constants.MENU_MY_BUCKETS:
-                        urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER).newBuilder();
+                        urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER_URL).newBuilder();
+                        break;
+                    case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
+                        url = new StringBuilder().append(Constants.BUCKETS_URL).append("/").append(map.get(Constants.ID))
+                                .append("/").append(Constants.SHOTS).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
                     case Constants.REQUEST_CHECK_IF_LIKE_SHOT:
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
@@ -65,7 +70,7 @@ HttpUtils {
                         urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
                         break;
                 }
-                if(type.equals(Constants.REQUEST_CHECK_IF_LIKE_SHOT)){
+                if(type.equals(Constants.REQUEST_CHECK_IF_LIKE_SHOT) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET)){
                     urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
                 }else {
                     for (String key : map.keySet()) {

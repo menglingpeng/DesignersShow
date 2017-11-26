@@ -50,14 +50,6 @@ public class Json {
         return t;
     }
 
-    public static AuthToken parseAuthToken(String json){
-        return gson.fromJson(json, AuthToken.class);
-    }
-
-    public static User parseUser(String json){
-        return gson.fromJson(json, User.class);
-    }
-
     public static class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
         public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
             Class<T> rawType = (Class<T>) type.getRawType();

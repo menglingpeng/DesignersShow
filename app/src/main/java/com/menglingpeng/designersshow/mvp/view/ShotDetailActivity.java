@@ -2,7 +2,6 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -20,27 +19,21 @@ import android.widget.TextView;
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
-import com.menglingpeng.designersshow.mvp.interf.RecyclerView;
-import com.menglingpeng.designersshow.mvp.model.Like;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
-import com.menglingpeng.designersshow.net.HttpUtils;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
-import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
 
 import java.util.HashMap;
 
-import okhttp3.HttpUrl;
-
 /**
  * Created by mengdroid on 2017/11/1.
  */
 
-public class DetailActivity extends BaseActivity implements OnloadDetailImageListener, com.menglingpeng.designersshow.mvp.interf.RecyclerView {
+public class ShotDetailActivity extends BaseActivity implements OnloadDetailImageListener, com.menglingpeng.designersshow.mvp.interf.RecyclerView {
 
     private Toolbar toolbar;
     private ImageView imageView;
@@ -60,14 +53,14 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
 
     @Override
     protected void initLayoutId() {
-        layoutId = R.layout.activity_detail;
+        layoutId = R.layout.activity_shot_detail;
     }
 
     @Override
     protected void initViews() {
         super.initViews();
         //获取序列化对象
-        shots = (Shots) getIntent().getSerializableExtra("shots");
+        shots = (Shots) getIntent().getSerializableExtra(Constants.SHOTS);
         htmlUrl = shots.getHtml_url();
         imageName = shots.getTitle();
         hidpiUrl = shots.getImages().getHidpi();
@@ -87,7 +80,7 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DetailActivity.this.finish();
+                ShotDetailActivity.this.finish();
             }
         });
         map.put(Constants.ID, String.valueOf(shots.getId()));
@@ -128,8 +121,8 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
         detailCommentsIm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this, CommentsActivity.class);
-                intent.putExtra(Constants.REQUEST_COMMENTS, String.valueOf(shots.getId()));
+                Intent intent = new Intent(ShotDetailActivity.this, CommentsActivity.class);
+                intent.putExtra(Constants.REQUEST_LIST_COMMENTS, String.valueOf(shots.getId()));
                 startActivity(intent);
             }
         });
@@ -246,17 +239,17 @@ public class DetailActivity extends BaseActivity implements OnloadDetailImageLis
     }
 
     private void checkIfLikeShot(){
-        presenter = new RecyclerPresenter(DetailActivity.this,Constants.REQUEST_CHECK_IF_LIKE_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, DetailActivity.this);
+        presenter = new RecyclerPresenter(ShotDetailActivity.this,Constants.REQUEST_CHECK_IF_LIKE_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, ShotDetailActivity.this);
         presenter.loadJson();
     }
 
     private void likeShot(){
-        presenter = new RecyclerPresenter(DetailActivity.this,Constants.REQUEST_LIKE_A_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, DetailActivity.this);
+        presenter = new RecyclerPresenter(ShotDetailActivity.this,Constants.REQUEST_LIKE_A_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, ShotDetailActivity.this);
         presenter.loadJson();
     }
 
     private void unlikeShot(){
-        presenter = new RecyclerPresenter(DetailActivity.this, Constants.REQUEST_UNLIKE_A_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_DELETE_MEIHOD, map, DetailActivity.this);
+        presenter = new RecyclerPresenter(ShotDetailActivity.this, Constants.REQUEST_UNLIKE_A_SHOT, Constants.REQUEST_NORMAL, Constants.REQUEST_DELETE_MEIHOD, map, ShotDetailActivity.this);
         presenter.loadJson();
 
     }

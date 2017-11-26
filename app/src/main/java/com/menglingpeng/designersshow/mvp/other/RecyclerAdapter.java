@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.menglingpeng.designersshow.R;
@@ -109,7 +110,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return new FooterViewHolder(view);
         }else {
             switch (type) {
-                case Constants.REQUEST_COMMENTS:
+                case Constants.REQUEST_LIST_COMMENTS:
                     view = inflater.inflate(R.layout.comments_recycler_view_item, parent, false);
                     viewHolder = new CommentsViewHolder(view);
                     break;
@@ -166,8 +167,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.commentsCreateAtTv.setText(comment.getCreated_at());
             viewHolder.commentsLikesCountTv.setText(comment.getLikes_count());
         }else if(holder instanceof BucketsViewHolder){
-            BucketsViewHolder viewHolder = (BucketsViewHolder)holder;
-            Buckets buckets = (Buckets)list.get(position);
+            final BucketsViewHolder viewHolder = (BucketsViewHolder)holder;
+            final Buckets buckets = (Buckets)list.get(position);
+            viewHolder.bucketRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mListener != null){
+                        mListener.onRecyclerFragmentListListener(viewHolder, buckets);
+                    }
+                }
+            });
             viewHolder.bucketNameTx.setText(buckets.getName());
             viewHolder.bucketDescTx.setText(buckets.getDescription());
             viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), "作品"));
@@ -221,10 +230,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class BucketsViewHolder extends RecyclerView.ViewHolder{
+        public final RelativeLayout bucketRl;
         public final TextView bucketNameTx, bucketDescTx, bucketShotsCountTx;
 
         public BucketsViewHolder(View view) {
             super(view);
+            bucketRl = (RelativeLayout)view.findViewById(R.id.bucket_rl);
             bucketNameTx = (TextView)view.findViewById(R.id.bucket_name_tx);
             bucketDescTx = (TextView)view.findViewById(R.id.bucket_desc_tx);
             bucketShotsCountTx = (TextView)view.findViewById(R.id.bucket_shots_count_tx);

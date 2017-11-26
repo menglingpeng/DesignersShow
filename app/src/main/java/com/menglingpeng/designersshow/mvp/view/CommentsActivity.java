@@ -33,8 +33,8 @@ public class CommentsActivity extends BaseActivity {
                 CommentsActivity.this.finish();
             }
         });
-        id = getIntent().getStringExtra(Constants.REQUEST_COMMENTS).toString();
-        replaceFragment(RecyclerFragment.newInstance(id, Constants.REQUEST_COMMENTS));
+        id = getIntent().getStringExtra(Constants.REQUEST_LIST_COMMENTS).toString();
+        replaceFragment(RecyclerFragment.newInstance(id, Constants.REQUEST_LIST_COMMENTS));
     }
 
 }

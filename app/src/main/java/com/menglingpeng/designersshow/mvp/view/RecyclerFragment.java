@@ -4,26 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ProgressBar;
 
-import com.bumptech.glide.Glide;
 import com.menglingpeng.designersshow.BaseActivity;
-import com.menglingpeng.designersshow.BaseApplication;
 import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.MainActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
-import com.menglingpeng.designersshow.mvp.interf.RecyclerPresenterIf;
 import com.menglingpeng.designersshow.mvp.model.Buckets;
 import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Likes;
 import com.menglingpeng.designersshow.mvp.model.Shots;
-import com.menglingpeng.designersshow.mvp.other.Data;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
@@ -33,10 +27,6 @@ import com.menglingpeng.designersshow.utils.SharedPreUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import okhttp3.HttpUrl;
 
 
 /**
@@ -61,6 +51,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String sort = null;
     private int page = 1;
     private ArrayList jsonList;
+    private String id;
 
     public static RecyclerFragment newInstance(String type){
         Bundle bundle = new Bundle();
@@ -72,7 +63,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     public static RecyclerFragment newInstance(String id, String type){
         Bundle bundle = new Bundle();
-        bundle.putString(type, id);
+        bundle.putString(Constants.TYPE, type);
+        bundle.putString(Constants.ID, id);
         RecyclerFragment fragment = new RecyclerFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -100,7 +92,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         recyclerView.setLayoutManager(linearLayoutManager);
         //确保item大小固定，可以提升性能
         recyclerView.setHasFixedSize(true);
-        if(mRequestType != Constants.REQUEST_COMMENTS) {
+        if(type != Constants.REQUEST_LIST_COMMENTS) {
             swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark, R.color.colorPrimary);
             swipeRefresh.setOnRefreshListener(this);
         }else {
@@ -111,10 +103,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     private void initParameters(){
         map = new HashMap<>();
-        if(getArguments().get(Constants.REQUEST_COMMENTS) != null){
-            map.put(Constants.SHOTS, getArguments().get(Constants.REQUEST_COMMENTS).toString());
-            type = Constants.REQUEST_COMMENTS;
-        }else {
+        if(getArguments().get(Constants.REQUEST_LIST_COMMENTS) != null){
+            map.put(Constants.SHOTS, getArguments().get(Constants.REQUEST_LIST_COMMENTS).toString());
+            type = Constants.REQUEST_LIST_COMMENTS;
+        } else {
             switch (type){
                 case Constants.TAB_FOLLOWING:
                     sort = Constants.SORT_RECENT;
@@ -175,9 +167,12 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     break;
                 case Constants.MENU_MY_BUCKETS:
                     break;
+                case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
+                    map.put(Constants.ID,getArguments().get(Constants.ID).toString());
+                    break;
             }
             //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
-            if(!type.equals(Constants.TAB_POPULAR) && !type.equals(Constants.TAB_RECENT) && !type.equals(Constants.TAB_FOLLOWING)){
+            if(!type.equals(Constants.TAB_POPULAR) && !type.equals(Constants.TAB_RECENT) && !type.equals(Constants.TAB_FOLLOWING) && !type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET)){
                 map = SharedPreUtil.getParameters();
             }
             if(SharedPreUtil.getState(Constants.IS_LOGIN)){
@@ -229,9 +224,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         Context context = null;
         if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
             fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-        } else if(type.equals(Constants.REQUEST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS)) {
+        } else if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS)) {
             context = getActivity().getApplicationContext();
-        }else {
+        }else if(type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET)){
+            fragment = BucketDetailActivity.getFragment();
+        } else {
             fragment = MainActivity.getCurrentFragment();
         }
         switch (requestType){
@@ -244,9 +241,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 adapter.setLoading(false);
                 break;
             case Constants.REQUEST_NORMAL:
-                if(type.equals(Constants.REQUEST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS)){
+                if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS)){
                     adapter = new RecyclerAdapter(recyclerView, context, type, this);
-                }else {
+                } else {
                     adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
                 }
                 recyclerView.setAdapter(adapter);
@@ -264,7 +261,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         });
 
         switch (type){
-            case Constants.REQUEST_COMMENTS:
+            case Constants.REQUEST_LIST_COMMENTS:
                 jsonList = Json.parseArrayJson(json, Comments.class);
                 break;
             case Constants.MENU_MY_LIKES:
@@ -287,10 +284,15 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     }
 
     @Override
-    public void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, Shots shots) {
+    public <T> void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, T t) {
+        Intent intent;
         if(viewHolder instanceof RecyclerAdapter.ViewHolder){
-            Intent intent = new Intent(getActivity(), DetailActivity.class);
-            intent.putExtra("shots", shots);
+            intent = new Intent(getActivity(), ShotDetailActivity.class);
+            intent.putExtra(Constants.SHOTS, (Shots)t);
+            startActivity(intent);
+        }else if(viewHolder instanceof  RecyclerAdapter.BucketsViewHolder){
+            intent = new Intent(getActivity(), BucketDetailActivity.class);
+            intent.putExtra(Constants.BUCKETS, (Buckets)t);
             startActivity(intent);
         }
     }

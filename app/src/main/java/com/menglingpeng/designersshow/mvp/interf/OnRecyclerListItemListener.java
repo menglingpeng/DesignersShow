@@ -10,5 +10,5 @@ import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
  */
 
 public interface OnRecyclerListItemListener {
-    void onRecyclerFragmentListListener(android.support.v7.widget.RecyclerView.ViewHolder viewHolder, Shots shots);
+    <T> void onRecyclerFragmentListListener(android.support.v7.widget.RecyclerView.ViewHolder viewHolder, T t);
 }

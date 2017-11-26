@@ -527,7 +527,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         HashMap<String, String> map = new HashMap<>();
-         loginDialogLoginBt.setVisibility(Button.GONE);
+        loginDialogLoginBt.setVisibility(Button.GONE);
         loginDialogPb.setVisibility(ProgressBar.VISIBLE);
         Uri uri = intent.getData();
         //接收传递过来URL中的参数code

@@ -21,14 +21,15 @@
             android:title="@string/nav_my_likes_menu"/>
 
         <item
+            android:id="@+id/nav_shots"
+            android:icon="@mipmap/ic_action_shots"
+            android:title="@string/nav_my_shots_menu"/>
+
+        <item
             android:id="@+id/nav_buckets"
             android:icon="@mipmap/ic_action_buckets"
             android:title="@string/nav_my_buckets_menu"/>
 
-        <item
-            android:id="@+id/nav_shots"
-            android:icon="@mipmap/ic_action_shots"
-            android:title="@string/nav_my_shots_menu"/>
     </group>
 
     <group android:id="@+id/group2">

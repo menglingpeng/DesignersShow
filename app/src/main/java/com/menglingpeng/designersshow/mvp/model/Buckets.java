@@ -1,10 +1,12 @@
 package com.menglingpeng.designersshow.mvp.model;
 
+import java.io.Serializable;
+
 /**
  * Created by mengdroid on 2017/11/26.
  */
 
-public class Buckets {
+public class Buckets implements Serializable {
 
     private int id;
 
