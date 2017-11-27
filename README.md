@@ -14,9 +14,12 @@
 
 ## 应用截图
 
-  ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/nav.PNG)
   ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/home1.PNG)
   ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/home2.PNG)
   ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/sort.PNG)
   ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/list.PNG)
   ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/timeframe.PNG)
+  ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/my_likes.PNG)
+  ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/my_buckets.PNG)
+  ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/shots_bucket.PNG)
+  ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/shot_detail.PNG)

@@ -104,6 +104,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         exploreLl = (LinearLayout)findViewById(R.id.explore_ll);
+        floatingActionButton = (FloatingActionButton)findViewById(R.id.my_bucket_fab);
         currentType = Constants.MENU_HOME;
         initToolbar();
         initNavigationView();
@@ -123,14 +124,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case Constants.MENU_MY_BUCKETS:
                 toolbarTitle = getString(R.string.nav_my_buckets_menu);
-                floatingActionButton = (FloatingActionButton)findViewById(R.id.my_bucket_fab);
-                floatingActionButton.setVisibility(FloatingActionButton.VISIBLE);
-                floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showCreateBucketDialog();
-                    }
-                });
                 break;
             case Constants.MENU_MY_SHOTS:
                 toolbarTitle = getString(R.string.nav_my_shots_menu);
@@ -373,6 +366,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         invalidateOptionsMenu();
         switch (menuType){
             case Constants.MENU_HOME:
+                floatingActionButton.setVisibility(FloatingActionButton.GONE);
                 exploreLl.setVisibility(LinearLayout.GONE);
                 if(currentFragment != null) {
                     removeCurrentFragment(currentFragment);
@@ -380,18 +374,33 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 initTabPager();
                 break;
             case Constants.MENU_EXPLORE:
+                floatingActionButton.setVisibility(FloatingActionButton.GONE);
                 tabLayout.setVisibility(TabLayout.GONE);
                 viewPager.setVisibility(ViewPager.GONE);
                 SharedPreUtil.deletedParameters();
                 initSpinner();
                 break;
+            case Constants.MENU_MY_BUCKETS:
+                floatingActionButton.setVisibility(FloatingActionButton.VISIBLE);
+                floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showCreateBucketDialog();
+                    }
+                });
+                tabLayout.setVisibility(TabLayout.GONE);
+                viewPager.setVisibility(ViewPager.GONE);
+                exploreLl.setVisibility(LinearLayout.GONE);
+                replaceFragment(newFragment(menuType));
+                break;
             case Constants.MENU_SETTING:
                 break;
             default:
-                    tabLayout.setVisibility(TabLayout.GONE);
-                    viewPager.setVisibility(ViewPager.GONE);
-                    exploreLl.setVisibility(LinearLayout.GONE);
-                    replaceFragment(newFragment(menuType));
+                floatingActionButton.setVisibility(FloatingActionButton.GONE);
+                tabLayout.setVisibility(TabLayout.GONE);
+                viewPager.setVisibility(ViewPager.GONE);
+                exploreLl.setVisibility(LinearLayout.GONE);
+                replaceFragment(newFragment(menuType));
                 break;
         }
     }
