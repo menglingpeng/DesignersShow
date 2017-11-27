@@ -34,6 +34,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.menglingpeng.designersshow.BaseApplication;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
 
@@ -130,7 +131,7 @@ public class ImageLoader {
                 //准备下载
                 case DownloadManager.STATUS_PENDING:
                     String text = new StringBuilder().append(context.getResources().getString(R.string.detail_toolbar_overflow_menu_download_snackbar_text)).append(imageName).toString();
-                    SnackUI.showSnackShort(coordinatorLayout, text);
+                    SnackUI.showSnackShort(context, coordinatorLayout, text);
                     break;
                 case DownloadManager.STATUS_RUNNING:
                     break;

@@ -90,9 +90,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        //确保item大小固定，可以提升性能
-        recyclerView.setHasFixedSize(true);
-        if(type != Constants.REQUEST_LIST_COMMENTS) {
+        if(!type.equals(Constants.MENU_MY_BUCKETS)) {
+            //确保item大小固定，可以提升性能
+            recyclerView.setHasFixedSize(true);
+        }
+        if(!type.equals(Constants.REQUEST_LIST_COMMENTS)) {
             swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark, R.color.colorPrimary);
             swipeRefresh.setOnRefreshListener(this);
         }else {
@@ -286,7 +288,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     public <T> void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, T t) {
         Intent intent;
-        if(viewHolder instanceof RecyclerAdapter.ViewHolder){
+        if(viewHolder instanceof RecyclerAdapter.ShotsViewHolder){
             intent = new Intent(getActivity(), ShotDetailActivity.class);
             intent.putExtra(Constants.SHOTS, (Shots)t);
             startActivity(intent);

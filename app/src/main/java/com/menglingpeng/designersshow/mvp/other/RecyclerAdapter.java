@@ -33,7 +33,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_FOOTER = 1;
     private OnRecyclerListItemListener mListener;
     private ArrayList list = new ArrayList<>();
-    private ArrayList<Comments> comments = new ArrayList<Comments>();
     private Fragment fragment;
     private Context context;
     private String type;
@@ -75,7 +74,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
                 int itemcount = layoutManager.getItemCount();
                 int lastPosition = layoutManager.findLastVisibleItemPosition();
-                if(!isLoading && lastPosition >= (itemcount - visibleThreshold)){
+                if(!isLoading && lastPosition >= (itemcount - visibleThreshold) && itemcount == 12){
                     if(loadingMore != null){
                         isLoading = true;
                         loadingMore.onLoadMore();
@@ -88,7 +87,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return list.size() + 1;
+        if(list.size() < 12) {
+            return list.size();
+        }else {
+            return list.size() + 1;
+        }
     }
 
     @Override
@@ -120,7 +123,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     break;
                 default:
                     view = inflater.inflate(R.layout.recycler_item, parent, false);
-                    viewHolder = new ViewHolder(view);
+                    viewHolder = new ShotsViewHolder(view);
                     break;
             }
             return viewHolder;
@@ -129,8 +132,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(holder instanceof ViewHolder){
-            final ViewHolder viewHolder = (ViewHolder)holder;
+        if(holder instanceof ShotsViewHolder){
+            final ShotsViewHolder viewHolder = (ShotsViewHolder)holder;
             final Shots shots = (Shots)list.get(position);
             boolean isGif = shots.isAnimated();
             int attachments = shots.getAttachments_count();
@@ -178,20 +181,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
             viewHolder.bucketNameTx.setText(buckets.getName());
-            viewHolder.bucketDescTx.setText(buckets.getDescription());
+            if(buckets.getDescription() != null) {
+                viewHolder.bucketDescTx.setText(buckets.getDescription());
+            }else {
+                viewHolder.bucketDescTx.setVisibility(TextView.GONE);
+            }
             viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), "作品"));
-        }
-        else {
-
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ShotsViewHolder extends RecyclerView.ViewHolder {
         public final ImageView avatarIv;
         public final TextView shotsTitleTx, shots_userTx, shotsCreatedTimeTx;
         public final ImageView shotsIm, shotsGifIm, itemAttachmentsCountIm;
         public final TextView itemLikesCountTx, itemCommentsCountTx, itemViewsCountTx, itemAttachmentsCountTx;
-        public ViewHolder(View view) {
+        public ShotsViewHolder(View view) {
             super(view);
             avatarIv = (ImageView) view.findViewById(R.id.avatar_im);
             shotsTitleTx = (TextView) view.findViewById(R.id.shots_title_tx);

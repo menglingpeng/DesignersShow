@@ -509,7 +509,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
           super.onBackPressed();
         }
         backPressed = true;
-        SnackUI.showSnackShort(drawerLayout, getResources().getString(R.string.double_back_quit));
+        SnackUI.showSnackShort(getApplicationContext(), drawerLayout, getResources().getString(R.string.double_back_quit));
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

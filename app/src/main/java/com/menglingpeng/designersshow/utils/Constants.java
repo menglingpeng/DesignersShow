@@ -15,6 +15,8 @@ public class Constants {
     public static final String REQUEST_POST_MEIHOD = "post";
     public static final String REQUEST_PUT_MEIHOD = "put";
     public static final String REQUEST_DELETE_MEIHOD = "delete";
+    public static final String CODE_404_NOT_FOUND = "404";
+    public static final String CODE_204_NO_CONTENT = "204";
     /**
      * Dribbble API
      */
@@ -79,6 +81,7 @@ public class Constants {
     public static final String REQUEST_AUTH_TOKEN = "auth_token";
     public static final String REQUEST_LIST_COMMENTS = "list_comments";
     public static final String REQUEST_LIST_SHOTS_FOR_A_BUCKET = "list_shots_for_a_bucket";
+    public static final String REQUEST_ADD_A_SHOT_TO_BUCKET = "add_a_shot_to_a_bucket";
     public static final String LIKE = "like";
     public static final String REQUEST_LIKE_A_SHOT = "like_a_shot";
     public static final String REQUEST_UNLIKE_A_SHOT = "unlike_a_shot";

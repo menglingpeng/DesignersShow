@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.menglingpeng.designersshow.BaseApplication;
 import com.menglingpeng.designersshow.MainActivity;
+import com.menglingpeng.designersshow.R;
 
 /**
  * Created by mengdroid on 2017/10/13.
@@ -14,11 +15,17 @@ import com.menglingpeng.designersshow.MainActivity;
 
 public class SnackUI {
 
-    public static void showSnackShort(View rootView, CharSequence text){
-        Snackbar.make(rootView, text, Snackbar.LENGTH_SHORT).show();
+    public static void showSnackShort(Context context, View rootView, CharSequence text){
+       Snackbar snackbar =  Snackbar.make(rootView, text, Snackbar.LENGTH_SHORT);
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        snackbar.show();
     }
 
-    public static void showSnackLong(View rootView, CharSequence text){
-        Snackbar.make(rootView, text, Snackbar.LENGTH_LONG).show();
+    public static void showSnackLong(Context context, View rootView, CharSequence text){
+        Snackbar snackbar =  Snackbar.make(rootView, text, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        snackbar.show();
     }
 }

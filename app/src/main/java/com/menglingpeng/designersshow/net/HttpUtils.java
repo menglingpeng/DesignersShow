@@ -70,12 +70,19 @@ HttpUtils {
                         urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
                         break;
                 }
-                if(type.equals(Constants.REQUEST_CHECK_IF_LIKE_SHOT) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET)){
-                    urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
-                }else {
-                    for (String key : map.keySet()) {
-                        urlBuilder.addQueryParameter(key, map.get(key));
-                    }
+                switch (type){
+                    case Constants.REQUEST_CHECK_IF_LIKE_SHOT:
+                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                        break;
+                    case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
+                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
+                        break;
+                    default:
+                        for (String key : map.keySet()) {
+                            urlBuilder.addQueryParameter(key, map.get(key));
+                        }
+                        break;
                 }
                 httpUrl = urlBuilder.build();
                 request = new Request.Builder()
@@ -125,6 +132,10 @@ HttpUtils {
             try {
                 response = client.newCall(request).execute();
                 json = response.body().string();
+                if(json.equals("")){
+                    json = String.valueOf(response.code());
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
                 json = e.getMessage();
