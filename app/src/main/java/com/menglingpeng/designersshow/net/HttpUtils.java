@@ -103,6 +103,12 @@ HttpUtils {
                                .append("/").append(Constants.LIKE).toString();
                         bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
                         break;
+                    case Constants.REQUEST_CREATE_A_BUCKET:
+                        for (String key : map.keySet()){
+                            bodyBuilder.add(key, map.get(key)) ;
+                        }
+                        url = Constants.BUCKETS_URL;
+                        break;
                 }
                 requestBody = bodyBuilder.build();
                 request = new Request.Builder()

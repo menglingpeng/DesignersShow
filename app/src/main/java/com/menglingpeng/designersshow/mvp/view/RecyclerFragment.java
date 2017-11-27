@@ -245,7 +245,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_NORMAL:
                 if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS)){
                     adapter = new RecyclerAdapter(recyclerView, context, type, this);
-                } else {
+                }else {
                     adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
                 }
                 recyclerView.setAdapter(adapter);

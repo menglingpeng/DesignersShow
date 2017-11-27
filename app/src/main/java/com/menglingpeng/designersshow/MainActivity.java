@@ -61,7 +61,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, com.menglingpeng.designersshow.mvp.interf.RecyclerView{
 
     private String currentType;
-    private String authType;
+    private String type;
     private Toolbar toolbar;
     private FloatingActionButton floatingActionButton;
     private String toolbarTitle;
@@ -182,12 +182,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void showCreateBucketDialog(){
-        TextInputEditText bucketNameEt, bucketDescEt;
+        final TextInputEditText bucketNameEt, bucketDescEt;
         AlertDialog dialog;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.create_a_bucket_dialog_message, null);
         builder.setTitle(R.string.create_a_bucket);
         builder.setView(dialogView);
+        bucketNameEt = (TextInputEditText)dialogView.findViewById(R.id.bucket_name_tiet);
+        bucketDescEt = (TextInputEditText)dialogView.findViewById(R.id.bucket_desc_tiet);
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -197,11 +199,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                map.put(Constants.NAME, bucketNameEt.getText().toString());
+                map.put(Constants.DESCRIPTION, bucketDescEt.getText().toString());
+                type = Constants.REQUEST_CREATE_A_BUCKET;
+                RecyclerPresenter presenter = new RecyclerPresenter(MainActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, MainActivity.this);
+                presenter.loadJson();
+                SnackUI.showSnackShort(getApplicationContext(),drawerLayout,  getResources().getString(R.string.snack_create_a_bucket_text));
 
             }
         });
-        bucketNameEt = (TextInputEditText)dialogView.findViewById(R.id.bucket_name_tiet);
-        bucketDescEt = (TextInputEditText)dialogView.findViewById(R.id.bucket_desc_tiet);
         bucketNameEt.setFocusable(true);
         dialog = builder.create();
         dialog.show();
@@ -257,7 +265,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View v) {
                 if(isLogin){
-                    //SharedPreUtil.saveState(Constants.IS_LOGIN, false);
+                    SharedPreUtil.saveState(Constants.IS_LOGIN, false);
                 }else {
                     showLoginDialog();
                 }
@@ -575,8 +583,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         map.put(Constants.CLIENT_SECRET, Constants.CLIENT_SECRET_VALUE);
         //code字符串前面带有code=,需要去掉。
         map.put(Constants.CODE, code.replace("code=", ""));
-        authType = Constants.REQUEST_AUTH_TOKEN;
-        RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map,this);
+        type = Constants.REQUEST_AUTH_TOKEN;
+        RecyclerPresenter presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map,this);
         presenter.loadJson();
     }
 
@@ -600,33 +608,38 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void loadSuccess(String json, String requestType) {
         HashMap<String, String> map = new HashMap<>();
-        if(authType.equals(Constants.REQUEST_AUTH_TOKEN)){
-            loginDialogPb.setVisibility(ProgressBar.VISIBLE);
-            if(json.indexOf("error") != -1) {
+        switch (type){
+            case Constants.REQUEST_AUTH_TOKEN:
+                loginDialogPb.setVisibility(ProgressBar.VISIBLE);
+                if(json.indexOf("error") != -1) {
 
-            }else {
-                AuthToken authToken = Json.parseJson(json, AuthToken.class);
-                Log.i("authToken", authToken.getAccess_token());
-                map.put(Constants.ACCESS_TOKEN, authToken.getAccess_token());
+                }else {
+                    AuthToken authToken = Json.parseJson(json, AuthToken.class);
+                    Log.i("authToken", authToken.getAccess_token());
+                    map.put(Constants.ACCESS_TOKEN, authToken.getAccess_token());
+                    SharedPreUtil.saveParameters(map);
+                    SharedPreUtil.saveState(Constants.IS_LOGIN, true);
+                    isLogin = true;
+                    type = Constants.REQUEST_AUTH_USER;
+                    RecyclerPresenter presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, this);
+                    presenter.loadJson();
+                }
+                break;
+            case Constants.REQUEST_AUTH_USER:
+                User authUser = Json.parseJson(json, User.class);
+                ImageLoader.loadCricleImage(getApplicationContext(), authUser.getAvatar_url(), navAvatarIm);
+                navNameTx.setText(authUser.getUsername());
+                navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
+                map.put(Constants.AUTH_USER_AVATAR_URL, authUser.getAvatar_url());
+                map.put(Constants.AUTH_USER_NAME, authUser.getUsername());
+                map.put(Constants.AUTH_USER_ID, String.valueOf(authUser.getId()));
                 SharedPreUtil.saveParameters(map);
-                SharedPreUtil.saveState(Constants.IS_LOGIN, true);
-                isLogin = true;
-                authType = Constants.REQUEST_AUTH_USER;
-                RecyclerPresenter presenter = new RecyclerPresenter(this, authType, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, this);
-                presenter.loadJson();
-            }
-        }else {
-            User authUser = Json.parseJson(json, User.class);
-            ImageLoader.loadCricleImage(getApplicationContext(), authUser.getAvatar_url(), navAvatarIm);
-            navNameTx.setText(authUser.getUsername());
-            navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
-            map.put(Constants.AUTH_USER_AVATAR_URL, authUser.getAvatar_url());
-            map.put(Constants.AUTH_USER_NAME, authUser.getUsername());
-            map.put(Constants.AUTH_USER_ID, String.valueOf(authUser.getId()));
-            SharedPreUtil.saveParameters(map);
-            Log.i("buckets", authUser.getBuckets_url());
-            dialog.cancel();
-            initTabPager();
+                dialog.cancel();
+                initTabPager();
+                break;
+            case Constants.REQUEST_CREATE_A_BUCKET:
+                replaceFragment(newFragment(Constants.MENU_MY_BUCKETS));
+                break;
         }
     }
 }

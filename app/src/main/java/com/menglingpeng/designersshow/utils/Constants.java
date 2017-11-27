@@ -87,5 +87,8 @@ public class Constants {
     public static final String REQUEST_UNLIKE_A_SHOT = "unlike_a_shot";
     public static final String REQUEST_CHECK_IF_LIKE_SHOT = "is_liked";
     public static final String REQUEST_SHOTS_ATTACHMENTS = "attachments";
+    public static final String REQUEST_CREATE_A_BUCKET = "create_a_bucket";
+    public static final String NAME = "name";
+    public static final String DESCRIPTION = "description";
 
 }

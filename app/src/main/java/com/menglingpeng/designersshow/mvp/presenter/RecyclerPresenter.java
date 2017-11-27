@@ -6,6 +6,7 @@ import com.menglingpeng.designersshow.mvp.interf.RecyclerModel;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerPresenterIf;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerView;
 import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.utils.Constants;
 
 import java.util.HashMap;
 
@@ -33,7 +34,9 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadJsonListene
 
     @Override
     public void onSuccess(String shotsJson, String requestType) {
-        recyclerViewIf.hideProgress();
+        if(!type.equals(Constants.REQUEST_CREATE_A_BUCKET)) {
+            recyclerViewIf.hideProgress();
+        }
         recyclerViewIf.loadSuccess(shotsJson, requestType);
     }
 
