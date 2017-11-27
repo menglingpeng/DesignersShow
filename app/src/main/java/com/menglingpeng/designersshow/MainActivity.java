@@ -2,14 +2,17 @@ package com.menglingpeng.designersshow;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +20,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -59,6 +63,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private String currentType;
     private String authType;
     private Toolbar toolbar;
+    private FloatingActionButton floatingActionButton;
     private String toolbarTitle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -118,6 +123,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case Constants.MENU_MY_BUCKETS:
                 toolbarTitle = getString(R.string.nav_my_buckets_menu);
+                floatingActionButton = (FloatingActionButton)findViewById(R.id.my_bucket_fab);
+                floatingActionButton.setVisibility(FloatingActionButton.VISIBLE);
+                floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showCreateBucketDialog();
+                    }
+                });
                 break;
             case Constants.MENU_MY_SHOTS:
                 toolbarTitle = getString(R.string.nav_my_shots_menu);
@@ -166,6 +179,32 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             menu.findItem(R.id.overflow_date).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void showCreateBucketDialog(){
+        TextInputEditText bucketNameEt, bucketDescEt;
+        AlertDialog dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.create_a_bucket_dialog_message, null);
+        builder.setTitle(R.string.create_a_bucket);
+        builder.setView(dialogView);
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        bucketNameEt = (TextInputEditText)dialogView.findViewById(R.id.bucket_name_tiet);
+        bucketDescEt = (TextInputEditText)dialogView.findViewById(R.id.bucket_desc_tiet);
+        bucketNameEt.setFocusable(true);
+        dialog = builder.create();
+        dialog.show();
     }
 
     @Override

@@ -66,5 +66,10 @@
     <string name="detail_likes_im_like_a_shot_snack_text">shot liked!</string>
     <string name="detail_likes_im_unlike_a_shot_snack_text">shot unliked!</string>
     <string name="on_load_detail_image_listener_failed_msg">加载失败</string>
+    <string name="name">名称</string>
+    <string name="description">说明</string>
+    <string name="create_a_bucket">创建作品集</string>
+    <string name="cancel">关闭</string>
+    <string name="create">创建</string>
 
 </resources>
