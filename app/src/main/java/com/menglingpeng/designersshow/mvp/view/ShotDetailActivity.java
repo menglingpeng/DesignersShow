@@ -133,6 +133,14 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         detailCommentsCountTx= (TextView)findViewById(R.id.detail_comments_tx);
         detailCommentsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getComments_count()), getResources().getString(R.string.detail_comments_tx)));
         detailBucketsIm = (ImageView)findViewById(R.id.detail_buckets_im);
+        detailBucketsIm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShotDetailActivity.this, ChooseBucketActivity.class);
+                intent.putExtra(Constants.SHOT_ID, String.valueOf(shots.getId()));
+                startActivity(intent);
+            }
+        });
         detailBucketsCountTx = (TextView)findViewById(R.id.detail_buckets_count_tx);
         detailBucketsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getBuckets_count()), getResources().getString(R.string.detail_buckets_tx)));
         detailViewsCountTx = (TextView)findViewById(R.id.detail_views_count_tx);

@@ -118,7 +118,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     viewHolder = new CommentsViewHolder(view);
                     break;
                 case Constants.MENU_MY_BUCKETS:
-                    view = inflater.inflate(R.layout.user_buckets_recycler_item, parent, false);
+                    view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
                     viewHolder = new BucketsViewHolder(view);
                     break;
                 default:

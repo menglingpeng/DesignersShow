@@ -72,5 +72,6 @@
     <string name="cancel">关闭</string>
     <string name="create">创建</string>
     <string name="snack_create_a_bucket_text">作品集已创建</string>
+    <string name="choose_a_bucket">选择作品集</string>
 
 </resources>
