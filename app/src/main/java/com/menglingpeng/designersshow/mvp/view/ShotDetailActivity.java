@@ -263,19 +263,19 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
 
     private void checkIfLikeShot(){
         type = Constants.REQUEST_CHECK_IF_LIKE_SHOT;
-        presenter = new RecyclerPresenter(ShotDetailActivity.this, type , Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, ShotDetailActivity.this);
+        presenter = new RecyclerPresenter(ShotDetailActivity.this, type , Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
     }
 
     private void likeShot(){
         type = Constants.REQUEST_LIKE_A_SHOT;
-        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, ShotDetailActivity.this);
+        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
     }
 
     private void unlikeShot(){
         type = Constants.REQUEST_UNLIKE_A_SHOT;
-        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_DELETE_MEIHOD, map, ShotDetailActivity.this);
+        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_DELETE_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
 
     }

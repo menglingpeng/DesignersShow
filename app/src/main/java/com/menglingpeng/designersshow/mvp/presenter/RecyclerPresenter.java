@@ -1,5 +1,7 @@
 package com.menglingpeng.designersshow.mvp.presenter;
 
+import android.content.Context;
+
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.mvp.interf.OnloadJsonListener;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerModel;
@@ -23,13 +25,13 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadJsonListene
     private String requestType;
     private String requestMethod;
     private HashMap<String, String> map;
-    public RecyclerPresenter(RecyclerView recyclerViewIf, String type, String requestType, String requestMethod, HashMap<String, String> map, BaseActivity activity){
+    public RecyclerPresenter(RecyclerView recyclerViewIf, String type, String requestType, String requestMethod, HashMap<String, String> map, Context context){
         this.recyclerViewIf = recyclerViewIf;
         this.type = type;
         this.requestType = requestType;
         this.requestMethod = requestMethod;
         this.map = map;
-        recyclerModel = new com.menglingpeng.designersshow.mvp.model.RecyclerModel(activity);
+        recyclerModel = new com.menglingpeng.designersshow.mvp.model.RecyclerModel(context);
     }
 
     @Override

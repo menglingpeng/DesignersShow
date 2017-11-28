@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow.mvp.other;
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,10 +43,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private int visibleThreshold = 2;
 
 
-    public RecyclerAdapter(RecyclerView recyclerView, Fragment fragment, String type, OnRecyclerListItemListener listener){
-        this.fragment = fragment;
-        mListener = listener;
+    public <T> RecyclerAdapter(RecyclerView recyclerView, T t, String type, OnRecyclerListItemListener listener){
         this.type = type;
+        if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET)) {
+            this.context = (Context) t;
+        }else {
+            this.fragment = (Fragment)t;
+        }
+        mListener = listener;
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -62,28 +67,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         });
     }
-
-    public RecyclerAdapter(RecyclerView recyclerView, Context context, String type, OnRecyclerListItemListener listener){
-        this.context = context;
-        mListener = listener;
-        this.type = type;
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
-                int itemcount = layoutManager.getItemCount();
-                int lastPosition = layoutManager.findLastVisibleItemPosition();
-                if(!isLoading && lastPosition >= (itemcount - visibleThreshold) && itemcount == 12){
-                    if(loadingMore != null){
-                        isLoading = true;
-                        loadingMore.onLoadMore();
-                    }
-                }
-            }
-        });
-    }
-
 
     @Override
     public int getItemCount() {
@@ -104,6 +87,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
@@ -120,6 +108,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 case Constants.MENU_MY_BUCKETS:
                     view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
                     viewHolder = new BucketsViewHolder(view);
+                    break;
+                case Constants.REQUEST_CHOOSE_BUCKET:
+                    view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
+                    viewHolder = new ChooseBucketViewHolder(view);
                     break;
                 default:
                     view = inflater.inflate(R.layout.recycler_item, parent, false);
@@ -171,6 +163,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.commentsLikesCountTv.setText(comment.getLikes_count());
         }else if(holder instanceof BucketsViewHolder){
             final BucketsViewHolder viewHolder = (BucketsViewHolder)holder;
+            final Buckets buckets = (Buckets)list.get(position);
+            viewHolder.bucketRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mListener != null){
+                        mListener.onRecyclerFragmentListListener(viewHolder, buckets);
+                    }
+                }
+            });
+            viewHolder.bucketNameTx.setText(buckets.getName());
+            if(buckets.getDescription() != null) {
+                viewHolder.bucketDescTx.setText(buckets.getDescription());
+            }else {
+                viewHolder.bucketDescTx.setVisibility(TextView.GONE);
+            }
+            viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), "作品"));
+        }else if(holder instanceof ChooseBucketViewHolder){
+            final ChooseBucketViewHolder viewHolder = (ChooseBucketViewHolder)holder;
             final Buckets buckets = (Buckets)list.get(position);
             viewHolder.bucketRl.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -243,6 +253,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             bucketNameTx = (TextView)view.findViewById(R.id.bucket_name_tx);
             bucketDescTx = (TextView)view.findViewById(R.id.bucket_desc_tx);
             bucketShotsCountTx = (TextView)view.findViewById(R.id.bucket_shots_count_tx);
+        }
+    }
+    public class ChooseBucketViewHolder extends RecyclerView.ViewHolder{
+        public final RelativeLayout bucketRl;
+        public final TextView bucketNameTx, bucketDescTx, bucketShotsCountTx;
+        public final FloatingActionButton chooseBucketFab;
+
+        public ChooseBucketViewHolder(View view) {
+            super(view);
+            bucketRl = (RelativeLayout)view.findViewById(R.id.bucket_rl);
+            bucketNameTx = (TextView)view.findViewById(R.id.bucket_name_tx);
+            bucketDescTx = (TextView)view.findViewById(R.id.bucket_desc_tx);
+            bucketShotsCountTx = (TextView)view.findViewById(R.id.bucket_shots_count_tx);
+            chooseBucketFab = (FloatingActionButton)view.findViewById(R.id.buckets_recycer_item_fab);
         }
     }
 

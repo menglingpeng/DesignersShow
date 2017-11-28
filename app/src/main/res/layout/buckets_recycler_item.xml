@@ -4,7 +4,7 @@
     android:id="@+id/bucket_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EEEEEE">
+    android:background="@color/bucket_recycler_item_background">
 
     <TextView
         android:id="@+id/bucket_name_tx"
@@ -34,13 +34,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/user_buckets_recycler_item_view_layout_height"
-        android:background="#BDBDBD"
+        android:background="@color/bucket_recycler_item_view_background"
         android:layout_below="@+id/bucket_shots_count_tx"
         >
     </View>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/bucket_fab"
+        android:id="@+id/buckets_recycer_item_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
