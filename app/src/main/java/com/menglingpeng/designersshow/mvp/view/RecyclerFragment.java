@@ -2,7 +2,11 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +28,7 @@ import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.SnackUI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +56,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String sort = null;
     private int page = 1;
     private ArrayList jsonList;
-    private String id;
+    private Context context;
+    private HashMap<String, String> addShotTobucketMap;
 
     public static RecyclerFragment newInstance(String type){
         Bundle bundle = new Bundle();
@@ -70,16 +76,18 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         return fragment;
     }
 
+
     @Override
     protected void initLayoutId() {
         layoutId = R.layout.fragment_recycler;
         type = getArguments().get(Constants.TYPE).toString();
+        context = getActivity().getApplicationContext();
     }
 
     @Override
     protected void initData() {
         initParameters();
-        presenter = new RecyclerPresenter(this, type, mRequestType, Constants.REQUEST_GET_MEIHOD, map, (BaseActivity)getActivity());
+        presenter = new RecyclerPresenter(this, type, mRequestType, Constants.REQUEST_GET_MEIHOD, map, context);
         presenter.loadJson();
     }
 
@@ -172,6 +180,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
                     map.put(Constants.ID,getArguments().get(Constants.ID).toString());
                     break;
+                case Constants.REQUEST_CHOOSE_BUCKET:
+                    addShotTobucketMap = new HashMap<>();
+                    break;
             }
             //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
             if(!type.equals(Constants.TAB_POPULAR) && !type.equals(Constants.TAB_RECENT) && !type.equals(Constants.TAB_FOLLOWING) && !type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET)){
@@ -223,14 +234,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     public void loadSuccess(String json, String requestType) {
         Fragment fragment = null;
-        Context context = null;
         if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
             fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-        } else if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS)) {
+        } else if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET)) {
             context = getActivity().getApplicationContext();
-        }else if(type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET)){
-            fragment = BucketDetailActivity.getFragment();
-        } else {
+        }else {
             fragment = MainActivity.getCurrentFragment();
         }
         switch (requestType){
@@ -243,9 +251,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 adapter.setLoading(false);
                 break;
             case Constants.REQUEST_NORMAL:
-                if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS)){
+                if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET)){
                     adapter = new RecyclerAdapter(recyclerView, context, type, this);
-                }else {
+                } else {
                     adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
                 }
                 recyclerView.setAdapter(adapter);
@@ -272,6 +280,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.MENU_MY_BUCKETS:
                 jsonList = Json.parseArrayJson(json, Buckets.class);
                 break;
+            case Constants.REQUEST_CHOOSE_BUCKET:
+                jsonList = Json.parseArrayJson(json, Buckets.class);
+                break;
             default:
                 jsonList = Json.parseArrayJson(json, Shots.class);
                 break;
@@ -288,6 +299,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     public <T> void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, T t) {
         Intent intent;
+        String text;
+        Resources resources = context.getResources();
+        CoordinatorLayout coordinatorLayout;
+        FloatingActionButton floatingActionButton = null;
         if(viewHolder instanceof RecyclerAdapter.ShotsViewHolder){
             intent = new Intent(getActivity(), ShotDetailActivity.class);
             intent.putExtra(Constants.SHOTS, (Shots)t);
@@ -296,6 +311,32 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             intent = new Intent(getActivity(), BucketDetailActivity.class);
             intent.putExtra(Constants.BUCKETS, (Buckets)t);
             startActivity(intent);
+        }else if(viewHolder instanceof RecyclerAdapter.ChooseBucketViewHolder){
+            Buckets buckets = (Buckets)t;
+            String itemId = String.valueOf(viewHolder.getLayoutPosition());
+            coordinatorLayout = (CoordinatorLayout)getActivity().findViewById(R.id.choose_bucket_cdl);
+            floatingActionButton = (FloatingActionButton)getActivity().findViewById(R.id.choose_bucket_fab);
+            if(addShotTobucketMap.get(itemId) != null){
+                ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).bucketRl.setBackgroundColor(getActivity().getApplicationContext().getResources().getColor(R.color.bucket_recycler_item_background));
+                ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).chooseBucketFab.setVisibility(FloatingActionButton.GONE);
+                addShotTobucketMap.remove(itemId);
+            }else {
+                ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).bucketRl.setBackgroundColor(Color.WHITE);
+                ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).chooseBucketFab.setVisibility(FloatingActionButton.VISIBLE);
+                addShotTobucketMap.put(itemId, String.valueOf(buckets.getId()));
+            }
+            if(addShotTobucketMap.size() == 0){
+                floatingActionButton.setVisibility(FloatingActionButton.VISIBLE);
+            }else {
+                floatingActionButton.setVisibility(FloatingActionButton.GONE);
+            }
+            text = new StringBuilder().append(resources.getString(R.string.choosed)).append(String.valueOf(addShotTobucketMap.size())).append(resources.getString(R.string.buckets)).toString();
+            type = Constants.REQUEST_ADD_A_SHOT_TO_BUCKET;
+            if(addShotTobucketMap.size() == 0) {
+
+            }else {
+                SnackUI.showActionSnack(context, coordinatorLayout, text, type, this);
+            }
         }
     }
 

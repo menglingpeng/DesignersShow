@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow.mvp.model;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.menglingpeng.designersshow.BaseActivity;
@@ -19,11 +20,10 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
     private String requestType;
     private String requestMethod;
     private HashMap<String, String> map;
-    private BaseActivity baseActivity;
+    private Context context;
 
-    public RecyclerModel(BaseActivity baseActivity){
-        this.baseActivity = baseActivity;
-
+    public RecyclerModel(Context context){
+        this.context = context;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class RecyclerModel implements com.menglingpeng.designersshow.mvp.interf.
             if(json != null){
                 listener.onSuccess(json, requestType);
             }else {
-                listener.onFailure(baseActivity.getString(R.string.on_load_shots_listener_failed_msg));
+                listener.onFailure(context.getString(R.string.on_load_shots_listener_failed_msg));
             }
         }
     }

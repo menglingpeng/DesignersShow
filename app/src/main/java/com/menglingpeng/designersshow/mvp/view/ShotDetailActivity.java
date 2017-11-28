@@ -133,6 +133,14 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         detailCommentsCountTx= (TextView)findViewById(R.id.detail_comments_tx);
         detailCommentsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getComments_count()), getResources().getString(R.string.detail_comments_tx)));
         detailBucketsIm = (ImageView)findViewById(R.id.detail_buckets_im);
+        detailBucketsIm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShotDetailActivity.this, ChooseBucketActivity.class);
+                intent.putExtra(Constants.SHOT_ID, String.valueOf(shots.getId()));
+                startActivity(intent);
+            }
+        });
         detailBucketsCountTx = (TextView)findViewById(R.id.detail_buckets_count_tx);
         detailBucketsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getBuckets_count()), getResources().getString(R.string.detail_buckets_tx)));
         detailViewsCountTx = (TextView)findViewById(R.id.detail_views_count_tx);
@@ -255,19 +263,19 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
 
     private void checkIfLikeShot(){
         type = Constants.REQUEST_CHECK_IF_LIKE_SHOT;
-        presenter = new RecyclerPresenter(ShotDetailActivity.this, type , Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, ShotDetailActivity.this);
+        presenter = new RecyclerPresenter(ShotDetailActivity.this, type , Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
     }
 
     private void likeShot(){
         type = Constants.REQUEST_LIKE_A_SHOT;
-        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, ShotDetailActivity.this);
+        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
     }
 
     private void unlikeShot(){
         type = Constants.REQUEST_UNLIKE_A_SHOT;
-        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_DELETE_MEIHOD, map, ShotDetailActivity.this);
+        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_DELETE_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
 
     }

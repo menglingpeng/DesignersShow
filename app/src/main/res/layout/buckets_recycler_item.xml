@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bucket_rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bucket_recycler_item_background">
+
+    <TextView
+        android:id="@+id/bucket_name_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/user_buckets_recycler_item_text_view_layout_marginBottom"
+        android:layout_marginTop="@dimen/user_buckets_recycler_item_bucket_name_tx_ayout_marginTop"
+        android:layout_marginLeft="@dimen/user_buckets_recycler_item_bucket_name_tx_ayout_marginLeft"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+
+    <TextView
+        android:id="@+id/bucket_desc_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/user_buckets_recycler_item_text_view_layout_marginBottom"
+        android:layout_alignLeft="@+id/bucket_name_tx"
+        android:layout_below="@+id/bucket_name_tx"/>
+
+    <TextView
+        android:id="@+id/bucket_shots_count_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/user_buckets_recycler_item_text_view_layout_marginBottom"
+        android:layout_alignLeft="@+id/bucket_name_tx"
+        android:layout_below="@+id/bucket_desc_tx" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/user_buckets_recycler_item_view_layout_height"
+        android:background="@color/bucket_recycler_item_view_background"
+        android:layout_below="@+id/bucket_shots_count_tx"
+        >
+    </View>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buckets_recycer_item_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/user_buckets_recycler_item_bucket_fab_layout_marginRight"
+        android:src="@drawable/ic_check_white_24dp"
+        android:visibility="gone"
+        app:borderWidth="@dimen/floating_action_button_borderWidth"
+        app:elevation="@dimen/floating_action_button_elevation"
+        app:pressedTranslationZ="@dimen/floating_action_button_pressedTranslationZ"
+        app:backgroundTint="@color/colorPrimary"
+        app:rippleColor="@color/colorPrimaryDark"
+        app:fabSize="mini"/>
+
+</RelativeLayout>

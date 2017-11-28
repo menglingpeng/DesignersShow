@@ -18,8 +18,8 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTask"
-            android:configChanges="keyboardHidden|orientation">
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +35,7 @@
                 <!-- 协议部分 -->
                 <data
                     android:host="@string/login_call_back"
-                    android:scheme="@string/app_name"></data>
+                    android:scheme="@string/app_name" />
             </intent-filter>
         </activity>
         <activity
@@ -43,7 +43,8 @@
             android:configChanges="keyboardHidden|orientation" />
         <activity android:name=".mvp.view.CommentsActivity" />
         <activity android:name=".UserProfileActivity" />
-        <activity android:name=".mvp.view.BucketDetailActivity"></activity>
+        <activity android:name=".mvp.view.BucketDetailActivity" />
+        <activity android:name=".mvp.view.ChooseBucketActivity"></activity>
     </application>
 
 </manifest>

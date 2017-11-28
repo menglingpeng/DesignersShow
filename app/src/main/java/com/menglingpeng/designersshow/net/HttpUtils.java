@@ -56,6 +56,9 @@ HttpUtils {
                     case Constants.MENU_MY_BUCKETS:
                         urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER_URL).newBuilder();
                         break;
+                    case Constants.REQUEST_CHOOSE_BUCKET:
+                        urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER_URL).newBuilder();
+                        break;
                     case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
                         url = new StringBuilder().append(Constants.BUCKETS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.SHOTS).toString();

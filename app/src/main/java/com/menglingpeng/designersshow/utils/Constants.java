@@ -32,6 +32,7 @@ public class Constants {
     public static final String AUTH_USER_NAME = "user_name";
     public static final String AUTH_USER_AVATAR_URL = "avatar_url";
     public static final String AUTH_USER_ID = "user_id";
+    public static final String SHOT_ID = "shot_id";
     public static final String LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL = "https://api.dribbble.com/v1/user/following/shots";
     public static final String LIST_SHOTS_FOR_AUTH_USER_LIKES_URL= "https://api.dribbble.com/v1/user/likes";
     public static final String LIST_BUCKETS_FOR_AUTH_USER_URL = "https://api.dribbble.com/v1/user/buckets";
@@ -88,6 +89,7 @@ public class Constants {
     public static final String REQUEST_CHECK_IF_LIKE_SHOT = "is_liked";
     public static final String REQUEST_SHOTS_ATTACHMENTS = "attachments";
     public static final String REQUEST_CREATE_A_BUCKET = "create_a_bucket";
+    public static final String REQUEST_CHOOSE_BUCKET = "choose_bucket";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
 
