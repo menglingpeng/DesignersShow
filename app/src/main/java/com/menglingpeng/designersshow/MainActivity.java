@@ -212,19 +212,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.now:
-                replaceFragment(newFragment(Constants.TIMEFRAME_NOW));
+                replaceFragment(newFragment(Constants.REQUEST_TIMEFRAME_NOW));
                 break;
             case R.id.week:
-                replaceFragment(newFragment(Constants.TIMEFRAME_WEEK));
+                replaceFragment(newFragment(Constants.REQUEST_TIMEFRAME_WEEK));
                 break;
             case R.id.month:
-                replaceFragment(newFragment(Constants.TIMEFRAME_WEEK));
+                replaceFragment(newFragment(Constants.REQUEST_TIMEFRAME_WEEK));
                 break;
             case R.id.year:
-                replaceFragment(newFragment(Constants.TIMEFRAME_YEAR));
+                replaceFragment(newFragment(Constants.REQUEST_TIMEFRAME_YEAR));
                 break;
             case R.id.allTime:
-                replaceFragment(newFragment(Constants.TIMEFRAME_EVER));
+                replaceFragment(newFragment(Constants.REQUEST_TIMEFRAME_EVER));
                 break;
             case R.id.overflow_small:
                 break;
@@ -481,16 +481,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        replaceFragment(newFragment(Constants.SORT_POPULAR));
+                        replaceFragment(newFragment(Constants.REQUEST_SORT_POPULAR));
                         break;
                     case 1:
-                        replaceFragment(newFragment(Constants.SORT_COMMENTS));
+                        replaceFragment(newFragment(Constants.REQUEST_SORT_COMMENTS));
                         break;
                     case 2:
-                        replaceFragment(newFragment(Constants.SORT_RECENT));
+                        replaceFragment(newFragment(Constants.REQUEST_SORT_RECENT));
                         break;
                     case 3:
-                        replaceFragment(newFragment(Constants.SORT_VIEWS));
+                        replaceFragment(newFragment(Constants.REQUEST_SORT_VIEWS));
                         break;
                 }
             }
@@ -505,25 +505,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        replaceFragment(newFragment(Constants.LIST_SHOTS));
+                        replaceFragment(newFragment(Constants.REQUEST_LIST_SHOTS));
                         break;
                     case 1:
-                        replaceFragment(newFragment(Constants.LIST_ANIMTED));
+                        replaceFragment(newFragment(Constants.REQUEST_LIST_ANIMTED));
                         break;
                     case 2:
-                        replaceFragment(newFragment(Constants.LIST_ATTACHMENTS));
+                        replaceFragment(newFragment(Constants.REQUEST_LIST_ATTACHMENTS));
                         break;
                     case 3:
-                        replaceFragment(newFragment(Constants.LIST_DEBUTS));
+                        replaceFragment(newFragment(Constants.REQUEST_LIST_DEBUTS));
                         break;
                     case 4:
-                        replaceFragment(newFragment(Constants.LIST_PLAYOFFS));
+                        replaceFragment(newFragment(Constants.REQUEST_LIST_PLAYOFFS));
                         break;
                     case 5:
-                        replaceFragment(newFragment(Constants.LIST_REBOUNDS));
+                        replaceFragment(newFragment(Constants.REQUEST_LIST_REBOUNDS));
                         break;
                     case 6:
-                        replaceFragment(newFragment(Constants.LIST_TEAM));
+                        replaceFragment(newFragment(Constants.REQUEST_LIST_TEAM));
                         break;
                 }
             }

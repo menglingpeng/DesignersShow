@@ -39,11 +39,6 @@ HttpUtils {
         switch (requestMethod){
             case Constants.REQUEST_GET_MEIHOD:
                 switch (type) {
-                    case Constants.REQUEST_LIST_COMMENTS:
-                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.SHOTS))
-                                .append("/").append(requestType).toString();
-                        urlBuilder = HttpUrl.parse(url).newBuilder();
-                        break;
                     case Constants.REQUEST_AUTH_USER:
                         urlBuilder = HttpUrl.parse(Constants.AUTHENTICATED_USER_URL).newBuilder();
                         break;
@@ -69,6 +64,11 @@ HttpUtils {
                                 .append("/").append(Constants.LIKE).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
+                    case Constants.REQUEST_LIST_COMMENTS:
+                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.SHOT_ID))
+                                .append("/").append(Constants.COMMENTS).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
                     default:
                         urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
                         break;
@@ -80,6 +80,9 @@ HttpUtils {
                     case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
                         urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
                         urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
+                        break;
+                    case Constants.REQUEST_LIST_COMMENTS:
+                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
                         break;
                     default:
                         for (String key : map.keySet()) {

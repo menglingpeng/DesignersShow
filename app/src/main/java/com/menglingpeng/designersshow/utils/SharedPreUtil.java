@@ -76,7 +76,6 @@ public class SharedPreUtil {
         map.put(Constants.TIMEFRAME, sp.getString(Constants.TIMEFRAME, null));
         map.put(Constants.DATE, sp.getString(Constants.DATE, null));
         map.put(Constants.SORT, sp.getString(Constants.SORT, null));
-        map.put(Constants.PAGE, sp.getString(Constants.PAGE, null));
         return map;
     }
 

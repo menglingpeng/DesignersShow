@@ -113,7 +113,6 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         detailTitleTx = (TextView)findViewById(R.id.detail_title_tx);
         detailTitleTx.setText(shots.getTitle());
         detailUpdateTimeTx = (TextView)findViewById(R.id.detail_update_time_tx);
-        String time = TimeUtil.getTimeDifference(shots.getUpdated_at());
         detailUpdateTimeTx.setText(TimeUtil.getTimeDifference(shots.getUpdated_at()));
         detailAvatarIm = (ImageView)findViewById(R.id.detail_avatar_im);
         ImageLoader.loadCricleImage(getApplicationContext(), shots.getUser().getAvatar_url(), detailAvatarIm);
@@ -128,7 +127,8 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShotDetailActivity.this, CommentsActivity.class);
-                intent.putExtra(Constants.REQUEST_LIST_COMMENTS, String.valueOf(shots.getId()));
+                intent.putExtra(Constants.SHOT_ID, String.valueOf(shots.getId()));
+                intent.putExtra(Constants.COMMENTS_COUNT, String.valueOf(shots.getComments_count()));
                 startActivity(intent);
             }
         });

@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -107,10 +108,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        if(!type.equals(Constants.MENU_MY_BUCKETS)) {
-            //确保item大小固定，可以提升性能
-            recyclerView.setHasFixedSize(true);
-        }
+        //确保item大小固定，可以提升性能
+        recyclerView.setHasFixedSize(true);
         if(!type.equals(Constants.REQUEST_LIST_COMMENTS)) {
             swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark, R.color.colorPrimary);
             swipeRefresh.setOnRefreshListener(this);
@@ -122,104 +121,107 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     private void initParameters(){
         map = new HashMap<>();
-        if(getArguments().get(Constants.REQUEST_LIST_COMMENTS) != null){
-            map.put(Constants.SHOTS, getArguments().get(Constants.REQUEST_LIST_COMMENTS).toString());
-            type = Constants.REQUEST_LIST_COMMENTS;
-        } else {
-            switch (type){
-                case Constants.TAB_FOLLOWING:
-                    sort = Constants.SORT_RECENT;
-                    break;
-                case Constants.TAB_POPULAR:
-                    break;
-                case Constants.TAB_RECENT:
-                    sort = Constants.SORT_RECENT;
-                    break;
-                case Constants.SORT_POPULAR:
-                    break;
-                case Constants.SORT_COMMENTS:
-                    sort = Constants.SORT_COMMENTS;
-                    break;
-                case Constants.SORT_RECENT:
-                    sort = Constants.SORT_RECENT;
-                    break;
-                case Constants.SORT_VIEWS:
-                    sort = Constants.SORT_VIEWS;
-                    break;
-                case Constants.LIST_SHOTS:
-                    break;
-                case Constants.LIST_ANIMTED:
-                    list = Constants.LIST_ANIMTED;
-                    break;
-                case Constants.LIST_ATTACHMENTS:
-                    list = Constants.LIST_ATTACHMENTS;
-                    break;
-                case Constants.LIST_DEBUTS:
-                    list = Constants.LIST_DEBUTS;
-                    break;
-                case Constants.LIST_PLAYOFFS:
-                    list = Constants.LIST_PLAYOFFS;
-                    break;
-                case Constants.LIST_REBOUNDS:
-                    list = Constants.LIST_REBOUNDS;
-                    break;
-                case Constants.LIST_TEAM:
-                    list = Constants.LIST_TEAM;
-                    break;
-                case Constants.TIMEFRAME_NOW:
-                    timeframe = null;
-                    break;
-                case Constants.TIMEFRAME_WEEK:
-                    timeframe = Constants.TIMEFRAME_WEEK;
-                    break;
-                case Constants.TIMEFRAME_MONTH:
-                    timeframe = Constants.TIMEFRAME_MONTH;
-                    break;
-                case Constants.TIMEFRAME_YEAR:
-                    timeframe = Constants.TIMEFRAME_YEAR;
-                    break;
-                case Constants.TIMEFRAME_EVER:
-                    timeframe = Constants.TIMEFRAME_EVER;
-                    break;
-                case Constants.MENU_MY_LIKES:
-                    sort = Constants.SORT_RECENT;
-                    break;
-                case Constants.MENU_MY_BUCKETS:
-                    break;
-                case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
-                    map.put(Constants.BUCKET_ID,getArguments().get(Constants.ID).toString());
-                    break;
-                case Constants.REQUEST_CHOOSE_BUCKET:
-                    addShotTobucketMap = new HashMap<>();
-                    shotId = getArguments().get(Constants.ID).toString();
-                    break;
-            }
-            //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
-            if(!type.equals(Constants.TAB_POPULAR) && !type.equals(Constants.TAB_RECENT) && !type.equals(Constants.TAB_FOLLOWING) && !type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET)){
-                map = SharedPreUtil.getParameters();
-            }
-            if(SharedPreUtil.getState(Constants.IS_LOGIN)){
-                map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
-            }else {
-                map.put(Constants.ACCESS_TOKEN, Constants.APP_ACCESS_TOKEN);
-            }
-            if(list != null){
-                map.put(Constants.LIST, list);
-            }
-            if(timeframe != null){
-                map.put(Constants.TIMEFRAME, timeframe);
-            }
-            if(date != null){
-                map.put(Constants.DATE, date);
-            }
-            if(sort != null){
-                map.put(Constants.SORT, sort);
-            }
-            map.put(Constants.PAGE, String.valueOf(page));
-            if(!type.equals(Constants.TAB_POPULAR) && !type.equals(Constants.TAB_RECENT) && !type.equals(Constants.TAB_FOLLOWING)) {
-                SharedPreUtil.saveParameters(map);
-            }
+        if(type.indexOf(Constants.EXPLORE) != -1){
+            map = SharedPreUtil.getParameters();
         }
+        switch (type){
+            case Constants.TAB_FOLLOWING:
+                sort = Constants.SORT_RECENT;
+                break;
+            case Constants.TAB_POPULAR:
+                break;
+            case Constants.TAB_RECENT:
+                sort = Constants.SORT_RECENT;
+                break;
+            case Constants.REQUEST_SORT_POPULAR:
+                map = SharedPreUtil.getParameters();
+                break;
+            case Constants.REQUEST_SORT_COMMENTS:
+                sort = Constants.SORT_COMMENTS;
+                break;
+            case Constants.REQUEST_SORT_RECENT:
+                sort = Constants.SORT_RECENT;
+                break;
+            case Constants.REQUEST_SORT_VIEWS:
+                sort = Constants.SORT_VIEWS;
+                break;
+            case Constants.REQUEST_LIST_SHOTS:
+                map = SharedPreUtil.getParameters();
+                break;
+            case Constants.REQUEST_LIST_ANIMTED:
+                list = Constants.LIST_ANIMTED;
+                break;
+            case Constants.REQUEST_LIST_ATTACHMENTS:
+                list = Constants.LIST_ATTACHMENTS;
+                break;
+            case Constants.REQUEST_LIST_DEBUTS:
+                list = Constants.LIST_DEBUTS;
+                break;
+            case Constants.REQUEST_LIST_PLAYOFFS:
+                list = Constants.LIST_PLAYOFFS;
+                break;
+            case Constants.REQUEST_LIST_REBOUNDS:
+                list = Constants.LIST_REBOUNDS;
+                break;
+            case Constants.REQUEST_LIST_TEAM:
+                list = Constants.LIST_TEAM;
+                break;
+            case Constants.REQUEST_TIMEFRAME_NOW:
+                map = SharedPreUtil.getParameters();
+                timeframe = null;
+                break;
+            case Constants.REQUEST_TIMEFRAME_WEEK:
+                timeframe = Constants.TIMEFRAME_WEEK;
+                break;
+            case Constants.REQUEST_TIMEFRAME_MONTH:
+                timeframe = Constants.TIMEFRAME_MONTH;
+                break;
+            case Constants.REQUEST_TIMEFRAME_YEAR:
+                timeframe = Constants.TIMEFRAME_YEAR;
+                break;
+            case Constants.REQUEST_TIMEFRAME_EVER:
+                timeframe = Constants.TIMEFRAME_EVER;
+                break;
+            case Constants.MENU_MY_LIKES:
+                sort = Constants.SORT_RECENT;
+                break;
+            case Constants.MENU_MY_BUCKETS:
+                break;
+            case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
+                map.put(Constants.BUCKET_ID,getArguments().get(Constants.ID).toString());
+                break;
+            case Constants.REQUEST_CHOOSE_BUCKET:
+                addShotTobucketMap = new HashMap<>();
+                shotId = getArguments().get(Constants.ID).toString();
+                break;
+            case Constants.REQUEST_LIST_COMMENTS:
+                shotId = getArguments().get(Constants.ID).toString();
+                map.put(Constants.SHOT_ID, shotId);
+                break;
+        }
+        if(SharedPreUtil.getState(Constants.IS_LOGIN)){
+            map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+        }else {
+            map.put(Constants.ACCESS_TOKEN, Constants.APP_ACCESS_TOKEN);
+        }
+        if(list != null){
+            map.put(Constants.LIST, list);
+        }
+        if(timeframe != null){
+            map.put(Constants.TIMEFRAME, timeframe);
+        }
+        if(date != null){
+            map.put(Constants.DATE, date);
+        }
+        if(sort != null){
+            map.put(Constants.SORT, sort);
+        }
+        map.put(Constants.PAGE, String.valueOf(page));
+        if(type.indexOf(Constants.EXPLORE) != -1){
+            SharedPreUtil.saveParameters(map);
+        }
+
+
     }
 
     @Override
@@ -244,12 +246,19 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     public void loadSuccess(String json, String requestType) {
         Fragment fragment = null;
-        if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
-            fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-        } else if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET)) {
-            context = getActivity().getApplicationContext();
-        }else {
-            fragment = MainActivity.getCurrentFragment();
+        switch (type){
+            case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
+                fragment = BucketDetailActivity.getFragment();
+                break;
+            case Constants.REQUEST_LIST_COMMENTS:
+                fragment = CommentsActivity.getFragment();
+                break;
+            default:
+                if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
+                    fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
+                }else {
+                    fragment = MainActivity.getCurrentFragment();
+                }
         }
         switch (requestType){
             case Constants.REQUEST_REFRESH:
