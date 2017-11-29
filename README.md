@@ -23,3 +23,4 @@
   ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/my_buckets.PNG)
   ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/shots_bucket.PNG)
   ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/shot_detail.PNG)
+  ![image](https://github.com/menglingpeng/DesignersShow/raw/master/screenshots/add_a_shot_to_bucket.PNG)
