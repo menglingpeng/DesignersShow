@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -59,7 +60,9 @@ public class ChooseBucketActivity extends BaseActivity implements RecyclerView{
                 showCreateBucketDialog();
             }
         });
-        replaceFragment(RecyclerFragment.newInstance(Constants.REQUEST_CHOOSE_BUCKET));
+        Intent intent = getIntent();
+        String shotId = intent.getStringExtra(Constants.SHOT_ID);
+        replaceFragment(RecyclerFragment.newInstance(shotId, Constants.REQUEST_CHOOSE_BUCKET));
     }
 
     private void showCreateBucketDialog(){

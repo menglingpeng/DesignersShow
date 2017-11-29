@@ -60,7 +60,7 @@ HttpUtils {
                         urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER_URL).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
-                        url = new StringBuilder().append(Constants.BUCKETS_URL).append("/").append(map.get(Constants.ID))
+                        url = new StringBuilder().append(Constants.BUCKETS_URL).append("/").append(map.get(Constants.BUCKET_ID))
                                 .append("/").append(Constants.SHOTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
@@ -121,6 +121,20 @@ HttpUtils {
 
                 break;
             case Constants.REQUEST_PUT_MEIHOD:
+                switch (type) {
+                    case Constants.REQUEST_ADD_A_SHOT_TO_BUCKET:
+                        url = new StringBuilder().append(Constants.BUCKETS_URL).append("/").append(map.get(Constants.BUCKET_ID)).append("/").append(Constants.SHOTS).toString();
+                        map.remove(Constants.BUCKET_ID);
+                        for (String key : map.keySet()) {
+                            bodyBuilder.addEncoded(key, map.get(key));
+                        }
+                        break;
+                }
+                requestBody = bodyBuilder.build();
+                request = new Request.Builder()
+                        .url(url)
+                        .put(requestBody)
+                        .build();
                 break;
             case Constants.REQUEST_DELETE_MEIHOD:
                 switch (type){

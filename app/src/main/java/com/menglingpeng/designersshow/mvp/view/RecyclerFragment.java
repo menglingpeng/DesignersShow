@@ -7,10 +7,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseActivity;
@@ -58,6 +60,13 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private ArrayList jsonList;
     private Context context;
     private HashMap<String, String> addShotTobucketMap;
+    private String text;
+    private Snackbar snackbar = null;
+    private CoordinatorLayout coordinatorLayout = null;
+    private FloatingActionButton floatingActionButton = null;
+    private String shotId;
+    private int count = 0;
+    private String bucketName;
 
     public static RecyclerFragment newInstance(String type){
         Bundle bundle = new Bundle();
@@ -178,10 +187,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 case Constants.MENU_MY_BUCKETS:
                     break;
                 case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
-                    map.put(Constants.ID,getArguments().get(Constants.ID).toString());
+                    map.put(Constants.BUCKET_ID,getArguments().get(Constants.ID).toString());
                     break;
                 case Constants.REQUEST_CHOOSE_BUCKET:
                     addShotTobucketMap = new HashMap<>();
+                    shotId = getArguments().get(Constants.ID).toString();
                     break;
             }
             //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
@@ -253,6 +263,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_NORMAL:
                 if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET)){
                     adapter = new RecyclerAdapter(recyclerView, context, type, this);
+                } else if(type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)){
+                    adapter = null;
                 } else {
                     adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
                 }
@@ -283,15 +295,33 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_CHOOSE_BUCKET:
                 jsonList = Json.parseArrayJson(json, Buckets.class);
                 break;
+            case Constants.REQUEST_ADD_A_SHOT_TO_BUCKET:
+                //添加到多个bucket
+                count++;
+                String text;
+                if(json.equals(Constants.CODE_204_NO_CONTENT) && count == addShotTobucketMap.size()) {
+                    if(count == 1){
+                        text = new StringBuilder().append(context.getText(R.string.added_to)).append(bucketName).toString();
+                    }else {
+                        text = new StringBuilder().append(context.getText(R.string.added_to)).append(String.valueOf(count))
+                                .append(context.getText(R.string.buckets)).toString();
+                    }
+                    Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
+                    intent.putExtra(Constants.SNACKBAR_TEXT, text);
+                    startActivity(intent);
+                }
+                break;
             default:
                 jsonList = Json.parseArrayJson(json, Shots.class);
                 break;
         }
-        for(int i = 0; i < jsonList.size(); i++) {
-            if(type.equals(Constants.MENU_MY_LIKES)){
-                adapter.addData(((Likes)jsonList.get(i)).getShot());
-            }else {
-                adapter.addData(jsonList.get(i));
+        if(!type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)) {
+            for (int i = 0; i < jsonList.size(); i++) {
+                if (type.equals(Constants.MENU_MY_LIKES)) {
+                    adapter.addData(((Likes) jsonList.get(i)).getShot());
+                } else {
+                    adapter.addData(jsonList.get(i));
+                }
             }
         }
     }
@@ -299,10 +329,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     public <T> void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, T t) {
         Intent intent;
-        String text;
         Resources resources = context.getResources();
-        CoordinatorLayout coordinatorLayout;
-        FloatingActionButton floatingActionButton = null;
         if(viewHolder instanceof RecyclerAdapter.ShotsViewHolder){
             intent = new Intent(getActivity(), ShotDetailActivity.class);
             intent.putExtra(Constants.SHOTS, (Shots)t);
@@ -313,6 +340,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             startActivity(intent);
         }else if(viewHolder instanceof RecyclerAdapter.ChooseBucketViewHolder){
             Buckets buckets = (Buckets)t;
+            bucketName = buckets.getName();
             String itemId = String.valueOf(viewHolder.getLayoutPosition());
             coordinatorLayout = (CoordinatorLayout)getActivity().findViewById(R.id.choose_bucket_cdl);
             floatingActionButton = (FloatingActionButton)getActivity().findViewById(R.id.choose_bucket_fab);
@@ -333,12 +361,23 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             text = new StringBuilder().append(resources.getString(R.string.choosed)).append(String.valueOf(addShotTobucketMap.size())).append(resources.getString(R.string.buckets)).toString();
             type = Constants.REQUEST_ADD_A_SHOT_TO_BUCKET;
             if(addShotTobucketMap.size() == 0) {
-
-            }else {
-                SnackUI.showActionSnack(context, coordinatorLayout, text, type, this);
+                if(snackbar != null) {
+                    snackbar.dismiss();
+                }
+            }else if(addShotTobucketMap.size() == 1){
+                if(snackbar != null){
+                    snackbar.setText(text);
+                }else {
+                    snackbar = SnackUI.showAddShotToBucketsActionSnack(context, coordinatorLayout, text, type, shotId, addShotTobucketMap, this);
+                    snackbar.show();
+                }
+            }
+            else {
+                snackbar.setText(text);
             }
         }
-    }
+        }
+
 
     public void showRefreshProgress(final boolean refreshState){
         if(swipeRefresh != null){

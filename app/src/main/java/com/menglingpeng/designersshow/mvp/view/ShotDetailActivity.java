@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,7 +44,8 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ProgressBar progressBar;
     private TextView detailTitleTx, detailUpdateTimeTx, detailUserNameTx, detailUserLocationTx;
-    private ImageView detailAvatarIm, detailLikesIm, detailCommentsIm, detailBucketsIm, detailViewsIm;
+    private FrameLayout detailLikesFl, detailCommentsFl, detailBucketsFl;
+    private ImageView detailAvatarIm, detailLikesIm, detailCommentsIm, detailBucketsIm;
     private TextView  detailLikesCountTx, detailCommentsCountTx, detailBucketsCountTx, detailViewsCountTx;
     private Button detailAttachmentsBt;
     private TextView detailDescTx;
@@ -132,6 +134,15 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         });
         detailCommentsCountTx= (TextView)findViewById(R.id.detail_comments_tx);
         detailCommentsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getComments_count()), getResources().getString(R.string.detail_comments_tx)));
+        detailBucketsFl = (FrameLayout)findViewById(R.id.detail_buckets_fl);
+        detailBucketsFl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShotDetailActivity.this, ChooseBucketActivity.class);
+                intent.putExtra(Constants.SHOT_ID, String.valueOf(shots.getId()));
+                startActivity(intent);
+            }
+        });
         detailBucketsIm = (ImageView)findViewById(R.id.detail_buckets_im);
         detailBucketsIm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,6 +223,12 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
 
     private void download(){
         ImageLoader.downloadImage(getApplicationContext(), coordinatorLayout, imageUrl, imageName);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, intent.getStringExtra(Constants.SNACKBAR_TEXT));
     }
 
     @Override
