@@ -33,7 +33,7 @@ public class SnackUI {
         snackbar.show();
     }
 
-    public static void showActionSnack(final Context context, View rootView, CharSequence text, final String type, final HashMap<String, String> map, final RecyclerView recyclerView){
+    public static Snackbar showActionSnack(final Context context, View rootView, CharSequence text, final String type, final HashMap<String, String> map, final RecyclerView recyclerView){
         final HashMap<String, String> map1 = new HashMap<>();
         Snackbar snackbar = Snackbar.make(rootView, text, Snackbar.LENGTH_INDEFINITE);
         View snackbarView = snackbar.getView();
@@ -44,13 +44,14 @@ public class SnackUI {
                 for(String key : map.keySet()) {
                     map1.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
                     map1.put(Constants.ID, map.get(key));
-                    RecyclerPresenter presenter = new RecyclerPresenter(recyclerView, type, Constants.REQUEST_ADD_A_SHOT_TO_BUCKET, Constants.REQUEST_PUT_MEIHOD, map, context);
+                    RecyclerPresenter presenter = new RecyclerPresenter(recyclerView, type, Constants.REQUEST_ADD_A_SHOT_TO_BUCKET, Constants.REQUEST_PUT_MEIHOD, map1, context);
                     presenter.loadJson();
                 }
 
             }
         });
-            snackbar.show();
+
+            return snackbar;
     }
 
 }

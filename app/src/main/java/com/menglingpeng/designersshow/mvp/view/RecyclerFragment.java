@@ -7,10 +7,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseActivity;
@@ -58,6 +60,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private ArrayList jsonList;
     private Context context;
     private HashMap<String, String> addShotTobucketMap;
+    private String text;
+    private Snackbar snackbar = null;
+    private CoordinatorLayout coordinatorLayout = null;
+    private FloatingActionButton floatingActionButton = null;
 
     public static RecyclerFragment newInstance(String type){
         Bundle bundle = new Bundle();
@@ -299,10 +305,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     public <T> void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, T t) {
         Intent intent;
-        String text;
         Resources resources = context.getResources();
-        CoordinatorLayout coordinatorLayout;
-        FloatingActionButton floatingActionButton = null;
         if(viewHolder instanceof RecyclerAdapter.ShotsViewHolder){
             intent = new Intent(getActivity(), ShotDetailActivity.class);
             intent.putExtra(Constants.SHOTS, (Shots)t);
@@ -333,12 +336,23 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             text = new StringBuilder().append(resources.getString(R.string.choosed)).append(String.valueOf(addShotTobucketMap.size())).append(resources.getString(R.string.buckets)).toString();
             type = Constants.REQUEST_ADD_A_SHOT_TO_BUCKET;
             if(addShotTobucketMap.size() == 0) {
-
-            }else {
-                SnackUI.showActionSnack(context, coordinatorLayout, text, type, this);
+                if(snackbar != null) {
+                    snackbar.dismiss();
+                }
+            }else if(addShotTobucketMap.size() == 1){
+                if(snackbar != null){
+                    snackbar.setText(text);
+                }else {
+                    snackbar = SnackUI.showActionSnack(context, coordinatorLayout, text, type, addShotTobucketMap, this);
+                    snackbar.show();
+                }
+            }
+            else {
+                snackbar.setText(text);
             }
         }
-    }
+        }
+
 
     public void showRefreshProgress(final boolean refreshState){
         if(swipeRefresh != null){
