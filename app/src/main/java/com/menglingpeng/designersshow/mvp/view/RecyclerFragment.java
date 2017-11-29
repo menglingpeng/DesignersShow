@@ -64,6 +64,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private Snackbar snackbar = null;
     private CoordinatorLayout coordinatorLayout = null;
     private FloatingActionButton floatingActionButton = null;
+    private String shotId;
+    private int count = 0;
+    private String bucketName;
 
     public static RecyclerFragment newInstance(String type){
         Bundle bundle = new Bundle();
@@ -184,10 +187,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 case Constants.MENU_MY_BUCKETS:
                     break;
                 case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
-                    map.put(Constants.ID,getArguments().get(Constants.ID).toString());
+                    map.put(Constants.BUCKET_ID,getArguments().get(Constants.ID).toString());
                     break;
                 case Constants.REQUEST_CHOOSE_BUCKET:
                     addShotTobucketMap = new HashMap<>();
+                    shotId = getArguments().get(Constants.ID).toString();
                     break;
             }
             //list, timeframe, date, sort缺省状态下，DribbbleAPI有默认值
@@ -259,6 +263,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_NORMAL:
                 if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET)){
                     adapter = new RecyclerAdapter(recyclerView, context, type, this);
+                } else if(type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)){
+                    adapter = null;
                 } else {
                     adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
                 }
@@ -289,15 +295,33 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_CHOOSE_BUCKET:
                 jsonList = Json.parseArrayJson(json, Buckets.class);
                 break;
+            case Constants.REQUEST_ADD_A_SHOT_TO_BUCKET:
+                //添加到多个bucket
+                count++;
+                String text;
+                if(json.equals(Constants.CODE_204_NO_CONTENT) && count == addShotTobucketMap.size()) {
+                    if(count == 1){
+                        text = new StringBuilder().append(context.getText(R.string.added_to)).append(bucketName).toString();
+                    }else {
+                        text = new StringBuilder().append(context.getText(R.string.added_to)).append(String.valueOf(count))
+                                .append(context.getText(R.string.buckets)).toString();
+                    }
+                    Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
+                    intent.putExtra(Constants.SNACKBAR_TEXT, text);
+                    startActivity(intent);
+                }
+                break;
             default:
                 jsonList = Json.parseArrayJson(json, Shots.class);
                 break;
         }
-        for(int i = 0; i < jsonList.size(); i++) {
-            if(type.equals(Constants.MENU_MY_LIKES)){
-                adapter.addData(((Likes)jsonList.get(i)).getShot());
-            }else {
-                adapter.addData(jsonList.get(i));
+        if(!type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)) {
+            for (int i = 0; i < jsonList.size(); i++) {
+                if (type.equals(Constants.MENU_MY_LIKES)) {
+                    adapter.addData(((Likes) jsonList.get(i)).getShot());
+                } else {
+                    adapter.addData(jsonList.get(i));
+                }
             }
         }
     }
@@ -316,6 +340,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             startActivity(intent);
         }else if(viewHolder instanceof RecyclerAdapter.ChooseBucketViewHolder){
             Buckets buckets = (Buckets)t;
+            bucketName = buckets.getName();
             String itemId = String.valueOf(viewHolder.getLayoutPosition());
             coordinatorLayout = (CoordinatorLayout)getActivity().findViewById(R.id.choose_bucket_cdl);
             floatingActionButton = (FloatingActionButton)getActivity().findViewById(R.id.choose_bucket_fab);
@@ -343,7 +368,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 if(snackbar != null){
                     snackbar.setText(text);
                 }else {
-                    snackbar = SnackUI.showActionSnack(context, coordinatorLayout, text, type, addShotTobucketMap, this);
+                    snackbar = SnackUI.showAddShotToBucketsActionSnack(context, coordinatorLayout, text, type, shotId, addShotTobucketMap, this);
                     snackbar.show();
                 }
             }

@@ -76,5 +76,6 @@
     <string name="OK">确认</string>
     <string name="choosed">已选择</string>
     <string name="buckets">作品集</string>
+    <string name="added_to">已加入</string>
 
 </resources>

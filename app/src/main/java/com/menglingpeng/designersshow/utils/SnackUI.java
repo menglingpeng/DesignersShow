@@ -33,8 +33,7 @@ public class SnackUI {
         snackbar.show();
     }
 
-    public static Snackbar showActionSnack(final Context context, View rootView, CharSequence text, final String type, final HashMap<String, String> map, final RecyclerView recyclerView){
-        final HashMap<String, String> map1 = new HashMap<>();
+    public static Snackbar showAddShotToBucketsActionSnack(final Context context, View rootView, CharSequence text, final String type,final String shotId,  final HashMap<String, String> map, final RecyclerView recyclerView){
         Snackbar snackbar = Snackbar.make(rootView, text, Snackbar.LENGTH_INDEFINITE);
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
@@ -42,15 +41,16 @@ public class SnackUI {
             @Override
             public void onClick(View v) {
                 for(String key : map.keySet()) {
+                    HashMap<String, String> map1 = new HashMap<>();
+                    map1.put(Constants.SHOT_ID, shotId);
                     map1.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
-                    map1.put(Constants.ID, map.get(key));
+                    map1.put(Constants.BUCKET_ID, map.get(key));
                     RecyclerPresenter presenter = new RecyclerPresenter(recyclerView, type, Constants.REQUEST_ADD_A_SHOT_TO_BUCKET, Constants.REQUEST_PUT_MEIHOD, map1, context);
                     presenter.loadJson();
                 }
 
             }
         });
-
             return snackbar;
     }
 

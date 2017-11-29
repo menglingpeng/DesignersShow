@@ -40,7 +40,8 @@
         </activity>
         <activity
             android:name=".mvp.view.ShotDetailActivity"
-            android:configChanges="keyboardHidden|orientation" />
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"/>
         <activity android:name=".mvp.view.CommentsActivity" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".mvp.view.BucketDetailActivity" />
