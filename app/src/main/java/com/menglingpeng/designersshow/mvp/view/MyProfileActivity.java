@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -59,6 +60,27 @@ private HashMap<String, String> map;
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(type.equals(Constants.REQUEST_AUTH_USER)){
+            if(item.getItemId() == R.id.profile_login_out){
+                loginOut();
+            }else {
+
+            }
+        }else {
+            if(item.getItemId() == R.id.profile_share){
+
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void loginOut(){
+        SharedPreUtil.saveState(Constants.IS_LOGIN, false);
+        SharedPreUtil.deleteAuthToken();
+    }
+
+    @Override
     public void hideProgress() {
         progressBar.setVisibility(ProgressBar.GONE);
     }
@@ -70,6 +92,6 @@ private HashMap<String, String> map;
 
     @Override
     public void loadSuccess(String json, String requestType) {
-
+        
     }
 }
