@@ -1,7 +1,9 @@
-package com.menglingpeng.designersshow;
+package com.menglingpeng.designersshow.mvp.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.menglingpeng.designersshow.R;
 
 public class UserProfileActivity extends AppCompatActivity {
 
