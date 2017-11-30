@@ -16,9 +16,9 @@
     </item>
 
     <item
-        android:id="@+id/profile_login_out"
+        android:id="@+id/profile_logout"
         android:icon="@drawable/ic_login_out"
-        android:title="@string/profile_login_out"
+        android:title="@string/profile_logout"
         app:showAsAction="never">
     </item>
 
