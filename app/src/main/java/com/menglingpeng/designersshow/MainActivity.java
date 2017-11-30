@@ -46,6 +46,7 @@ import com.menglingpeng.designersshow.mvp.model.AuthToken;
 import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
+import com.menglingpeng.designersshow.mvp.view.MyProfileActivity;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
@@ -258,7 +259,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View v) {
                 if(isLogin){
-                    SharedPreUtil.saveState(Constants.IS_LOGIN, false);
+                    Intent intent = new Intent(MainActivity.this, MyProfileActivity.class);
+                    intent.putExtra(Constants.TYPE, Constants.REQUEST_AUTH_USER);
+                    startActivity(intent);
+                    //SharedPreUtil.saveState(Constants.IS_LOGIN, false);
                 }else {
                     showLoginDialog();
                 }

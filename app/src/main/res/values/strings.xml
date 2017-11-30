@@ -35,6 +35,7 @@
     <string name="nav_view_name_tx">登陆</string>
     <string name="nav_view_desc_tx">使用你的Dribbble帐号登陆</string>
     <string name="nav_view_login_desc_tx">点击打开我的主页</string>
+    <string name="profile_login_out">登出</string>
     <string name="dialog_login_bt">登陆Dribbble</string>
     <string name="dialog_login_desc">登陆你的Dribbble帐号使用shots的全部功能</string>
     <string name="nav_drawer_open">open drawer</string>
