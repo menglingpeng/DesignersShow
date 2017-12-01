@@ -9,22 +9,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.BaseApplication;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerView;
+import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
+import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MyProfileActivity extends BaseActivity implements RecyclerView{
 
 private String type;
 private Toolbar toolbar;
+private ImageView profileBackgroundIm, profileAvatarIm;
 private RecyclerPresenter presenter;
 private ProgressBar progressBar;
 private HashMap<String, String> map;
@@ -41,16 +47,7 @@ private HashMap<String, String> map;
     protected void initViews() {
         super.initViews();
         progressBar = (ProgressBar)findViewById(R.id.progress_bar);
-        toolbar = (Toolbar)findViewById(R.id.my_profile_tb);
         map = new HashMap<>();
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
         presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
@@ -124,6 +121,19 @@ private HashMap<String, String> map;
 
     @Override
     public void loadSuccess(String json, String requestType) {
-        
+        User user = Json.parseJson(json, User.class);
+        toolbar = (Toolbar)findViewById(R.id.profile_tb);
+        profileBackgroundIm = (ImageView)findViewById(R.id.profile_backgroud_im);
+        profileAvatarIm = (ImageView)findViewById(R.id.profile_avatar_im);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        ImageLoader.load(getApplicationContext(), user.getAvatar_url(), profileBackgroundIm, true);
+        ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), profileAvatarIm);
     }
 }
