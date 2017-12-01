@@ -60,12 +60,12 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
-        <TableLayout
-            android:id="@+id/my_profile_tl"
+        <TabLayout
+            android:id="@+id/profile_tl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </TableLayout>
+        </TabLayout>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -73,7 +73,7 @@
 
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/my_profile_vp"
+        android:id="@+id/profile_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

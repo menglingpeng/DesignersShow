@@ -2,6 +2,8 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import com.menglingpeng.designersshow.BaseApplication;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerView;
 import com.menglingpeng.designersshow.mvp.model.User;
+import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
@@ -33,7 +36,11 @@ private Toolbar toolbar;
 private ImageView profileBackgroundIm, profileAvatarIm;
 private RecyclerPresenter presenter;
 private ProgressBar progressBar;
+private TabLayout profileTl;
+private ViewPager profileVp;
+private TabPagerFragmentAdapter adapter;
 private HashMap<String, String> map;
+private ArrayList<RecyclerFragment> fragmentsList;
     @Override
     protected void initLayoutId() {
         type = getIntent().getStringExtra(Constants.TYPE);
@@ -125,6 +132,9 @@ private HashMap<String, String> map;
         toolbar = (Toolbar)findViewById(R.id.profile_tb);
         profileBackgroundIm = (ImageView)findViewById(R.id.profile_backgroud_im);
         profileAvatarIm = (ImageView)findViewById(R.id.profile_avatar_im);
+        profileTl = (TabLayout)findViewById(R.id.profile_tl);
+        profileVp = (ViewPager)findViewById(R.id.profile_vp);
+        fragmentsList = new ArrayList<>();
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -135,5 +145,43 @@ private HashMap<String, String> map;
         });
         ImageLoader.load(getApplicationContext(), user.getAvatar_url(), profileBackgroundIm, true);
         ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), profileAvatarIm);
+        initTabPager();
+    }
+
+    private void initTabPager(){
+        adapter = new TabPagerFragmentAdapter(getSupportFragmentManager());
+        initTabFragments();
+        profileVp.setAdapter(adapter);
+        profileTl.setupWithViewPager(profileVp);
+        profileTl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                profileVp.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+    }
+
+    private void initTabFragments(){
+        ArrayList<String> titlesList = new ArrayList<>();
+        titlesList.add(getText(R.string.detail).toString());
+        titlesList.add(getText(R.string.explore_spinner_list_shots).toString());
+        titlesList.add(getText(R.string.followers).toString());
+        if(type.equals(Constants.REQUEST_AUTH_USER)){
+            fragmentsList.add(RecyclerFragment.newInstance(type));
+            fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER));
+            fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER));
+        }
+        adapter.setFragments(fragmentsList, titlesList);
     }
 }
