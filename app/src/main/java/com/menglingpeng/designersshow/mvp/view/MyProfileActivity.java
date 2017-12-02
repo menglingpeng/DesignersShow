@@ -180,7 +180,7 @@ private ArrayList<RecyclerFragment> fragmentsList;
         if(type.equals(Constants.REQUEST_AUTH_USER)){
             fragmentsList.add(RecyclerFragment.newInstance(type));
             fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER));
-            fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER));
+            fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER));
         }
         adapter.setFragments(fragmentsList, titlesList);
     }

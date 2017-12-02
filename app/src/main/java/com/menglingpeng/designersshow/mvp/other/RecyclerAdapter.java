@@ -45,7 +45,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public <T> RecyclerAdapter(RecyclerView recyclerView, T t, String type, OnRecyclerListItemListener listener){
         this.type = type;
-        if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET)) {
+        if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET) || type.equals(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER)) {
             this.context = (Context)t;
         }else {
             this.fragment = (Fragment)t;

@@ -31,7 +31,7 @@ public class Constants {
     public static final String REQUEST_AUTH_USER = "auth_user";
     public static final String REQUEST_SINGLE_USER = "single_user";
     public static final String REQUEST_LIST_SHOTS_FOR_AUTH_USER = "list_shots_for_auth_user";
-    public static final String REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER = "list_followers_for_auth_user";
+    public static final String REQUEST_LIST_FOLLOWERS_OF_AUTH_USER = "list_followers_of_auth_user";
     public static final String AUTH_USER_NAME = "user_name";
     public static final String AUTH_USER_AVATAR_URL = "avatar_url";
     public static final String AUTH_USER_ID = "user_id";
@@ -115,5 +115,7 @@ public class Constants {
     public static final String REQUEST_CHOOSE_BUCKET = "choose_bucket";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
+    public static final String FOLLOWERS = "followers";
+
 
 }

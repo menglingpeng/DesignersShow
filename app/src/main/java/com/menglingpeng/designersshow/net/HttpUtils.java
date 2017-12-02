@@ -69,6 +69,10 @@ HttpUtils {
                                 .append("/").append(Constants.COMMENTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
+                    case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+                        url = new StringBuilder().append(Constants.AUTHENTICATED_USER_URL).append("/").append(Constants.FOLLOWERS).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
                     default:
                         urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
                         break;

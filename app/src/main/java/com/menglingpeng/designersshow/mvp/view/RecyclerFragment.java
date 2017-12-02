@@ -25,6 +25,7 @@ import com.menglingpeng.designersshow.mvp.model.Buckets;
 import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Likes;
 import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
@@ -198,6 +199,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 shotId = getArguments().get(Constants.ID).toString();
                 map.put(Constants.SHOT_ID, shotId);
                 break;
+            case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+                break;
         }
         if(SharedPreUtil.getState(Constants.IS_LOGIN)){
             map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
@@ -270,7 +273,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 adapter.setLoading(false);
                 break;
             case Constants.REQUEST_NORMAL:
-                if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET)){
+                if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET) || type.equals(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER)){
                     adapter = new RecyclerAdapter(recyclerView, context, type, this);
                 } else if(type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)){
                     adapter = null;
@@ -319,6 +322,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     intent.putExtra(Constants.SNACKBAR_TEXT, text);
                     startActivity(intent);
                 }
+                break;
+            case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+                jsonList = Json.parseArrayJson(json, User.class);
                 break;
             default:
                 jsonList = Json.parseArrayJson(json, Shots.class);
