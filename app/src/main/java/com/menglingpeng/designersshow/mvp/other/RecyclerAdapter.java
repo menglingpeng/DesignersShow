@@ -17,6 +17,7 @@ import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
 import com.menglingpeng.designersshow.mvp.model.Buckets;
 import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.TextUtil;
@@ -113,6 +114,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
                     viewHolder = new ChooseBucketViewHolder(view);
                     break;
+                case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+                    view = inflater.inflate(R.layout.profile_tablayout_followers_item, parent, false);
+                    viewHolder = new FollowersOfAuthUserViewHolder(view);
+                    break;
                 default:
                     view = inflater.inflate(R.layout.recycler_item, parent, false);
                     viewHolder = new ShotsViewHolder(view);
@@ -197,6 +202,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.bucketDescTx.setVisibility(TextView.GONE);
             }
             viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), "作品"));
+        }else if(holder instanceof FollowersOfAuthUserViewHolder){
+            final FollowersOfAuthUserViewHolder viewHolder = (FollowersOfAuthUserViewHolder)holder;
+            final User user = (User)list.get(position);
+            ImageLoader.loadCricleImage(context, user.getAvatar_url(), viewHolder.followerAvatarIm);
+            viewHolder.followerNameTx.setText(user.getUsername());
+            viewHolder.followerLocationTx.setText(user.getLocation());
+            viewHolder.followerShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getShots_count()), context.getText(R.string.explore_spinner_list_shots).toString()));
+            viewHolder.followersOfFollowerCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowers_count()), context.getText(R.string.followers).toString()));
+            viewHolder.followerRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mListener != null){
+                        mListener.onRecyclerFragmentListListener(viewHolder, user);
+                    }
+                }
+            });
         }
     }
 
@@ -235,6 +256,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             commentsLikesCountTv = (TextView)view.findViewById(R.id.detail_comments_likes_count_tx);
         }
     }
+
+    public class FollowersOfAuthUserViewHolder extends RecyclerView.ViewHolder{
+        public final RelativeLayout followerRl;
+        public final ImageView followerAvatarIm;
+        public final TextView followerNameTx, followerLocationTx, followerShotsCountTx, followersOfFollowerCountTx;
+
+        public FollowersOfAuthUserViewHolder(View view) {
+            super(view);
+            followerRl = (RelativeLayout)view.findViewById(R.id.profile_tablayout_followers_rl);
+            followerAvatarIm = (ImageView)view.findViewById(R.id.profile_tablayout_followers_avatar_im);
+            followerLocationTx = (TextView)view.findViewById(R.id.profile_tablayout_followers_location_tx);
+            followerNameTx = (TextView)view.findViewById(R.id.profile_tablayout_followers_name_tx);
+            followerShotsCountTx = (TextView)view.findViewById(R.id.profile_tablayout_followers_shots_count_tx);
+            followersOfFollowerCountTx = (TextView)view.findViewById(R.id.profile_tablayout_followers_followers_count_tx);
+        }
+    }
+
 
     public class FooterViewHolder extends RecyclerView.ViewHolder{
 
