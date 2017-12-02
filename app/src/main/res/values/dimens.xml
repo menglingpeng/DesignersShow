@@ -91,4 +91,13 @@
     <dimen name="floating_action_button_borderWidth">0dp</dimen>
     <dimen name="floating_action_button_elevation">6dp</dimen>
     <dimen name="floating_action_button_pressedTranslationZ">6dp</dimen>
+    <dimen name="profile_tablayout_followers_avatar_im_layout_width_height">60dp</dimen>
+    <dimen name="profile_tablayout_followers_avatar_im_layout_margin_top_left">15dp</dimen>
+    <dimen name="profile_tablayout_followers_name_tx_layout_marginLeft">15dp</dimen>
+    <dimen name="profile_tablayout_followers_location_tx_layout_marginTop">10dp</dimen>
+    <dimen name="profile_tablayout_followers_shots_count_tx_layout_marginTop">10dp</dimen>
+    <dimen name="profile_tablayout_followers_shots_count_tx_layout_marginBottom">15dp</dimen>
+    <dimen name="profile_tablayout_followers_followers_count_tx_layout_marginLeft">15dp</dimen>
+
+
 </resources>
