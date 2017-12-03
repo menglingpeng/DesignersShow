@@ -111,13 +111,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         recyclerView.setLayoutManager(linearLayoutManager);
         //确保item大小固定，可以提升性能
         recyclerView.setHasFixedSize(true);
-        if(!type.equals(Constants.REQUEST_LIST_COMMENTS)) {
-            swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark, R.color.colorPrimary);
-            swipeRefresh.setOnRefreshListener(this);
-        }else {
-            swipeRefresh.setVisibility(SwipeRefreshLayout.GONE);
-        }
-        recyclerView.setHasFixedSize(true);
+        swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark, R.color.colorPrimary);
+        swipeRefresh.setOnRefreshListener(this);
     }
 
     private void initParameters(){
@@ -233,10 +228,14 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void onRefresh() {
-        page = 1;
-        map.put("page", String.valueOf(page));
-        mRequestType = Constants.REQUEST_REFRESH;
-        initData();
+        if(!type.equals(Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER)) {
+            page = 1;
+            map.put("page", String.valueOf(page));
+            mRequestType = Constants.REQUEST_REFRESH;
+            initData();
+        }else {
+            showRefreshProgress(false);
+        }
     }
 
     @Override
@@ -281,7 +280,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 adapter.setLoading(false);
                 break;
             case Constants.REQUEST_NORMAL:
-                if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET) || type.equals(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER)){
+                if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET) ||type.equals(Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER) || type.equals(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER)){
                     adapter = new RecyclerAdapter(recyclerView, context, type, this);
                 } else if(type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)){
                     adapter = null;

@@ -6,6 +6,7 @@
     <color name="imageview_background">#ADD8E6</color>
     <color name="shots_username">#536DFE</color>
     <color name="nav_header_desc_tx">#757575</color>
+    <color name="tablayout_text_color">#BDBDBD</color>
     <color name="bucket_recycler_item_background">#EEEEEE</color>
     <color name="bucket_recycler_item_view_background">#BDBDBD</color>
 </resources>

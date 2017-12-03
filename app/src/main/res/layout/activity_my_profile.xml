@@ -63,7 +63,10 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/profile_tl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:tabTextAppearance="@style/TabLayoutTheme"
+            app:tabTextColor="@color/tablayout_text_color"
+            app:tabSelectedTextColor="@android:color/white">
 
         </android.support.design.widget.TabLayout>
 

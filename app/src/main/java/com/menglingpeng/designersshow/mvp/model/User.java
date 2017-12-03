@@ -30,9 +30,9 @@ public class User implements Serializable {
 
     private int followers_count;
 
-    private int following_count;
+    private int followings_count;
 
-    private int project_count;
+    private int projects_count;
 
     private int teams_count;
 
@@ -144,19 +144,19 @@ public class User implements Serializable {
     }
 
     public int getFollowing_count() {
-        return following_count;
+        return followings_count;
     }
 
-    public void setFollowing_count(int following_count) {
-        this.following_count = following_count;
+    public void setFollowing_count(int followings_count) {
+        this.followings_count = followings_count;
     }
 
     public int getProject_count() {
-        return project_count;
+        return projects_count;
     }
 
-    public void setProject_count(int project_count) {
-        this.project_count = project_count;
+    public void setProject_count(int projects_count) {
+        this.projects_count = projects_count;
     }
 
     public int getTeams_count() {

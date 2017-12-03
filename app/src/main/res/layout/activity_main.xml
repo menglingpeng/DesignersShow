@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:tabTextAppearance="@style/TabLayoutTheme"
-                app:tabTextColor="#BDBDBD"
+                app:tabTextColor="@color/tablayout_text_color"
                 app:tabSelectedTextColor="@android:color/white"
                 />
 
