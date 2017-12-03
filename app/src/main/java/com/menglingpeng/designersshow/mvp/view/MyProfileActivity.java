@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow.mvp.view;
 
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -41,6 +42,7 @@ private ViewPager profileVp;
 private TabPagerFragmentAdapter adapter;
 private HashMap<String, String> map;
 private ArrayList<RecyclerFragment> fragmentsList;
+private static RecyclerFragment fragment;
     @Override
     protected void initLayoutId() {
         type = getIntent().getStringExtra(Constants.TYPE);
@@ -178,11 +180,20 @@ private ArrayList<RecyclerFragment> fragmentsList;
         titlesList.add(getText(R.string.explore_spinner_list_shots).toString());
         titlesList.add(getText(R.string.followers).toString());
         if(type.equals(Constants.REQUEST_AUTH_USER)){
-            fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER));
-            fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER));
-            fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER));
+            fragmentsList.add(newRecyclerFragment(Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER));
+            fragmentsList.add(newRecyclerFragment(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER));
+            fragmentsList.add(newRecyclerFragment(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER));
         }
         adapter.setFragments(fragmentsList, titlesList);
+    }
+
+    private RecyclerFragment newRecyclerFragment(String type){
+        fragment = RecyclerFragment.newInstance(type);
+        return fragment;
+    }
+
+    public static RecyclerFragment getFragment(){
+        return fragment;
     }
 
 }

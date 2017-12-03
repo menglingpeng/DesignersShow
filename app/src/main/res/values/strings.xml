@@ -83,5 +83,6 @@
     <string name="followers">粉丝</string>
     <string name="following">关注</string>
     <string name="detail">详情</string>
+    <string name="the_name_of_bucket_is_not_null">作品集名称不能为空！</string>
 
 </resources>

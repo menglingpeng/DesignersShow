@@ -179,7 +179,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         final TextInputEditText bucketNameEt, bucketDescEt;
         AlertDialog dialog;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.create_a_bucket_dialog_message, null);
+        final View dialogView = getLayoutInflater().inflate(R.layout.create_a_bucket_dialog_message, null);
         builder.setTitle(R.string.create_a_bucket);
         builder.setView(dialogView);
         bucketNameEt = (TextInputEditText)dialogView.findViewById(R.id.bucket_name_tiet);
@@ -193,14 +193,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                HashMap<String, String> map = new HashMap<>();
-                map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
-                map.put(Constants.NAME, bucketNameEt.getText().toString());
-                map.put(Constants.DESCRIPTION, bucketDescEt.getText().toString());
-                type = Constants.REQUEST_CREATE_A_BUCKET;
-                RecyclerPresenter presenter = new RecyclerPresenter(MainActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, MainActivity.this);
-                presenter.loadJson();
-                SnackUI.showSnackShort(getApplicationContext(),drawerLayout,  getResources().getString(R.string.snack_create_a_bucket_text));
+                String name = bucketNameEt.getText().toString();
+                if(name.equals("")){
+                    SnackUI.showSnackShort(getApplicationContext(), drawerLayout, getString(R.string.the_name_of_bucket_is_not_null));
+                }else {
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                    map.put(Constants.NAME, bucketNameEt.getText().toString());
+                    map.put(Constants.DESCRIPTION, bucketDescEt.getText().toString());
+                    type = Constants.REQUEST_CREATE_A_BUCKET;
+                    RecyclerPresenter presenter = new RecyclerPresenter(MainActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, MainActivity.this);
+                    presenter.loadJson();
+                    SnackUI.showSnackShort(getApplicationContext(), drawerLayout, getResources().getString(R.string.snack_create_a_bucket_text));
+                }
 
             }
         });

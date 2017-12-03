@@ -261,6 +261,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_LIST_COMMENTS:
                 fragment = CommentsActivity.getFragment();
                 break;
+            case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
+                fragment = MyProfileActivity.getFragment();
+                break;
             default:
                 if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER)) {
                     fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();

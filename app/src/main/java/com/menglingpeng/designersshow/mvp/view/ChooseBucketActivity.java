@@ -83,14 +83,19 @@ public class ChooseBucketActivity extends BaseActivity implements RecyclerView{
         builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                HashMap<String, String> map = new HashMap<>();
-                map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
-                map.put(Constants.NAME, bucketNameEt.getText().toString());
-                map.put(Constants.DESCRIPTION, bucketDescEt.getText().toString());
-                type = Constants.REQUEST_CREATE_A_BUCKET;
-                RecyclerPresenter presenter = new RecyclerPresenter(ChooseBucketActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, getApplicationContext());
-                presenter.loadJson();
-                SnackUI.showSnackShort(getApplicationContext(),coordinatorLayout,  getResources().getString(R.string.snack_create_a_bucket_text));
+                String name = bucketNameEt.getText().toString();
+                if(name.equals("")){
+                    SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getString(R.string.the_name_of_bucket_is_not_null));
+                }else {
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                    map.put(Constants.NAME, bucketNameEt.getText().toString());
+                    map.put(Constants.DESCRIPTION, bucketDescEt.getText().toString());
+                    type = Constants.REQUEST_CREATE_A_BUCKET;
+                    RecyclerPresenter presenter = new RecyclerPresenter(ChooseBucketActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, getApplicationContext());
+                    presenter.loadJson();
+                    SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getString(R.string.snack_create_a_bucket_text));
+                }
 
             }
         });

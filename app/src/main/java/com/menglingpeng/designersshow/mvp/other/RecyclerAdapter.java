@@ -187,7 +187,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else {
                 viewHolder.bucketDescTx.setVisibility(TextView.GONE);
             }
-            viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), "作品"));
+            viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
         }else if(holder instanceof ChooseBucketViewHolder){
             final ChooseBucketViewHolder viewHolder = (ChooseBucketViewHolder)holder;
             final Buckets buckets = (Buckets)list.get(position);
@@ -205,14 +205,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else {
                 viewHolder.bucketDescTx.setVisibility(TextView.GONE);
             }
-            viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), "作品"));
+            viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
         }else if(holder instanceof FollowersOfAuthUserViewHolder){
             final FollowersOfAuthUserViewHolder viewHolder = (FollowersOfAuthUserViewHolder)holder;
             final User user = (User)list.get(position);
             ImageLoader.loadCricleImage(context, user.getAvatar_url(), viewHolder.followerAvatarIm);
             viewHolder.followerNameTx.setText(user.getUsername());
             viewHolder.followerLocationTx.setText(user.getLocation());
-            viewHolder.followerShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getShots_count()), context.getText(R.string.explore_spinner_list_shots).toString()));
+            viewHolder.followerShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
             viewHolder.followersOfFollowerCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowers_count()), context.getText(R.string.followers).toString()));
             viewHolder.followerRl.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -225,12 +225,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }else if(holder instanceof DetailOfUserViewHolder){
             final DetailOfUserViewHolder viewHolder = (DetailOfUserViewHolder)holder;
             final User user = (User)list.get(position);
-            viewHolder.profileTablayoutDetailShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getShots_count()), context.getText(R.string.explore_spinner_list_shots).toString()));
-            viewHolder.profileTablayoutDetailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getLikes_count()), context.getText(R.string.detail_likes_tx).toString()));
-            viewHolder.profileTablayoutDetailBucketsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getBuckets_count()), context.getText(R.string.detail_buckets_tx).toString()));
-            viewHolder.profileTablayoutDetailProjectCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getProject_count()), context.getText(R.string.project).toString()));
-            viewHolder.profileTablayoutDetailFollowersCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowers_count()), context.getText(R.string.followers).toString()));
-            viewHolder.profileTablayoutDetailFollowingCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowing_count()), context.getText(R.string.following).toString()));
+            viewHolder.profileTablayoutDetailShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
+            viewHolder.profileTablayoutDetailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getLikes_count()), context.getString(R.string.detail_likes_tx)));
+            viewHolder.profileTablayoutDetailBucketsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getBuckets_count()), context.getString(R.string.detail_buckets_tx)));
+            viewHolder.profileTablayoutDetailProjectCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getProject_count()), context.getString(R.string.project)));
+            viewHolder.profileTablayoutDetailFollowersCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowers_count()), context.getString(R.string.followers)));
+            viewHolder.profileTablayoutDetailFollowingCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowing_count()), context.getString(R.string.following)));
         }
     }
 
