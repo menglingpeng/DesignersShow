@@ -48,6 +48,9 @@ HttpUtils {
                     case Constants.MENU_MY_LIKES:
                         urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES_URL).newBuilder();
                         break;
+                    case Constants.MENU_MY_SHOTS:
+                        urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_URL).newBuilder();
+                        break;
                     case Constants.MENU_MY_BUCKETS:
                         urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER_URL).newBuilder();
                         break;

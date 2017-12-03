@@ -273,19 +273,17 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         switch (requestType){
             case Constants.REQUEST_REFRESH:
                 showRefreshProgress(false);
-                adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
+                adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
                 recyclerView.setAdapter(adapter);
                 break;
             case Constants.REQUEST_LOAD_MORE:
                 adapter.setLoading(false);
                 break;
             case Constants.REQUEST_NORMAL:
-                if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET) ||type.equals(Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER) || type.equals(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER)){
-                    adapter = new RecyclerAdapter(recyclerView, context, type, this);
-                } else if(type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)){
+                if(type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)){
                     adapter = null;
                 } else {
-                    adapter = new RecyclerAdapter(recyclerView, fragment, type, this);
+                    adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
                 }
                 recyclerView.setAdapter(adapter);
                 break;
@@ -300,55 +298,56 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 initData();
             }
         });
-
-        switch (type){
-            case Constants.REQUEST_LIST_COMMENTS:
-                jsonList = Json.parseArrayJson(json, Comments.class);
-                break;
-            case Constants.MENU_MY_LIKES:
-                jsonList = Json.parseArrayJson(json, Likes.class);
-                break;
-            case Constants.MENU_MY_BUCKETS:
-                jsonList = Json.parseArrayJson(json, Buckets.class);
-                break;
-            case Constants.REQUEST_CHOOSE_BUCKET:
-                jsonList = Json.parseArrayJson(json, Buckets.class);
-                break;
-            case Constants.REQUEST_ADD_A_SHOT_TO_BUCKET:
-                //添加到多个bucket
-                count++;
-                String text;
-                if(json.equals(Constants.CODE_204_NO_CONTENT) && count == addShotTobucketMap.size()) {
-                    if(count == 1){
-                        text = new StringBuilder().append(context.getText(R.string.added_to)).append(bucketName).toString();
-                    }else {
-                        text = new StringBuilder().append(context.getText(R.string.added_to)).append(String.valueOf(count))
-                                .append(context.getText(R.string.buckets)).toString();
-                    }
-                    Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
-                    intent.putExtra(Constants.SNACKBAR_TEXT, text);
-                    startActivity(intent);
-                }
-                break;
-            case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
-                jsonList.add(Json.parseJson(json, User.class));
-                break;
-            case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
-                jsonList = Json.parseArrayJson(json, User.class);
-                break;
-            default:
-                jsonList = Json.parseArrayJson(json, Shots.class);
-                break;
-        }
-        if(!type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)) {
-            for (int i = 0; i < jsonList.size(); i++) {
-                if (type.equals(Constants.MENU_MY_LIKES)) {
-                    adapter.addData(((Likes) jsonList.get(i)).getShot());
-                } else {
-                    adapter.addData(jsonList.get(i));
-                }
-            }
-        }
+       if(!json.equals(Constants.EMPTY)) {
+           switch (type) {
+               case Constants.REQUEST_LIST_COMMENTS:
+                   jsonList = Json.parseArrayJson(json, Comments.class);
+                   break;
+               case Constants.MENU_MY_LIKES:
+                   jsonList = Json.parseArrayJson(json, Likes.class);
+                   break;
+               case Constants.MENU_MY_BUCKETS:
+                   jsonList = Json.parseArrayJson(json, Buckets.class);
+                   break;
+               case Constants.REQUEST_CHOOSE_BUCKET:
+                   jsonList = Json.parseArrayJson(json, Buckets.class);
+                   break;
+               case Constants.REQUEST_ADD_A_SHOT_TO_BUCKET:
+                   //添加到多个bucket
+                   count++;
+                   String text;
+                   if (json.equals(Constants.CODE_204_NO_CONTENT) && count == addShotTobucketMap.size()) {
+                       if (count == 1) {
+                           text = new StringBuilder().append(context.getText(R.string.added_to)).append(bucketName).toString();
+                       } else {
+                           text = new StringBuilder().append(context.getText(R.string.added_to)).append(String.valueOf(count))
+                                   .append(context.getText(R.string.buckets)).toString();
+                       }
+                       Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
+                       intent.putExtra(Constants.SNACKBAR_TEXT, text);
+                       startActivity(intent);
+                   }
+                   break;
+               case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
+                   jsonList.add(Json.parseJson(json, User.class));
+                   break;
+               case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+                   jsonList = Json.parseArrayJson(json, User.class);
+                   break;
+               default:
+                   jsonList = Json.parseArrayJson(json, Shots.class);
+                   break;
+           }
+           if (!type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)) {
+               for (int i = 0; i < jsonList.size(); i++) {
+                   if (type.equals(Constants.MENU_MY_LIKES)) {
+                       adapter.addData(((Likes) jsonList.get(i)).getShot());
+                   } else {
+                       adapter.addData(jsonList.get(i));
+                   }
+               }
+           }
+       }
     }
 
     @Override

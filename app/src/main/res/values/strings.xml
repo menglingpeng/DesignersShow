@@ -84,5 +84,11 @@
     <string name="following">关注</string>
     <string name="detail">详情</string>
     <string name="the_name_of_bucket_is_not_null">作品集名称不能为空！</string>
+    <string name="no_shot_here">没 有 作 品</string>
+    <string name="no_bucket_here">没 有 作 品 集</string>
+    <string name="no_liked_shot_here">没 有 喜 欢 的 作 品</string>
+    <string name="no_project_here">没 有 项 目</string>
+    <string name="no_follower_here">没 有 粉 丝</string>
+    <string name="no_following_here">没 有 关 注</string>
 
 </resources>

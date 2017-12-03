@@ -17,6 +17,7 @@ public class Constants {
     public static final String REQUEST_DELETE_MEIHOD = "delete";
     public static final String CODE_404_NOT_FOUND = "404";
     public static final String CODE_204_NO_CONTENT = "204";
+    public static final String EMPTY = "[]";
     public static final String SNACKBAR_TEXT = "snackbar_text";
     /**
      * Dribbble API
@@ -41,6 +42,7 @@ public class Constants {
     public static final String COMMENTS_COUNT = "comments_count";
     public static final String LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL = "https://api.dribbble.com/v1/user/following/shots";
     public static final String LIST_SHOTS_FOR_AUTH_USER_LIKES_URL= "https://api.dribbble.com/v1/user/likes";
+    public static final String LIST_SHOTS_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/shots";
     public static final String LIST_BUCKETS_FOR_AUTH_USER_URL = "https://api.dribbble.com/v1/user/buckets";
     public static final String BUCKETS_URL = "https://api.dribbble.com/v1/buckets";
     public static final String AUTHENTICATED_USER_URL = "https://api.dribbble.com/v1/user";

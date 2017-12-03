@@ -24,6 +24,10 @@
     <dimen name="recycler_view_item_comments_layout_layout_height">40dp</dimen>
     <dimen name="recycler_view_item_comments_layout_layout_imageview_layout_marginLeft">20dp</dimen>
     <dimen name="recycler_view_item_comments_layout_layout_textview_layout_marginLeft">10dp</dimen>
+    <dimen name="recycler_item_empty_im_layout_width">160dp</dimen>
+    <dimen name="recycler_item_empty_im_layout_height">160dp</dimen>
+    <dimen name="recycler_item_empty_im_layout_marginTop">100dp</dimen>
+    <dimen name="recycler_item_empty_tx_layout_marginTop">20dp</dimen>
     <dimen name="toolbar_date_menu_padding_top">20dp</dimen>
     <dimen name="toolbar_date_menu_padding_left">10dp</dimen>
     <dimen name="spinner_drop_down_width">180dp</dimen>

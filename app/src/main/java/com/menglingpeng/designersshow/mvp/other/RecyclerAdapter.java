@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,8 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_ITEM = 0;
-    private static final int TYPE_FOOTER = 1;
+    private static final int TYPE_ITEM_FOOTER = 1;
+    private static final int TYPE_ITEM_EMPTY = 2;
     private OnRecyclerListItemListener mListener;
     private ArrayList list = new ArrayList<>();
     private Fragment fragment;
@@ -44,13 +46,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private int visibleThreshold = 2;
 
 
-    public <T> RecyclerAdapter(RecyclerView recyclerView, T t, final String type, OnRecyclerListItemListener listener){
+    public  RecyclerAdapter(RecyclerView recyclerView, Context context, Fragment fragment, final String type, OnRecyclerListItemListener listener){
         this.type = type;
-        if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET) || type.equals(Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER) || type.equals(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER)) {
-            this.context = (Context)t;
-        }else {
-            this.fragment = (Fragment)t;
-        }
+        this.context = context;
+        this.fragment = fragment;
         mListener = listener;
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -73,20 +72,34 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        if(list.size() < 12) {
-            return list.size();
+        int cout = 0;
+        if(list.isEmpty()){
+                Log.i("empty", "true");
+                cout = 1;
+                return cout;
         }else {
-            return list.size() + 1;
+            if (list.size() < 12) {
+                cout = list.size();
+            } else {
+                cout = list.size() + 1;
+            }
         }
+        return cout;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position == list.size()){
-            return TYPE_FOOTER;
+        int type = 0;
+        if(list.isEmpty()){
+            type = TYPE_ITEM_EMPTY;
         }else {
-            return TYPE_ITEM;
+            if (position == list.size()) {
+                type = TYPE_ITEM_FOOTER;
+            } else {
+                type = TYPE_ITEM;
+            }
         }
+        return type;
     }
 
     @Override
@@ -99,38 +112,45 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
         RecyclerView.ViewHolder viewHolder = null;
-        if(viewType == TYPE_FOOTER){
-            view = inflater.inflate(R.layout.recycler_item_footer_loading, parent, false);
-            return new FooterViewHolder(view);
-        }else {
-            switch (type) {
-                case Constants.REQUEST_LIST_COMMENTS:
-                    view = inflater.inflate(R.layout.comments_recycler_view_item, parent, false);
-                    viewHolder = new CommentsViewHolder(view);
-                    break;
-                case Constants.MENU_MY_BUCKETS:
-                    view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
-                    viewHolder = new BucketsViewHolder(view);
-                    break;
-                case Constants.REQUEST_CHOOSE_BUCKET:
-                    view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
-                    viewHolder = new ChooseBucketViewHolder(view);
-                    break;
-                case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
-                    view = inflater.inflate(R.layout.profile_tablayout_detail_item, parent, false);
-                    viewHolder = new DetailOfUserViewHolder(view);
-                    break;
-                case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
-                    view = inflater.inflate(R.layout.profile_tablayout_followers_item, parent, false);
-                    viewHolder = new FollowersOfAuthUserViewHolder(view);
-                    break;
-                default:
-                    view = inflater.inflate(R.layout.recycler_item, parent, false);
-                    viewHolder = new ShotsViewHolder(view);
-                    break;
-            }
-            return viewHolder;
+        switch (viewType){
+            case TYPE_ITEM_EMPTY:
+                view = inflater.inflate(R.layout.recycler_item_empty, parent, false);
+                viewHolder = new EmptyiewHolder(view);
+                break;
+            case TYPE_ITEM_FOOTER:
+                view = inflater.inflate(R.layout.recycler_item_footer_loading, parent, false);
+                viewHolder = new FooterViewHolder(view);
+                break;
+            default:
+                switch (type) {
+                    case Constants.REQUEST_LIST_COMMENTS:
+                        view = inflater.inflate(R.layout.comments_recycler_view_item, parent, false);
+                        viewHolder = new CommentsViewHolder(view);
+                        break;
+                    case Constants.MENU_MY_BUCKETS:
+                        view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
+                        viewHolder = new BucketsViewHolder(view);
+                        break;
+                    case Constants.REQUEST_CHOOSE_BUCKET:
+                        view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
+                        viewHolder = new ChooseBucketViewHolder(view);
+                        break;
+                    case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
+                        view = inflater.inflate(R.layout.profile_tablayout_detail_item, parent, false);
+                        viewHolder = new DetailOfUserViewHolder(view);
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+                        view = inflater.inflate(R.layout.profile_tablayout_followers_item, parent, false);
+                        viewHolder = new FollowersOfAuthUserViewHolder(view);
+                        break;
+                    default:
+                        view = inflater.inflate(R.layout.recycler_item, parent, false);
+                        viewHolder = new ShotsViewHolder(view);
+                        break;
+                }
+                break;
         }
+        return viewHolder;
     }
 
     @Override
@@ -233,6 +253,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.profileTablayoutDetailProjectsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getProject_count()), context.getString(R.string.project)));
             viewHolder.profileTablayoutDetailFollowersCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowers_count()), context.getString(R.string.followers)));
             viewHolder.profileTablayoutDetailFollowingsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowing_count()), context.getString(R.string.following)));
+        }else if(holder instanceof EmptyiewHolder){
+            int imId = 0;
+            int txId = 0;
+            EmptyiewHolder viewHolder = (EmptyiewHolder)holder;
+            switch (type){
+                case Constants.MENU_MY_BUCKETS:
+                    imId = R.drawable.ic_image_grey_400_48dp;
+                    txId = R.string.no_bucket_here;
+                    break;
+                case Constants.MENU_MY_SHOTS:
+                    imId = R.drawable.ic_image_grey_400_48dp;
+                    txId = R.string.no_shot_here;
+                    break;
+                case Constants.MENU_MY_LIKES:
+                    imId = R.drawable.ic_image_grey_400_48dp;
+                    txId = R.string.no_liked_shot_here;
+                    break;
+            }
+            viewHolder.emptyIm.setImageResource(imId);
+            viewHolder.emptyTx.setText(context.getString(txId));
         }
     }
 
@@ -312,14 +352,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-
-    public class FooterViewHolder extends RecyclerView.ViewHolder{
-
-        public FooterViewHolder(View view) {
-            super(view);
-        }
-    }
-
     public class BucketsViewHolder extends RecyclerView.ViewHolder{
         public final RelativeLayout bucketRl;
         public final TextView bucketNameTx, bucketDescTx, bucketShotsCountTx;
@@ -347,10 +379,29 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+    public class EmptyiewHolder extends RecyclerView.ViewHolder{
+        public final ImageView emptyIm;
+        public final TextView emptyTx;
+
+        public EmptyiewHolder(View view) {
+            super(view);
+            emptyIm = (ImageView)view.findViewById(R.id.recycler_item_empty_im);
+            emptyTx = (TextView)view.findViewById(R.id.recycler_item_empty_tx);
+        }
+    }
+
+    public class FooterViewHolder extends RecyclerView.ViewHolder{
+
+        public FooterViewHolder(View view) {
+            super(view);
+        }
+    }
+
     public <T> void addData(T d){
         list.add(d);
         notifyDataSetChanged();
     }
+
 
     public void setLoading(boolean isLoading){
         this.isLoading = isLoading;
