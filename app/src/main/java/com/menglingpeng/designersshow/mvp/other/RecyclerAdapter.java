@@ -46,7 +46,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public <T> RecyclerAdapter(RecyclerView recyclerView, T t, String type, OnRecyclerListItemListener listener){
         this.type = type;
-        if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET) || type.equals(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER)) {
+        if(type.equals(Constants.REQUEST_LIST_COMMENTS) || type.equals(Constants.MENU_MY_BUCKETS) || type.equals(Constants.REQUEST_CHOOSE_BUCKET) || type.equals(Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER) || type.equals(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER)) {
             this.context = (Context)t;
         }else {
             this.fragment = (Fragment)t;
@@ -113,6 +113,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 case Constants.REQUEST_CHOOSE_BUCKET:
                     view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
                     viewHolder = new ChooseBucketViewHolder(view);
+                    break;
+                case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
+                    view = inflater.inflate(R.layout.profile_tablayout_detail_item, parent, false);
+                    viewHolder = new DetailOfUserViewHolder(view);
                     break;
                 case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
                     view = inflater.inflate(R.layout.profile_tablayout_followers_item, parent, false);
@@ -218,6 +222,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             });
+        }else if(holder instanceof DetailOfUserViewHolder){
+            final DetailOfUserViewHolder viewHolder = (DetailOfUserViewHolder)holder;
+            final User user = (User)list.get(position);
+            viewHolder.profileTablayoutDetailShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getShots_count()), context.getText(R.string.explore_spinner_list_shots).toString()));
+            viewHolder.profileTablayoutDetailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getLikes_count()), context.getText(R.string.detail_likes_tx).toString()));
+            viewHolder.profileTablayoutDetailBucketsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getBuckets_count()), context.getText(R.string.detail_buckets_tx).toString()));
+            viewHolder.profileTablayoutDetailProjectCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getProject_count()), context.getText(R.string.project).toString()));
+            viewHolder.profileTablayoutDetailFollowersCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowers_count()), context.getText(R.string.followers).toString()));
+            viewHolder.profileTablayoutDetailFollowingCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowing_count()), context.getText(R.string.following).toString()));
         }
     }
 
@@ -254,6 +267,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             commentsCreateAtTv = (TextView)view.findViewById(R.id.detail_comments_create_at_tx);
             commentsLikesIm = (ImageView)view.findViewById(R.id.detail_comments_likes_im);
             commentsLikesCountTv = (TextView)view.findViewById(R.id.detail_comments_likes_count_tx);
+        }
+    }
+
+    public class DetailOfUserViewHolder extends RecyclerView.ViewHolder{
+        public final RelativeLayout profileTablayoutDetailShotsRl, profileTablayoutDetailLikesRl, profileTablayoutDetailBucketsRl,
+                profileTablayoutDetailProjectRl, profileTablayoutDetailFollowersRl, profileTablayoutDetailFollowingRl;
+        public final TextView profileTablayoutDetailShotsCountTx, profileTablayoutDetailLikesCountTx, profileTablayoutDetailBucketsCountTx,
+                profileTablayoutDetailProjectCountTx, profileTablayoutDetailFollowersCountTx, profileTablayoutDetailFollowingCountTx;
+        public DetailOfUserViewHolder(View view) {
+            super(view);
+            profileTablayoutDetailShotsRl = (RelativeLayout)view.findViewById(R.id.profile_tablayout_detail_shots_rl);
+            profileTablayoutDetailLikesRl = (RelativeLayout)view.findViewById(R.id.profile_tablayout_detail_likes_rl);
+            profileTablayoutDetailBucketsRl = (RelativeLayout)view.findViewById(R.id.profile_tablayout_detail_buckets_rl);
+            profileTablayoutDetailProjectRl = (RelativeLayout)view.findViewById(R.id.profile_tablayout_detail_project_rl);
+            profileTablayoutDetailFollowersRl = (RelativeLayout)view.findViewById(R.id.profile_tablayout_detail_followers_rl);
+            profileTablayoutDetailFollowingRl = (RelativeLayout)view.findViewById(R.id.profile_tablayout_detail_following_rl);
+            profileTablayoutDetailShotsCountTx = (TextView)view.findViewById(R.id.profile_tablayout_detail_shots_count_tx);
+            profileTablayoutDetailLikesCountTx = (TextView)view.findViewById(R.id.profile_tablayout_detail_likes_count_tx);
+            profileTablayoutDetailBucketsCountTx = (TextView)view.findViewById(R.id.profile_tablayout_detail_buckets_count_tx);
+            profileTablayoutDetailProjectCountTx = (TextView)view.findViewById(R.id.profile_tablayout_detail_project_count_tx);
+            profileTablayoutDetailFollowersCountTx = (TextView)view.findViewById(R.id.profile_tablayout_detail_followers_count_tx);
+            profileTablayoutDetailFollowingCountTx = (TextView)view.findViewById(R.id.profile_tablayout_detail_following_count_tx);
+
+
         }
     }
 

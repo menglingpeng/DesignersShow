@@ -178,11 +178,11 @@ private ArrayList<RecyclerFragment> fragmentsList;
         titlesList.add(getText(R.string.explore_spinner_list_shots).toString());
         titlesList.add(getText(R.string.followers).toString());
         if(type.equals(Constants.REQUEST_AUTH_USER)){
-            fragmentsList.add(RecyclerFragment.newInstance(type));
+            fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER));
             fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER));
             fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER));
         }
         adapter.setFragments(fragmentsList, titlesList);
     }
-    
+
 }

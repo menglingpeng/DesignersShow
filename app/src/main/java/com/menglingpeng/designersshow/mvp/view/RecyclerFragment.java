@@ -199,6 +199,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 shotId = getArguments().get(Constants.ID).toString();
                 map.put(Constants.SHOT_ID, shotId);
                 break;
+            case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
+                break;
             case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
                 break;
             case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
@@ -251,6 +253,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     public void loadSuccess(String json, String requestType) {
         Fragment fragment = null;
+        jsonList = new ArrayList();
         switch (type){
             case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
                 fragment = BucketDetailActivity.getFragment();
@@ -324,6 +327,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     intent.putExtra(Constants.SNACKBAR_TEXT, text);
                     startActivity(intent);
                 }
+                break;
+            case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
+                jsonList.add(Json.parseJson(json, User.class));
                 break;
             case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
                 jsonList = Json.parseArrayJson(json, User.class);

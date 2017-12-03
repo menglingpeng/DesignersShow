@@ -30,6 +30,7 @@ public class Constants {
     public static final String SCOPE_VALUE = "public+write+comment+upload";
     public static final String REQUEST_AUTH_USER = "auth_user";
     public static final String REQUEST_SINGLE_USER = "single_user";
+    public static final String REQUEST_LIST_DETAIL_OF_AUTH_USER = "list_detail_of_auth_user";
     public static final String REQUEST_LIST_SHOTS_FOR_AUTH_USER = "list_shots_for_auth_user";
     public static final String REQUEST_LIST_FOLLOWERS_OF_AUTH_USER = "list_followers_of_auth_user";
     public static final String AUTH_USER_NAME = "user_name";

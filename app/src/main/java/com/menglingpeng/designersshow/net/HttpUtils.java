@@ -69,6 +69,9 @@ HttpUtils {
                                 .append("/").append(Constants.COMMENTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
+                    case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
+                        urlBuilder = HttpUrl.parse(Constants.AUTHENTICATED_USER_URL).newBuilder();
+                        break;
                     case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
                         url = new StringBuilder().append(Constants.AUTHENTICATED_USER_URL).append("/").append(Constants.SHOTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
