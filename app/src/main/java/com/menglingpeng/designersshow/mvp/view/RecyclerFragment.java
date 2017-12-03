@@ -199,6 +199,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 shotId = getArguments().get(Constants.ID).toString();
                 map.put(Constants.SHOT_ID, shotId);
                 break;
+            case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
+                break;
             case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
                 break;
         }
@@ -257,7 +259,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 fragment = CommentsActivity.getFragment();
                 break;
             default:
-                if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING)) {
+                if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER)) {
                     fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
                 }else {
                     fragment = MainActivity.getCurrentFragment();

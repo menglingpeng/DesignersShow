@@ -60,12 +60,12 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
-        <TabLayout
+        <android.support.design.widget.TabLayout
             android:id="@+id/profile_tl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </TabLayout>
+        </android.support.design.widget.TabLayout>
 
     </android.support.design.widget.AppBarLayout>
 

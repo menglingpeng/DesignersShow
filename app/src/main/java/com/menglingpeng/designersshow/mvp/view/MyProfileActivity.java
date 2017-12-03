@@ -184,4 +184,5 @@ private ArrayList<RecyclerFragment> fragmentsList;
         }
         adapter.setFragments(fragmentsList, titlesList);
     }
+    
 }
