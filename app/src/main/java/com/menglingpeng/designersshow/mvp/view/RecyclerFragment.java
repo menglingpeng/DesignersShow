@@ -12,8 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseActivity;
@@ -23,6 +21,8 @@ import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
 import com.menglingpeng.designersshow.mvp.model.Buckets;
 import com.menglingpeng.designersshow.mvp.model.Comments;
+import com.menglingpeng.designersshow.mvp.model.Follower;
+import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Likes;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.model.User;
@@ -200,6 +200,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
             case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
                 break;
+            case Constants.REQUEST_LIST_FOLLOWING_OF_AUTH_USER:
+                break;
         }
         if(SharedPreUtil.getState(Constants.IS_LOGIN)){
             map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
@@ -332,7 +334,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                    jsonList.add(Json.parseJson(json, User.class));
                    break;
                case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
-                   jsonList = Json.parseArrayJson(json, User.class);
+                   jsonList = Json.parseArrayJson(json, Follower.class);
+                   break;
+               case Constants.REQUEST_LIST_FOLLOWING_OF_AUTH_USER:
+                   jsonList = Json.parseArrayJson(json, Following.class);
                    break;
                default:
                    jsonList = Json.parseArrayJson(json, Shots.class);

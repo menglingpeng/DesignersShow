@@ -1,49 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/profile_tablayout_followers_rl"
+    android:id="@+id/profile_tablayout_follow_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/profile_tablayout_followers_avatar_im"
+        android:id="@+id/profile_tablayout_follow_avatar_im"
         android:layout_width="@dimen/profile_tablayout_followers_avatar_im_layout_width_height"
         android:layout_height="@dimen/profile_tablayout_followers_avatar_im_layout_width_height"
         android:layout_marginTop="@dimen/profile_tablayout_followers_avatar_im_layout_margin_top_left"
         android:layout_marginLeft="@dimen/profile_tablayout_followers_avatar_im_layout_margin_top_left"/>
 
     <TextView
-        android:id="@+id/profile_tablayout_followers_name_tx"
+        android:id="@+id/profile_tablayout_follow_name_tx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/profile_tablayout_followers_avatar_im"
-        android:layout_alignTop="@+id/profile_tablayout_followers_avatar_im"
+        android:layout_toRightOf="@+id/profile_tablayout_follow_avatar_im"
+        android:layout_alignTop="@+id/profile_tablayout_follow_avatar_im"
         android:layout_marginLeft="@dimen/profile_tablayout_followers_name_tx_layout_marginLeft"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
     <TextView
-        android:id="@+id/profile_tablayout_followers_location_tx"
+        android:id="@+id/profile_tablayout_follow_location_tx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/profile_tablayout_followers_location_tx_layout_marginTop"
-        android:layout_alignLeft="@+id/profile_tablayout_followers_name_tx"
-        android:layout_below="@+id/profile_tablayout_followers_name_tx"/>
+        android:layout_alignLeft="@+id/profile_tablayout_follow_name_tx"
+        android:layout_below="@+id/profile_tablayout_follow_name_tx"/>
 
     <TextView
-        android:id="@+id/profile_tablayout_followers_shots_count_tx"
+        android:id="@+id/profile_tablayout_follow_shots_count_tx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/profile_tablayout_followers_name_tx"
-        android:layout_below="@+id/profile_tablayout_followers_location_tx"
+        android:layout_alignLeft="@+id/profile_tablayout_follow_name_tx"
+        android:layout_below="@+id/profile_tablayout_follow_location_tx"
         android:layout_marginTop="@dimen/profile_tablayout_followers_shots_count_tx_layout_marginTop"
         android:layout_marginBottom="@dimen/profile_tablayout_followers_shots_count_tx_layout_marginBottom"/>
 
     <TextView
-        android:id="@+id/profile_tablayout_followers_followers_count_tx"
+        android:id="@+id/profile_tablayout_followers_of_follow_count_tx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/profile_tablayout_followers_shots_count_tx"
-        android:layout_alignTop="@+id/profile_tablayout_followers_shots_count_tx"
-        android:layout_marginLeft="@dimen/profile_tablayout_followers_followers_count_tx_layout_marginLeft"/>
+        android:layout_toRightOf="@+id/profile_tablayout_follow_shots_count_tx"
+        android:layout_alignTop="@+id/profile_tablayout_follow_shots_count_tx"
+        android:layout_marginLeft="@dimen/profile_tablayout_followers_followers_count_tx_layout_marginLeft"
+        android:layout_marginBottom="@dimen/profile_tablayout_followers_followers_count_tx_layout_marginLeft"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/user_buckets_recycler_item_view_layout_height"
+        android:background="@color/bucket_recycler_item_view_background"
+        android:layout_below="@+id/profile_tablayout_followers_of_follow_count_tx"
+        >
+    </View>
 
 </RelativeLayout>

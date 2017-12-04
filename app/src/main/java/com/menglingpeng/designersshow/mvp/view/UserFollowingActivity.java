@@ -37,5 +37,6 @@ public class UserFollowingActivity extends BaseActivity {
                 finish();
             }
         });
+        replaceFragment(RecyclerFragment.newInstance(type));
     }
 }
