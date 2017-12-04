@@ -20,12 +20,10 @@ import android.widget.TextView;
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
-import com.menglingpeng.designersshow.mvp.model.Like;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
-import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
@@ -43,12 +41,12 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     private CoordinatorLayout coordinatorLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ProgressBar progressBar;
-    private TextView detailTitleTx, detailUpdateTimeTx, detailUserNameTx, detailUserLocationTx;
+    private TextView detailTitleTv, detailUpdateTimeTv, detailUserNameTv, detailUserLocationTv;
     private FrameLayout detailLikesFl, detailCommentsFl, detailBucketsFl;
-    private ImageView detailAvatarIm, detailLikesIm, detailCommentsIm, detailBucketsIm;
-    private TextView  detailLikesCountTx, detailCommentsCountTx, detailBucketsCountTx, detailViewsCountTx;
+    private ImageView detailAvatarIv, detailLikesIv, detailCommentsIv, detailBucketsIv;
+    private TextView  detailLikesCountTv, detailCommentsCountTv, detailBucketsCountTv, detailViewsCountTv;
     private Button detailAttachmentsBt;
-    private TextView detailDescTx;
+    private TextView detailDescTv;
     private Shots shots;
     private String htmlUrl, hidpiUrl, imageUrl, imageName;
     private HashMap<String, String> map = new HashMap<>();
@@ -90,8 +88,8 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         });
         map.put(Constants.ID, String.valueOf(shots.getId()));
         checkIfLikeShot();
-        detailLikesIm = (ImageView)findViewById(R.id.detail_likes_im);
-        detailLikesIm.setOnClickListener(new View.OnClickListener() {
+        detailLikesIv = (ImageView)findViewById(R.id.detail_likes_im);
+        detailLikesIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(shotsIsLiked){
@@ -110,20 +108,28 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     }
 
     private void initDescription(){
-        detailTitleTx = (TextView)findViewById(R.id.detail_title_tx);
-        detailTitleTx.setText(shots.getTitle());
-        detailUpdateTimeTx = (TextView)findViewById(R.id.detail_update_time_tx);
-        detailUpdateTimeTx.setText(TimeUtil.getTimeDifference(shots.getUpdated_at()));
-        detailAvatarIm = (ImageView)findViewById(R.id.detail_avatar_im);
-        ImageLoader.loadCricleImage(getApplicationContext(), shots.getUser().getAvatar_url(), detailAvatarIm);
-        detailUserNameTx = (TextView)findViewById(R.id.detail_user_name_tx);
-        detailUserNameTx.setText(shots.getUser().getUsername());
-        detailUserLocationTx = (TextView)findViewById(R.id.detail_user_location_tx);
-        detailUserLocationTx.setText(shots.getUser().getLocation());
-        detailLikesCountTx = (TextView)findViewById(R.id.detail_likes_count_tx);
-        detailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count()), getResources().getString(R.string.detail_likes_tx)));
-        detailCommentsIm = (ImageView)findViewById(R.id.detail_comments_im);
-        detailCommentsIm.setOnClickListener(new View.OnClickListener() {
+        detailTitleTv = (TextView)findViewById(R.id.detail_title_tx);
+        detailTitleTv.setText(shots.getTitle());
+        detailUpdateTimeTv = (TextView)findViewById(R.id.detail_update_time_tx);
+        detailUpdateTimeTv.setText(TimeUtil.getTimeDifference(shots.getUpdated_at()));
+        detailAvatarIv = (ImageView)findViewById(R.id.detail_avatar_im);
+        ImageLoader.loadCricleImage(getApplicationContext(), shots.getUser().getAvatar_url(), detailAvatarIv);
+        detailAvatarIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShotDetailActivity.this, UserProfileActivity.class);
+                intent.putExtra(Constants.TYPE, Constants.REQUEST_SINGLE_USER);
+                startActivity(intent);
+            }
+        });
+        detailUserNameTv = (TextView)findViewById(R.id.detail_user_name_tx);
+        detailUserNameTv.setText(shots.getUser().getUsername());
+        detailUserLocationTv = (TextView)findViewById(R.id.detail_user_location_tx);
+        detailUserLocationTv.setText(shots.getUser().getLocation());
+        detailLikesCountTv = (TextView)findViewById(R.id.detail_likes_count_tx);
+        detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count()), getResources().getString(R.string.detail_likes_tx)));
+        detailCommentsIv = (ImageView)findViewById(R.id.detail_comments_im);
+        detailCommentsIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShotDetailActivity.this, CommentsActivity.class);
@@ -132,8 +138,8 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 startActivity(intent);
             }
         });
-        detailCommentsCountTx= (TextView)findViewById(R.id.detail_comments_tx);
-        detailCommentsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getComments_count()), getResources().getString(R.string.detail_comments_tx)));
+        detailCommentsCountTv= (TextView)findViewById(R.id.detail_comments_tx);
+        detailCommentsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getComments_count()), getResources().getString(R.string.detail_comments_tx)));
         detailBucketsFl = (FrameLayout)findViewById(R.id.detail_buckets_fl);
         detailBucketsFl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,8 +149,8 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 startActivity(intent);
             }
         });
-        detailBucketsIm = (ImageView)findViewById(R.id.detail_buckets_im);
-        detailBucketsIm.setOnClickListener(new View.OnClickListener() {
+        detailBucketsIv = (ImageView)findViewById(R.id.detail_buckets_im);
+        detailBucketsIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShotDetailActivity.this, ChooseBucketActivity.class);
@@ -152,10 +158,10 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 startActivity(intent);
             }
         });
-        detailBucketsCountTx = (TextView)findViewById(R.id.detail_buckets_count_tx);
-        detailBucketsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getBuckets_count()), getResources().getString(R.string.detail_buckets_tx)));
-        detailViewsCountTx = (TextView)findViewById(R.id.detail_views_count_tx);
-        detailViewsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getViews_count()), getResources().getString(R.string.detail_views_tx)));
+        detailBucketsCountTv = (TextView)findViewById(R.id.detail_buckets_count_tx);
+        detailBucketsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getBuckets_count()), getResources().getString(R.string.detail_buckets_tx)));
+        detailViewsCountTv = (TextView)findViewById(R.id.detail_views_count_tx);
+        detailViewsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getViews_count()), getResources().getString(R.string.detail_views_tx)));
         detailAttachmentsBt = (Button)findViewById(R.id.detail_attachment_bt);
         if(shots.getAttachments_count() != 0){
             detailAttachmentsBt.setVisibility(Button.VISIBLE);
@@ -170,13 +176,13 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
             });
         }
 
-        detailDescTx = (TextView)findViewById(R.id.detail_desc_tx);
+        detailDescTv = (TextView)findViewById(R.id.detail_desc_tx);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            detailDescTx.setText(Html.fromHtml(shots.getDescription(), Html.FROM_HTML_MODE_LEGACY));
+            detailDescTv.setText(Html.fromHtml(shots.getDescription(), Html.FROM_HTML_MODE_LEGACY));
         }else {
-            detailDescTx.setText(Html.fromHtml(shots.getDescription()));
+            detailDescTv.setText(Html.fromHtml(shots.getDescription()));
         }
-        detailDescTx.setMovementMethod(LinkMovementMethod.getInstance());
+        detailDescTv.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
@@ -254,19 +260,19 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     public void loadSuccess(String json, String requestType) {
         switch (type){
             case Constants.REQUEST_LIKE_A_SHOT:
-                detailLikesIm.setImageResource(R.drawable.ic_favorite_red_600_24dp);
-                detailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count() + 1), getResources().getString(R.string.detail_likes_tx)));
+                detailLikesIv.setImageResource(R.drawable.ic_favorite_red_600_24dp);
+                detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count() + 1), getResources().getString(R.string.detail_likes_tx)));
                 SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getResources().getString(R.string.detail_likes_im_like_a_shot_snack_text));
                 break;
             case Constants.REQUEST_CHECK_IF_LIKE_SHOT:
                 if(!json.equals(Constants.CODE_404_NOT_FOUND)){
                     setShotIsLiked(true);
-                    detailLikesIm.setImageResource(R.drawable.ic_favorite_red_600_24dp);
+                    detailLikesIv.setImageResource(R.drawable.ic_favorite_red_600_24dp);
                 }
                 break;
             case Constants.REQUEST_UNLIKE_A_SHOT:
                 if(json.equals(Constants.CODE_204_NO_CONTENT)){
-                    detailLikesIm.setImageResource(R.drawable.ic_favorite_grey_600);
+                    detailLikesIv.setImageResource(R.drawable.ic_favorite_grey_600);
                     SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getResources().getString(R.string.detail_likes_im_unlike_a_shot_snack_text));
                     setShotIsLiked(false);
                 }

@@ -66,7 +66,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private Snackbar snackbar = null;
     private CoordinatorLayout coordinatorLayout = null;
     private FloatingActionButton floatingActionButton = null;
-    private String shotId;
+    private String id;
     private int count = 0;
     private String bucketName;
 
@@ -188,19 +188,37 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
             case Constants.REQUEST_CHOOSE_BUCKET:
                 addShotTobucketMap = new HashMap<>();
-                shotId = getArguments().get(Constants.ID).toString();
+                id = getArguments().get(Constants.ID).toString();
                 break;
             case Constants.REQUEST_LIST_COMMENTS:
-                shotId = getArguments().get(Constants.ID).toString();
-                map.put(Constants.SHOT_ID, shotId);
+                id = getArguments().get(Constants.ID).toString();
+                map.put(Constants.SHOT_ID, id);
                 break;
-            case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
+            case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
                 break;
             case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
+                sort = Constants.REQUEST_SORT_RECENT;
                 break;
-            case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+            case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
                 break;
-            case Constants.REQUEST_LIST_FOLLOWING_OF_AUTH_USER:
+            case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
+                break;
+            case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
+                id = getArguments().get(Constants.ID).toString();
+                map.put(Constants.ID, id);
+                break;
+            case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
+                sort = Constants.REQUEST_SORT_RECENT;
+                id = getArguments().get(Constants.ID).toString();
+                map.put(Constants.ID, id);
+                break;
+            case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
+                id = getArguments().get(Constants.ID).toString();
+                map.put(Constants.ID, id);
+                break;
+            case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
+                id = getArguments().get(Constants.ID).toString();
+                map.put(Constants.ID, id);
                 break;
         }
         if(SharedPreUtil.getState(Constants.IS_LOGIN)){
@@ -230,7 +248,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void onRefresh() {
-        if(!type.equals(Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER)) {
+        if(!type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER)) {
             page = 1;
             map.put("page", String.valueOf(page));
             mRequestType = Constants.REQUEST_REFRESH;
@@ -262,11 +280,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_LIST_COMMENTS:
                 fragment = CommentsActivity.getFragment();
                 break;
-            case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
-                fragment = MyProfileActivity.getFragment();
-                break;
             default:
-                if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER)) {
+                if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_USER)) {
                     fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
                 }else {
                     fragment = MainActivity.getCurrentFragment();
@@ -330,13 +345,22 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                        startActivity(intent);
                    }
                    break;
-               case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
+               case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
                    jsonList.add(Json.parseJson(json, User.class));
                    break;
-               case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+               case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
                    jsonList = Json.parseArrayJson(json, Follower.class);
                    break;
-               case Constants.REQUEST_LIST_FOLLOWING_OF_AUTH_USER:
+               case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
+                   jsonList = Json.parseArrayJson(json, Following.class);
+                   break;
+               case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
+                   jsonList.add(Json.parseJson(json, User.class));
+                   break;
+               case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
+                   jsonList = Json.parseArrayJson(json, Follower.class);
+                   break;
+               case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
                    jsonList = Json.parseArrayJson(json, Following.class);
                    break;
                default:
@@ -397,7 +421,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 if(snackbar != null){
                     snackbar.setText(text);
                 }else {
-                    snackbar = SnackUI.showAddShotToBucketsActionSnack(context, coordinatorLayout, text, type, shotId, addShotTobucketMap, this);
+                    snackbar = SnackUI.showAddShotToBucketsActionSnack(context, coordinatorLayout, text, type, id, addShotTobucketMap, this);
                     snackbar.show();
                 }
             }

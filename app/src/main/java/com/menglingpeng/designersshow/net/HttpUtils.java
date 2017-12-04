@@ -42,6 +42,10 @@ HttpUtils {
                     case Constants.REQUEST_AUTH_USER:
                         urlBuilder = HttpUrl.parse(Constants.AUTHENTICATED_USER_URL).newBuilder();
                         break;
+                    case Constants.REQUEST_SINGLE_USER:
+                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get(Constants.ID)).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
                     case Constants.TAB_FOLLOWING:
                         urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL).newBuilder();
                         break;
@@ -72,19 +76,35 @@ HttpUtils {
                                 .append("/").append(Constants.COMMENTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
-                    case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
+                    case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
                         urlBuilder = HttpUrl.parse(Constants.AUTHENTICATED_USER_URL).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
                         url = new StringBuilder().append(Constants.AUTHENTICATED_USER_URL).append("/").append(Constants.SHOTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
-                    case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+                    case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
                         url = new StringBuilder().append(Constants.AUTHENTICATED_USER_URL).append("/").append(Constants.FOLLOWERS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
-                    case Constants.REQUEST_LIST_FOLLOWING_OF_AUTH_USER:
+                    case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
                         url = new StringBuilder().append(Constants.AUTHENTICATED_USER_URL).append("/").append(Constants.FOLLOWING).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
+                    case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
+                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get(Constants.ID)).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
+                    case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
+                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get(Constants.ID)).append("/").append(Constants.SHOTS).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
+                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append(map.get(Constants.ID)).append("/").append(Constants.FOLLOWERS).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
+                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append(map.get(Constants.ID)).append("/").append(Constants.FOLLOWING).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
                     default:
@@ -100,6 +120,22 @@ HttpUtils {
                         urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
                         break;
                     case Constants.REQUEST_LIST_COMMENTS:
+                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        break;
+                    case Constants.REQUEST_SINGLE_USER:
+                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        break;
+                    case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
+                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        break;
+                    case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
+                         urlBuilder.addEncodedQueryParameter(Constants.SORT, map.get(Constants.SORT));
+                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
+                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
                         urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
                         break;
                     default:

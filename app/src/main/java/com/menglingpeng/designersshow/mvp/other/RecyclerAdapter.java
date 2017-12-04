@@ -22,6 +22,7 @@ import com.menglingpeng.designersshow.mvp.model.Follower;
 import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.model.User;
+import com.menglingpeng.designersshow.mvp.view.UserProfileActivity;
 import com.menglingpeng.designersshow.mvp.view.UserFollowingActivity;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
@@ -62,7 +63,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
                 int itemcount = layoutManager.getItemCount();
                 int lastPosition = layoutManager.findLastVisibleItemPosition();
-                if(!type.equals(Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER)) {
+                if(!type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER) || !type.equals(Constants.REQUEST_LIST_DETAIL_FOR_A_USER)) {
                     if (!isLoading && lastPosition >= (itemcount - visibleThreshold)) {
                         if (loadingMore != null) {
                             isLoading = true;
@@ -139,15 +140,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
                         viewHolder = new ChooseBucketViewHolder(view);
                         break;
-                    case Constants.REQUEST_LIST_DETAIL_OF_AUTH_USER:
+                    case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
                         view = inflater.inflate(R.layout.profile_tablayout_detail_item, parent, false);
                         viewHolder = new DetailOfUserViewHolder(view);
                         break;
-                    case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+                    case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
                         view = inflater.inflate(R.layout.profile_tablayout_follow_item, parent, false);
                         viewHolder = new FollowOfUserViewHolder(view);
                         break;
-                    case Constants.REQUEST_LIST_FOLLOWING_OF_AUTH_USER:
+                    case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
+                        view = inflater.inflate(R.layout.profile_tablayout_follow_item, parent, false);
+                        viewHolder = new FollowOfUserViewHolder(view);
+                        break;
+                    case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
+                        view = inflater.inflate(R.layout.profile_tablayout_detail_item, parent, false);
+                        viewHolder = new DetailOfUserViewHolder(view);
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
+                        view = inflater.inflate(R.layout.profile_tablayout_follow_item, parent, false);
+                        viewHolder = new FollowOfUserViewHolder(view);
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
                         view = inflater.inflate(R.layout.profile_tablayout_follow_item, parent, false);
                         viewHolder = new FollowOfUserViewHolder(view);
                         break;
@@ -169,6 +182,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             boolean isGif = shots.isAnimated();
             int attachments = shots.getAttachments_count();
             ImageLoader.loadCricleImage(fragment, shots.getUser().getAvatar_url(), viewHolder.avatarIv);
+            viewHolder.avatarIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                Intent intent = new Intent(context, UserProfileActivity.class);
+                intent.putExtra(Constants.TYPE, Constants.REQUEST_SINGLE_USER);
+                intent.putExtra(Constants.ID, String.valueOf(shots.getUser().getId()));
+                context.startActivity(intent);
+                }
+            });
             viewHolder.shotsTitleTx.setText(shots.getTitle());
             viewHolder.shots_userTx.setText(shots.getUser().getUsername());
             viewHolder.shotsCreatedTimeTx.setText(TimeUtil.getTimeDifference(shots.getUpdated_at()));
@@ -274,7 +296,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void onClick(View v) {
                     Intent intent = new Intent(context, UserFollowingActivity.class);
                     intent.putExtra(Constants.NAME, user.getUsername());
-                    intent.putExtra(Constants.TYPE, Constants.REQUEST_LIST_FOLLOWING_OF_AUTH_USER);
+                    intent.putExtra(Constants.TYPE, Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER);
                     context.startActivity(intent);
                 }
             });
@@ -299,11 +321,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     imId = R.drawable.ic_image_grey_400_48dp;
                     txId = R.string.no_liked_shot_here;
                     break;
-                case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+                case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
                     imId = R.drawable.ic_image_grey_400_48dp;
                     txId = R.string.no_follower_here;
                     break;
-                case Constants.REQUEST_LIST_FOLLOWING_OF_AUTH_USER:
+                case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
                     imId = R.drawable.ic_image_grey_400_48dp;
                     txId = R.string.no_following_here;
                     break;
