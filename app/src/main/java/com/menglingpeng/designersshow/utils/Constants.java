@@ -34,6 +34,7 @@ public class Constants {
     public static final String REQUEST_LIST_DETAIL_OF_AUTH_USER = "list_detail_of_auth_user";
     public static final String REQUEST_LIST_SHOTS_FOR_AUTH_USER = "list_shots_for_auth_user";
     public static final String REQUEST_LIST_FOLLOWERS_OF_AUTH_USER = "list_followers_of_auth_user";
+    public static final String REQUEST_LIST_FOLLOWING_OF_AUTH_USER = "list_following_of_auth_user";
     public static final String AUTH_USER_NAME = "user_name";
     public static final String AUTH_USER_AVATAR_URL = "avatar_url";
     public static final String AUTH_USER_ID = "user_id";
@@ -119,6 +120,7 @@ public class Constants {
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
     public static final String FOLLOWERS = "followers";
+    public static final String FOLLOWING = "following";
 
 
 }

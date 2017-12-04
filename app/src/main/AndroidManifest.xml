@@ -46,7 +46,8 @@
         <activity android:name=".mvp.view.UserProfileActivity" />
         <activity android:name=".mvp.view.BucketDetailActivity" />
         <activity android:name=".mvp.view.ChooseBucketActivity" />
-        <activity android:name=".mvp.view.MyProfileActivity"></activity>
+        <activity android:name=".mvp.view.MyProfileActivity" />
+        <activity android:name=".mvp.view.UserFollowingActivity"></activity>
     </application>
 
 </manifest>

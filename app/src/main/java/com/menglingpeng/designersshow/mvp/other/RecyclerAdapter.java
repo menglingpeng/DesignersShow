@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow.mvp.other;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.menglingpeng.designersshow.mvp.model.Buckets;
 import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.model.User;
+import com.menglingpeng.designersshow.mvp.view.UserFollowingActivity;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.TextUtil;
@@ -253,6 +255,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.profileTablayoutDetailProjectsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getProject_count()), context.getString(R.string.project)));
             viewHolder.profileTablayoutDetailFollowersCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowers_count()), context.getString(R.string.followers)));
             viewHolder.profileTablayoutDetailFollowingsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowing_count()), context.getString(R.string.following)));
+            viewHolder.profileTablayoutDetailFollowingsRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, UserFollowingActivity.class);
+                    intent.putExtra(Constants.NAME, user.getUsername());
+                    intent.putExtra(Constants.TYPE, Constants.REQUEST_LIST_FOLLOWING_OF_AUTH_USER);
+                    context.startActivity(intent);
+                }
+            });
         }else if(holder instanceof EmptyiewHolder){
             int imId = 0;
             int txId = 0;
@@ -266,9 +277,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     imId = R.drawable.ic_image_grey_400_48dp;
                     txId = R.string.no_shot_here;
                     break;
+                case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
+                    imId = R.drawable.ic_image_grey_400_48dp;
+                    txId = R.string.no_shot_here;
+                    break;
                 case Constants.MENU_MY_LIKES:
                     imId = R.drawable.ic_image_grey_400_48dp;
                     txId = R.string.no_liked_shot_here;
+                    break;
+                case Constants.REQUEST_LIST_FOLLOWERS_OF_AUTH_USER:
+                    imId = R.drawable.ic_image_grey_400_48dp;
+                    txId = R.string.no_follower_here;
                     break;
             }
             viewHolder.emptyIm.setImageResource(imId);
