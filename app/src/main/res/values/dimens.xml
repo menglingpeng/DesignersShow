@@ -17,7 +17,7 @@
     <dimen name="recycler_view_item_card_view_card_corner_radius">5dp</dimen>
     <dimen name="recycler_view_item_avatar_layout_width">45dp</dimen>
     <dimen name="recycler_view_item_avatar_layout_height">45dp</dimen>
-    <dimen name="recycler_view_item_avatar_layout_marginLeft">10dp</dimen>
+    <dimen name="recycler_view_item_avatar_layout_marginLeft">20dp</dimen>
     <dimen name="recycler_view_item_shots_im__layout_height">300dp</dimen>
     <dimen name="recycler_view_item_shots_create_time_tx_layout_marginLeft">3dp</dimen>
     <dimen name="recycler_view_item_desc_layout_layout_height">80dp</dimen>

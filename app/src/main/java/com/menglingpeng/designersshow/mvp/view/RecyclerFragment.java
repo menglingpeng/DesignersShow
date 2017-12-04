@@ -208,7 +208,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 map.put(Constants.ID, id);
                 break;
             case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
-                sort = Constants.REQUEST_SORT_RECENT;
+                sort = Constants.SORT_RECENT;
                 id = getArguments().get(Constants.ID).toString();
                 map.put(Constants.ID, id);
                 break;
@@ -383,7 +383,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     public <T> void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, T t) {
         Intent intent;
         Resources resources = context.getResources();
-        if(viewHolder instanceof RecyclerAdapter.ShotsViewHolder){
+        if(viewHolder instanceof RecyclerAdapter.ShotViewHolder){
             intent = new Intent(getActivity(), ShotDetailActivity.class);
             intent.putExtra(Constants.SHOTS, (Shots)t);
             startActivity(intent);

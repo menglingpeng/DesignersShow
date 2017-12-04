@@ -18,73 +18,46 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/desc_layout"
+            android:id="@+id/profile_desc_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recycler_view_item_desc_layout_layout_height"
             android:gravity="center_vertical">
 
-            <ImageView
-                android:id="@+id/avatar_im"
-                android:layout_width="@dimen/recycler_view_item_avatar_layout_width"
-                android:layout_height="@dimen/recycler_view_item_avatar_layout_height"
-                android:layout_marginStart="@dimen/recycler_view_item_avatar_layout_marginLeft"
-                android:src="@drawable/ic_avatar"
-                />
-
             <TextView
-                android:id="@+id/shot_title_tx"
+                android:id="@+id/profile_shot_title_tx"
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/avatar_im"
                 android:layout_marginStart="@dimen/recycler_view_item_avatar_layout_marginLeft"
                 android:ellipsize="end"
                 android:singleLine="true" />
 
             <TextView
-                android:id="@+id/shot_user_name_tx"
+                android:id="@+id/profile_shot_create_time_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shot_title_tx"
-                android:layout_toRightOf="@+id/avatar_im"
-                android:layout_marginStart="@dimen/recycler_view_item_avatar_layout_marginLeft"
-                android:textColor="@color/shots_username"
-                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"/>
-
-            <TextView
-                android:id="@+id/comma"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/shot_title_tx"
-                android:layout_toRightOf="@+id/shot_user_name_tx"
-                android:text=","/>
-
-            <TextView
-                android:id="@+id/shot_create_time_tx"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/shot_title_tx"
-                android:layout_toRightOf="@+id/comma"
+                android:layout_below="@+id/profile_shot_title_tx"
+                android:layout_alignLeft="@+id/profile_shot_title_tx"
                 android:layout_marginLeft="@dimen/recycler_view_item_shots_create_time_tx_layout_marginLeft"
                 />
 
         </RelativeLayout>
 
         <FrameLayout
-            android:id="@+id/shot_fl"
+            android:id="@+id/profile_shot_fl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/desc_layout">
+            android:layout_below="@+id/profile_desc_layout">
 
             <ImageView
-                android:id="@+id/shot_im"
+                android:id="@+id/profile_shot_im"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/recycler_view_item_shots_im__layout_height"
                 android:background="@color/colorPrimary"
                 android:scaleType="centerCrop" />
 
             <ImageView
-                android:id="@+id/shot_gif_im"
+                android:id="@+id/profile_shot_gif_im"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -102,68 +75,68 @@
             >
 
             <ImageView
-                android:id="@+id/shot_likes_count_im"
+                android:id="@+id/profile_shot_likes_count_im"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
                 android:src="@drawable/ic_favorite_grey_600"/>
 
             <TextView
-                android:id="@+id/shot_likes_count_tx"
+                android:id="@+id/profile_shot_likes_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
-                android:layout_toRightOf="@+id/shot_likes_count_im"/>
+                android:layout_toRightOf="@+id/profile_shot_likes_count_im"/>
 
             <ImageView
-                android:id="@+id/shot_comments_count_im"
+                android:id="@+id/profile_shot_comments_count_im"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
-                android:layout_toRightOf="@+id/shot_likes_count_tx"
+                android:layout_toRightOf="@+id/profile_shot_likes_count_tx"
                 android:src="@drawable/ic_mode_comment_grey_600"/>
 
             <TextView
-                android:id="@+id/shot_comments_count_tx"
+                android:id="@+id/profile_shot_comments_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
-                android:layout_toRightOf="@+id/shot_comments_count_im"/>
+                android:layout_toRightOf="@+id/profile_shot_comments_count_im"/>
 
             <ImageView
-                android:id="@+id/shot_views_count_im"
+                android:id="@+id/profile_shot_views_count_im"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
-                android:layout_toRightOf="@+id/shot_comments_count_tx"
+                android:layout_toRightOf="@+id/profile_shot_comments_count_tx"
                 android:src="@drawable/ic_view"/>
 
             <TextView
-                android:id="@+id/shot_views_count_tx"
+                android:id="@+id/profile_shot_views_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
-                android:layout_toRightOf="@+id/shot_views_count_im"/>
+                android:layout_toRightOf="@+id/profile_shot_views_count_im"/>
 
             <ImageView
-                android:id="@+id/shot_attachments_count_im"
+                android:id="@+id/profile_shot_attachments_count_im"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
-                android:layout_toRightOf="@+id/shot_views_count_tx"
+                android:layout_toRightOf="@+id/profile_shot_views_count_tx"
                 android:visibility="gone"
                 android:src="@drawable/ic_attachment_24dp"/>
 
             <TextView
-                android:id="@+id/shot_attachments_count_tx"
+                android:id="@+id/profile_shot_attachments_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
-                android:layout_toRightOf="@+id/shot_attachments_count_im"
+                android:layout_toRightOf="@+id/profile_shot_attachments_count_im"
                 android:visibility="gone"/>
 
         </RelativeLayout>
 
     </RelativeLayout>
 
-r</android.support.v7.widget.CardView>
+    r</android.support.v7.widget.CardView>

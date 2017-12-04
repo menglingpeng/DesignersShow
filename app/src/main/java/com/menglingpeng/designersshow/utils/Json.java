@@ -34,7 +34,7 @@ public class Json {
 
     public static <T> ArrayList<T> parseArrayJson(String json, Class<T> type){
 
-        //替换Sting值null为"".
+        //替换Sting值null为""
         JsonParser parser = new JsonParser();
         JsonArray jsonArray = parser.parse(json).getAsJsonArray();
         ArrayList<T> list = new ArrayList<>();
@@ -44,6 +44,7 @@ public class Json {
         }
         return list;
     }
+
 
     public static <T> T parseJson(String json, Class<T> type){
         T t = gson.fromJson(json, type);

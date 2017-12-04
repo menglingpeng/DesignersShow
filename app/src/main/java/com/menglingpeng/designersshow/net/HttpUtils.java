@@ -129,8 +129,8 @@ HttpUtils {
                         urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
                         break;
                     case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
-                         urlBuilder.addEncodedQueryParameter(Constants.SORT, map.get(Constants.SORT));
                         urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        urlBuilder.addEncodedQueryParameter(Constants.SORT, map.get(Constants.SORT));
                         break;
                     case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
                         urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
