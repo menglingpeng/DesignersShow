@@ -70,9 +70,9 @@ public class Constants {
     public static final String APP_ACCESS_TOKEN  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     public static final String MENU_HOME = "Home";
     public static final String MENU_EXPLORE = "Explore";
-    public static final String MENU_MY_LIKES = "list_likess_for_auth_user";
+    public static final String MENU_MY_LIKES = "my_likes";
     public static final String MENU_MY_BUCKETS = "list_buckets_for_auth_user";
-    public static final String MENU_MY_SHOTS = "list_shots_for_auth_user";
+    public static final String MENU_MY_SHOTS = "my_shots";
     public static final String MENU_SETTING = "setting";
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
@@ -124,6 +124,7 @@ public class Constants {
     public static final String SHOTS = "shots";
     public static final String BUCKETS = "buckets";
     public static final String COMMENTS = "comments";
+    public static final String LIKES = "likes";
     public static final String REQUEST_NORMAL = "normal";
     public static final String REQUEST_REFRESH = "refresh";
     public static final String REQUEST_LOAD_MORE ="loadmore";

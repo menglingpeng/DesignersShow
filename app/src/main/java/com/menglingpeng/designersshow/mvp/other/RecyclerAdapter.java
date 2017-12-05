@@ -23,6 +23,7 @@ import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.view.UserBucketsActivity;
+import com.menglingpeng.designersshow.mvp.view.UserLikesActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProfileActivity;
 import com.menglingpeng.designersshow.mvp.view.UserFollowingActivity;
 import com.menglingpeng.designersshow.utils.Constants;
@@ -129,6 +130,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
             default:
                 switch (type) {
+                    case Constants.MENU_MY_SHOTS:
+                        view = inflater.inflate(R.layout.profile_tablayout_shots_item, parent, false);
+                        viewHolder = new ProfileShotViewHolder(view);
+                        break;
                     case Constants.REQUEST_LIST_COMMENTS:
                         view = inflater.inflate(R.layout.comments_recycler_view_item, parent, false);
                         viewHolder = new CommentViewHolder(view);
@@ -323,6 +328,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     context.startActivity(intent);
                 }
             });
+            viewHolder.profileTablayoutDetailLikesRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, UserLikesActivity.class);
+                    intent.putExtra(Constants.NAME, user.getUsername());
+                    if(type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER)) {
+                        intent.putExtra(Constants.TYPE, Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER);
+                    }else {
+                        intent.putExtra(Constants.TYPE, Constants.REQUEST_LIST_LIKES_FOR_A_USER);
+                        intent.putExtra(Constants.ID, String.valueOf(user.getId()));
+                    }
+                    context.startActivity(intent);
+                }
+            });
             viewHolder.profileTablayoutDetailFollowingsRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -370,6 +389,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             int txId = 0;
             EmptyiewHolder viewHolder = (EmptyiewHolder)holder;
             switch (type){
+                case Constants.MENU_MY_SHOTS:
+                    imId = R.drawable.ic_image_grey_400_48dp;
+                    txId = R.string.no_shot_here;
+                    break;
+                case Constants.MENU_MY_LIKES:
+                    imId = R.drawable.ic_image_grey_400_48dp;
+                    txId = R.string.no_liked_shot_here;
+                    break;
                 case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
                     imId = R.drawable.ic_image_grey_400_48dp;
                     txId = R.string.no_bucket_here;

@@ -187,6 +187,12 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_TIMEFRAME_EVER:
                 timeframe = Constants.TIMEFRAME_EVER;
                 break;
+            case Constants.MENU_MY_SHOTS:
+                sort = Constants.REQUEST_SORT_RECENT;
+                break;
+            case Constants.MENU_MY_LIKES:
+                sort = Constants.SORT_RECENT;
+                break;
             case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
                 sort = Constants.REQUEST_SORT_RECENT;
                 break;
@@ -219,6 +225,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
                 sort = Constants.SORT_RECENT;
                 id = String.valueOf(((User)getArguments().getSerializable(Constants.USER)).getId());
+                map.put(Constants.ID, id);
+                break;
+            case Constants.REQUEST_LIST_LIKES_FOR_A_USER:
+                sort = Constants.SORT_RECENT;
+                id = getArguments().get(Constants.ID).toString();
                 map.put(Constants.ID, id);
                 break;
             case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
@@ -296,7 +307,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             default:
                 if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_USER)) {
                     fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-                }else {
+                }else if (type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_LIKES_FOR_A_USER)){
+                    fragment = UserLikesActivity.getFragment();
+                } else {
                     fragment = MainActivity.getCurrentFragment();
                 }
         }
@@ -330,6 +343,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         });
        if(!json.equals(Constants.EMPTY)) {
            switch (type) {
+               case Constants.MENU_MY_LIKES:
+                   jsonList = Json.parseArrayJson(json, Likes.class);
+                   break;
                case Constants.REQUEST_LIST_COMMENTS:
                    jsonList = Json.parseArrayJson(json, Comments.class);
                    break;
@@ -372,6 +388,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
                    jsonList.add(Json.parseJson(json, User.class));
                    break;
+               case Constants.REQUEST_LIST_LIKES_FOR_A_USER:
+                   jsonList = Json.parseArrayJson(json, Likes.class);
+                   break;
                case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
                    jsonList = Json.parseArrayJson(json, Buckets.class);
                    break;
@@ -387,7 +406,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
            }
            if (!type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)) {
                for (int i = 0; i < jsonList.size(); i++) {
-                   if (type.equals(Constants.MENU_MY_LIKES)) {
+                   if (type.equals(Constants.MENU_MY_LIKES) || type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER)  || type.equals(Constants.REQUEST_LIST_LIKES_FOR_A_USER)) {
                        adapter.addData(((Likes) jsonList.get(i)).getShot());
                    } else {
                        adapter.addData(jsonList.get(i));
