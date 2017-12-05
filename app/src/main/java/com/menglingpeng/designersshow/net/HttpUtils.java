@@ -59,7 +59,7 @@ HttpUtils {
                         urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER_URL).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
-                        url = new StringBuilder().append(Constants.BUCKETS_URL).append("/").append(map.get(Constants.BUCKET_ID))
+                        url = new StringBuilder().append(Constants.BUCKETS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.SHOTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
@@ -69,7 +69,7 @@ HttpUtils {
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_COMMENTS:
-                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.SHOT_ID))
+                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.COMMENTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
@@ -119,51 +119,10 @@ HttpUtils {
                         urlBuilder = HttpUrl.parse(Constants.SHOTS_URL).newBuilder();
                         break;
                 }
-                switch (type){
-                    case Constants.REQUEST_CHECK_IF_LIKE_SHOT:
-                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
-                        break;
-                    case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
-                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
-                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
-                        break;
-                    case Constants.REQUEST_LIST_COMMENTS:
-                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
-                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
-                        break;
-                    case Constants.REQUEST_SINGLE_USER:
-                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
-                        break;
-                    case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
-                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
-                        break;
-                    case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
-                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
-                        urlBuilder.addEncodedQueryParameter(Constants.SORT, map.get(Constants.SORT));
-                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
-                        break;
-                    case Constants.REQUEST_LIST_LIKES_FOR_A_USER:
-                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
-                        urlBuilder.addEncodedQueryParameter(Constants.SORT, map.get(Constants.SORT));
-                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
-                        break;
-                    case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
-                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
-                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
-                        break;
-                    case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
-                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
-                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
-                        break;
-                    case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
-                        urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
-                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
-                        break;
-                    default:
-                        for (String key : map.keySet()) {
-                            urlBuilder.addQueryParameter(key, map.get(key));
-                        }
-                        break;
+                for (String key : map.keySet()) {
+                    if(!key.equals(Constants.ID)) {
+                        urlBuilder.addQueryParameter(key, map.get(key));
+                    }
                 }
                 httpUrl = urlBuilder.build();
                 request = new Request.Builder()

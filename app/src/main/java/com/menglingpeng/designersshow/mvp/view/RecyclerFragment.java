@@ -202,7 +202,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
                 break;
             case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
-                map.put(Constants.BUCKET_ID,getArguments().get(Constants.ID).toString());
+                map.put(Constants.ID,getArguments().get(Constants.ID).toString());
                 break;
             case Constants.REQUEST_CHOOSE_BUCKET:
                 addShotTobucketMap = new HashMap<>();
@@ -210,7 +210,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
             case Constants.REQUEST_LIST_COMMENTS:
                 id = getArguments().get(Constants.ID).toString();
-                map.put(Constants.SHOT_ID, id);
+                map.put(Constants.ID, id);
                 break;
             case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
                 break;
