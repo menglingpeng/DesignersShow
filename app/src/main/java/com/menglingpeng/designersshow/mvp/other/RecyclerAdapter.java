@@ -22,6 +22,7 @@ import com.menglingpeng.designersshow.mvp.model.Follower;
 import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.model.User;
+import com.menglingpeng.designersshow.mvp.view.UserBucketsActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProfileActivity;
 import com.menglingpeng.designersshow.mvp.view.UserFollowingActivity;
 import com.menglingpeng.designersshow.utils.Constants;
@@ -164,6 +165,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         view = inflater.inflate(R.layout.profile_tablayout_shots_item, parent, false);
                         viewHolder = new ProfileShotViewHolder(view);
                         break;
+                    case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
+                        view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
+                        viewHolder = new BucketsViewHolder(view);
+                        break;
                     case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
                         view = inflater.inflate(R.layout.profile_tablayout_follow_item, parent, false);
                         viewHolder = new FollowOfUserViewHolder(view);
@@ -222,6 +227,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             });
+
         }else if(holder instanceof CommentViewHolder){
             CommentViewHolder viewHolder = (CommentViewHolder)holder;
             Comments comment = (Comments)list.get(position);
@@ -230,6 +236,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.commentsUsernameTv.setText(comment.getUser().getUsername());
             viewHolder.commentsCreateAtTv.setText(comment.getCreated_at());
             viewHolder.commentsLikesCountTv.setText(String.valueOf(comment.getLikes_count()));
+
         }else if(holder instanceof BucketsViewHolder){
             final BucketsViewHolder viewHolder = (BucketsViewHolder)holder;
             final Buckets buckets = (Buckets)list.get(position);
@@ -248,6 +255,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.bucketDescTx.setVisibility(TextView.GONE);
             }
             viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
+
         }else if(holder instanceof ChooseBucketViewHolder){
             final ChooseBucketViewHolder viewHolder = (ChooseBucketViewHolder)holder;
             final Buckets buckets = (Buckets)list.get(position);
@@ -266,6 +274,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.bucketDescTx.setVisibility(TextView.GONE);
             }
             viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(buckets.getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
+
         }else if(holder instanceof FollowOfUserViewHolder){
             final FollowOfUserViewHolder viewHolder = (FollowOfUserViewHolder)holder;
             User user;
@@ -290,6 +299,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             });
+
         }else if(holder instanceof DetailOfUserViewHolder){
             final DetailOfUserViewHolder viewHolder = (DetailOfUserViewHolder)holder;
             final User user = (User)list.get(position);
@@ -299,6 +309,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.profileTablayoutDetailProjectsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getProject_count()), context.getString(R.string.project)));
             viewHolder.profileTablayoutDetailFollowersCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowers_count()), context.getString(R.string.followers)));
             viewHolder.profileTablayoutDetailFollowingsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowing_count()), context.getString(R.string.following)));
+            viewHolder.profileTablayoutDetailBucketsRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, UserBucketsActivity.class);
+                    intent.putExtra(Constants.NAME, user.getUsername());
+                    if(type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER)) {
+                        intent.putExtra(Constants.TYPE, Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER);
+                    }else {
+                        intent.putExtra(Constants.TYPE, Constants.REQUEST_LIST_BUCKETS_FOR_A_USER);
+                        intent.putExtra(Constants.ID, String.valueOf(user.getId()));
+                    }
+                    context.startActivity(intent);
+                }
+            });
             viewHolder.profileTablayoutDetailFollowingsRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -313,6 +337,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     context.startActivity(intent);
                 }
             });
+
         }else if(holder instanceof ProfileShotViewHolder){
             final ProfileShotViewHolder viewHolder = (ProfileShotViewHolder)holder;
             final Shots shot = (Shots)list.get(position);

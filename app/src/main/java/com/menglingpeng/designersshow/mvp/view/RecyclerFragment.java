@@ -221,6 +221,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 id = String.valueOf(((User)getArguments().getSerializable(Constants.USER)).getId());
                 map.put(Constants.ID, id);
                 break;
+            case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
+                id = getArguments().get(Constants.ID).toString();
+                map.put(Constants.ID, id);
+                break;
             case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
                 id = getArguments().get(Constants.ID).toString();
                 map.put(Constants.ID, id);
@@ -367,6 +371,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                    break;
                case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
                    jsonList.add(Json.parseJson(json, User.class));
+                   break;
+               case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
+                   jsonList = Json.parseArrayJson(json, Buckets.class);
                    break;
                case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
                    jsonList = Json.parseArrayJson(json, Follower.class);
