@@ -19,6 +19,7 @@ public class Constants {
     public static final String CODE_204_NO_CONTENT = "204";
     public static final String EMPTY = "[]";
     public static final String SNACKBAR_TEXT = "snackbar_text";
+    public static final String DETAIL = "detail";
     /**
      * Dribbble API
      */
@@ -45,6 +46,8 @@ public class Constants {
     public static final String REQUEST_LIST_PROJECTS_FOR_A_USER = "list_projects_for_a_user";
     public static final String REQUEST_LIST_FOLLOWERS_FOR_A_USER = "list_followers_for_a_user";
     public static final String REQUEST_LIST_FOLLOWING_FOR_A_USER = "list_following_for_a_user";
+    public static final String SHOT_DETAIL = "shot_detail";
+    public static final String USER_SHOT_DETAIL = "user_shot_detail";
     public static final String AUTH_USER_NAME = "user_name";
     public static final String AUTH_USER_AVATAR_URL = "avatar_url";
     public static final String AUTH_USER_ID = "user_id";
@@ -55,6 +58,8 @@ public class Constants {
     public static final String LIST_SHOTS_FOR_AUTH_USER_LIKES_URL= "https://api.dribbble.com/v1/user/likes";
     public static final String LIST_SHOTS_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/shots";
     public static final String LIST_BUCKETS_FOR_AUTH_USER_URL = "https://api.dribbble.com/v1/user/buckets";
+    public static final String LIST_FOLLOWERS_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/followers";
+    public static final String LIST_FOLLOWING_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/following";
     public static final String BUCKETS_URL = "https://api.dribbble.com/v1/buckets";
     public static final String AUTHENTICATED_USER_URL = "https://api.dribbble.com/v1/user";
     public static final String SINGLE_USER_URL = "https://api.dribbble.com/v1/users";
@@ -65,9 +70,9 @@ public class Constants {
     public static final String APP_ACCESS_TOKEN  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     public static final String MENU_HOME = "Home";
     public static final String MENU_EXPLORE = "Explore";
-    public static final String MENU_MY_LIKES = "my_likes";
-    public static final String MENU_MY_BUCKETS = "my_buckets";
-    public static final String MENU_MY_SHOTS = "my_shots";
+    public static final String MENU_MY_LIKES = "list_likess_for_auth_user";
+    public static final String MENU_MY_BUCKETS = "list_buckets_for_auth_user";
+    public static final String MENU_MY_SHOTS = "list_shots_for_auth_user";
     public static final String MENU_SETTING = "setting";
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
@@ -79,6 +84,11 @@ public class Constants {
     public static final String TIMEFRAME = "timeframe";
     public static final String DATE = "date";
     public static final String PAGE = "page";
+    public static final String PER_PAGE = "per_page";
+    //默认值1
+    public static final int PAGE_VALUE = 1;
+    //默认值12，最高到100
+    public static final int PER_PAGE_VALUE = 12;
     public static final String SORT_POPULAR = "popular";
     public static final String SORT_RECENT = "recent";
     public static final String SORT_COMMENTS = "comments";
@@ -122,6 +132,7 @@ public class Constants {
     public static final String REQUEST_LIST_SHOTS_FOR_A_BUCKET = "list_shots_for_a_bucket";
     public static final String REQUEST_ADD_A_SHOT_TO_BUCKET = "add_a_shot_to_a_bucket";
     public static final String LIKE = "like";
+    public static final String USER = "user";
     public static final String REQUEST_LIKE_A_SHOT = "like_a_shot";
     public static final String REQUEST_UNLIKE_A_SHOT = "unlike_a_shot";
     public static final String REQUEST_CHECK_IF_LIKE_SHOT = "is_liked";

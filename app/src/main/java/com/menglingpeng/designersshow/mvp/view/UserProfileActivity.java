@@ -186,11 +186,11 @@ private static RecyclerFragment fragment;
         titlesList.add(getText(R.string.followers).toString());
         if(type.equals(Constants.REQUEST_AUTH_USER)){
             fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER));
-            fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER));
+            fragmentsList.add(RecyclerFragment.newInstance(user, Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER));
             fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER));
         }else {
             fragmentsList.add(RecyclerFragment.newInstance(userId, Constants.REQUEST_LIST_DETAIL_FOR_A_USER));
-            fragmentsList.add(RecyclerFragment.newInstance(userId, Constants.REQUEST_LIST_SHOTS_FOR_A_USER));
+            fragmentsList.add(RecyclerFragment.newInstance(user, Constants.REQUEST_LIST_SHOTS_FOR_A_USER));
             fragmentsList.add(RecyclerFragment.newInstance(userId, Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER));
         }
         adapter.setFragments(fragmentsList, titlesList);

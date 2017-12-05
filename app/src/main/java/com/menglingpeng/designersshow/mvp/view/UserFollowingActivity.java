@@ -37,6 +37,10 @@ public class UserFollowingActivity extends BaseActivity {
                 finish();
             }
         });
-        replaceFragment(RecyclerFragment.newInstance(type));
+        if(type.equals(Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER)) {
+            replaceFragment(RecyclerFragment.newInstance(type));
+        }else {
+            replaceFragment(RecyclerFragment.newInstance(getIntent().getStringExtra(Constants.ID), Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER));
+        }
     }
 }

@@ -65,12 +65,11 @@
                 android:visibility="gone" />
         </FrameLayout>
 
-
         <RelativeLayout
             android:id="@+id/comments_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recycler_view_item_comments_layout_layout_height"
-            android:layout_below="@+id/shot_fl"
+            android:layout_below="@+id/profile_shot_fl"
             android:gravity="center_vertical"
             >
 

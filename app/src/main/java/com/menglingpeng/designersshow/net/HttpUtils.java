@@ -49,7 +49,7 @@ HttpUtils {
                     case Constants.TAB_FOLLOWING:
                         urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL).newBuilder();
                         break;
-                    case Constants.MENU_MY_LIKES:
+                    /*case Constants.MENU_MY_LIKES:
                         urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES_URL).newBuilder();
                         break;
                     case Constants.MENU_MY_SHOTS:
@@ -57,7 +57,7 @@ HttpUtils {
                         break;
                     case Constants.MENU_MY_BUCKETS:
                         urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER_URL).newBuilder();
-                        break;
+                        break;*/
                     case Constants.REQUEST_CHOOSE_BUCKET:
                         urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER_URL).newBuilder();
                         break;
@@ -79,17 +79,20 @@ HttpUtils {
                     case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
                         urlBuilder = HttpUrl.parse(Constants.AUTHENTICATED_USER_URL).newBuilder();
                         break;
+                    case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:
+                        urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES_URL).newBuilder();
+                        break;
                     case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
-                        url = new StringBuilder().append(Constants.AUTHENTICATED_USER_URL).append("/").append(Constants.SHOTS).toString();
-                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_URL).newBuilder();
+                        break;
+                    case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
+                        urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER_URL).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
-                        url = new StringBuilder().append(Constants.AUTHENTICATED_USER_URL).append("/").append(Constants.FOLLOWERS).toString();
-                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        urlBuilder = HttpUrl.parse(Constants.LIST_FOLLOWERS_FOR_AUTH_USER_URL).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
-                        url = new StringBuilder().append(Constants.AUTHENTICATED_USER_URL).append("/").append(Constants.FOLLOWING).toString();
-                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        urlBuilder = HttpUrl.parse(Constants.LIST_FOLLOWING_FOR_AUTH_USER_URL).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
                         url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get(Constants.ID)).toString();
@@ -100,11 +103,11 @@ HttpUtils {
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
-                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append(map.get(Constants.ID)).append("/").append(Constants.FOLLOWERS).toString();
+                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get(Constants.ID)).append("/").append(Constants.FOLLOWERS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
-                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append(map.get(Constants.ID)).append("/").append(Constants.FOLLOWING).toString();
+                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get(Constants.ID)).append("/").append(Constants.FOLLOWING).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
                     default:
@@ -121,6 +124,7 @@ HttpUtils {
                         break;
                     case Constants.REQUEST_LIST_COMMENTS:
                         urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
                         break;
                     case Constants.REQUEST_SINGLE_USER:
                         urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
@@ -131,12 +135,15 @@ HttpUtils {
                     case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
                         urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
                         urlBuilder.addEncodedQueryParameter(Constants.SORT, map.get(Constants.SORT));
+                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
                         break;
                     case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
                         urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
                         break;
                     case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
                         urlBuilder.addEncodedQueryParameter(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        urlBuilder.addEncodedQueryParameter(Constants.PAGE, map.get(Constants.PAGE));
                         break;
                     default:
                         for (String key : map.keySet()) {

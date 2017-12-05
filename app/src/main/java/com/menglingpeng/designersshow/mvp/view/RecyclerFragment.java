@@ -87,6 +87,15 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         return fragment;
     }
 
+    public static RecyclerFragment newInstance(User user, String type){
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.TYPE, type);
+        bundle.putSerializable(Constants.USER, user);
+        RecyclerFragment fragment = new RecyclerFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
 
     @Override
     protected void initLayoutId() {
@@ -178,10 +187,13 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_TIMEFRAME_EVER:
                 timeframe = Constants.TIMEFRAME_EVER;
                 break;
-            case Constants.MENU_MY_LIKES:
+            case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
+                sort = Constants.REQUEST_SORT_RECENT;
+                break;
+            case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:
                 sort = Constants.SORT_RECENT;
                 break;
-            case Constants.MENU_MY_BUCKETS:
+            case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
                 break;
             case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
                 map.put(Constants.BUCKET_ID,getArguments().get(Constants.ID).toString());
@@ -196,9 +208,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
             case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
                 break;
-            case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
-                sort = Constants.REQUEST_SORT_RECENT;
-                break;
             case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
                 break;
             case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
@@ -209,7 +218,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
             case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
                 sort = Constants.SORT_RECENT;
-                id = getArguments().get(Constants.ID).toString();
+                id = String.valueOf(((User)getArguments().getSerializable(Constants.USER)).getId());
                 map.put(Constants.ID, id);
                 break;
             case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
@@ -248,13 +257,13 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void onRefresh() {
-        if(!type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER)) {
+        if(type.indexOf(Constants.DETAIL) != -1) {
+            showRefreshProgress(false);
+        }else {
             page = 1;
             map.put("page", String.valueOf(page));
             mRequestType = Constants.REQUEST_REFRESH;
             initData();
-        }else {
-            showRefreshProgress(false);
         }
     }
 
@@ -320,10 +329,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                case Constants.REQUEST_LIST_COMMENTS:
                    jsonList = Json.parseArrayJson(json, Comments.class);
                    break;
-               case Constants.MENU_MY_LIKES:
+               case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:
                    jsonList = Json.parseArrayJson(json, Likes.class);
                    break;
-               case Constants.MENU_MY_BUCKETS:
+               case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
                    jsonList = Json.parseArrayJson(json, Buckets.class);
                    break;
                case Constants.REQUEST_CHOOSE_BUCKET:
@@ -333,6 +342,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                    //添加到多个bucket
                    count++;
                    String text;
+                   getActivity().finish();
                    if (json.equals(Constants.CODE_204_NO_CONTENT) && count == addShotTobucketMap.size()) {
                        if (count == 1) {
                            text = new StringBuilder().append(context.getText(R.string.added_to)).append(bucketName).toString();
@@ -341,6 +351,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                                    .append(context.getText(R.string.buckets)).toString();
                        }
                        Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
+                       intent.putExtra(Constants.TYPE, Constants.REQUEST_ADD_A_SHOT_TO_BUCKET);
                        intent.putExtra(Constants.SNACKBAR_TEXT, text);
                        startActivity(intent);
                    }
@@ -386,12 +397,24 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         if(viewHolder instanceof RecyclerAdapter.ShotViewHolder){
             intent = new Intent(getActivity(), ShotDetailActivity.class);
             intent.putExtra(Constants.SHOTS, (Shots)t);
+            intent.putExtra(Constants.TYPE, Constants.SHOT_DETAIL);
             startActivity(intent);
-        }else if(viewHolder instanceof  RecyclerAdapter.BucketsViewHolder){
+        }else if(viewHolder instanceof RecyclerAdapter.ProfileShotViewHolder){
+            intent = new Intent(getActivity(), ShotDetailActivity.class);
+            intent.putExtra(Constants.SHOTS, (Shots)t);
+            intent.putExtra(Constants.TYPE, Constants.USER_SHOT_DETAIL);
+            intent.putExtra(Constants.USER, (User)getArguments().getSerializable(Constants.USER));
+            startActivity(intent);
+        } else if(viewHolder instanceof  RecyclerAdapter.BucketsViewHolder){
             intent = new Intent(getActivity(), BucketDetailActivity.class);
             intent.putExtra(Constants.BUCKETS, (Buckets)t);
             startActivity(intent);
-        }else if(viewHolder instanceof RecyclerAdapter.ChooseBucketViewHolder){
+        }else if(viewHolder instanceof RecyclerAdapter.FollowOfUserViewHolder){
+            intent = new Intent(getActivity(), UserProfileActivity.class);
+            intent.putExtra(Constants.TYPE, Constants.REQUEST_SINGLE_USER);
+            intent.putExtra(Constants.ID, (String)t);
+            startActivity(intent);
+        } else if(viewHolder instanceof RecyclerAdapter.ChooseBucketViewHolder){
             Buckets buckets = (Buckets)t;
             bucketName = buckets.getName();
             String itemId = String.valueOf(viewHolder.getLayoutPosition());

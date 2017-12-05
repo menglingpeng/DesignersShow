@@ -63,7 +63,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
                 int itemcount = layoutManager.getItemCount();
                 int lastPosition = layoutManager.findLastVisibleItemPosition();
-                if(!type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER) && !type.equals(Constants.REQUEST_LIST_DETAIL_FOR_A_USER)) {
+                if(itemcount >= Constants.PER_PAGE_VALUE) {
                     if (!isLoading && lastPosition >= (itemcount - visibleThreshold)) {
                         if (loadingMore != null) {
                             isLoading = true;
@@ -132,7 +132,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         view = inflater.inflate(R.layout.comments_recycler_view_item, parent, false);
                         viewHolder = new CommentViewHolder(view);
                         break;
-                    case Constants.MENU_MY_BUCKETS:
+                    case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
                         view = inflater.inflate(R.layout.buckets_recycler_item, parent, false);
                         viewHolder = new BucketsViewHolder(view);
                         break;
@@ -229,7 +229,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.commentsContentTv.setText(comment.getBody());
             viewHolder.commentsUsernameTv.setText(comment.getUser().getUsername());
             viewHolder.commentsCreateAtTv.setText(comment.getCreated_at());
-            viewHolder.commentsLikesCountTv.setText(comment.getLikes_count());
+            viewHolder.commentsLikesCountTv.setText(String.valueOf(comment.getLikes_count()));
         }else if(holder instanceof BucketsViewHolder){
             final BucketsViewHolder viewHolder = (BucketsViewHolder)holder;
             final Buckets buckets = (Buckets)list.get(position);
@@ -277,16 +277,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 user = follower.getFollower();
             }
             final User userFollow = user;
-            ImageLoader.loadCricleImage(context, user.getAvatar_url(), viewHolder.followerAvatarIm);
-            viewHolder.followerNameTx.setText(user.getUsername());
-            viewHolder.followerLocationTx.setText(user.getLocation());
-            viewHolder.followerShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
-            viewHolder.followersOfFollowerCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user.getFollowers_count()), context.getText(R.string.followers).toString()));
+            ImageLoader.loadCricleImage(context, userFollow.getAvatar_url(), viewHolder.followerAvatarIm);
+            viewHolder.followerNameTx.setText(userFollow.getUsername());
+            viewHolder.followerLocationTx.setText(userFollow.getLocation());
+            viewHolder.followerShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(userFollow.getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
+            viewHolder.followersOfFollowerCountTx.setText(TextUtil.setBeforeBold(String.valueOf(userFollow.getFollowers_count()), context.getText(R.string.followers).toString()));
             viewHolder.followerRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(mListener != null){
-                        mListener.onRecyclerFragmentListListener(viewHolder, userFollow);
+                        mListener.onRecyclerFragmentListListener(viewHolder, String.valueOf(userFollow.getId()));
                     }
                 }
             });
@@ -304,7 +304,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void onClick(View v) {
                     Intent intent = new Intent(context, UserFollowingActivity.class);
                     intent.putExtra(Constants.NAME, user.getUsername());
-                    intent.putExtra(Constants.TYPE, Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER);
+                    if(type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER)) {
+                        intent.putExtra(Constants.TYPE, Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER);
+                    }else {
+                        intent.putExtra(Constants.TYPE, Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER);
+                        intent.putExtra(Constants.ID, String.valueOf(user.getId()));
+                    }
                     context.startActivity(intent);
                 }
             });
@@ -340,19 +345,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             int txId = 0;
             EmptyiewHolder viewHolder = (EmptyiewHolder)holder;
             switch (type){
-                case Constants.MENU_MY_BUCKETS:
+                case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
                     imId = R.drawable.ic_image_grey_400_48dp;
                     txId = R.string.no_bucket_here;
-                    break;
-                case Constants.MENU_MY_SHOTS:
-                    imId = R.drawable.ic_image_grey_400_48dp;
-                    txId = R.string.no_shot_here;
                     break;
                 case Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER:
                     imId = R.drawable.ic_image_grey_400_48dp;
                     txId = R.string.no_shot_here;
                     break;
-                case Constants.MENU_MY_LIKES:
+                case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:
                     imId = R.drawable.ic_image_grey_400_48dp;
                     txId = R.string.no_liked_shot_here;
                     break;

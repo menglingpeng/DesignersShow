@@ -21,6 +21,7 @@ import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
 import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
@@ -48,6 +49,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     private Button detailAttachmentsBt;
     private TextView detailDescTv;
     private Shots shots;
+    private User user;
     private String htmlUrl, hidpiUrl, imageUrl, imageName;
     private HashMap<String, String> map = new HashMap<>();
     private RecyclerPresenter presenter;
@@ -64,6 +66,12 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         super.initViews();
         //获取序列化对象
         shots = (Shots) getIntent().getSerializableExtra(Constants.SHOTS);
+        type = getIntent().getStringExtra(Constants.TYPE);
+        if(type.equals(Constants.USER_SHOT_DETAIL)){
+            user = (User) getIntent().getSerializableExtra(Constants.USER);
+        }else {
+            user = shots.getUser();
+        }
         htmlUrl = shots.getHtml_url();
         imageName = shots.getTitle();
         hidpiUrl = shots.getImages().getHidpi();
@@ -103,29 +111,26 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         initDescription();
     }
 
-    private void initData(){
-
-    }
-
     private void initDescription(){
         detailTitleTv = (TextView)findViewById(R.id.detail_title_tx);
         detailTitleTv.setText(shots.getTitle());
         detailUpdateTimeTv = (TextView)findViewById(R.id.detail_update_time_tx);
         detailUpdateTimeTv.setText(TimeUtil.getTimeDifference(shots.getUpdated_at()));
         detailAvatarIv = (ImageView)findViewById(R.id.detail_avatar_im);
-        ImageLoader.loadCricleImage(getApplicationContext(), shots.getUser().getAvatar_url(), detailAvatarIv);
+        detailUserNameTv = (TextView)findViewById(R.id.detail_user_name_tx);
+        detailUserLocationTv = (TextView)findViewById(R.id.detail_user_location_tx);
+        ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), detailAvatarIv);
         detailAvatarIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShotDetailActivity.this, UserProfileActivity.class);
                 intent.putExtra(Constants.TYPE, Constants.REQUEST_SINGLE_USER);
+                intent.putExtra(Constants.ID, String.valueOf( user.getId()));
                 startActivity(intent);
             }
         });
-        detailUserNameTv = (TextView)findViewById(R.id.detail_user_name_tx);
-        detailUserNameTv.setText(shots.getUser().getUsername());
-        detailUserLocationTv = (TextView)findViewById(R.id.detail_user_location_tx);
-        detailUserLocationTv.setText(shots.getUser().getLocation());
+        detailUserNameTv.setText( user.getUsername());
+        detailUserLocationTv.setText( user.getLocation());
         detailLikesCountTv = (TextView)findViewById(R.id.detail_likes_count_tx);
         detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count()), getResources().getString(R.string.detail_likes_tx)));
         detailCommentsIv = (ImageView)findViewById(R.id.detail_comments_im);
@@ -177,6 +182,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         }
 
         detailDescTv = (TextView)findViewById(R.id.detail_desc_tx);
+        //处理HTML文本
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
             detailDescTv.setText(Html.fromHtml(shots.getDescription(), Html.FROM_HTML_MODE_LEGACY));
         }else {
@@ -273,6 +279,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
             case Constants.REQUEST_UNLIKE_A_SHOT:
                 if(json.equals(Constants.CODE_204_NO_CONTENT)){
                     detailLikesIv.setImageResource(R.drawable.ic_favorite_grey_600);
+                    detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count() - 1), getResources().getString(R.string.detail_likes_tx)));
                     SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getResources().getString(R.string.detail_likes_im_unlike_a_shot_snack_text));
                     setShotIsLiked(false);
                 }
