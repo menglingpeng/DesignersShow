@@ -6,14 +6,12 @@
         android:id="@+id/profile_share"
         android:icon="@drawable/ic_share"
         android:title="@string/detail_toolbar_overflow_menu_share"
-        app:showAsAction="never">
-    </item>
+        app:showAsAction="never"></item>
 
     <item
         android:id="@+id/profile_logout"
         android:icon="@drawable/ic_login_out"
         android:title="@string/profile_logout"
-        app:showAsAction="never">
-    </item>
+        app:showAsAction="never"></item>
 
 </menu>

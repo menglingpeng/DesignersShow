@@ -18,8 +18,9 @@ import okhttp3.Response;
 
 public class Net {
 
-    public static boolean isconnected(Context context){
-        ConnectivityManager conManager = (ConnectivityManager)context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean isconnected(Context context) {
+        ConnectivityManager conManager = (ConnectivityManager) context.getApplicationContext().getSystemService
+                (Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = conManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }

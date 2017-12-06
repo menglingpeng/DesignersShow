@@ -27,22 +27,23 @@ import com.menglingpeng.designersshow.utils.SharedPreUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserProfileActivity extends BaseActivity implements RecyclerView{
+public class UserProfileActivity extends BaseActivity implements RecyclerView {
 
-private String type;
-private User user;
-private String userId;
-private Toolbar toolbar;
-private ImageView profileBackgroundIv, profileAvatarIv;
-private TextView profileNameTv, profileDescTv;
-private RecyclerPresenter presenter;
-private ProgressBar progressBar;
-private TabLayout profileTl;
-private ViewPager profileVp;
-private TabPagerFragmentAdapter adapter;
-private HashMap<String, String> map;
-private ArrayList<RecyclerFragment> fragmentsList;
-private static RecyclerFragment fragment;
+    private String type;
+    private User user;
+    private String userId;
+    private Toolbar toolbar;
+    private ImageView profileBackgroundIv, profileAvatarIv;
+    private TextView profileNameTv, profileDescTv;
+    private RecyclerPresenter presenter;
+    private ProgressBar progressBar;
+    private TabLayout profileTl;
+    private ViewPager profileVp;
+    private TabPagerFragmentAdapter adapter;
+    private HashMap<String, String> map;
+    private ArrayList<RecyclerFragment> fragmentsList;
+    private static RecyclerFragment fragment;
+
     @Override
     protected void initLayoutId() {
         type = getIntent().getStringExtra(Constants.TYPE);
@@ -53,13 +54,14 @@ private static RecyclerFragment fragment;
     @Override
     protected void initViews() {
         super.initViews();
-        progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         map = new HashMap<>();
-        if(type.equals(Constants.REQUEST_SINGLE_USER)){
-            map.put(Constants.ID,  userId);
+        if (type.equals(Constants.REQUEST_SINGLE_USER)) {
+            map.put(Constants.ID, userId);
         }
         map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
-        presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, getApplicationContext());
+        presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map,
+                getApplicationContext());
         presenter.loadJson();
     }
 
@@ -71,21 +73,21 @@ private static RecyclerFragment fragment;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(type.equals(Constants.REQUEST_AUTH_USER)){
-            if(item.getItemId() == R.id.profile_logout){
+        if (type.equals(Constants.REQUEST_AUTH_USER)) {
+            if (item.getItemId() == R.id.profile_logout) {
                 showLogoutDialog();
-            }else {
+            } else {
 
             }
-        }else {
-            if(item.getItemId() == R.id.profile_share){
+        } else {
+            if (item.getItemId() == R.id.profile_share) {
 
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void showLogoutDialog(){
+    private void showLogoutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         AlertDialog dialog;
         builder.setTitle(getText(R.string.profile_logout));
@@ -106,13 +108,13 @@ private static RecyclerFragment fragment;
         dialog.show();
     }
 
-    private void loginOut(){
+    private void loginOut() {
         SharedPreUtil.saveState(Constants.IS_LOGIN, false);
         SharedPreUtil.deleteAuthToken();
         restartApplication();
     }
 
-    private void restartApplication(){
+    private void restartApplication() {
         Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -132,13 +134,13 @@ private static RecyclerFragment fragment;
     @Override
     public void loadSuccess(String json, String requestType) {
         user = Json.parseJson(json, User.class);
-        toolbar = (Toolbar)findViewById(R.id.profile_tb);
-        profileNameTv = (TextView)findViewById(R.id.profile_name_tv);
-        profileDescTv = (TextView)findViewById(R.id.profile_desc_tv);
-        profileBackgroundIv = (ImageView)findViewById(R.id.profile_backgroud_iv);
-        profileAvatarIv = (ImageView)findViewById(R.id.profile_avatar_iv);
-        profileTl = (TabLayout)findViewById(R.id.profile_tl);
-        profileVp = (ViewPager)findViewById(R.id.profile_vp);
+        toolbar = (Toolbar) findViewById(R.id.profile_tb);
+        profileNameTv = (TextView) findViewById(R.id.profile_name_tv);
+        profileDescTv = (TextView) findViewById(R.id.profile_desc_tv);
+        profileBackgroundIv = (ImageView) findViewById(R.id.profile_backgroud_iv);
+        profileAvatarIv = (ImageView) findViewById(R.id.profile_avatar_iv);
+        profileTl = (TabLayout) findViewById(R.id.profile_tl);
+        profileVp = (ViewPager) findViewById(R.id.profile_vp);
         fragmentsList = new ArrayList<>();
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -155,7 +157,7 @@ private static RecyclerFragment fragment;
         initTabPager();
     }
 
-    private void initTabPager(){
+    private void initTabPager() {
         adapter = new TabPagerFragmentAdapter(getSupportFragmentManager());
         initTabFragments();
         profileVp.setAdapter(adapter);
@@ -179,16 +181,16 @@ private static RecyclerFragment fragment;
 
     }
 
-    private void initTabFragments(){
+    private void initTabFragments() {
         ArrayList<String> titlesList = new ArrayList<>();
         titlesList.add(getText(R.string.detail).toString());
         titlesList.add(getText(R.string.explore_spinner_list_shots).toString());
         titlesList.add(getText(R.string.followers).toString());
-        if(type.equals(Constants.REQUEST_AUTH_USER)){
+        if (type.equals(Constants.REQUEST_AUTH_USER)) {
             fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER));
             fragmentsList.add(RecyclerFragment.newInstance(user, Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER));
             fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER));
-        }else {
+        } else {
             fragmentsList.add(RecyclerFragment.newInstance(userId, Constants.REQUEST_LIST_DETAIL_FOR_A_USER));
             fragmentsList.add(RecyclerFragment.newInstance(user, Constants.REQUEST_LIST_SHOTS_FOR_A_USER));
             fragmentsList.add(RecyclerFragment.newInstance(userId, Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER));

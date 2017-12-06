@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/recycler_item_footer_loading_load_layout"
     android:gravity="center"
+    android:orientation="horizontal"
     android:padding="@dimen/recycler_item_footer_loading_load_layout_padding">
 
     <ProgressBar
@@ -17,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/recycler_item_footer_loading_more_loading_layout_margin_left"
         android:text="@string/recycler_item_footer_more_loading_text"
-        android:textSize="@dimen/recycler_item_footer_loading_more_loading_text_size"
-        android:textColor="@android:color/darker_gray"/>
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/recycler_item_footer_loading_more_loading_text_size" />
 
 </LinearLayout>

@@ -25,7 +25,9 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadJsonListene
     private String requestType;
     private String requestMethod;
     private HashMap<String, String> map;
-    public RecyclerPresenter(RecyclerView recyclerViewIf, String type, String requestType, String requestMethod, HashMap<String, String> map, Context context){
+
+    public RecyclerPresenter(RecyclerView recyclerViewIf, String type, String requestType, String requestMethod,
+                             HashMap<String, String> map, Context context) {
         this.recyclerViewIf = recyclerViewIf;
         this.type = type;
         this.requestType = requestType;
@@ -36,7 +38,7 @@ public class RecyclerPresenter implements RecyclerPresenterIf, OnloadJsonListene
 
     @Override
     public void onSuccess(String shotsJson, String requestType) {
-        if(!type.equals(Constants.REQUEST_CREATE_A_BUCKET)) {
+        if (!type.equals(Constants.REQUEST_CREATE_A_BUCKET)) {
             recyclerViewIf.hideProgress();
         }
         recyclerViewIf.loadSuccess(shotsJson, requestType);

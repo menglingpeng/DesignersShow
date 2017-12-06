@@ -17,7 +17,8 @@ public abstract class BaseFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
+            savedInstanceState) {
 
         if (rootView == null) {
             initLayoutId();
@@ -35,6 +36,7 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+
     protected abstract void initLayoutId();
 
     protected abstract void initView();
@@ -42,7 +44,7 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void initData();
 
 
-    public boolean isAlive(){
+    public boolean isAlive() {
         return getActivity() != null;
     }
 

@@ -11,28 +11,23 @@
         <menu xmlns:android="http://schemas.android.com/apk/res/android">
             <item
                 android:id="@+id/now"
-                android:title="@string/toolbar_date_menu_item_now">
-            </item>
+                android:title="@string/toolbar_date_menu_item_now"></item>
 
             <item
                 android:id="@+id/week"
-                android:title="@string/toolbar_date_menu_item_past_week">
-            </item>
+                android:title="@string/toolbar_date_menu_item_past_week"></item>
 
             <item
                 android:id="@+id/month"
-                android:title="@string/toolbar_date_menu_item_past_month">
-            </item>
+                android:title="@string/toolbar_date_menu_item_past_month"></item>
 
             <item
                 android:id="@+id/year"
-                android:title="@string/toolbar_date_menu_item_past_year">
-            </item>
+                android:title="@string/toolbar_date_menu_item_past_year"></item>
 
             <item
                 android:id="@+id/allTime"
-                android:title="@string/toolbar_date_menu_item_all_time">
-            </item>
+                android:title="@string/toolbar_date_menu_item_all_time"></item>
         </menu>
 
     </item>
@@ -48,26 +43,22 @@
             <item
                 android:id="@+id/overflow_small"
                 android:title="@string/toobar_overflow_small_with_infos"
-                app:showAsAction="never">
-            </item>
+                app:showAsAction="never"></item>
 
             <item
                 android:id="@+id/overflow_large"
                 android:title="@string/toobar_overflow_large_with_infos"
-                app:showAsAction="never">
-            </item>
+                app:showAsAction="never"></item>
 
             <item
                 android:id="@+id/overflow_small_without_infos"
                 android:title="@string/toobar_overflow_small_without_infos"
-                app:showAsAction="never">
-            </item>
+                app:showAsAction="never"></item>
 
             <item
                 android:id="@+id/overflow_large_without_infos"
                 android:title="@string/toobar_overflow_large_without_infos"
-                app:showAsAction="never">
-            </item>
+                app:showAsAction="never"></item>
 
         </menu>
 

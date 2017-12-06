@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/profile_tablayout_detail_rl"
     android:layout_width="match_parent"
     android:layout_height="@dimen/profile_tablayout_detail_rl_layout_height"
@@ -17,23 +16,23 @@
             android:id="@+id/profile_tablayout_detail_shots_rl"
             android:layout_width="@dimen/profile_tablayout_detail_shots_rl_layout_width"
             android:layout_height="wrap_content"
-            android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight"
             android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_rl_layout_marginLeft"
-            android:layout_marginRight="@dimen/profile_tablayout_detail_shots_rl_layout_marginRight">
+            android:layout_marginRight="@dimen/profile_tablayout_detail_shots_rl_layout_marginRight"
+            android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight">
 
             <ImageView
                 android:id="@+id/profile_tablayout_detail_shots_im"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
-                android:src="@drawable/ic_shots_grey_600_24dp"/>
+                android:src="@drawable/ic_shots_grey_600_24dp" />
 
             <TextView
                 android:id="@+id/profile_tablayout_detail_shots_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_shots_im"
-                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"/>
+                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
+                android:layout_toRightOf="@+id/profile_tablayout_detail_shots_im" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -47,14 +46,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
-                android:src="@drawable/ic_favorite_grey_600"/>
+                android:src="@drawable/ic_favorite_grey_600" />
 
             <TextView
                 android:id="@+id/profile_tablayout_detail_likes_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_likes_im"
-                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"/>
+                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
+                android:layout_toRightOf="@+id/profile_tablayout_detail_likes_im" />
         </RelativeLayout>
 
 
@@ -64,31 +63,31 @@
         android:id="@+id/profile_tablayout_detail_2_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_tablayout_detail_ll"
         android:layout_marginTop="@dimen/profile_tablayout_detail_ll_layout_marginTop"
-        android:orientation="horizontal"
-        android:layout_below="@+id/profile_tablayout_detail_ll">
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/profile_tablayout_detail_buckets_rl"
             android:layout_width="@dimen/profile_tablayout_detail_shots_rl_layout_width"
             android:layout_height="wrap_content"
-            android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight"
             android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_rl_layout_marginLeft"
-            android:layout_marginRight="@dimen/profile_tablayout_detail_shots_rl_layout_marginRight">
+            android:layout_marginRight="@dimen/profile_tablayout_detail_shots_rl_layout_marginRight"
+            android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight">
 
             <ImageView
                 android:id="@+id/profile_tablayout_detail_buckets_im"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
-                android:src="@drawable/ic_buckets_grey_600_24dp"/>
+                android:src="@drawable/ic_buckets_grey_600_24dp" />
 
             <TextView
                 android:id="@+id/profile_tablayout_detail_buckets_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_buckets_im"
-                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"/>
+                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
+                android:layout_toRightOf="@+id/profile_tablayout_detail_buckets_im" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -102,14 +101,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
-                android:src="@drawable/ic_folder_grey_600_24dp"/>
+                android:src="@drawable/ic_folder_grey_600_24dp" />
 
             <TextView
                 android:id="@+id/profile_tablayout_detail_projects_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_projects_im"
-                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"/>
+                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
+                android:layout_toRightOf="@+id/profile_tablayout_detail_projects_im" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -118,31 +117,31 @@
         android:id="@+id/profile_tablayout_detail_3_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_tablayout_detail_2_ll"
         android:layout_marginTop="@dimen/profile_tablayout_detail_ll_layout_marginTop"
-        android:orientation="horizontal"
-        android:layout_below="@+id/profile_tablayout_detail_2_ll">
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/profile_tablayout_detail_followers_rl"
             android:layout_width="@dimen/profile_tablayout_detail_shots_rl_layout_width"
             android:layout_height="wrap_content"
-            android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight"
             android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_rl_layout_marginLeft"
-            android:layout_marginRight="@dimen/profile_tablayout_detail_shots_rl_layout_marginRight">
+            android:layout_marginRight="@dimen/profile_tablayout_detail_shots_rl_layout_marginRight"
+            android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight">
 
             <ImageView
                 android:id="@+id/profile_tablayout_detail_followers_im"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
-                android:src="@drawable/ic_person_grey_600_24dp"/>
+                android:src="@drawable/ic_person_grey_600_24dp" />
 
             <TextView
                 android:id="@+id/profile_tablayout_detail_followers_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_followers_im"
-                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"/>
+                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
+                android:layout_toRightOf="@+id/profile_tablayout_detail_followers_im" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -156,14 +155,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
-                android:src="@drawable/ic_person_outline_grey_600_24dp"/>
+                android:src="@drawable/ic_person_outline_grey_600_24dp" />
 
             <TextView
                 android:id="@+id/profile_tablayout_detail_followings_count_tx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_followings_im"
-                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"/>
+                android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
+                android:layout_toRightOf="@+id/profile_tablayout_detail_followings_im" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -172,10 +171,9 @@
         android:id="@+id/profile_tablayout_item_view"
         android:layout_width="@dimen/profile_tablayout_item_view_layout_width"
         android:layout_height="wrap_content"
-        android:background="@color/bucket_recycler_item_view_background"
         android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/profile_tablayout_item_view_layout_marginBottom"
         android:layout_marginTop="@dimen/profile_tablayout_item_view_layout_marginTop"
-        android:layout_marginBottom="@dimen/profile_tablayout_item_view_layout_marginBottom">
-    </View>
+        android:background="@color/bucket_recycler_item_view_background"></View>
 
 </RelativeLayout>

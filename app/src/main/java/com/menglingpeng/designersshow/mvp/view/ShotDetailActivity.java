@@ -35,7 +35,8 @@ import java.util.HashMap;
  * Created by mengdroid on 2017/11/1.
  */
 
-public class ShotDetailActivity extends BaseActivity implements OnloadDetailImageListener, com.menglingpeng.designersshow.mvp.interf.RecyclerView {
+public class ShotDetailActivity extends BaseActivity implements OnloadDetailImageListener, com.menglingpeng
+        .designersshow.mvp.interf.RecyclerView {
 
     private Toolbar toolbar;
     private ImageView imageView;
@@ -45,7 +46,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     private TextView detailTitleTv, detailUpdateTimeTv, detailUserNameTv, detailUserLocationTv;
     private FrameLayout detailLikesFl, detailCommentsFl, detailBucketsFl;
     private ImageView detailAvatarIv, detailLikesIv, detailCommentsIv, detailBucketsIv;
-    private TextView  detailLikesCountTv, detailCommentsCountTv, detailBucketsCountTv, detailViewsCountTv;
+    private TextView detailLikesCountTv, detailCommentsCountTv, detailBucketsCountTv, detailViewsCountTv;
     private Button detailAttachmentsBt;
     private TextView detailDescTv;
     private Shots shots;
@@ -67,24 +68,24 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         //获取序列化对象
         shots = (Shots) getIntent().getSerializableExtra(Constants.SHOTS);
         type = getIntent().getStringExtra(Constants.TYPE);
-        if(type.equals(Constants.USER_SHOT_DETAIL)){
+        if (type.equals(Constants.USER_SHOT_DETAIL)) {
             user = (User) getIntent().getSerializableExtra(Constants.USER);
-        }else {
+        } else {
             user = shots.getUser();
         }
         htmlUrl = shots.getHtml_url();
         imageName = shots.getTitle();
         hidpiUrl = shots.getImages().getHidpi();
-        if(hidpiUrl != null) {
+        if (hidpiUrl != null) {
             imageUrl = hidpiUrl;
-        }else {
+        } else {
             imageUrl = shots.getImages().getNormal();
         }
-        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator_layout);
-        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar_layout);
-        imageView = (ImageView)findViewById(R.id.detail_im);
-        toolbar = (Toolbar)findViewById(R.id.detail_tb);
-        progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+        imageView = (ImageView) findViewById(R.id.detail_im);
+        toolbar = (Toolbar) findViewById(R.id.detail_tb);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         toolbar.setTitle(shots.getTitle());
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -96,13 +97,13 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         });
         map.put(Constants.ID, String.valueOf(shots.getId()));
         checkIfLikeShot();
-        detailLikesIv = (ImageView)findViewById(R.id.detail_likes_im);
+        detailLikesIv = (ImageView) findViewById(R.id.detail_likes_im);
         detailLikesIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(shotsIsLiked){
+                if (shotsIsLiked) {
                     unlikeShot();
-                }else {
+                } else {
                     likeShot();
                 }
             }
@@ -111,29 +112,30 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         initDescription();
     }
 
-    private void initDescription(){
-        detailTitleTv = (TextView)findViewById(R.id.detail_title_tx);
+    private void initDescription() {
+        detailTitleTv = (TextView) findViewById(R.id.detail_title_tx);
         detailTitleTv.setText(shots.getTitle());
-        detailUpdateTimeTv = (TextView)findViewById(R.id.detail_update_time_tx);
+        detailUpdateTimeTv = (TextView) findViewById(R.id.detail_update_time_tx);
         detailUpdateTimeTv.setText(TimeUtil.getTimeDifference(shots.getUpdated_at()));
-        detailAvatarIv = (ImageView)findViewById(R.id.detail_avatar_im);
-        detailUserNameTv = (TextView)findViewById(R.id.detail_user_name_tx);
-        detailUserLocationTv = (TextView)findViewById(R.id.detail_user_location_tx);
+        detailAvatarIv = (ImageView) findViewById(R.id.detail_avatar_im);
+        detailUserNameTv = (TextView) findViewById(R.id.detail_user_name_tx);
+        detailUserLocationTv = (TextView) findViewById(R.id.detail_user_location_tx);
         ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), detailAvatarIv);
         detailAvatarIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShotDetailActivity.this, UserProfileActivity.class);
                 intent.putExtra(Constants.TYPE, Constants.REQUEST_SINGLE_USER);
-                intent.putExtra(Constants.ID, String.valueOf( user.getId()));
+                intent.putExtra(Constants.ID, String.valueOf(user.getId()));
                 startActivity(intent);
             }
         });
-        detailUserNameTv.setText( user.getUsername());
-        detailUserLocationTv.setText( user.getLocation());
-        detailLikesCountTv = (TextView)findViewById(R.id.detail_likes_count_tx);
-        detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count()), getResources().getString(R.string.detail_likes_tx)));
-        detailCommentsIv = (ImageView)findViewById(R.id.detail_comments_im);
+        detailUserNameTv.setText(user.getUsername());
+        detailUserLocationTv.setText(user.getLocation());
+        detailLikesCountTv = (TextView) findViewById(R.id.detail_likes_count_tx);
+        detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count()), getResources()
+                .getString(R.string.detail_likes_tx)));
+        detailCommentsIv = (ImageView) findViewById(R.id.detail_comments_im);
         detailCommentsIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,9 +145,10 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 startActivity(intent);
             }
         });
-        detailCommentsCountTv= (TextView)findViewById(R.id.detail_comments_tx);
-        detailCommentsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getComments_count()), getResources().getString(R.string.detail_comments_tx)));
-        detailBucketsFl = (FrameLayout)findViewById(R.id.detail_buckets_fl);
+        detailCommentsCountTv = (TextView) findViewById(R.id.detail_comments_tx);
+        detailCommentsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getComments_count()), getResources
+                ().getString(R.string.detail_comments_tx)));
+        detailBucketsFl = (FrameLayout) findViewById(R.id.detail_buckets_fl);
         detailBucketsFl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,7 +157,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 startActivity(intent);
             }
         });
-        detailBucketsIv = (ImageView)findViewById(R.id.detail_buckets_im);
+        detailBucketsIv = (ImageView) findViewById(R.id.detail_buckets_im);
         detailBucketsIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,12 +166,14 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 startActivity(intent);
             }
         });
-        detailBucketsCountTv = (TextView)findViewById(R.id.detail_buckets_count_tx);
-        detailBucketsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getBuckets_count()), getResources().getString(R.string.detail_buckets_tx)));
-        detailViewsCountTv = (TextView)findViewById(R.id.detail_views_count_tx);
-        detailViewsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getViews_count()), getResources().getString(R.string.detail_views_tx)));
-        detailAttachmentsBt = (Button)findViewById(R.id.detail_attachment_bt);
-        if(shots.getAttachments_count() != 0){
+        detailBucketsCountTv = (TextView) findViewById(R.id.detail_buckets_count_tx);
+        detailBucketsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getBuckets_count()), getResources()
+                .getString(R.string.detail_buckets_tx)));
+        detailViewsCountTv = (TextView) findViewById(R.id.detail_views_count_tx);
+        detailViewsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getViews_count()), getResources()
+                .getString(R.string.detail_views_tx)));
+        detailAttachmentsBt = (Button) findViewById(R.id.detail_attachment_bt);
+        if (shots.getAttachments_count() != 0) {
             detailAttachmentsBt.setVisibility(Button.VISIBLE);
             String attachments = new StringBuilder().append(String.valueOf(shots.getAttachments_count()))
                     .append(getResources().getString(R.string.detail_attachmets_bt_tx)).toString();
@@ -181,11 +186,11 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
             });
         }
 
-        detailDescTv = (TextView)findViewById(R.id.detail_desc_tx);
+        detailDescTv = (TextView) findViewById(R.id.detail_desc_tx);
         //处理HTML文本
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             detailDescTv.setText(Html.fromHtml(shots.getDescription(), Html.FROM_HTML_MODE_LEGACY));
-        }else {
+        } else {
             detailDescTv.setText(Html.fromHtml(shots.getDescription()));
         }
         detailDescTv.setMovementMethod(LinkMovementMethod.getInstance());
@@ -199,7 +204,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.share:
                 shareShots();
                 break;
@@ -213,7 +218,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         return super.onOptionsItemSelected(item);
     }
 
-    private void shareShots(){
+    private void shareShots() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         String text = new StringBuilder().append(imageName).append("\n")
@@ -221,26 +226,29 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 .append(getResources().getString(R.string.detail_toolbar_overflow_menu_share_footer_text))
                 .toString();
         intent.putExtra(Intent.EXTRA_TEXT, text);
-        startActivity(Intent.createChooser(intent, getResources().getString(R.string.detail_toolbar_overflow_menu_share_create_chooser_title)));
+        startActivity(Intent.createChooser(intent, getResources().getString(R.string
+                .detail_toolbar_overflow_menu_share_create_chooser_title)));
     }
 
-    private void openInBrowser(){
+    private void openInBrowser() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri uri = Uri.parse(htmlUrl);
         intent.setData(uri);
-        if(intent.resolveActivity(getPackageManager()) != null){
-            startActivity(Intent.createChooser(intent, getResources().getString(R.string.detail_toolbar_overflow_menu_open_in_browser_create_chooser_title)));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(Intent.createChooser(intent, getResources().getString(R.string
+                    .detail_toolbar_overflow_menu_open_in_browser_create_chooser_title)));
         }
     }
 
-    private void download(){
+    private void download() {
         ImageLoader.downloadImage(getApplicationContext(), coordinatorLayout, imageUrl, imageName);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, intent.getStringExtra(Constants.SNACKBAR_TEXT));
+        SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, intent.getStringExtra(Constants
+                .SNACKBAR_TEXT));
     }
 
     @Override
@@ -264,48 +272,55 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
 
     @Override
     public void loadSuccess(String json, String requestType) {
-        switch (type){
+        switch (type) {
             case Constants.REQUEST_LIKE_A_SHOT:
                 detailLikesIv.setImageResource(R.drawable.ic_favorite_red_600_24dp);
-                detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count() + 1), getResources().getString(R.string.detail_likes_tx)));
-                SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getResources().getString(R.string.detail_likes_im_like_a_shot_snack_text));
+                detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count() + 1),
+                        getResources().getString(R.string.detail_likes_tx)));
+                SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getResources().getString(R.string
+                        .detail_likes_im_like_a_shot_snack_text));
                 break;
             case Constants.REQUEST_CHECK_IF_LIKE_SHOT:
-                if(!json.equals(Constants.CODE_404_NOT_FOUND)){
+                if (!json.equals(Constants.CODE_404_NOT_FOUND)) {
                     setShotIsLiked(true);
                     detailLikesIv.setImageResource(R.drawable.ic_favorite_red_600_24dp);
                 }
                 break;
             case Constants.REQUEST_UNLIKE_A_SHOT:
-                if(json.equals(Constants.CODE_204_NO_CONTENT)){
+                if (json.equals(Constants.CODE_204_NO_CONTENT)) {
                     detailLikesIv.setImageResource(R.drawable.ic_favorite_grey_600);
-                    detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count() - 1), getResources().getString(R.string.detail_likes_tx)));
-                    SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getResources().getString(R.string.detail_likes_im_unlike_a_shot_snack_text));
+                    detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shots.getLikes_count() - 1),
+                            getResources().getString(R.string.detail_likes_tx)));
+                    SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getResources().getString(R
+                            .string.detail_likes_im_unlike_a_shot_snack_text));
                     setShotIsLiked(false);
                 }
                 break;
         }
     }
 
-    private void setShotIsLiked(Boolean isLiked){
+    private void setShotIsLiked(Boolean isLiked) {
         shotsIsLiked = isLiked;
     }
 
-    private void checkIfLikeShot(){
+    private void checkIfLikeShot() {
         type = Constants.REQUEST_CHECK_IF_LIKE_SHOT;
-        presenter = new RecyclerPresenter(ShotDetailActivity.this, type , Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, getApplicationContext());
+        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants
+                .REQUEST_GET_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
     }
 
-    private void likeShot(){
+    private void likeShot() {
         type = Constants.REQUEST_LIKE_A_SHOT;
-        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, getApplicationContext());
+        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants
+                .REQUEST_POST_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
     }
 
-    private void unlikeShot(){
+    private void unlikeShot() {
         type = Constants.REQUEST_UNLIKE_A_SHOT;
-        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_DELETE_MEIHOD, map, getApplicationContext());
+        presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants
+                .REQUEST_DELETE_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
 
     }

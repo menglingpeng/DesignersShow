@@ -19,7 +19,7 @@ import java.util.TimeZone;
 
 public class TimeUtil {
 
-    public static String getTimeDifference(String utcTime){
+    public static String getTimeDifference(String utcTime) {
         String current, create;
         Date currentDate, createDate;
         long diff;
@@ -32,7 +32,7 @@ public class TimeUtil {
             create = utcToLocal(utcTime);
             currentDate = localFormat.parse(current);
             createDate = localFormat.parse(create);
-            diff = currentDate.getTime()-createDate.getTime();
+            diff = currentDate.getTime() - createDate.getTime();
             diffString = diffToString(createDate, currentDate, diff);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -40,7 +40,7 @@ public class TimeUtil {
         return diffString;
     }
 
-    private static String utcToLocal(String utcTime){
+    private static String utcToLocal(String utcTime) {
         //当地时间格式
         SimpleDateFormat localFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.CHINA);
         //UTC时间格式
@@ -56,28 +56,32 @@ public class TimeUtil {
         return localFormat.format(utcDate);
     }
 
-    public static String diffToString(Date cretateDate ,Date currentDate, long diff){
+    public static String diffToString(Date cretateDate, Date currentDate, long diff) {
         String differ;
         int day, hours, minutes, seconds;
         StringBuilder builder = new StringBuilder();
         SimpleDateFormat yesterdayFormat = new SimpleDateFormat(" HH:mm");
-        SimpleDateFormat format = new SimpleDateFormat(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_days));
-        day =currentDate.getDay() - cretateDate.getDay();
-        hours =(int)diff/(1000*60*60);
-        minutes = (int)diff/(1000*60);
-        seconds = (int)diff/1000;
-        switch (day){
+        SimpleDateFormat format = new SimpleDateFormat(BaseApplication.getContext().getResources().getString(R.string
+                .shots_create_at_time_days));
+        day = currentDate.getDay() - cretateDate.getDay();
+        hours = (int) diff / (1000 * 60 * 60);
+        minutes = (int) diff / (1000 * 60);
+        seconds = (int) diff / 1000;
+        switch (day) {
             case 0:
-                if(seconds < 60){
+                if (seconds < 60) {
                     differ = BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_now);
-                }else if(seconds > 60 && seconds <3600){
-                    differ =  builder.append(String.valueOf(minutes)).append(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_minutes)).toString();
-                }else {
-                    differ =  builder.append(String.valueOf(hours)).append(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_hours)).toString();
+                } else if (seconds > 60 && seconds < 3600) {
+                    differ = builder.append(String.valueOf(minutes)).append(BaseApplication.getContext().getResources
+                            ().getString(R.string.shots_create_at_time_minutes)).toString();
+                } else {
+                    differ = builder.append(String.valueOf(hours)).append(BaseApplication.getContext().getResources()
+                            .getString(R.string.shots_create_at_time_hours)).toString();
                 }
                 break;
             case 1:
-                differ = builder.append(BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_one_day)).append(yesterdayFormat.format(cretateDate)).toString();
+                differ = builder.append(BaseApplication.getContext().getResources().getString(R.string
+                        .shots_create_at_time_one_day)).append(yesterdayFormat.format(cretateDate)).toString();
                 break;
             /*case 2:
                 differ = BaseApplication.getContext().getResources().getString(R.string.shots_create_at_time_two_days);

@@ -36,9 +36,9 @@
     <dimen name="spinner_text_size">16dp</dimen>
     <dimen name="spinner_text_layout_height">50dp</dimen>
     <dimen name="spinner_layout_width">0dp</dimen>
-    <item name="spinner_List_layout_weight" type="dimen" format="integer">1</item>
-    <item name="spinner_sort_layout_weight" type="dimen" format="integer">1</item>
-    <item name="detail_im_layout_collapse_parallax_multiplier" type="dimen" format="float">0.8</item>
+    <item name="spinner_List_layout_weight" format="integer" type="dimen">1</item>
+    <item name="spinner_sort_layout_weight" format="integer" type="dimen">1</item>
+    <item name="detail_im_layout_collapse_parallax_multiplier" format="float" type="dimen">0.8</item>
     <dimen name="detail_appbar_layout_height">300dp</dimen>
     <dimen name="detail_title_rl_layout_height">200dp</dimen>
     <dimen name="detail_title_rl_paddingLeft">15dp</dimen>
@@ -55,7 +55,7 @@
     <dimen name="detail_desc_ll_paddingBottom">10dp</dimen>
     <dimen name="detail_desc_ll_fl_layout_width">0dp</dimen>
     <dimen name="detail_desc_ll_fl_layout_height">75dp</dimen>
-    <item name="detail_desc_ll_fl_layout_weight" type="dimen" format="integer">1</item>
+    <item name="detail_desc_ll_fl_layout_weight" format="integer" type="dimen">1</item>
     <dimen name="detail_desc_ll_fl_paddingTop">10dp</dimen>
     <dimen name="detail_desc_ll_fl_paddingBottom">10dp</dimen>
     <dimen name="detail_attachment_bt_paddingLeft">5dp</dimen>

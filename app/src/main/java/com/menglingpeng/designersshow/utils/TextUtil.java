@@ -13,7 +13,7 @@ import java.time.format.TextStyle;
 
 public class TextUtil {
 
-    public static SpannableStringBuilder setBeforeBold(String beforeText, String afterText){
+    public static SpannableStringBuilder setBeforeBold(String beforeText, String afterText) {
         SpannableStringBuilder builder = new SpannableStringBuilder(beforeText);
         builder.setSpan(new StyleSpan(Typeface.BOLD), 0, beforeText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         builder.append(" ");

@@ -24,10 +24,11 @@ public class UserFollowingActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
-         type = getIntent().getStringExtra(Constants.TYPE);
-         userName = getIntent().getStringExtra(Constants.NAME);
-         String title = new StringBuilder().append(userName).append(getString(R.string.s)).append(getString(R.string.following)).toString();
-        toolbar = (Toolbar)findViewById(R.id.user_following_tb);
+        type = getIntent().getStringExtra(Constants.TYPE);
+        userName = getIntent().getStringExtra(Constants.NAME);
+        String title = new StringBuilder().append(userName).append(getString(R.string.s)).append(getString(R.string
+                .following)).toString();
+        toolbar = (Toolbar) findViewById(R.id.user_following_tb);
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -37,10 +38,11 @@ public class UserFollowingActivity extends BaseActivity {
                 finish();
             }
         });
-        if(type.equals(Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER)) {
+        if (type.equals(Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER)) {
             replaceFragment(RecyclerFragment.newInstance(type));
-        }else {
-            replaceFragment(RecyclerFragment.newInstance(getIntent().getStringExtra(Constants.ID), Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER));
+        } else {
+            replaceFragment(RecyclerFragment.newInstance(getIntent().getStringExtra(Constants.ID), Constants
+                    .REQUEST_LIST_FOLLOWING_FOR_A_USER));
         }
     }
 }

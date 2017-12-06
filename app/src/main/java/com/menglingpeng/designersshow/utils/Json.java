@@ -30,15 +30,16 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class Json {
 
-    public static Gson gson = new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create();
+    public static Gson gson = new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory())
+            .create();
 
-    public static <T> ArrayList<T> parseArrayJson(String json, Class<T> type){
+    public static <T> ArrayList<T> parseArrayJson(String json, Class<T> type) {
 
         //替换Sting值null为""
         JsonParser parser = new JsonParser();
         JsonArray jsonArray = parser.parse(json).getAsJsonArray();
         ArrayList<T> list = new ArrayList<>();
-        for(JsonElement element : jsonArray){
+        for (JsonElement element : jsonArray) {
             T t = gson.fromJson(element, type);
             list.add(t);
         }
@@ -46,7 +47,7 @@ public class Json {
     }
 
 
-    public static <T> T parseJson(String json, Class<T> type){
+    public static <T> T parseJson(String json, Class<T> type) {
         T t = gson.fromJson(json, type);
         return t;
     }

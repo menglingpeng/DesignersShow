@@ -26,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 切换Fragment，同时传递Type达到复用的目的。
      */
-    public void replaceFragment(Fragment fragment){
+    public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();

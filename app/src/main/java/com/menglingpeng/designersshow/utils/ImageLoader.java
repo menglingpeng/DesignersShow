@@ -50,52 +50,60 @@ import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
 
 public class ImageLoader {
 
-    public static <T> void load(T t, String  url, ImageView imageView, Boolean isContext){
+    public static <T> void load(T t, String url, ImageView imageView, Boolean isContext) {
         RequestBuilder<Bitmap> requestBuilder = null;
-        RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        if(isContext){
-            Context context = (Context)t;
+        RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy
+                .AUTOMATIC);
+        if (isContext) {
+            Context context = (Context) t;
             requestBuilder = Glide.with(context).asBitmap();
-        }else {
-            Fragment fragment = (Fragment)t;
+        } else {
+            Fragment fragment = (Fragment) t;
             requestBuilder = Glide.with(fragment).asBitmap();
         }
         //第一次加载GIF图片时不播放
-            requestBuilder.apply(requestOptions);
-            requestBuilder.load(url).apply(requestOptions).into(imageView);
+        requestBuilder.apply(requestOptions);
+        requestBuilder.load(url).apply(requestOptions).into(imageView);
 
     }
 
-    public static void loadCricleImage(Fragment fragment, String url, ImageView imageView){
-        RequestOptions requestOptions = new RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+    public static void loadCricleImage(Fragment fragment, String url, ImageView imageView) {
+        RequestOptions requestOptions = new RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy
+                .AUTOMATIC);
         Glide.with(fragment)
                 .load(url)
                 .apply(requestOptions)
                 .into(imageView);
     }
 
-    public static void loadCricleImage(Context context, String url, ImageView imageView){
-        RequestOptions requestOptions = new RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+    public static void loadCricleImage(Context context, String url, ImageView imageView) {
+        RequestOptions requestOptions = new RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy
+                .AUTOMATIC);
         Glide.with(context)
                 .load(url)
                 .apply(requestOptions)
                 .into(imageView);
     }
 
-    public static void loadDetailImage(final Context context, String url, ImageView imageView, final OnloadDetailImageListener listener){
-        RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+    public static void loadDetailImage(final Context context, String url, ImageView imageView, final
+    OnloadDetailImageListener listener) {
+        RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy
+                .AUTOMATIC);
         Glide.with(context)
                 .load(url)
                 .apply(requestOptions)
                 .listener(new RequestListener<Drawable>() {
                     @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        listener.onFailure(context.getResources().getString(R.string.on_load_detail_image_listener_failed_msg));
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target,
+                                                boolean isFirstResource) {
+                        listener.onFailure(context.getResources().getString(R.string
+                                .on_load_detail_image_listener_failed_msg));
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+                                                   DataSource dataSource, boolean isFirstResource) {
                         listener.onSuccess();
                         return false;
                     }
@@ -104,7 +112,8 @@ public class ImageLoader {
 
     }
 
-    public static void downloadImage(Context context, CoordinatorLayout coordinatorLayout, String url, String imageName){
+    public static void downloadImage(Context context, CoordinatorLayout coordinatorLayout, String url, String
+            imageName) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         /*// 设置允许在何种网络下进行下载任务,默认所有网络都允许
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);*/
@@ -113,15 +122,14 @@ public class ImageLoader {
         //设置通知基本信息
         request.setTitle(imageName);
         //设置下载文件的保存位置为系统相册
-        File appDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "DesignersShow");
-        if(!appDir.exists()){
+        File appDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                "DesignersShow");
+        if (!appDir.exists()) {
             appDir.mkdirs();
         }
         request.setDestinationInExternalFilesDir(context, appDir.getAbsolutePath(), imageName);
         //获取DownloadManager实例
-        DownloadManager dm = (DownloadManager)context.getSystemService(Context.DOWNLOAD_SERVICE);
-
-
+        DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
 
 
         //将下载请求添加到下载队列，返回一个下载ID
@@ -129,15 +137,16 @@ public class ImageLoader {
         //根据ID过滤下载结果
         DownloadManager.Query query = new DownloadManager.Query().setFilterById(downloadId);
         Cursor cursor = dm.query(query);
-        if(cursor != null && cursor.moveToFirst()){
+        if (cursor != null && cursor.moveToFirst()) {
             //下载请求的状态
             int status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID));
             //下载文件在本地的路径
             String localFilePath = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-            switch (status){
+            switch (status) {
                 //准备下载
                 case DownloadManager.STATUS_PENDING:
-                    String text = new StringBuilder().append(context.getResources().getString(R.string.detail_toolbar_overflow_menu_download_snackbar_text)).append(imageName).toString();
+                    String text = new StringBuilder().append(context.getResources().getString(R.string
+                            .detail_toolbar_overflow_menu_download_snackbar_text)).append(imageName).toString();
                     SnackUI.showSnackShort(context, coordinatorLayout, text);
                     break;
                 case DownloadManager.STATUS_RUNNING:
@@ -152,7 +161,7 @@ public class ImageLoader {
                     break;
             }
         }
-        if(cursor != null){
+        if (cursor != null) {
             cursor.close();
         }
 

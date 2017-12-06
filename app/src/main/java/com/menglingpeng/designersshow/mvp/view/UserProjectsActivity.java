@@ -24,7 +24,7 @@ public class UserProjectsActivity extends BaseActivity {
         type = getIntent().getStringExtra(Constants.TYPE);
         title = new StringBuilder().append(getIntent().getStringExtra(Constants.NAME)).append(getString(R.string.s))
                 .append(getString(R.string.project)).toString();
-        toolbar = (Toolbar)findViewById(R.id.user_projects_tb);
+        toolbar = (Toolbar) findViewById(R.id.user_projects_tb);
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -34,9 +34,9 @@ public class UserProjectsActivity extends BaseActivity {
                 finish();
             }
         });
-        if(type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER)){
+        if (type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER)) {
             replaceFragment(RecyclerFragment.newInstance(Constants.REQUEST_LIST_PROJECTS_FOR_AUTH_USER));
-        }else {
+        } else {
             replaceFragment(RecyclerFragment.newInstance(getIntent().getStringExtra(Constants.ID),
                     Constants.REQUEST_LIST_PROJECTS_FOR_A_USER));
         }

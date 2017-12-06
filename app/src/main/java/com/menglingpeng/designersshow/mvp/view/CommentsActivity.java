@@ -38,7 +38,7 @@ public class CommentsActivity extends BaseActivity {
         replaceFragment(fragment);
     }
 
-    public static RecyclerFragment getFragment(){
+    public static RecyclerFragment getFragment() {
         return fragment;
     }
 

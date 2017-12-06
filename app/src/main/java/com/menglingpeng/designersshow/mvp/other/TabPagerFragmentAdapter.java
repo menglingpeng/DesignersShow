@@ -25,14 +25,14 @@ public class TabPagerFragmentAdapter extends FragmentStatePagerAdapter {
         super(fm);
     }
 
-    public void setFragments(List<RecyclerFragment> fragments, List<String> titles){
+    public void setFragments(List<RecyclerFragment> fragments, List<String> titles) {
         this.fragments = fragments;
         this.titles = titles;
     }
 
-    public void clearFragments(){
-        for(Fragment fragment : fragments){
-            if(fragment != null && fragment.isAdded()){
+    public void clearFragments() {
+        for (Fragment fragment : fragments) {
+            if (fragment != null && fragment.isAdded()) {
                 fragment.onDestroy();
             }
         }
@@ -50,7 +50,6 @@ public class TabPagerFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
 
-
     @Override
     public CharSequence getPageTitle(int position) {
         return titles.get(position);
@@ -59,7 +58,7 @@ public class TabPagerFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         super.setPrimaryItem(container, position, object);
-        fragment = (RecyclerFragment)object;
+        fragment = (RecyclerFragment) object;
     }
 
     @Override
@@ -67,7 +66,7 @@ public class TabPagerFragmentAdapter extends FragmentStatePagerAdapter {
         super.destroyItem(container, position, object);
     }
 
-    public static RecyclerFragment getCurrentPagerViewFragment(){
-        return  fragment;
+    public static RecyclerFragment getCurrentPagerViewFragment() {
+        return fragment;
     }
 }

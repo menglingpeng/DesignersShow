@@ -55,22 +55,25 @@ public class Constants {
     public static final String SHOT_ID = "shot_id";
     public static final String BUCKET_ID = "bucket_id";
     public static final String COMMENTS_COUNT = "comments_count";
-    public static final String LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL = "https://api.dribbble.com/v1/user/following/shots";
-    public static final String LIST_SHOTS_FOR_AUTH_USER_LIKES_URL= "https://api.dribbble.com/v1/user/likes";
-    public static final String LIST_SHOTS_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/shots";
+    public static final String LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL = "https://api.dribbble" +
+            ".com/v1/user/following/shots";
+    public static final String LIST_SHOTS_FOR_AUTH_USER_LIKES_URL = "https://api.dribbble.com/v1/user/likes";
+    public static final String LIST_SHOTS_FOR_AUTH_USER_URL = "https://api.dribbble.com/v1/user/shots";
     public static final String LIST_BUCKETS_FOR_AUTH_USER_URL = "https://api.dribbble.com/v1/user/buckets";
     public static final String LIST_PROJECTS_FOR_AUTH_USER_URL = "https://api.dribbble.com/v1/user/projects";
-    public static final String LIST_FOLLOWERS_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/followers";
-    public static final String LIST_FOLLOWING_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/following";
+    public static final String LIST_FOLLOWERS_FOR_AUTH_USER_URL = "https://api.dribbble.com/v1/user/followers";
+    public static final String LIST_FOLLOWING_FOR_AUTH_USER_URL = "https://api.dribbble.com/v1/user/following";
     public static final String BUCKETS_URL = "https://api.dribbble.com/v1/buckets";
     public static final String PROJECTS_URL = "https://api.dribbble.com/v1/projects";
     public static final String AUTHENTICATED_USER_URL = "https://api.dribbble.com/v1/user";
     public static final String SINGLE_USER_URL = "https://api.dribbble.com/v1/users";
     public static final String SHOTS_URL = "https://api.dribbble.com/v1/shots";
     public static final String REQUEST_AUTH_TOKEN_URL = "https://dribbble.com/oauth/token";
-    public static final String REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL = "https://dribbble.com/oauth/authorize?client_id=2824a0365fffaa9fe9b74dce83921d185e5a45ad6c879a06f83399a25ce128a0&redirect_uri=shots://dribbble-login-callback&scope=public+write+comment+upload";
+    public static final String REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL = "https://dribbble" +
+            ".com/oauth/authorize?client_id=2824a0365fffaa9fe9b74dce83921d185e5a45ad6c879a06f83399a25ce128a0" +
+            "&redirect_uri=shots://dribbble-login-callback&scope=public+write+comment+upload";
     public static final String AUTH_TOKEN = "auth_token";
-    public static final String APP_ACCESS_TOKEN  = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
+    public static final String APP_ACCESS_TOKEN = "498b79c0b032215d0e1e1a2fa487a9f8e5637918fa373c63aa29e48528b2822c";
     public static final String MENU_HOME = "Home";
     public static final String MENU_EXPLORE = "Explore";
     public static final String MENU_MY_LIKES = "my_likes";
@@ -131,7 +134,7 @@ public class Constants {
     public static final String PROJECTS = "projects";
     public static final String REQUEST_NORMAL = "normal";
     public static final String REQUEST_REFRESH = "refresh";
-    public static final String REQUEST_LOAD_MORE ="loadmore";
+    public static final String REQUEST_LOAD_MORE = "loadmore";
     public static final String REQUEST_AUTH_TOKEN = "auth_token";
     public static final String REQUEST_LIST_COMMENTS = "list_comments";
     public static final String REQUEST_LIST_SHOTS_FOR_A_BUCKET = "list_shots_for_a_bucket";

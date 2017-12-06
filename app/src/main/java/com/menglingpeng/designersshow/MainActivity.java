@@ -59,7 +59,8 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, com.menglingpeng.designersshow.mvp.interf.RecyclerView{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, com
+        .menglingpeng.designersshow.mvp.interf.RecyclerView {
 
     private String currentType;
     private String type;
@@ -90,7 +91,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void initLayoutId() {
         layoutId = R.layout.activity_main;
         //先判断是否第一次启动应用
-        if(SharedPreUtil.getState(Constants.IS_FIRST_START)){
+        if (SharedPreUtil.getState(Constants.IS_FIRST_START)) {
             showLoginDialog();
             SharedPreUtil.saveState(Constants.IS_FIRST_START, false);
         }
@@ -100,20 +101,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void initViews() {
         super.initViews();
         isLogin = SharedPreUtil.getState(Constants.IS_LOGIN);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView)findViewById(R.id.nav_view);
-        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
-        viewPager = (ViewPager)findViewById(R.id.view_pager);
-        exploreLl = (LinearLayout)findViewById(R.id.explore_ll);
-        floatingActionButton = (FloatingActionButton)findViewById(R.id.my_bucket_fab);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        exploreLl = (LinearLayout) findViewById(R.id.explore_ll);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.my_bucket_fab);
         currentType = Constants.MENU_HOME;
         initToolbar();
         initNavigationView();
         initTabPager();
     }
 
-    private void initToolbar(){
-        switch (currentType){
+    private void initToolbar() {
+        switch (currentType) {
             case Constants.MENU_HOME:
                 toolbarTitle = getString(R.string.app_name);
                 break;
@@ -142,9 +143,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START);
-                }else {
+                } else {
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
 
@@ -163,27 +164,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(Constants.MENU_EXPLORE.equals(currentType)){
+        if (Constants.MENU_EXPLORE.equals(currentType)) {
             menu.findItem(R.id.overflow_date).setVisible(true);
-        }else if(Constants.MENU_MY_BUCKETS.equals(currentType)){
+        } else if (Constants.MENU_MY_BUCKETS.equals(currentType)) {
             menu.findItem(R.id.overflow_date).setVisible(false);
             menu.findItem(R.id.overflow_item_type).setVisible(false);
-        }
-        else {
+        } else {
             menu.findItem(R.id.overflow_date).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void showCreateBucketDialog(){
+    private void showCreateBucketDialog() {
         final TextInputEditText bucketNameEt, bucketDescEt;
         AlertDialog dialog;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View dialogView = getLayoutInflater().inflate(R.layout.create_a_bucket_dialog_message, null);
         builder.setTitle(R.string.create_a_bucket);
         builder.setView(dialogView);
-        bucketNameEt = (TextInputEditText)dialogView.findViewById(R.id.bucket_name_tiet);
-        bucketDescEt = (TextInputEditText)dialogView.findViewById(R.id.bucket_desc_tiet);
+        bucketNameEt = (TextInputEditText) dialogView.findViewById(R.id.bucket_name_tiet);
+        bucketDescEt = (TextInputEditText) dialogView.findViewById(R.id.bucket_desc_tiet);
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -194,17 +194,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String name = bucketNameEt.getText().toString();
-                if(name.equals("")){
-                    SnackUI.showSnackShort(getApplicationContext(), drawerLayout, getString(R.string.the_name_of_bucket_is_not_null));
-                }else {
+                if (name.equals("")) {
+                    SnackUI.showSnackShort(getApplicationContext(), drawerLayout, getString(R.string
+                            .the_name_of_bucket_is_not_null));
+                } else {
                     HashMap<String, String> map = new HashMap<>();
                     map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
                     map.put(Constants.NAME, bucketNameEt.getText().toString());
                     map.put(Constants.DESCRIPTION, bucketDescEt.getText().toString());
                     type = Constants.REQUEST_CREATE_A_BUCKET;
-                    RecyclerPresenter presenter = new RecyclerPresenter(MainActivity.this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, MainActivity.this);
+                    RecyclerPresenter presenter = new RecyclerPresenter(MainActivity.this, type, Constants
+                            .REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, MainActivity.this);
                     presenter.loadJson();
-                    SnackUI.showSnackShort(getApplicationContext(), drawerLayout, getResources().getString(R.string.snack_create_a_bucket_text));
+                    SnackUI.showSnackShort(getApplicationContext(), drawerLayout, getResources().getString(R.string
+                            .snack_create_a_bucket_text));
                 }
 
             }
@@ -216,7 +219,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.now:
                 replaceFragment(newFragment(Constants.REQUEST_TIMEFRAME_NOW));
                 break;
@@ -245,17 +248,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @SuppressLint("RestrictedApi")
-    private void initNavigationView(){
+    private void initNavigationView() {
         View headerView = navigationView.getHeaderView(0);
-        navHeaderRl = (RelativeLayout)headerView.findViewById(R.id.nav_view_header_rl);
-        navAvatarIm = (ImageView)headerView.findViewById(R.id.login_avatar_im);
-        navNameTx = (TextView)headerView.findViewById(R.id.nav_view_name_tx);
-        navDescTx = (TextView)headerView.findViewById(R.id.nav_view_desc_tx);
-        if(isLogin){
-            ImageLoader.loadCricleImage(getApplicationContext(), SharedPreUtil.getLoginData(Constants.AUTH_USER_AVATAR_URL), navAvatarIm);
+        navHeaderRl = (RelativeLayout) headerView.findViewById(R.id.nav_view_header_rl);
+        navAvatarIm = (ImageView) headerView.findViewById(R.id.login_avatar_im);
+        navNameTx = (TextView) headerView.findViewById(R.id.nav_view_name_tx);
+        navDescTx = (TextView) headerView.findViewById(R.id.nav_view_desc_tx);
+        if (isLogin) {
+            ImageLoader.loadCricleImage(getApplicationContext(), SharedPreUtil.getLoginData(Constants
+                    .AUTH_USER_AVATAR_URL), navAvatarIm);
             navNameTx.setText(SharedPreUtil.getLoginData(Constants.AUTH_USER_NAME));
             navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
-        }else {
+        } else {
             navAvatarIm.setImageResource(R.drawable.ic_avatar);
             navNameTx.setText(getResources().getString(R.string.nav_view_name_tx));
             navDescTx.setText(getResources().getString(R.string.nav_view_desc_tx));
@@ -263,18 +267,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navHeaderRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isLogin){
+                if (isLogin) {
                     Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
                     intent.putExtra(Constants.TYPE, Constants.REQUEST_AUTH_USER);
                     startActivity(intent);
                     //SharedPreUtil.saveState(Constants.IS_LOGIN, false);
-                }else {
+                } else {
                     showLoginDialog();
                 }
             }
         });
         //设置打开和关闭Drawer的特效
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string
+                .nav_drawer_open, R.string.nav_drawer_close);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         toggle.syncState();
@@ -293,7 +298,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     /**
      * 登陆的中转页面
      */
-    private void showLoginDialog(){
+    private void showLoginDialog() {
         dialog = new Dialog(this, R.style.ThemeLoginDialog);
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_login, null);
         Window window = dialog.getWindow();
@@ -305,9 +310,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(layoutParams);
         dialog.setContentView(dialogView);
-        loginDialogCloseIm = (ImageView)dialogView.findViewById(R.id.dialog_login_close_im);
-        loginDialogLoginBt = (Button)dialogView.findViewById(R.id.dialog_login_bt);
-        loginDialogPb = (ProgressBar)dialogView.findViewById(R.id.dialog_login_pb);
+        loginDialogCloseIm = (ImageView) dialogView.findViewById(R.id.dialog_login_close_im);
+        loginDialogLoginBt = (Button) dialogView.findViewById(R.id.dialog_login_bt);
+        loginDialogPb = (ProgressBar) dialogView.findViewById(R.id.dialog_login_pb);
         dialog.show();
         loginDialogCloseIm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -328,56 +333,56 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item){
-            switch (item.getItemId()) {
-                case R.id.nav_home:
-                    currentType = Constants.MENU_HOME;
-                    initSelectedNavigationItemView(currentType);
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    break;
-                case R.id.nav_explore:
-                    currentType = Constants.MENU_EXPLORE;
-                    initSelectedNavigationItemView(currentType);
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    break;
-                default:
-                    //后面的MenuItem需要登陆
-                    if(!isLogin){
-                        for (int i = 2; i < 6; i++) {
-                            navigationView.getMenu().getItem(i).setCheckable(false);
-                        }
-                        showLoginDialog();
-                    }else {
-                        switch (item.getItemId()) {
-                            case R.id.nav_likes:
-                                currentType = Constants.MENU_MY_LIKES;
-                                break;
-                            case R.id.nav_buckets:
-                                currentType = Constants.MENU_MY_BUCKETS;
-                                break;
-                            case R.id.nav_shots:
-                                currentType = Constants.MENU_MY_SHOTS;
-                                break;
-                            case R.id.nav_settings:
-                                currentType = Constants.MENU_SETTING;
-                                break;
-                        }
-                        initSelectedNavigationItemView(currentType);
-                        drawerLayout.closeDrawer(GravityCompat.START);
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                currentType = Constants.MENU_HOME;
+                initSelectedNavigationItemView(currentType);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_explore:
+                currentType = Constants.MENU_EXPLORE;
+                initSelectedNavigationItemView(currentType);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                break;
+            default:
+                //后面的MenuItem需要登陆
+                if (!isLogin) {
+                    for (int i = 2; i < 6; i++) {
+                        navigationView.getMenu().getItem(i).setCheckable(false);
                     }
-                    break;
-            }
-            return true;
+                    showLoginDialog();
+                } else {
+                    switch (item.getItemId()) {
+                        case R.id.nav_likes:
+                            currentType = Constants.MENU_MY_LIKES;
+                            break;
+                        case R.id.nav_buckets:
+                            currentType = Constants.MENU_MY_BUCKETS;
+                            break;
+                        case R.id.nav_shots:
+                            currentType = Constants.MENU_MY_SHOTS;
+                            break;
+                        case R.id.nav_settings:
+                            currentType = Constants.MENU_SETTING;
+                            break;
+                    }
+                    initSelectedNavigationItemView(currentType);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+                break;
+        }
+        return true;
     }
 
-    private void initSelectedNavigationItemView(String menuType){
+    private void initSelectedNavigationItemView(String menuType) {
         initToolbar();
         invalidateOptionsMenu();
-        switch (menuType){
+        switch (menuType) {
             case Constants.MENU_HOME:
                 floatingActionButton.setVisibility(FloatingActionButton.GONE);
                 exploreLl.setVisibility(LinearLayout.GONE);
-                if(currentFragment != null) {
+                if (currentFragment != null) {
                     removeCurrentFragment(currentFragment);
                 }
                 initTabPager();
@@ -414,7 +419,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void initTabPager(){
+    private void initTabPager() {
         tabLayout.setVisibility(TabLayout.VISIBLE);
         viewPager.setVisibility(ViewPager.VISIBLE);
         fragments = new ArrayList<>();
@@ -472,10 +477,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void initSpinner(){
+    private void initSpinner() {
         exploreLl.setVisibility(LinearLayout.VISIBLE);
-        sortSpinner = (Spinner)findViewById(R.id.sort_spinner);
-        listSpinner = (Spinner)findViewById(R.id.list_spinner);
+        sortSpinner = (Spinner) findViewById(R.id.sort_spinner);
+        listSpinner = (Spinner) findViewById(R.id.list_spinner);
         ArrayAdapter<String> sortAdapter, listAdapter;
         String[] sortArray = getResources().getStringArray(R.array.sort);
         String[] listArray = getResources().getStringArray(R.array.list);
@@ -488,7 +493,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         replaceFragment(newFragment(Constants.REQUEST_SORT_POPULAR));
                         break;
@@ -512,7 +517,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         listSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         replaceFragment(newFragment(Constants.REQUEST_LIST_SHOTS));
                         break;
@@ -544,16 +549,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
     }
 
-    private RecyclerFragment newFragment(String type){
+    private RecyclerFragment newFragment(String type) {
         currentFragment = RecyclerFragment.newInstance(type);
         return currentFragment;
     }
 
-    public static RecyclerFragment getCurrentFragment(){
+    public static RecyclerFragment getCurrentFragment() {
         return currentFragment;
     }
 
-    public void removeCurrentFragment(Fragment fragment){
+    public void removeCurrentFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.remove(fragment);
@@ -562,19 +567,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
+        } else {
             doubleBackToQuit();
         }
     }
 
-    private void doubleBackToQuit(){
-        if(backPressed){
-          super.onBackPressed();
+    private void doubleBackToQuit() {
+        if (backPressed) {
+            super.onBackPressed();
         }
         backPressed = true;
-        SnackUI.showSnackShort(getApplicationContext(), drawerLayout, getResources().getString(R.string.double_back_quit));
+        SnackUI.showSnackShort(getApplicationContext(), drawerLayout, getResources().getString(R.string
+                .double_back_quit));
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -586,6 +592,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     /**
      * URL scheme方式启动MainActivity（SingleTask）时，调用此方法
      * 可以接收网页传递的数据
+     *
      * @param intent
      */
     @Override
@@ -602,7 +609,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //code字符串前面带有code=,需要去掉。
         map.put(Constants.CODE, code.replace("code=", ""));
         type = Constants.REQUEST_AUTH_TOKEN;
-        RecyclerPresenter presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map,this);
+        RecyclerPresenter presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants
+                .REQUEST_POST_MEIHOD, map, this);
         presenter.loadJson();
     }
 
@@ -626,12 +634,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void loadSuccess(String json, String requestType) {
         HashMap<String, String> map = new HashMap<>();
-        switch (type){
+        switch (type) {
             case Constants.REQUEST_AUTH_TOKEN:
                 loginDialogPb.setVisibility(ProgressBar.VISIBLE);
-                if(json.indexOf("error") != -1) {
+                if (json.indexOf("error") != -1) {
 
-                }else {
+                } else {
                     AuthToken authToken = Json.parseJson(json, AuthToken.class);
                     Log.i("authToken", authToken.getAccess_token());
                     map.put(Constants.ACCESS_TOKEN, authToken.getAccess_token());
@@ -639,7 +647,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     SharedPreUtil.saveState(Constants.IS_LOGIN, true);
                     isLogin = true;
                     type = Constants.REQUEST_AUTH_USER;
-                    RecyclerPresenter presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, this);
+                    RecyclerPresenter presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL,
+                            Constants.REQUEST_GET_MEIHOD, map, this);
                     presenter.loadJson();
                 }
                 break;

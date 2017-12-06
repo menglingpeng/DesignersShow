@@ -23,8 +23,8 @@ public class ProjectDetailActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        project = (Project)getIntent().getSerializableExtra(Constants.PROJECTS);
-        toolbar = (Toolbar)findViewById(R.id.project_detail_tb);
+        project = (Project) getIntent().getSerializableExtra(Constants.PROJECTS);
+        toolbar = (Toolbar) findViewById(R.id.project_detail_tb);
         toolbar.setTitle(project.getName());
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -34,11 +34,12 @@ public class ProjectDetailActivity extends BaseActivity {
                 finish();
             }
         });
-        fragment = RecyclerFragment.newInstance(String.valueOf(project.getId()), Constants.REQUEST_LIST_SHOTS_FOR_A_PROJECT);
+        fragment = RecyclerFragment.newInstance(String.valueOf(project.getId()), Constants
+                .REQUEST_LIST_SHOTS_FOR_A_PROJECT);
         replaceFragment(fragment);
     }
 
-    public static RecyclerFragment getFragment(){
+    public static RecyclerFragment getFragment() {
         return fragment;
     }
 

@@ -23,8 +23,9 @@ public class UserLikesActivity extends BaseActivity {
     protected void initViews() {
         super.initViews();
         type = getIntent().getStringExtra(Constants.TYPE);
-        title = new StringBuilder().append(getIntent().getStringExtra(Constants.NAME)).append(getString(R.string.s)).append(getString(R.string.likes)).toString();
-        toolbar = (Toolbar)findViewById(R.id.user_likes_tb);
+        title = new StringBuilder().append(getIntent().getStringExtra(Constants.NAME)).append(getString(R.string.s))
+                .append(getString(R.string.likes)).toString();
+        toolbar = (Toolbar) findViewById(R.id.user_likes_tb);
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -37,16 +38,16 @@ public class UserLikesActivity extends BaseActivity {
         replaceFragment(newFragment(type));
     }
 
-    private RecyclerFragment newFragment(String type){
-        if(type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER)){
+    private RecyclerFragment newFragment(String type) {
+        if (type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER)) {
             fragment = RecyclerFragment.newInstance(type);
-        }else {
+        } else {
             fragment = RecyclerFragment.newInstance(getIntent().getStringExtra(Constants.ID), type);
         }
         return fragment;
     }
 
-    public static RecyclerFragment getFragment(){
+    public static RecyclerFragment getFragment() {
         return fragment;
     }
 }
