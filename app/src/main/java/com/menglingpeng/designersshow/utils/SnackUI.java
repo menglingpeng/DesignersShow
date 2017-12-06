@@ -26,6 +26,13 @@ public class SnackUI {
         snackbar.show();
     }
 
+    public static void showErrorSnackShort(Context context, View rootView, CharSequence text){
+        Snackbar snackbar =  Snackbar.make(rootView, text, Snackbar.LENGTH_SHORT);
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+        snackbar.show();
+    }
+
     public static void showSnackLong(Context context, View rootView, CharSequence text){
         Snackbar snackbar =  Snackbar.make(rootView, text, Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();

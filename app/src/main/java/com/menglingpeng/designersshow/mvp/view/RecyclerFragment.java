@@ -297,124 +297,131 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     public void loadSuccess(String json, String requestType) {
         Fragment fragment = null;
         jsonList = new ArrayList();
-        switch (type){
-            case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
-                fragment = BucketDetailActivity.getFragment();
-                break;
-            case Constants.REQUEST_LIST_COMMENTS:
-                fragment = CommentsActivity.getFragment();
-                break;
-            default:
-                if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_USER)) {
-                    fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-                }else if (type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_LIKES_FOR_A_USER)){
-                    fragment = UserLikesActivity.getFragment();
-                } else {
-                    fragment = MainActivity.getCurrentFragment();
-                }
-        }
-        switch (requestType){
-            case Constants.REQUEST_REFRESH:
-                showRefreshProgress(false);
-                adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
-                recyclerView.setAdapter(adapter);
-                break;
-            case Constants.REQUEST_LOAD_MORE:
-                adapter.setLoading(false);
-                break;
-            case Constants.REQUEST_NORMAL:
-                if(type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)){
-                    adapter = null;
-                } else {
-                    adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
-                }
-                recyclerView.setAdapter(adapter);
-                break;
-        }
-        adapter.setLoadingMore(new RecyclerAdapter.onLoadingMore() {
-            @Override
-            public void onLoadMore() {
-                adapter.setLoading(true);
-                page += 1;
-                map.put("page", String.valueOf(page));
-                mRequestType = Constants.REQUEST_LOAD_MORE;
-                initData();
+        if(json.indexOf(Constants.TIME_OUT) != -1){
+            SnackUI.showErrorSnackShort(context, getActivity().findViewById(R.id.drawer_layout), getString(R.string.an_error_just_occurred_while_connecting_to_Dribbble_try_it_again_later));
+        }else {
+            switch (type) {
+                case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
+                    fragment = BucketDetailActivity.getFragment();
+                    break;
+                case Constants.REQUEST_LIST_COMMENTS:
+                    fragment = CommentsActivity.getFragment();
+                    break;
+                default:
+                    if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_USER)) {
+
+                        fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
+                    } else if (type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_LIKES_FOR_A_USER)) {
+                        fragment = UserLikesActivity.getFragment();
+                    } else {
+                        fragment = MainActivity.getCurrentFragment();
+                    }
             }
-        });
-       if(!json.equals(Constants.EMPTY)) {
-           switch (type) {
-               case Constants.MENU_MY_LIKES:
-                   jsonList = Json.parseArrayJson(json, Likes.class);
-                   break;
-               case Constants.REQUEST_LIST_COMMENTS:
-                   jsonList = Json.parseArrayJson(json, Comments.class);
-                   break;
-               case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:
-                   jsonList = Json.parseArrayJson(json, Likes.class);
-                   break;
-               case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
-                   jsonList = Json.parseArrayJson(json, Buckets.class);
-                   break;
-               case Constants.REQUEST_CHOOSE_BUCKET:
-                   jsonList = Json.parseArrayJson(json, Buckets.class);
-                   break;
-               case Constants.REQUEST_ADD_A_SHOT_TO_BUCKET:
-                   //添加到多个bucket
-                   count++;
-                   String text;
-                   getActivity().finish();
-                   if (json.equals(Constants.CODE_204_NO_CONTENT) && count == addShotTobucketMap.size()) {
-                       if (count == 1) {
-                           text = new StringBuilder().append(context.getText(R.string.added_to)).append(bucketName).toString();
-                       } else {
-                           text = new StringBuilder().append(context.getText(R.string.added_to)).append(String.valueOf(count))
-                                   .append(context.getText(R.string.buckets)).toString();
-                       }
-                       Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
-                       intent.putExtra(Constants.TYPE, Constants.REQUEST_ADD_A_SHOT_TO_BUCKET);
-                       intent.putExtra(Constants.SNACKBAR_TEXT, text);
-                       startActivity(intent);
-                   }
-                   break;
-               case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
-                   jsonList.add(Json.parseJson(json, User.class));
-                   break;
-               case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
-                   jsonList = Json.parseArrayJson(json, Follower.class);
-                   break;
-               case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
-                   jsonList = Json.parseArrayJson(json, Following.class);
-                   break;
-               case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
-                   jsonList.add(Json.parseJson(json, User.class));
-                   break;
-               case Constants.REQUEST_LIST_LIKES_FOR_A_USER:
-                   jsonList = Json.parseArrayJson(json, Likes.class);
-                   break;
-               case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
-                   jsonList = Json.parseArrayJson(json, Buckets.class);
-                   break;
-               case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
-                   jsonList = Json.parseArrayJson(json, Follower.class);
-                   break;
-               case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
-                   jsonList = Json.parseArrayJson(json, Following.class);
-                   break;
-               default:
-                   jsonList = Json.parseArrayJson(json, Shots.class);
-                   break;
-           }
-           if (!type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)) {
-               for (int i = 0; i < jsonList.size(); i++) {
-                   if (type.equals(Constants.MENU_MY_LIKES) || type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER)  || type.equals(Constants.REQUEST_LIST_LIKES_FOR_A_USER)) {
-                       adapter.addData(((Likes) jsonList.get(i)).getShot());
-                   } else {
-                       adapter.addData(jsonList.get(i));
-                   }
-               }
-           }
-       }
+            switch (requestType) {
+                case Constants.REQUEST_REFRESH:
+                    showRefreshProgress(false);
+                    adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
+                    recyclerView.setAdapter(adapter);
+                    break;
+                case Constants.REQUEST_LOAD_MORE:
+                    adapter.setLoading(false);
+                    break;
+                case Constants.REQUEST_NORMAL:
+                    if (type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)) {
+                        adapter = null;
+                    } else {
+                        adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
+                    }
+                    recyclerView.setAdapter(adapter);
+                    break;
+            }
+            adapter.setLoadingMore(new RecyclerAdapter.onLoadingMore() {
+                @Override
+                public void onLoadMore() {
+                    adapter.setLoading(true);
+                    page += 1;
+                    map.put("page", String.valueOf(page));
+                    mRequestType = Constants.REQUEST_LOAD_MORE;
+                    initData();
+                }
+            });
+            if (!json.equals(Constants.EMPTY)) {
+                switch (type) {
+                    case Constants.MENU_MY_LIKES:
+                        jsonList = Json.parseArrayJson(json, Likes.class);
+                        break;
+                    case Constants.REQUEST_LIST_COMMENTS:
+                        jsonList = Json.parseArrayJson(json, Comments.class);
+                        break;
+                    case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:
+                        jsonList = Json.parseArrayJson(json, Likes.class);
+                        break;
+                    case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
+                        jsonList = Json.parseArrayJson(json, Buckets.class);
+                        break;
+                    case Constants.REQUEST_CHOOSE_BUCKET:
+                        jsonList = Json.parseArrayJson(json, Buckets.class);
+                        break;
+                    case Constants.REQUEST_ADD_A_SHOT_TO_BUCKET:
+                        //添加到多个bucket
+                        count++;
+                        String text;
+                        getActivity().finish();
+                        if (json.equals(Constants.CODE_204_NO_CONTENT) && count == addShotTobucketMap.size()) {
+                            if (count == 1) {
+                                text = new StringBuilder().append(context.getText(R.string.added_to)).append
+                                        (bucketName).toString();
+                            } else {
+                                text = new StringBuilder().append(context.getText(R.string.added_to)).append(String.valueOf(count))
+                                        .append(context.getText(R.string.buckets)).toString();
+                            }
+                            Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
+                            intent.putExtra(Constants.TYPE, Constants.REQUEST_ADD_A_SHOT_TO_BUCKET);
+                            intent.putExtra(Constants.SNACKBAR_TEXT, text);
+                            startActivity(intent);
+                        }
+                        break;
+                    case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
+                        jsonList.add(Json.parseJson(json, User.class));
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
+                        jsonList = Json.parseArrayJson(json, Follower.class);
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
+                        jsonList = Json.parseArrayJson(json, Following.class);
+                        break;
+                    case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
+                        jsonList.add(Json.parseJson(json, User.class));
+                        break;
+                    case Constants.REQUEST_LIST_LIKES_FOR_A_USER:
+                        jsonList = Json.parseArrayJson(json, Likes.class);
+                        break;
+                    case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
+                        jsonList = Json.parseArrayJson(json, Buckets.class);
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
+                        jsonList = Json.parseArrayJson(json, Follower.class);
+                        break;
+                    case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
+                        jsonList = Json.parseArrayJson(json, Following.class);
+                        break;
+                    default:
+                        jsonList = Json.parseArrayJson(json, Shots.class);
+                        break;
+                }
+                if (!type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)) {
+                    for (int i = 0; i < jsonList.size(); i++) {
+                        if (type.equals(Constants.MENU_MY_LIKES) || type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_LIKES_FOR_A_USER)) {
+                            adapter.addData(((Likes) jsonList.get(i)).getShot());
+                        } else {
+                            adapter.addData(jsonList.get(i));
+                        }
+                    }
+                }
+            }
+        }
     }
+
 
     @Override
     public <T> void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, T t) {

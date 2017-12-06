@@ -17,6 +17,7 @@ public class Constants {
     public static final String REQUEST_DELETE_MEIHOD = "delete";
     public static final String CODE_404_NOT_FOUND = "404";
     public static final String CODE_204_NO_CONTENT = "204";
+    public static final String TIME_OUT = "timed out";
     public static final String EMPTY = "[]";
     public static final String SNACKBAR_TEXT = "snackbar_text";
     public static final String DETAIL = "detail";
