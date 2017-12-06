@@ -59,6 +59,7 @@ public class Constants {
     public static final String LIST_SHOTS_FOR_AUTH_USER_LIKES_URL= "https://api.dribbble.com/v1/user/likes";
     public static final String LIST_SHOTS_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/shots";
     public static final String LIST_BUCKETS_FOR_AUTH_USER_URL = "https://api.dribbble.com/v1/user/buckets";
+    public static final String LIST_PROJECTS_FOR_AUTH_USER_URL = "https://api.dribbble.com/v1/user/projects";
     public static final String LIST_FOLLOWERS_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/followers";
     public static final String LIST_FOLLOWING_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/following";
     public static final String BUCKETS_URL = "https://api.dribbble.com/v1/buckets";
@@ -126,6 +127,7 @@ public class Constants {
     public static final String BUCKETS = "buckets";
     public static final String COMMENTS = "comments";
     public static final String LIKES = "likes";
+    public static final String PROJECTS = "projects";
     public static final String REQUEST_NORMAL = "normal";
     public static final String REQUEST_REFRESH = "refresh";
     public static final String REQUEST_LOAD_MORE ="loadmore";

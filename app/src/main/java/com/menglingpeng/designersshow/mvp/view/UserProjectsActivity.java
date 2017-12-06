@@ -34,5 +34,11 @@ public class UserProjectsActivity extends BaseActivity {
                 finish();
             }
         });
+        if(type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER)){
+            replaceFragment(RecyclerFragment.newInstance(Constants.REQUEST_LIST_PROJECTS_FOR_AUTH_USER));
+        }else {
+            replaceFragment(RecyclerFragment.newInstance(getIntent().getStringExtra(Constants.ID),
+                    Constants.REQUEST_LIST_PROJECTS_FOR_A_USER));
+        }
     }
 }

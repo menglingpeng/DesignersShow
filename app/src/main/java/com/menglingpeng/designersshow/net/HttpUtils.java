@@ -87,6 +87,9 @@ HttpUtils {
                     case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
                         urlBuilder = HttpUrl.parse(Constants.LIST_BUCKETS_FOR_AUTH_USER_URL).newBuilder();
                         break;
+                    case Constants.REQUEST_LIST_PROJECTS_FOR_AUTH_USER:
+                        urlBuilder = HttpUrl.parse(Constants.LIST_PROJECTS_FOR_AUTH_USER_URL).newBuilder();
+                        break;
                     case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
                         urlBuilder = HttpUrl.parse(Constants.LIST_FOLLOWERS_FOR_AUTH_USER_URL).newBuilder();
                         break;
@@ -111,6 +114,11 @@ HttpUtils {
                     case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
                         url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get
                                 (Constants.ID)).append("/").append(Constants.BUCKETS).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
+                    case Constants.REQUEST_LIST_PROJECTS_FOR_A_USER:
+                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get
+                                (Constants.ID)).append("/").append(Constants.PROJECTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:

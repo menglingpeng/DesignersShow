@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/project_rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bucket_recycler_item_background">
+
+    <TextView
+        android:id="@+id/project_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/user_buckets_recycler_item_text_view_layout_marginBottom"
+        android:layout_marginTop="@dimen/user_buckets_recycler_item_bucket_name_tx_ayout_marginTop"
+        android:layout_marginLeft="@dimen/user_buckets_recycler_item_bucket_name_tx_ayout_marginLeft"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+
+    <TextView
+        android:id="@+id/project_shots_count_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/user_buckets_recycler_item_text_view_layout_marginBottom"
+        android:layout_alignLeft="@+id/project_name_tv"
+        android:layout_below="@+id/project_name_tv" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/user_buckets_recycler_item_view_layout_height"
+        android:background="@color/bucket_recycler_item_view_background"
+        android:layout_below="@+id/project_shots_count_tx"
+        >
+    </View>
+
+</RelativeLayout>

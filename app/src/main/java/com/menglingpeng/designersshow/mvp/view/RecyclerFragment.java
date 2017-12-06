@@ -24,6 +24,7 @@ import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.mvp.model.Follower;
 import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Likes;
+import com.menglingpeng.designersshow.mvp.model.Project;
 import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
@@ -42,7 +43,8 @@ import java.util.HashMap;
  * Created by mengdroid on 2017/10/13.
  */
 
-public class RecyclerFragment extends BaseFragment implements com.menglingpeng.designersshow.mvp.interf.RecyclerView<Shots>, OnRecyclerListItemListener, SwipeRefreshLayout.OnRefreshListener {
+public class RecyclerFragment extends BaseFragment implements com.menglingpeng.designersshow.mvp.interf
+        .RecyclerView<Shots>, OnRecyclerListItemListener, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefresh;
@@ -54,7 +56,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private HashMap<String, String> map;
     private String mRequestType = Constants.REQUEST_NORMAL;
     private String type;
-    private String list= null;
+    private String list = null;
     private String timeframe = null;
     private String date = null;
     private String sort = null;
@@ -70,15 +72,15 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private int count = 0;
     private String bucketName;
 
-    public static RecyclerFragment newInstance(String type){
+    public static RecyclerFragment newInstance(String type) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TYPE, type);
-        RecyclerFragment fragment = new RecyclerFragment() ;
+        RecyclerFragment fragment = new RecyclerFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public static RecyclerFragment newInstance(String id, String type){
+    public static RecyclerFragment newInstance(String id, String type) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TYPE, type);
         bundle.putString(Constants.ID, id);
@@ -87,7 +89,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         return fragment;
     }
 
-    public static RecyclerFragment newInstance(User user, String type){
+    public static RecyclerFragment newInstance(User user, String type) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TYPE, type);
         bundle.putSerializable(Constants.USER, user);
@@ -113,9 +115,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     protected void initView() {
-        swipeRefresh = (SwipeRefreshLayout)rootView.findViewById(R.id.swipe_refresh);
-        progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
-        recyclerView = (RecyclerView)rootView.findViewById(R.id.recycler_view);
+        swipeRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         //确保item大小固定，可以提升性能
@@ -124,12 +126,12 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         swipeRefresh.setOnRefreshListener(this);
     }
 
-    private void initParameters(){
+    private void initParameters() {
         map = new HashMap<>();
-        if(type.indexOf(Constants.EXPLORE) != -1){
+        if (type.indexOf(Constants.EXPLORE) != -1) {
             map = SharedPreUtil.getParameters();
         }
-        switch (type){
+        switch (type) {
             case Constants.TAB_FOLLOWING:
                 sort = Constants.SORT_RECENT;
                 break;
@@ -187,6 +189,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_TIMEFRAME_EVER:
                 timeframe = Constants.TIMEFRAME_EVER;
                 break;
+            case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
+                break;
             case Constants.MENU_MY_SHOTS:
                 sort = Constants.REQUEST_SORT_RECENT;
                 break;
@@ -202,7 +206,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
                 break;
             case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
-                map.put(Constants.ID,getArguments().get(Constants.ID).toString());
+                map.put(Constants.ID, getArguments().get(Constants.ID).toString());
                 break;
             case Constants.REQUEST_CHOOSE_BUCKET:
                 addShotTobucketMap = new HashMap<>();
@@ -212,7 +216,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 id = getArguments().get(Constants.ID).toString();
                 map.put(Constants.ID, id);
                 break;
-            case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
+            case Constants.REQUEST_LIST_PROJECTS_FOR_AUTH_USER:
                 break;
             case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
                 break;
@@ -224,7 +228,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 break;
             case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
                 sort = Constants.SORT_RECENT;
-                id = String.valueOf(((User)getArguments().getSerializable(Constants.USER)).getId());
+                id = String.valueOf(((User) getArguments().getSerializable(Constants.USER)).getId());
                 map.put(Constants.ID, id);
                 break;
             case Constants.REQUEST_LIST_LIKES_FOR_A_USER:
@@ -233,6 +237,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 map.put(Constants.ID, id);
                 break;
             case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
+                id = getArguments().get(Constants.ID).toString();
+                map.put(Constants.ID, id);
+                break;
+            case Constants.REQUEST_LIST_PROJECTS_FOR_A_USER:
                 id = getArguments().get(Constants.ID).toString();
                 map.put(Constants.ID, id);
                 break;
@@ -245,25 +253,25 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 map.put(Constants.ID, id);
                 break;
         }
-        if(SharedPreUtil.getState(Constants.IS_LOGIN)){
+        if (SharedPreUtil.getState(Constants.IS_LOGIN)) {
             map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
-        }else {
+        } else {
             map.put(Constants.ACCESS_TOKEN, Constants.APP_ACCESS_TOKEN);
         }
-        if(list != null){
+        if (list != null) {
             map.put(Constants.LIST, list);
         }
-        if(timeframe != null){
+        if (timeframe != null) {
             map.put(Constants.TIMEFRAME, timeframe);
         }
-        if(date != null){
+        if (date != null) {
             map.put(Constants.DATE, date);
         }
-        if(sort != null){
+        if (sort != null) {
             map.put(Constants.SORT, sort);
         }
         map.put(Constants.PAGE, String.valueOf(page));
-        if(type.indexOf(Constants.EXPLORE) != -1){
+        if (type.indexOf(Constants.EXPLORE) != -1) {
             SharedPreUtil.saveParameters(map);
         }
 
@@ -272,9 +280,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void onRefresh() {
-        if(type.indexOf(Constants.DETAIL) != -1) {
+        if (type.indexOf(Constants.DETAIL) != -1) {
             showRefreshProgress(false);
-        }else {
+        } else {
             page = 1;
             map.put("page", String.valueOf(page));
             mRequestType = Constants.REQUEST_REFRESH;
@@ -290,16 +298,17 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void loadFailed(String msg) {
-    showRefreshProgress(false);
+        showRefreshProgress(false);
     }
 
     @Override
     public void loadSuccess(String json, String requestType) {
         Fragment fragment = null;
         jsonList = new ArrayList();
-        if(json.indexOf(Constants.TIME_OUT) != -1){
-            SnackUI.showErrorSnackShort(context, getActivity().findViewById(R.id.drawer_layout), getString(R.string.an_error_just_occurred_while_connecting_to_Dribbble_try_it_again_later));
-        }else {
+        if (json.indexOf(Constants.TIME_OUT) != -1) {
+            SnackUI.showErrorSnackShort(context, getActivity().findViewById(R.id.drawer_layout), getString(R.string
+                    .an_error_just_occurred_while_connecting_to_Dribbble_try_it_again_later));
+        } else {
             switch (type) {
                 case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
                     fragment = BucketDetailActivity.getFragment();
@@ -308,10 +317,13 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     fragment = CommentsActivity.getFragment();
                     break;
                 default:
-                    if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals(Constants.TAB_FOLLOWING) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_USER)) {
+                    if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals
+                            (Constants.TAB_FOLLOWING) || type.equals(Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER) ||
+                            type.equals(Constants.REQUEST_LIST_SHOTS_FOR_A_USER)) {
 
                         fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-                    } else if (type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_LIKES_FOR_A_USER)) {
+                    } else if (type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER) || type.equals(Constants
+                            .REQUEST_LIST_LIKES_FOR_A_USER)) {
                         fragment = UserLikesActivity.getFragment();
                     } else {
                         fragment = MainActivity.getCurrentFragment();
@@ -372,7 +384,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                                 text = new StringBuilder().append(context.getText(R.string.added_to)).append
                                         (bucketName).toString();
                             } else {
-                                text = new StringBuilder().append(context.getText(R.string.added_to)).append(String.valueOf(count))
+                                text = new StringBuilder().append(context.getText(R.string.added_to)).append(String
+                                        .valueOf(count))
                                         .append(context.getText(R.string.buckets)).toString();
                             }
                             Intent intent = new Intent(getActivity(), ShotDetailActivity.class);
@@ -383,6 +396,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                         break;
                     case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
                         jsonList.add(Json.parseJson(json, User.class));
+                        break;
+                    case Constants.REQUEST_LIST_PROJECTS_FOR_AUTH_USER:
+                        jsonList = Json.parseArrayJson(json, Project.class);
                         break;
                     case Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER:
                         jsonList = Json.parseArrayJson(json, Follower.class);
@@ -399,6 +415,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
                         jsonList = Json.parseArrayJson(json, Buckets.class);
                         break;
+                    case Constants.REQUEST_LIST_PROJECTS_FOR_A_USER:
+                        jsonList = Json.parseArrayJson(json, Project.class);
+                        break;
                     case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
                         jsonList = Json.parseArrayJson(json, Follower.class);
                         break;
@@ -411,7 +430,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 }
                 if (!type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)) {
                     for (int i = 0; i < jsonList.size(); i++) {
-                        if (type.equals(Constants.MENU_MY_LIKES) || type.equals(Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER) || type.equals(Constants.REQUEST_LIST_LIKES_FOR_A_USER)) {
+                        if (type.equals(Constants.MENU_MY_LIKES) || type.equals(Constants
+                                .REQUEST_LIST_LIKES_FOR_AUTH_USER) || type.equals(Constants
+                                .REQUEST_LIST_LIKES_FOR_A_USER)) {
                             adapter.addData(((Likes) jsonList.get(i)).getShot());
                         } else {
                             adapter.addData(jsonList.get(i));
@@ -427,69 +448,73 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     public <T> void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, T t) {
         Intent intent;
         Resources resources = context.getResources();
-        if(viewHolder instanceof RecyclerAdapter.ShotViewHolder){
+        if (viewHolder instanceof RecyclerAdapter.ShotViewHolder) {
             intent = new Intent(getActivity(), ShotDetailActivity.class);
-            intent.putExtra(Constants.SHOTS, (Shots)t);
+            intent.putExtra(Constants.SHOTS, (Shots) t);
             intent.putExtra(Constants.TYPE, Constants.SHOT_DETAIL);
             startActivity(intent);
-        }else if(viewHolder instanceof RecyclerAdapter.ProfileShotViewHolder){
+        } else if (viewHolder instanceof RecyclerAdapter.ProfileShotViewHolder) {
             intent = new Intent(getActivity(), ShotDetailActivity.class);
-            intent.putExtra(Constants.SHOTS, (Shots)t);
+            intent.putExtra(Constants.SHOTS, (Shots) t);
             intent.putExtra(Constants.TYPE, Constants.USER_SHOT_DETAIL);
-            intent.putExtra(Constants.USER, (User)getArguments().getSerializable(Constants.USER));
+            intent.putExtra(Constants.USER, (User) getArguments().getSerializable(Constants.USER));
             startActivity(intent);
-        } else if(viewHolder instanceof  RecyclerAdapter.BucketsViewHolder){
+        } else if (viewHolder instanceof RecyclerAdapter.BucketsViewHolder) {
             intent = new Intent(getActivity(), BucketDetailActivity.class);
-            intent.putExtra(Constants.BUCKETS, (Buckets)t);
+            intent.putExtra(Constants.BUCKETS, (Buckets) t);
             startActivity(intent);
-        }else if(viewHolder instanceof RecyclerAdapter.FollowOfUserViewHolder){
+        } else if (viewHolder instanceof RecyclerAdapter.FollowOfUserViewHolder) {
             intent = new Intent(getActivity(), UserProfileActivity.class);
             intent.putExtra(Constants.TYPE, Constants.REQUEST_SINGLE_USER);
-            intent.putExtra(Constants.ID, (String)t);
+            intent.putExtra(Constants.ID, (String) t);
             startActivity(intent);
-        } else if(viewHolder instanceof RecyclerAdapter.ChooseBucketViewHolder){
-            Buckets buckets = (Buckets)t;
+        } else if (viewHolder instanceof RecyclerAdapter.ChooseBucketViewHolder) {
+            Buckets buckets = (Buckets) t;
             bucketName = buckets.getName();
             String itemId = String.valueOf(viewHolder.getLayoutPosition());
-            coordinatorLayout = (CoordinatorLayout)getActivity().findViewById(R.id.choose_bucket_cdl);
-            floatingActionButton = (FloatingActionButton)getActivity().findViewById(R.id.choose_bucket_fab);
-            if(addShotTobucketMap.get(itemId) != null){
-                ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).bucketRl.setBackgroundColor(getActivity().getApplicationContext().getResources().getColor(R.color.bucket_recycler_item_background));
-                ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).chooseBucketFab.setVisibility(FloatingActionButton.GONE);
+            coordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.choose_bucket_cdl);
+            floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.choose_bucket_fab);
+            if (addShotTobucketMap.get(itemId) != null) {
+                ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).bucketRl.setBackgroundColor(getActivity()
+                        .getApplicationContext().getResources().getColor(R.color.bucket_recycler_item_background));
+                ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).chooseBucketFab.setVisibility
+                        (FloatingActionButton.GONE);
                 addShotTobucketMap.remove(itemId);
-            }else {
+            } else {
                 ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).bucketRl.setBackgroundColor(Color.WHITE);
-                ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).chooseBucketFab.setVisibility(FloatingActionButton.VISIBLE);
+                ((RecyclerAdapter.ChooseBucketViewHolder) viewHolder).chooseBucketFab.setVisibility
+                        (FloatingActionButton.VISIBLE);
                 addShotTobucketMap.put(itemId, String.valueOf(buckets.getId()));
             }
-            if(addShotTobucketMap.size() == 0){
+            if (addShotTobucketMap.size() == 0) {
                 floatingActionButton.setVisibility(FloatingActionButton.VISIBLE);
-            }else {
+            } else {
                 floatingActionButton.setVisibility(FloatingActionButton.GONE);
             }
-            text = new StringBuilder().append(resources.getString(R.string.choosed)).append(String.valueOf(addShotTobucketMap.size())).append(resources.getString(R.string.buckets)).toString();
+            text = new StringBuilder().append(resources.getString(R.string.choosed)).append(String.valueOf
+                    (addShotTobucketMap.size())).append(resources.getString(R.string.buckets)).toString();
             type = Constants.REQUEST_ADD_A_SHOT_TO_BUCKET;
-            if(addShotTobucketMap.size() == 0) {
-                if(snackbar != null) {
+            if (addShotTobucketMap.size() == 0) {
+                if (snackbar != null) {
                     snackbar.dismiss();
                 }
-            }else if(addShotTobucketMap.size() == 1){
-                if(snackbar != null){
+            } else if (addShotTobucketMap.size() == 1) {
+                if (snackbar != null) {
                     snackbar.setText(text);
-                }else {
-                    snackbar = SnackUI.showAddShotToBucketsActionSnack(context, coordinatorLayout, text, type, id, addShotTobucketMap, this);
+                } else {
+                    snackbar = SnackUI.showAddShotToBucketsActionSnack(context, coordinatorLayout, text, type, id,
+                            addShotTobucketMap, this);
                     snackbar.show();
                 }
-            }
-            else {
+            } else {
                 snackbar.setText(text);
             }
         }
-        }
+    }
 
 
-    public void showRefreshProgress(final boolean refreshState){
-        if(swipeRefresh != null){
+    public void showRefreshProgress(final boolean refreshState) {
+        if (swipeRefresh != null) {
             swipeRefresh.setRefreshing(refreshState);
         }
     }
