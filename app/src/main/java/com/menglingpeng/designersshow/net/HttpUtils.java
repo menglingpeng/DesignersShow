@@ -61,8 +61,12 @@ HttpUtils {
                         break;
                     case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
                         url = new StringBuilder().append(Constants.BUCKETS_URL).append("/").append(map.get(Constants
-                                .ID))
-                                .append("/").append(Constants.SHOTS).toString();
+                                .ID)).append("/").append(Constants.SHOTS).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
+                    case Constants.REQUEST_LIST_SHOTS_FOR_A_PROJECT:
+                        url = new StringBuilder().append(Constants.PROJECTS_URL).append("/").append(map.get(Constants
+                                .ID)).append("/").append(Constants.SHOTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
                     case Constants.REQUEST_CHECK_IF_LIKE_SHOT:

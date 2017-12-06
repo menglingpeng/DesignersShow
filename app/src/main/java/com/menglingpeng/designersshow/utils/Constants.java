@@ -63,6 +63,7 @@ public class Constants {
     public static final String LIST_FOLLOWERS_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/followers";
     public static final String LIST_FOLLOWING_FOR_AUTH_USER_URL= "https://api.dribbble.com/v1/user/following";
     public static final String BUCKETS_URL = "https://api.dribbble.com/v1/buckets";
+    public static final String PROJECTS_URL = "https://api.dribbble.com/v1/projects";
     public static final String AUTHENTICATED_USER_URL = "https://api.dribbble.com/v1/user";
     public static final String SINGLE_USER_URL = "https://api.dribbble.com/v1/users";
     public static final String SHOTS_URL = "https://api.dribbble.com/v1/shots";
@@ -135,6 +136,7 @@ public class Constants {
     public static final String REQUEST_LIST_COMMENTS = "list_comments";
     public static final String REQUEST_LIST_SHOTS_FOR_A_BUCKET = "list_shots_for_a_bucket";
     public static final String REQUEST_ADD_A_SHOT_TO_BUCKET = "add_a_shot_to_a_bucket";
+    public static final String REQUEST_LIST_SHOTS_FOR_A_PROJECT = "list_shots_for_a_project";
     public static final String LIKE = "like";
     public static final String USER = "user";
     public static final String REQUEST_LIKE_A_SHOT = "like_a_shot";

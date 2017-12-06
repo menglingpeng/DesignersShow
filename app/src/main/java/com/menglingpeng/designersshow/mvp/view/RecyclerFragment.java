@@ -208,6 +208,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
                 map.put(Constants.ID, getArguments().get(Constants.ID).toString());
                 break;
+            case Constants.REQUEST_LIST_SHOTS_FOR_A_PROJECT:
+                map.put(Constants.ID, getArguments().get(Constants.ID).toString());
             case Constants.REQUEST_CHOOSE_BUCKET:
                 addShotTobucketMap = new HashMap<>();
                 id = getArguments().get(Constants.ID).toString();
@@ -312,6 +314,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             switch (type) {
                 case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
                     fragment = BucketDetailActivity.getFragment();
+                    break;
+                case Constants.REQUEST_LIST_SHOTS_FOR_A_PROJECT:
+                    fragment = ProjectDetailActivity.getFragment();
                     break;
                 case Constants.REQUEST_LIST_COMMENTS:
                     fragment = CommentsActivity.getFragment();
@@ -463,7 +468,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             intent = new Intent(getActivity(), BucketDetailActivity.class);
             intent.putExtra(Constants.BUCKETS, (Buckets) t);
             startActivity(intent);
-        } else if (viewHolder instanceof RecyclerAdapter.FollowOfUserViewHolder) {
+        }else if(viewHolder instanceof RecyclerAdapter.ProjectOfUserViewHolder){
+            intent = new Intent(getActivity(), ProjectDetailActivity.class);
+            intent.putExtra(Constants.PROJECTS, (Project) t);
+            startActivity(intent);
+        }else if (viewHolder instanceof RecyclerAdapter.FollowOfUserViewHolder) {
             intent = new Intent(getActivity(), UserProfileActivity.class);
             intent.putExtra(Constants.TYPE, Constants.REQUEST_SINGLE_USER);
             intent.putExtra(Constants.ID, (String) t);

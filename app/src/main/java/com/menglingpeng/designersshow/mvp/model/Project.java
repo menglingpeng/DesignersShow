@@ -1,10 +1,12 @@
 package com.menglingpeng.designersshow.mvp.model;
 
+import java.io.Serializable;
+
 /**
  * Created by mengdroid on 2017/12/6.
  */
 
-public class Project {
+public class Project implements Serializable{
 
     private int id;
 
