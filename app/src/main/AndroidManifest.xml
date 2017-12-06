@@ -48,7 +48,8 @@
         <activity android:name=".mvp.view.UserProfileActivity" />
         <activity android:name=".mvp.view.UserFollowingActivity" />
         <activity android:name=".mvp.view.UserBucketsActivity" />
-        <activity android:name=".mvp.view.UserLikesActivity"></activity>
+        <activity android:name=".mvp.view.UserLikesActivity" />
+        <activity android:name=".mvp.view.UserProjectsActivity"></activity>
     </application>
 
 </manifest>
