@@ -249,10 +249,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         } else if (holder instanceof CommentViewHolder) {
             CommentViewHolder viewHolder = (CommentViewHolder) holder;
-            Comment comment = (Comment) list.get(position);
+            final Comment comment = (Comment) list.get(position);
             ImageLoader.loadCricleImage(context, comment.getUser().getAvatar_url(), viewHolder.avatarIv);
+            viewHolder.avatarIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, UserProfileActivity.class);
+                    intent.putExtra(Constants.TYPE, Constants.REQUEST_SINGLE_USER);
+                    intent.putExtra(Constants.ID, String.valueOf(comment.getUser().getId()));
+                    context.startActivity(intent);
+                }
+            });
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-                viewHolder.commentContentTv.setText(Html.fromHtml(comment.getBody(), Html.FROM_HTML_MODE_LEGACY));
+                viewHolder.commentContentTv.setText(Html.fromHtml(comment.getBody(), Html.FROM_HTML_MODE_COMPACT));
             }else {
                 viewHolder.commentContentTv.setText(Html.fromHtml(comment.getBody()));
             }

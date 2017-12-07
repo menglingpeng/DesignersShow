@@ -2,10 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/detial_comments_rl"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/detial_comments_rl_layout_height"
     android:background="#EEEEEE"
-    android:paddingLeft="@dimen/detail_title_rl_paddingLeft"
-    android:paddingRight="@dimen/detail_title_rl_paddingRight">
+    >
 
     <ImageView
         android:id="@+id/detail_comment_avatar_iv"
@@ -32,16 +31,14 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/detail_comment_username_tv"
         android:layout_below="@+id/detail_comment_username_tv"
-        android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop"
-        android:layout_toRightOf="@+id/detail_comment_avatar_iv" />
+        android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop" />
 
     <TextView
         android:id="@+id/detail_comment_create_at_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/detail_comment_username_tv"
-        android:layout_below="@+id/detail_comment_content_tv"
-        android:layout_toRightOf="@+id/detail_comment_avatar_iv" />
+        android:layout_below="@+id/detail_comment_content_tv" />
 
     <ImageView
         android:id="@+id/detail_comment_likes_iv"
@@ -58,8 +55,6 @@
         android:layout_height="@dimen/detail_comments_dividing_line_layout_height"
         android:layout_alignLeft="@+id/detail_comment_username_tv"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/detail_comment_create_at_tv"
-        android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop"
         android:background="#757575"></View>
 
     <TextView
