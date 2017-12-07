@@ -2,10 +2,13 @@ package com.menglingpeng.designersshow.mvp.other;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +20,7 @@ import android.widget.TextView;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
 import com.menglingpeng.designersshow.mvp.model.Buckets;
-import com.menglingpeng.designersshow.mvp.model.Comments;
+import com.menglingpeng.designersshow.mvp.model.Comment;
 import com.menglingpeng.designersshow.mvp.model.Follower;
 import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Project;
@@ -246,12 +249,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         } else if (holder instanceof CommentViewHolder) {
             CommentViewHolder viewHolder = (CommentViewHolder) holder;
-            Comments comment = (Comments) list.get(position);
-            ImageLoader.loadCricleImage(context, comment.getUser().getAvatar_url(), viewHolder.commentsAvatarIm);
-            viewHolder.commentsContentTv.setText(comment.getBody());
-            viewHolder.commentsUsernameTv.setText(comment.getUser().getUsername());
-            viewHolder.commentsCreateAtTv.setText(comment.getCreated_at());
-            viewHolder.commentsLikesCountTv.setText(String.valueOf(comment.getLikes_count()));
+            Comment comment = (Comment) list.get(position);
+            ImageLoader.loadCricleImage(context, comment.getUser().getAvatar_url(), viewHolder.avatarIv);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                viewHolder.commentContentTv.setText(Html.fromHtml(comment.getBody(), Html.FROM_HTML_MODE_LEGACY));
+            }else {
+                viewHolder.commentContentTv.setText(Html.fromHtml(comment.getBody()));
+            }
+            viewHolder.commentContentTv.setMovementMethod(LinkMovementMethod.getInstance());
+            viewHolder.usernameTv.setText(comment.getUser().getUsername());
+            viewHolder.commentCreateAtTv.setText(TimeUtil.getTimeDifference(comment.getCreated_at()));
+            viewHolder.commentLikesCountTv.setText(String.valueOf(comment.getLikes_count()));
 
         } else if (holder instanceof BucketsViewHolder) {
             final BucketsViewHolder viewHolder = (BucketsViewHolder) holder;
@@ -493,17 +501,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class CommentViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView commentsAvatarIm, commentsLikesIm;
-        public final TextView commentsUsernameTv, commentsContentTv, commentsCreateAtTv, commentsLikesCountTv;
+        public final ImageView avatarIv;
+        public final TextView usernameTv;
+        public final TextView commentContentTv;
+        public final TextView commentCreateAtTv;
+        public final ImageView commentLikesIv;
+        public final TextView commentLikesCountTv;
 
         public CommentViewHolder(View view) {
             super(view);
-            commentsAvatarIm = (ImageView) view.findViewById(R.id.detail_comments_avatar_im);
-            commentsUsernameTv = (TextView) view.findViewById(R.id.detail_comments_username_tx);
-            commentsContentTv = (TextView) view.findViewById(R.id.detail_comments_content_tx);
-            commentsCreateAtTv = (TextView) view.findViewById(R.id.detail_comments_create_at_tx);
-            commentsLikesIm = (ImageView) view.findViewById(R.id.detail_comments_likes_im);
-            commentsLikesCountTv = (TextView) view.findViewById(R.id.detail_comments_likes_count_tx);
+            avatarIv = (ImageView) view.findViewById(R.id.detail_comment_avatar_iv);
+            usernameTv = (TextView) view.findViewById(R.id.detail_comment_username_tv);
+            commentContentTv = (TextView) view.findViewById(R.id.detail_comment_content_tv);
+            commentCreateAtTv = (TextView) view.findViewById(R.id.detail_comment_create_at_tv);
+            commentLikesIv = (ImageView) view.findViewById(R.id.detail_comment_likes_iv);
+            commentLikesCountTv = (TextView) view.findViewById(R.id.detail_comment_likes_count_tv);
         }
     }
 

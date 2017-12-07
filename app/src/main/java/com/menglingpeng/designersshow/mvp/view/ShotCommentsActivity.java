@@ -9,7 +9,7 @@ import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.utils.Constants;
 
-public class CommentsActivity extends BaseActivity {
+public class ShotCommentsActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private String id;
@@ -30,7 +30,7 @@ public class CommentsActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentsActivity.this.finish();
+                ShotCommentsActivity.this.finish();
             }
         });
         id = getIntent().getStringExtra(Constants.SHOT_ID).toString();

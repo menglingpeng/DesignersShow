@@ -1,7 +1,5 @@
 package com.menglingpeng.designersshow.utils;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -13,16 +11,9 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.menglingpeng.designersshow.mvp.model.AuthToken;
-import com.menglingpeng.designersshow.mvp.model.Comments;
-import com.menglingpeng.designersshow.mvp.model.Likes;
-import com.menglingpeng.designersshow.mvp.model.Shots;
-import com.menglingpeng.designersshow.mvp.model.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by mengdroid on 2017/10/17.

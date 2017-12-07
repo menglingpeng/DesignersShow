@@ -20,7 +20,7 @@ import com.menglingpeng.designersshow.MainActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
 import com.menglingpeng.designersshow.mvp.model.Buckets;
-import com.menglingpeng.designersshow.mvp.model.Comments;
+import com.menglingpeng.designersshow.mvp.model.Comment;
 import com.menglingpeng.designersshow.mvp.model.Follower;
 import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Likes;
@@ -319,7 +319,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     fragment = ProjectDetailActivity.getFragment();
                     break;
                 case Constants.REQUEST_LIST_COMMENTS:
-                    fragment = CommentsActivity.getFragment();
+                    fragment = ShotCommentsActivity.getFragment();
                     break;
                 default:
                     if (type.equals(Constants.TAB_POPULAR) || type.equals(Constants.TAB_RECENT) || type.equals
@@ -368,7 +368,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                         jsonList = Json.parseArrayJson(json, Likes.class);
                         break;
                     case Constants.REQUEST_LIST_COMMENTS:
-                        jsonList = Json.parseArrayJson(json, Comments.class);
+                        jsonList = Json.parseArrayJson(json, Comment.class);
                         break;
                     case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:
                         jsonList = Json.parseArrayJson(json, Likes.class);

@@ -25,6 +25,7 @@ import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.SharedPreUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
@@ -96,6 +97,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
             }
         });
         map.put(Constants.ID, String.valueOf(shots.getId()));
+        map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
         checkIfLikeShot();
         detailLikesIv = (ImageView) findViewById(R.id.detail_likes_im);
         detailLikesIv.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +141,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         detailCommentsIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShotDetailActivity.this, CommentsActivity.class);
+                Intent intent = new Intent(ShotDetailActivity.this, ShotCommentsActivity.class);
                 intent.putExtra(Constants.SHOT_ID, String.valueOf(shots.getId()));
                 intent.putExtra(Constants.COMMENTS_COUNT, String.valueOf(shots.getComments_count()));
                 startActivity(intent);

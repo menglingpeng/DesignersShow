@@ -1,17 +1,11 @@
 package com.menglingpeng.designersshow.net;
 
-import android.util.Log;
-
-import com.menglingpeng.designersshow.mvp.model.Comments;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
-import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
