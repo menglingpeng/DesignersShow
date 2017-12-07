@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/detial_comments_rl"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/detial_comments_rl_layout_height"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/detial_comments_rl_layout_marginRight"
     android:background="#EEEEEE"
     >
 

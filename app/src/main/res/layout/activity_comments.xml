@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.menglingpeng.designersshow.mvp.view.ShotCommentsActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -19,5 +20,49 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/container"></include>
+
+    <LinearLayout
+        android:id="@+id/comments_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/comments_rl_layout_height"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/add_comment_avatar_iv"
+            android:layout_width="@dimen/add_comment_avatar_iv_layout_width"
+            android:layout_height="@dimen/add_comment_avatar_iv_layout_height"
+            android:layout_marginLeft="@dimen/add_comment_avatar_iv_layout_marginLeft"
+            android:scaleType="centerCrop"/>
+
+        <EditText
+            android:id="@+id/add_comment_et"
+            android:layout_width="@dimen/add_comment_et_layout_width"
+            android:layout_height="wrap_content"
+            android:layout_weight="@dimen/add_comment_et_layout_weight"
+            android:layout_toRightOf="@+id/add_comment_avatar_iv"
+            android:layout_marginLeft="@dimen/add_comment_et_layout_marginLeft"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:hint="@string/add_your_comment"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add_comment_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/user_buckets_recycler_item_bucket_fab_layout_marginRight"
+            android:src="@drawable/ic_send_white_24dp"
+            app:backgroundTint="@color/colorPrimary"
+            app:borderWidth="@dimen/floating_action_button_borderWidth"
+            app:elevation="@dimen/floating_action_button_elevation"
+            app:fabSize="mini"
+            app:pressedTranslationZ="@dimen/floating_action_button_pressedTranslationZ"
+            app:rippleColor="@color/colorPrimaryDark" />
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

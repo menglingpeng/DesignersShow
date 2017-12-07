@@ -93,5 +93,5 @@
     <string name="no_follower_here">没 有 粉 丝</string>
     <string name="no_following_here">没 有 关 注</string>
     <string name="an_error_just_occurred_while_connecting_to_Dribbble_try_it_again_later">在连接到Dribbble的过程中出错，请稍后重试</string>
-
+    <string name="add_your_comment">添加评论</string>
 </resources>
