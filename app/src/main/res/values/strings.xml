@@ -60,11 +60,13 @@
     <string name="detail_toolbar_overflow_menu_share_footer_text">来自Dribbble的分享</string>
     <string name="detail_toolbar_overflow_menu_open_in_browser_create_chooser_title">请选择浏览器</string>
     <string name="detail_toolbar_overflow_menu_download_snackbar_text">正在下载</string>
-    <string name="detail_likes_tx">喜欢</string>
-    <string name="detail_comments_tx">评论</string>
-    <string name="detail_buckets_tx">作品集</string>
-    <string name="detail_views_tx">浏览</string>
-    <string name="detail_attachmets_bt_tx">附件</string>
+    <string name="detail_likes_tv_text">喜欢</string>
+    <string name="detail_comments_tv_text">评论</string>
+    <string name="detail_buckets_tv_text">作品集</string>
+    <string name="detail_views_tv_text">浏览</string>
+    <string name="detail_attachmets_bt_text">附件</string>
+    <string name="comment_reply_tv_text"></string>
+    <string name="comment_copy_tv_text"></string>
     <string name="detail_likes_im_like_a_shot_snack_text">shot liked!</string>
     <string name="detail_likes_im_unlike_a_shot_snack_text">shot unliked!</string>
     <string name="on_load_detail_image_listener_failed_msg">加载失败</string>
@@ -94,4 +96,6 @@
     <string name="no_following_here">没 有 关 注</string>
     <string name="an_error_just_occurred_while_connecting_to_Dribbble_try_it_again_later">在连接到Dribbble的过程中出错，请稍后重试</string>
     <string name="add_your_comment">添加评论</string>
+    <string name="dialog_post_comment_text">提交评论中...</string>
+    <string name="add_your_comment_403_forbidden_error_text">提交评论发生错误：账号权限需要player或则team!</string>
 </resources>

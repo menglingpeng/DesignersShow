@@ -2,12 +2,10 @@ package com.menglingpeng.designersshow.mvp.presenter;
 
 import android.content.Context;
 
-import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.mvp.interf.OnloadJsonListener;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerModel;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerPresenterIf;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerView;
-import com.menglingpeng.designersshow.mvp.model.Shots;
 import com.menglingpeng.designersshow.utils.Constants;
 
 import java.util.HashMap;

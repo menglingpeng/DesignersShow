@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dialog_post_comment_layout_marginLeft">
+
+    <ProgressBar
+        android:id="@+id/post_comment_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/post_comment_pb"
+        android:layout_marginLeft="@dimen/dialog_post_comment_layout_marginLeft"
+        android:layout_centerVertical="true"
+        android:text="@string/dialog_post_comment_text"
+        android:textSize="@dimen/dialog_post_comment_tv_text_size"/>
+
+</RelativeLayout>

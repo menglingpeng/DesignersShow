@@ -21,7 +21,7 @@
             app:titleEnabled="false">
 
             <ImageView
-                android:id="@+id/detail_im"
+                android:id="@+id/detail_iv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/recycler_view_item_shots_im__layout_height"
                 android:background="@color/colorPrimary"
@@ -61,43 +61,43 @@
                 android:paddingRight="@dimen/detail_title_rl_paddingRight">
 
                 <TextView
-                    android:id="@+id/detail_title_tx"
+                    android:id="@+id/detail_title_tv"
                     style="@style/Base.TextAppearance.AppCompat.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:id="@+id/detail_update_time_tx"
+                    android:id="@+id/detail_update_time_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/detail_title_tx"
+                    android:layout_below="@+id/detail_title_tv"
                     android:layout_marginTop="@dimen/detail_update_time_tx_layout_marginTop" />
 
                 <ImageView
-                    android:id="@+id/detail_avatar_im"
+                    android:id="@+id/detail_avatar_iv"
                     android:layout_width="@dimen/recycler_view_item_avatar_layout_width"
                     android:layout_height="@dimen/recycler_view_item_avatar_layout_height"
-                    android:layout_below="@+id/detail_update_time_tx"
+                    android:layout_below="@+id/detail_update_time_tv"
                     android:layout_marginTop="@dimen/detail_avatar_im_layout_marginTop" />
 
                 <TextView
-                    android:id="@+id/detail_user_name_tx"
+                    android:id="@+id/detail_user_name_tv"
                     style="@style/TextAppearance.AppCompat.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/detail_update_time_tx"
+                    android:layout_below="@+id/detail_update_time_tv"
                     android:layout_marginLeft="@dimen/detail_user_name_tx_layout_marginLeft"
                     android:layout_marginTop="@dimen/detail_user_name_tx_layout_marginTop"
-                    android:layout_toRightOf="@+id/detail_avatar_im" />
+                    android:layout_toRightOf="@+id/detail_avatar_iv" />
 
                 <TextView
-                    android:id="@+id/detail_user_location_tx"
+                    android:id="@+id/detail_user_location_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/detail_user_name_tx"
+                    android:layout_below="@+id/detail_user_name_tv"
                     android:layout_marginLeft="@dimen/detail_user_location_tx_layout_marginLeft"
                     android:layout_marginTop="@dimen/detail_user_location_tx_layout_marginTop"
-                    android:layout_toRightOf="@+id/detail_avatar_im" />
+                    android:layout_toRightOf="@+id/detail_avatar_iv" />
 
             </RelativeLayout>
 
@@ -121,14 +121,14 @@
                     android:paddingTop="@dimen/detail_desc_ll_fl_paddingTop">
 
                     <ImageView
-                        android:id="@+id/detail_likes_im"
+                        android:id="@+id/detail_likes_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|top"
                         android:src="@drawable/ic_favorite_grey_600" />
 
                     <TextView
-                        android:id="@+id/detail_likes_count_tx"
+                        android:id="@+id/detail_likes_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|bottom" />
@@ -144,14 +144,14 @@
                     android:paddingTop="@dimen/detail_desc_ll_fl_paddingTop">
 
                     <ImageView
-                        android:id="@+id/detail_comments_im"
+                        android:id="@+id/detail_comments_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|top"
                         android:src="@drawable/ic_mode_comment_grey_600" />
 
                     <TextView
-                        android:id="@+id/detail_comments_tx"
+                        android:id="@+id/detail_comments_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|bottom" />
@@ -167,14 +167,14 @@
                     android:paddingTop="@dimen/detail_desc_ll_fl_paddingTop">
 
                     <ImageView
-                        android:id="@+id/detail_buckets_im"
+                        android:id="@+id/detail_buckets_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|top"
                         android:src="@drawable/ic_buckets_grey_600_24dp" />
 
                     <TextView
-                        android:id="@+id/detail_buckets_count_tx"
+                        android:id="@+id/detail_buckets_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|bottom" />
@@ -190,14 +190,14 @@
                     android:paddingTop="@dimen/detail_desc_ll_fl_paddingTop">
 
                     <ImageView
-                        android:id="@+id/detail_views_im"
+                        android:id="@+id/detail_views_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|top"
                         android:src="@drawable/ic_view" />
 
                     <TextView
-                        android:id="@+id/detail_views_count_tx"
+                        android:id="@+id/detail_views_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|bottom" />
@@ -221,7 +221,7 @@
                 android:visibility="gone" />
 
             <TextView
-                android:id="@+id/detail_desc_tx"
+                android:id="@+id/detail_desc_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/detail_attachment_bt"

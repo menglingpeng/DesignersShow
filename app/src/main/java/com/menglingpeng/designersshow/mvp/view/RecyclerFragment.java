@@ -25,7 +25,7 @@ import com.menglingpeng.designersshow.mvp.model.Follower;
 import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Likes;
 import com.menglingpeng.designersshow.mvp.model.Project;
-import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.mvp.model.Shot;
 import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.other.RecyclerAdapter;
 import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
@@ -44,7 +44,7 @@ import java.util.HashMap;
  */
 
 public class RecyclerFragment extends BaseFragment implements com.menglingpeng.designersshow.mvp.interf
-        .RecyclerView<Shots>, OnRecyclerListItemListener, SwipeRefreshLayout.OnRefreshListener {
+        .RecyclerView<Shot>, OnRecyclerListItemListener, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefresh;
@@ -430,7 +430,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                         jsonList = Json.parseArrayJson(json, Following.class);
                         break;
                     default:
-                        jsonList = Json.parseArrayJson(json, Shots.class);
+                        jsonList = Json.parseArrayJson(json, Shot.class);
                         break;
                 }
                 if (!type.equals(Constants.REQUEST_ADD_A_SHOT_TO_BUCKET)) {
@@ -455,12 +455,12 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         Resources resources = context.getResources();
         if (viewHolder instanceof RecyclerAdapter.ShotViewHolder) {
             intent = new Intent(getActivity(), ShotDetailActivity.class);
-            intent.putExtra(Constants.SHOTS, (Shots) t);
+            intent.putExtra(Constants.SHOTS, (Shot) t);
             intent.putExtra(Constants.TYPE, Constants.SHOT_DETAIL);
             startActivity(intent);
         } else if (viewHolder instanceof RecyclerAdapter.ProfileShotViewHolder) {
             intent = new Intent(getActivity(), ShotDetailActivity.class);
-            intent.putExtra(Constants.SHOTS, (Shots) t);
+            intent.putExtra(Constants.SHOTS, (Shot) t);
             intent.putExtra(Constants.TYPE, Constants.USER_SHOT_DETAIL);
             intent.putExtra(Constants.USER, (User) getArguments().getSerializable(Constants.USER));
             startActivity(intent);

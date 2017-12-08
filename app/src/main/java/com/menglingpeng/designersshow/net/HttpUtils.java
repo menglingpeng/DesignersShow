@@ -163,6 +163,11 @@ HttpUtils {
                         }
                         url = Constants.BUCKETS_URL;
                         break;
+                    case Constants.REQUEST_CREATE_A_COMMENT:
+                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
+                                .append("/").append(Constants.COMMENTS).toString();
+                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                        bodyBuilder.add(Constants.BODY, map.get(Constants.BODY));
                     default:
                         break;
 

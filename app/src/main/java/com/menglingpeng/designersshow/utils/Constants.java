@@ -17,6 +17,7 @@ public class Constants {
     public static final String REQUEST_DELETE_MEIHOD = "delete";
     public static final String CODE_404_NOT_FOUND = "404";
     public static final String CODE_204_NO_CONTENT = "204";
+    public static final String CODE_403_FORBIDDEN = "403";
     public static final String TIME_OUT = "timed out";
     public static final String EMPTY = "[]";
     public static final String SNACKBAR_TEXT = "snackbar_text";
@@ -54,6 +55,7 @@ public class Constants {
     public static final String AUTH_USER_ID = "user_id";
     public static final String SHOT_ID = "shot_id";
     public static final String BUCKET_ID = "bucket_id";
+    public static final String BODY = "body";
     public static final String COMMENTS_COUNT = "comments_count";
     public static final String LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL = "https://api.dribbble" +
             ".com/v1/user/following/shots";
@@ -137,6 +139,7 @@ public class Constants {
     public static final String REQUEST_LOAD_MORE = "loadmore";
     public static final String REQUEST_AUTH_TOKEN = "auth_token";
     public static final String REQUEST_LIST_COMMENTS = "list_comments";
+    public static final String REQUEST_CREATE_A_COMMENT = "create_a_comment";
     public static final String REQUEST_LIST_SHOTS_FOR_A_BUCKET = "list_shots_for_a_bucket";
     public static final String REQUEST_ADD_A_SHOT_TO_BUCKET = "add_a_shot_to_a_bucket";
     public static final String REQUEST_LIST_SHOTS_FOR_A_PROJECT = "list_shots_for_a_project";

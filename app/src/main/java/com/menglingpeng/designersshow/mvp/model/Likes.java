@@ -9,7 +9,7 @@ public class Likes {
 
     private String created_at;
 
-    private Shots shot;
+    private Shot shot;
 
     public int getId() {
         return id;
@@ -27,11 +27,11 @@ public class Likes {
         this.created_at = created_at;
     }
 
-    public Shots getShot() {
+    public Shot getShot() {
         return shot;
     }
 
-    public void setShot(Shots shot) {
+    public void setShot(Shot shot) {
         this.shot = shot;
     }
 }

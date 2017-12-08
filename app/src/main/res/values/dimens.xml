@@ -83,6 +83,8 @@
     <dimen name="add_comment_et_layout_width">0dp</dimen>
     <item name="add_comment_et_layout_weight" format="integer" type="dimen">1</item>
     <dimen name="add_comment_et_layout_marginLeft">20dp</dimen>
+    <dimen name="dialog_post_comment_layout_marginLeft">20dp</dimen>
+    <dimen name="dialog_post_comment_tv_text_size">18dp</dimen>
     <dimen name="user_profile_ctb_layout_height">350dp</dimen>
     <dimen name="user_profile_avatar_im_layout_width">80dp</dimen>
     <dimen name="user_profile_avatar_im_layout_height">80dp</dimen>

@@ -24,7 +24,7 @@ import com.menglingpeng.designersshow.mvp.model.Comment;
 import com.menglingpeng.designersshow.mvp.model.Follower;
 import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Project;
-import com.menglingpeng.designersshow.mvp.model.Shots;
+import com.menglingpeng.designersshow.mvp.model.Shot;
 import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.view.UserBucketsActivity;
 import com.menglingpeng.designersshow.mvp.view.UserLikesActivity;
@@ -210,7 +210,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ShotViewHolder) {
             final ShotViewHolder viewHolder = (ShotViewHolder) holder;
-            final Shots shot = (Shots) list.get(position);
+            final Shot shot = (Shot) list.get(position);
             boolean isGif = shot.isAnimated();
             int attachmentsCount = shot.getAttachments_count();
             ImageLoader.loadCricleImage(fragment, shot.getUser().getAvatar_url(), viewHolder.avatarIv);
@@ -347,9 +347,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.profileTablayoutDetailShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
             viewHolder.profileTablayoutDetailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
-                    .getLikes_count()), context.getString(R.string.detail_likes_tx)));
+                    .getLikes_count()), context.getString(R.string.detail_likes_tv_text)));
             viewHolder.profileTablayoutDetailBucketsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
-                    .getBuckets_count()), context.getString(R.string.detail_buckets_tx)));
+                    .getBuckets_count()), context.getString(R.string.detail_buckets_tv_text)));
             viewHolder.profileTablayoutDetailProjectsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getProject_count()), context.getString(R.string.project)));
             viewHolder.profileTablayoutDetailFollowersCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
@@ -415,7 +415,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         } else if (holder instanceof ProfileShotViewHolder) {
             final ProfileShotViewHolder viewHolder = (ProfileShotViewHolder) holder;
-            final Shots shot = (Shots) list.get(position);
+            final Shot shot = (Shot) list.get(position);
             boolean isGif = shot.isAnimated();
             int attachmentsCount = shot.getAttachments_count();
             viewHolder.profileShotTitleTx.setText(shot.getTitle());

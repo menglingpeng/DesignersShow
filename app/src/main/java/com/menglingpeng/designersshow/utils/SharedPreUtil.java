@@ -2,12 +2,9 @@ package com.menglingpeng.designersshow.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.menglingpeng.designersshow.BaseApplication;
-import com.menglingpeng.designersshow.mvp.model.Shots;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
