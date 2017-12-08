@@ -168,6 +168,13 @@ HttpUtils {
                                 .append("/").append(Constants.COMMENTS).toString();
                         bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
                         bodyBuilder.add(Constants.BODY, map.get(Constants.BODY));
+                        break;
+                    case Constants.REQUEST_LIKE_A_COMMENT:
+                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map
+                                .get(Constants.SHOT_ID)).append("/").append(Constants.COMMENTS).append("/")
+                                .append(map.get(Constants.COMMENT_ID)).append("/").append(Constants.LIKE).toString();
+                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                        break;
                     default:
                         break;
 

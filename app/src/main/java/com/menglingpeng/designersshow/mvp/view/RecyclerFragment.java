@@ -458,6 +458,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             intent.putExtra(Constants.SHOTS, (Shot) t);
             intent.putExtra(Constants.TYPE, Constants.SHOT_DETAIL);
             startActivity(intent);
+        } else if(viewHolder instanceof RecyclerAdapter.CommentViewHolder){
+
         } else if (viewHolder instanceof RecyclerAdapter.ProfileShotViewHolder) {
             intent = new Intent(getActivity(), ShotDetailActivity.class);
             intent.putExtra(Constants.SHOTS, (Shot) t);

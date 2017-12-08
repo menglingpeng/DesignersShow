@@ -26,6 +26,7 @@ import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Project;
 import com.menglingpeng.designersshow.mvp.model.Shot;
 import com.menglingpeng.designersshow.mvp.model.User;
+import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.mvp.view.UserBucketsActivity;
 import com.menglingpeng.designersshow.mvp.view.UserLikesActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProfileActivity;
@@ -525,6 +526,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             commentCreateAtTv = (TextView) view.findViewById(R.id.detail_comment_create_at_tv);
             commentLikesIv = (ImageView) view.findViewById(R.id.detail_comment_likes_iv);
             commentLikesCountTv = (TextView) view.findViewById(R.id.detail_comment_likes_count_tv);
+        }
+    }
+
+    public class OperateCommentViewHolder extends RecyclerView.ViewHolder{
+        public final RelativeLayout likeCommentRl;
+        public final RelativeLayout replyCommentRl;
+        public final RelativeLayout copyCommentRl;
+
+        public OperateCommentViewHolder(View view) {
+            super(view);
+            likeCommentRl = (RelativeLayout)view.findViewById(R.id.like_comment_rl);
+            replyCommentRl = (RelativeLayout)view.findViewById(R.id.reply_comment_rl);
+            copyCommentRl = (RelativeLayout)view.findViewById(R.id.copy_comment_rl);
+            likeCommentRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
         }
     }
 
