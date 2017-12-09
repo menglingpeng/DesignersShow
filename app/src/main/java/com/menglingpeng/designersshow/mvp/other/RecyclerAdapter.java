@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -249,7 +251,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
 
         } else if (holder instanceof CommentViewHolder) {
-            CommentViewHolder viewHolder = (CommentViewHolder) holder;
+            final CommentViewHolder viewHolder = (CommentViewHolder) holder;
             final Comment comment = (Comment) list.get(position);
             ImageLoader.loadCricleImage(context, comment.getUser().getAvatar_url(), viewHolder.avatarIv);
             viewHolder.avatarIv.setOnClickListener(new View.OnClickListener() {
@@ -270,8 +272,37 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.usernameTv.setText(comment.getUser().getUsername());
             viewHolder.commentCreateAtTv.setText(TimeUtil.getTimeDifference(comment.getCreated_at()));
             viewHolder.commentLikesCountTv.setText(String.valueOf(comment.getLikes_count()));
-
-        } else if (holder instanceof BucketsViewHolder) {
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onRecyclerFragmentListListener(viewHolder, comment);
+                    }
+                }
+            });
+        } else if (holder instanceof OperateCommentViewHolder){
+            OperateCommentViewHolder viewHolder = (OperateCommentViewHolder)holder;
+            final Comment comment = (Comment) list.get(position);
+            viewHolder.likeCommentRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
+            viewHolder.replyCommentRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText editText = (EditText)fragment.getActivity().findViewById(R.id.add_comment_et);
+                    editText.setFocusable(true);
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+                    editText.setText(new StringBuilder().append("@").append(comment.getUser().getUsername().toString()));
+                    editText.setSelection(editText.getText().toString().length());
+                    InputMethodManager imm = (InputMethodManager)editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput( editText, 0);
+                }
+            });
+        }
+        else if (holder instanceof BucketsViewHolder) {
             final BucketsViewHolder viewHolder = (BucketsViewHolder) holder;
             final Buckets bucket = (Buckets) list.get(position);
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -539,11 +570,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             likeCommentRl = (RelativeLayout)view.findViewById(R.id.like_comment_rl);
             replyCommentRl = (RelativeLayout)view.findViewById(R.id.reply_comment_rl);
             copyCommentRl = (RelativeLayout)view.findViewById(R.id.copy_comment_rl);
-            likeCommentRl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                }
-            });
         }
     }
 

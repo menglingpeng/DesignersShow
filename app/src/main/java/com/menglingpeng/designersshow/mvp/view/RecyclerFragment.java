@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseActivity;
@@ -459,7 +464,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             intent.putExtra(Constants.TYPE, Constants.SHOT_DETAIL);
             startActivity(intent);
         } else if(viewHolder instanceof RecyclerAdapter.CommentViewHolder){
-
         } else if (viewHolder instanceof RecyclerAdapter.ProfileShotViewHolder) {
             intent = new Intent(getActivity(), ShotDetailActivity.class);
             intent.putExtra(Constants.SHOTS, (Shot) t);
