@@ -1,5 +1,7 @@
 package com.menglingpeng.designersshow.mvp.other;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -36,6 +38,7 @@ import com.menglingpeng.designersshow.mvp.view.UserFollowingActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProjectsActivity;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
 
@@ -283,6 +286,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else if (holder instanceof OperateCommentViewHolder){
             OperateCommentViewHolder viewHolder = (OperateCommentViewHolder)holder;
             final Comment comment = (Comment) list.get(position);
+            final EditText editText = (EditText)fragment.getActivity().findViewById(R.id.add_comment_et);
             viewHolder.likeCommentRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -291,7 +295,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.replyCommentRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EditText editText = (EditText)fragment.getActivity().findViewById(R.id.add_comment_et);
                     editText.setFocusable(true);
                     editText.setFocusableInTouchMode(true);
                     editText.requestFocus();
@@ -299,6 +302,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     editText.setSelection(editText.getText().toString().length());
                     InputMethodManager imm = (InputMethodManager)editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput( editText, 0);
+                }
+            });
+            viewHolder.copyCommentRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clipData = ClipData.newPlainText("copy comment", comment.getBody());
+                    cm.setPrimaryClip(clipData);
+                    SnackUI.showSnackShort(context, fragment.getActivity().findViewById(R.id.comments_cdl), context.getString(R.string.comment_text_copied_in_clipboard));
                 }
             });
         }
