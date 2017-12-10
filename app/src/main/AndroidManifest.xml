@@ -50,7 +50,8 @@
         <activity android:name=".mvp.view.UserBucketsActivity" />
         <activity android:name=".mvp.view.UserLikesActivity" />
         <activity android:name=".mvp.view.UserProjectsActivity" />
-        <activity android:name=".mvp.view.ProjectDetailActivity"></activity>
+        <activity android:name=".mvp.view.ProjectDetailActivity" />
+        <activity android:name=".mvp.view.SettingsActivity"></activity>
     </application>
 
 </manifest>

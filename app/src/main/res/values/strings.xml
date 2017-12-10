@@ -99,4 +99,7 @@
     <string name="dialog_post_comment_text">提交评论中...</string>
     <string name="add_your_comment_403_forbidden_error_text">提交评论发生错误：账号权限需要player或则team!</string>
     <string name="comment_text_copied_in_clipboard">评论已经复制到剪贴板中</string>
+    <string name="title_activity_settings">设置</string>
+
+
 </resources>
