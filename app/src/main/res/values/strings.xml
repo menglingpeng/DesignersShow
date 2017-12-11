@@ -100,6 +100,17 @@
     <string name="add_your_comment_403_forbidden_error_text">提交评论发生错误：账号权限需要player或则team!</string>
     <string name="comment_text_copied_in_clipboard">评论已经复制到剪贴板中</string>
     <string name="title_activity_settings">设置</string>
+    <string name="settings_preference_category_data_title">数据</string>
+    <string name="settings_switch_preference_data_saving_mode_title">数据保存模式</string>
+    <string name="settings_switch_preference_data_saving_mode_summary">在图片列表上加载低分辨率的图片以节省数据流量</string>
+    <string name="settings_switch_preference_gifs_autoplay_title">自动播放</string>
+    <string name="settings_switch_preference_gifs_autoplay_summary">在图片列表上自动播放GIF图片</string>
+    <string name="settings_switch_preference_clear_cache_title">清除缓存</string>
+    <string name="settings_switch_preference_clear_cache_summary">清除所有的图片缓存</string>
+    <string name="settings_preference_category_about_title">关于</string>
+    <string name="settings_preference_about_the_app_title">关于应用</string>
+    <string name="settings_preference_contact_me_title">联系我</string>
+    <string name="settings_preference_contact_me_summary">给我发送邮件</string>
 
 
 </resources>

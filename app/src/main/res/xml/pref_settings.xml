@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <PreferenceCategory
+        android:title="@string/settings_preference_category_data_title"
+        android:layout="@layout/pref_catagory_data">
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/settings_preference_category_about_title">
+        <Preference
+            android:key="about_the_app"
+            android:title="@string/settings_preference_about_the_app_title"/>
+        <Preference
+            android:key="contact_me1"
+            android:title="@string/settings_preference_contact_me_title"
+            android:summary="@string/settings_preference_contact_me_summary"/>
+    </PreferenceCategory>
 </PreferenceScreen>

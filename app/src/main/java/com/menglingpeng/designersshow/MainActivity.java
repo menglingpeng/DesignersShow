@@ -46,6 +46,7 @@ import com.menglingpeng.designersshow.mvp.model.AuthToken;
 import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
+import com.menglingpeng.designersshow.mvp.view.SettingsActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProfileActivity;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
 import com.menglingpeng.designersshow.utils.Constants;
@@ -408,6 +409,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 replaceFragment(newFragment(menuType));
                 break;
             case Constants.MENU_SETTING:
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
                 break;
             default:
                 floatingActionButton.setVisibility(FloatingActionButton.GONE);

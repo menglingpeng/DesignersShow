@@ -23,4 +23,9 @@
 
     <include layout="@layout/container"></include>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/settings_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
 </android.support.design.widget.CoordinatorLayout>

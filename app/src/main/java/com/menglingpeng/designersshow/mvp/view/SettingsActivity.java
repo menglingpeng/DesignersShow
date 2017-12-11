@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow.mvp.view;
 
+import android.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -28,5 +29,7 @@ public class SettingsActivity extends BaseActivity {
                 finish();
             }
         });
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, new SettingsFragment()).commit();
     }
 }
