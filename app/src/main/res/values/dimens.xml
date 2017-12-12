@@ -124,7 +124,7 @@
     <dimen name="profile_tablayout_followers_shots_count_tx_layout_marginTop">10dp</dimen>
     <dimen name="profile_tablayout_followers_shots_count_tx_layout_marginBottom">15dp</dimen>
     <dimen name="profile_tablayout_followers_followers_count_tx_layout_marginLeft">15dp</dimen>
-    <dimen name="settings_preference_category_cv_layout_marginTop">20dp</dimen>
+    <dimen name="settings_preference_category_cv_layout_marginTop">15dp</dimen>
     <dimen name="settings_preference_category_data_title_tv_layout_margin_top_bottom">10dp</dimen>
     <dimen name="settings_preference_category_data_title_tv_layout_marginLeft">15dp</dimen>
     <dimen name="settings_switch_preference_title_tv_layout_marginTop">10dp</dimen>

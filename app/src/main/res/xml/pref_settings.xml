@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:layout="@layout/pref_catagory_data">
-    </PreferenceCategory>
-    <PreferenceCategory
-        android:layout="@layout/pref_category_about">
-    </PreferenceCategory>
+    <Preference
+        android:layout="@layout/pref_card_layout_margin_top"/>
+    <com.menglingpeng.designersshow.mvp.view.DataPreference
+        android:key="settings_data_pref" />
+    <Preference
+        android:layout="@layout/pref_card_layout_margin_top"/>
+    <com.menglingpeng.designersshow.mvp.view.AboutPreference
+        android:key="settings_about_pref"/>
 </PreferenceScreen>
