@@ -23,6 +23,9 @@ public class DataPreference extends Preference {
     private RelativeLayout gifsAutoplayRl;
     private Switch gifsAutoplaySwitch;
     private RelativeLayout clearCacheRl;
+    private View.OnClickListener listener;
+
+
     public DataPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -40,6 +43,13 @@ public class DataPreference extends Preference {
         gifsAutoplayRl = (RelativeLayout)view.findViewById(R.id.settings_switch_preference_gifs_autoplay_rl);
         gifsAutoplaySwitch = (Switch)view.findViewById(R.id.settings_switch_preference_gifs_autoplay_switch);
         clearCacheRl = (RelativeLayout)view.findViewById(R.id.settings_switch_preference_clear_cache_rl);
+        savingDataModeRl.setOnClickListener(listener);
+        gifsAutoplayRl.setOnClickListener(listener);
+        clearCacheRl.setOnClickListener(listener);
+    }
+
+    public void setOnclickListerner(View.OnClickListener listerner){
+        this.listener = listerner;
     }
 
     public RelativeLayout getSavingDataModeRl(){

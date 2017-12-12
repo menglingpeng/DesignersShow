@@ -38,6 +38,7 @@ import com.menglingpeng.designersshow.mvp.view.UserFollowingActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProjectsActivity;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.SharedPreUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
@@ -217,6 +218,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof ShotViewHolder) {
             final ShotViewHolder viewHolder = (ShotViewHolder) holder;
             final Shot shot = (Shot) list.get(position);
+            String shotUrl = null;
             boolean isGif = shot.isAnimated();
             int attachmentsCount = shot.getAttachments_count();
             ImageLoader.loadCricleImage(fragment, shot.getUser().getAvatar_url(), viewHolder.avatarIv);
@@ -232,7 +234,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.shotTitleTx.setText(shot.getTitle());
             viewHolder.shotUserNameTx.setText(shot.getUser().getUsername());
             viewHolder.shotCreatedTimeTx.setText(TimeUtil.getTimeDifference(shot.getUpdated_at()));
-            ImageLoader.load(fragment, shot.getImages().getNormal(), viewHolder.shotIm, false);
+            if(SharedPreUtil.getState(Constants.SAVING_LOWER_IMAGE)){
+                shotUrl = shot.getImages().getTeaser();
+            }else {
+                shotUrl = shot.getImages().getNormal();
+            }
+            ImageLoader.load(fragment, shotUrl, viewHolder.shotIm, false);
             if (isGif) {
                 viewHolder.shotGifIm.setVisibility(TextView.VISIBLE);
             }
@@ -298,9 +305,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     editText.setFocusable(true);
                     editText.setFocusableInTouchMode(true);
                     editText.requestFocus();
-                    editText.setText(new StringBuilder().append("@").append(comment.getUser().getUsername().toString()));
+                    editText.setText(new StringBuilder().append("@").append(comment.getUser().getUsername().toString()
+                    ));
                     editText.setSelection(editText.getText().toString().length());
-                    InputMethodManager imm = (InputMethodManager)editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager)editText.getContext().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput( editText, 0);
                 }
             });
@@ -310,7 +319,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clipData = ClipData.newPlainText("copy comment", comment.getBody());
                     cm.setPrimaryClip(clipData);
-                    SnackUI.showSnackShort(context, fragment.getActivity().findViewById(R.id.comments_cdl), context.getString(R.string.comment_text_copied_in_clipboard));
+                    SnackUI.showSnackShort(context, fragment.getActivity().findViewById(R.id.comments_cdl), context
+                            .getString(R.string.comment_text_copied_in_clipboard));
                 }
             });
         }

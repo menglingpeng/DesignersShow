@@ -23,11 +23,7 @@ public class SharedPreUtil {
      * 保存用户登陆状态。
      */
     public static boolean saveState(String key, Boolean is) {
-        if (key.equals(Constants.IS_FIRST_START)) {
-            editor.putBoolean(Constants.IS_FIRST_START, is);
-        } else {
-            editor.putBoolean(Constants.IS_LOGIN, is);
-        }
+        editor.putBoolean(key, is);
         return editor.commit();
     }
 
