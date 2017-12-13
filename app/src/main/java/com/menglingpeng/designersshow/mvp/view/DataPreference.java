@@ -83,4 +83,5 @@ public class DataPreference extends Preference {
     public RelativeLayout getClearCacheRl(){
         return clearCacheRl;
     }
+
 }

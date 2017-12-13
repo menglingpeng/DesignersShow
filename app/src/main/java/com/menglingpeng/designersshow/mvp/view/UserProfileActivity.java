@@ -152,7 +152,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
         });
         profileNameTv.setText(user.getUsername());
         profileDescTv.setText(user.getBio());
-        ImageLoader.load(getApplicationContext(), user.getAvatar_url(), profileBackgroundIv, true);
+        ImageLoader.load(getApplicationContext(), user.getAvatar_url(), profileBackgroundIv, true, false);
         ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), profileAvatarIv);
         initTabPager();
     }

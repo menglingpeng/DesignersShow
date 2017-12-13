@@ -25,7 +25,7 @@ public class Constants {
     public static final String SETTINGS_DATA_PREF = "settings_data_pref";
     public static final String SAVING_LOWER_IMAGE = "saving_lower_image";
     public static final String GIFS_AUTO_PLAY = "gifs_auto_play";
-    public static final String SETTINS_ABOUT_PREF = "settings_data_pref";
+    public static final String SETTINGS_ABOUT_PREF = "settings_data_pref";
     /**
      * Dribbble API
      */

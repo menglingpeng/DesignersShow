@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/settings_preference_category_cv_layout_marginTop"
@@ -15,41 +14,55 @@
             android:id="@+id/settings_preference_about_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/settings_preference_category_data_title_tv_layout_margin_top_bottom"
             android:layout_marginBottom="@dimen/settings_preference_category_data_title_tv_layout_margin_top_bottom"
             android:layout_marginLeft="@dimen/settings_preference_category_data_title_tv_layout_marginLeft"
+            android:layout_marginTop="@dimen/settings_preference_category_data_title_tv_layout_margin_top_bottom"
             android:text="@string/settings_preference_category_about_title"
-            android:textColor="@color/colorAccent"/>
+            android:textColor="@color/colorAccent" />
 
-        <TextView
-            android:id="@+id/settings_preference_about_app_title_tv"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/settings_preference_about_app_rl"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/settings_preference_about_title_tv"
-            android:layout_marginTop="@dimen/settings_switch_preference_title_tv_layout_marginTop"
-            android:layout_marginLeft="@dimen/settings_switch_preference_title_tv_layout_marginLeft"
-            android:text="@string/settings_preference_about_the_app_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Notification.Title"/>
+            android:layout_below="@id/settings_preference_about_title_tv"
+            android:layout_marginBottom="@dimen/settings_switch_preference_rl_layout_marginBottom"
+            android:layout_marginTop="@dimen/settings_switch_preference_rl_layout_marginTop">
 
-        <TextView
-            android:id="@+id/settings_preference_contact_me_title_tv"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/settings_switch_preference_clear_cache_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/settings_switch_preference_title_tv_layout_marginLeft"
+                android:text="@string/settings_preference_about_the_app_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Notification.Title" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/settings_preference_contact_me_rl"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/settings_preference_about_app_title_tv"
-            android:layout_marginTop="@dimen/settings_switch_preference_rl_layout_marginTop"
-            android:layout_marginLeft="@dimen/settings_switch_preference_title_tv_layout_marginLeft"
-            android:text="@string/settings_preference_contact_me_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Notification.Title"/>
+            android:layout_below="@id/settings_preference_about_app_rl"
+            android:layout_marginBottom="@dimen/settings_switch_preference_rl_layout_marginBottom"
+            android:layout_marginTop="@dimen/settings_switch_preference_rl_layout_marginTop">
 
-        <TextView
-            android:id="@+id/settings_switch_preference_contact_me_summary_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/settings_preference_contact_me_title_tv"
-            android:layout_alignLeft="@+id/settings_preference_contact_me_title_tv"
-            android:layout_marginTop="@dimen/settings_switch_preference_summary_tv__layout_marginTop"
-            android:layout_marginEnd="@dimen/settings_switch_preference_summary_tv__layout_marginEnd"
-            android:text="@string/settings_preference_contact_me_summary"/>
+            <TextView
+                android:id="@+id/settings_preference_contact_me_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/settings_switch_preference_title_tv_layout_marginLeft"
+                android:text="@string/settings_preference_contact_me_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Notification.Title" />
 
+            <TextView
+                android:id="@+id/settings_switch_preference_contact_me_summary_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/settings_preference_contact_me_title_tv"
+                android:layout_below="@+id/settings_preference_contact_me_title_tv"
+                android:layout_marginEnd="@dimen/settings_switch_preference_summary_tv__layout_marginEnd"
+                android:layout_marginTop="@dimen/settings_switch_preference_summary_tv__layout_marginTop"
+                android:text="@string/settings_preference_contact_me_summary" />
+
+        </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

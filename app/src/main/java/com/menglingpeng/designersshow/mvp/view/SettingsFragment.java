@@ -23,6 +23,7 @@ import com.menglingpeng.designersshow.utils.SnackUI;
 
 public class SettingsFragment extends PreferenceFragment implements View.OnClickListener {
     private DataPreference dataPreference;
+    private AboutPreference aboutPreference;
     private Context context;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +36,9 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
 
     private void initPreference(){
         dataPreference = (DataPreference) findPreference(Constants.SETTINGS_DATA_PREF);
+        aboutPreference = (AboutPreference)findPreference(Constants.SETTINGS_ABOUT_PREF);
         dataPreference.setOnclickListerner(this);
+        aboutPreference.setOnclickListerner(this);
     }
 
     @Override
