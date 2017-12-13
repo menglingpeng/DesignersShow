@@ -25,10 +25,22 @@ public class DataPreference extends Preference {
     private RelativeLayout clearCacheRl;
     private View.OnClickListener listener;
 
+    public DataPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public DataPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
 
     public DataPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+    public DataPreference(Context context) {
+        super(context);
+    }
+
 
     @Override
     protected View onCreateView(ViewGroup parent) {

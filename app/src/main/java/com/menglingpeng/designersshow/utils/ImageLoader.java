@@ -50,20 +50,36 @@ import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
 
 public class ImageLoader {
 
-    public static <T> void load(T t, String url, ImageView imageView, Boolean isContext) {
+    public static <T> void load(T t, String url, ImageView imageView, Boolean isContext, Boolean gifsAutoplay) {
         RequestBuilder<Bitmap> requestBuilder = null;
         RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy
                 .AUTOMATIC);
-        if (isContext) {
-            Context context = (Context) t;
-            requestBuilder = Glide.with(context).asBitmap();
-        } else {
-            Fragment fragment = (Fragment) t;
-            requestBuilder = Glide.with(fragment).asBitmap();
+        if(gifsAutoplay){
+            if (isContext) {
+                Context context = (Context) t;
+                Glide.with(context)
+                        .load(url)
+                        .apply(requestOptions)
+                        .into(imageView);
+            } else {
+                Fragment fragment = (Fragment) t;
+                Glide.with(fragment)
+                        .load(url)
+                        .apply(requestOptions)
+                        .into(imageView);
+            }
+        }else {
+            if (isContext) {
+                Context context = (Context) t;
+                requestBuilder = Glide.with(context).asBitmap();
+            } else {
+                Fragment fragment = (Fragment) t;
+                requestBuilder = Glide.with(fragment).asBitmap();
+            }
+            //第一次加载GIF图片时不播放
+            requestBuilder.apply(requestOptions);
+            requestBuilder.load(url).apply(requestOptions).into(imageView);
         }
-        //第一次加载GIF图片时不播放
-        requestBuilder.apply(requestOptions);
-        requestBuilder.load(url).apply(requestOptions).into(imageView);
 
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,14 +24,13 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPreferenceManager().setSharedPreferencesMode(Context.MODE_PRIVATE);
         addPreferencesFromResource(R.xml.pref_settings);
         initPreference();
     }
 
 
     private void initPreference(){
-        dataPreference = (DataPreference)findPreference(Constants.SETTINS_DATA_PREF);
+        dataPreference = (DataPreference) findPreference(Constants.SETTINGS_DATA_PREF);
         dataPreference.setOnclickListerner(this);
     }
 
@@ -47,6 +47,13 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
                 }
                 break;
             case R.id.settings_switch_preference_gifs_autoplay_rl:
+                if(SharedPreUtil.getState(Constants.GIFS_AUTO_PLAY)){
+                    dataPreference.getGifsAutoplaySwitch().setChecked(false);
+                    SharedPreUtil.saveState(Constants.GIFS_AUTO_PLAY, false);
+                }else {
+                    dataPreference.getGifsAutoplaySwitch().setChecked(true);
+                    SharedPreUtil.saveState(Constants.GIFS_AUTO_PLAY, true);
+                }
                 break;
             case R.id.settings_switch_preference_clear_cache_rl:
                 break;

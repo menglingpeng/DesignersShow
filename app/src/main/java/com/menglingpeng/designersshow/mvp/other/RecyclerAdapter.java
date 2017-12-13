@@ -239,7 +239,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else {
                 shotUrl = shot.getImages().getNormal();
             }
-            ImageLoader.load(fragment, shotUrl, viewHolder.shotIm, false);
+            if(SharedPreUtil.getState(Constants.GIFS_AUTO_PLAY)){
+                ImageLoader.load(fragment, shotUrl, viewHolder.shotIm, false, true);
+            }else {
+                ImageLoader.load(fragment, shotUrl, viewHolder.shotIm, false, false);
+            }
             if (isGif) {
                 viewHolder.shotGifIm.setVisibility(TextView.VISIBLE);
             }
@@ -474,7 +478,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             int attachmentsCount = shot.getAttachments_count();
             viewHolder.profileShotTitleTx.setText(shot.getTitle());
             viewHolder.profileShotCreatedTimeTx.setText(TimeUtil.getTimeDifference(shot.getUpdated_at()));
-            ImageLoader.load(fragment, shot.getImages().getNormal(), viewHolder.profileShotIm, false);
+            if(SharedPreUtil.getState(Constants.GIFS_AUTO_PLAY)){
+                ImageLoader.load(fragment, shot.getImages().getNormal(), viewHolder.profileShotIm, false,
+                        true);
+            }else {
+                ImageLoader.load(fragment, shot.getImages().getNormal(), viewHolder.profileShotIm, false,
+                        false);
+            }
             if (isGif) {
                 viewHolder.profileShotGifIm.setVisibility(TextView.VISIBLE);
             }
