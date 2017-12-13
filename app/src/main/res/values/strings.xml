@@ -107,6 +107,7 @@
     <string name="settings_switch_preference_gifs_autoplay_summary">在图片列表上自动播放GIF图片</string>
     <string name="settings_switch_preference_clear_cache_title">清除缓存</string>
     <string name="settings_switch_preference_clear_cache_summary">清除所有的图片缓存</string>
+    <string name="cache_successfully_cleared">成功清除缓存！</string>
     <string name="settings_preference_category_about_title">关于</string>
     <string name="settings_preference_about_the_app_title">关于应用</string>
     <string name="settings_preference_contact_me_title">联系我</string>

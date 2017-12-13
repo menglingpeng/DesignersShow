@@ -128,6 +128,11 @@ public class ImageLoader {
 
     }
 
+    //清理所有磁盘缓存
+    public static void clearDiskCache(Context context){
+        Glide.get(context).clearDiskCache();
+    }
+
     public static void downloadImage(Context context, CoordinatorLayout coordinatorLayout, String url, String
             imageName) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
