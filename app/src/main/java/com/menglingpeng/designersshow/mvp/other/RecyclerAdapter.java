@@ -232,7 +232,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
             viewHolder.shotTitleTx.setText(shot.getTitle());
-            viewHolder.shotUserNameTx.setText(shot.getUser().getUsername());
+            viewHolder.shotUserNameTx.setText(shot.getUser().getName());
             viewHolder.shotCreatedTimeTx.setText(TimeUtil.getTimeDifference(shot.getUpdated_at()));
             if(SharedPreUtil.getState(Constants.SAVING_LOWER_IMAGE)){
                 shotUrl = shot.getImages().getTeaser();
@@ -283,7 +283,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.commentContentTv.setText(Html.fromHtml(comment.getBody()));
             }
             viewHolder.commentContentTv.setMovementMethod(LinkMovementMethod.getInstance());
-            viewHolder.usernameTv.setText(comment.getUser().getUsername());
+            viewHolder.usernameTv.setText(comment.getUser().getName());
             viewHolder.commentCreateAtTv.setText(TimeUtil.getTimeDifference(comment.getCreated_at()));
             viewHolder.commentLikesCountTv.setText(String.valueOf(comment.getLikes_count()));
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -384,7 +384,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
             final User userFollow = user;
             ImageLoader.loadCricleImage(context, userFollow.getAvatar_url(), viewHolder.followerAvatarIm);
-            viewHolder.followerNameTx.setText(userFollow.getUsername());
+            viewHolder.followerNameTx.setText(userFollow.getName());
             viewHolder.followerLocationTx.setText(userFollow.getLocation());
             viewHolder.followerShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(userFollow.getShots_count()
             ), context.getString(R.string.explore_spinner_list_shots)));
@@ -409,11 +409,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.profileTablayoutDetailBucketsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getBuckets_count()), context.getString(R.string.detail_buckets_tv_text)));
             viewHolder.profileTablayoutDetailProjectsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
-                    .getProject_count()), context.getString(R.string.project)));
+                    .getProjects_count()), context.getString(R.string.project)));
             viewHolder.profileTablayoutDetailFollowersCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getFollowers_count()), context.getString(R.string.followers)));
             viewHolder.profileTablayoutDetailFollowingsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
-                    .getFollowing_count()), context.getString(R.string.following)));
+                    .getFollowings_count()), context.getString(R.string.following)));
             viewHolder.profileTablayoutDetailBucketsRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

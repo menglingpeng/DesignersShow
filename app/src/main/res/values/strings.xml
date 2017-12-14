@@ -78,6 +78,8 @@
     <string name="snack_create_a_bucket_text">作品集已创建</string>
     <string name="choose_a_bucket">选择作品集</string>
     <string name="OK">确认</string>
+    <string name="follow">FOLLOW</string>
+    <string name="unfollow">UNFOLLOW</string>
     <string name="choosed">已选择</string>
     <string name="buckets">作品集</string>
     <string name="added_to">已加入</string>

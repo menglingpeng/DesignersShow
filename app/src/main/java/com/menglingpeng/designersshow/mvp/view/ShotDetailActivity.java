@@ -146,7 +146,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 startActivity(intent);
             }
         });
-        detailUserNameTv.setText(user.getUsername());
+        detailUserNameTv.setText(user.getName());
         detailUserLocationTv.setText(user.getLocation());
         detailLikesCountTv = (TextView) findViewById(R.id.detail_likes_count_tv);
         detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shot.getLikes_count()), getResources()

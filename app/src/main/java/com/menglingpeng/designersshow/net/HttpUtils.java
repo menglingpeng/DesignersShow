@@ -41,6 +41,11 @@ HttpUtils {
                                 (Constants.ID)).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
+                    case Constants.CHECK_IF_YOU_ARE_FOLLOWING_A_USER:
+                        url = new StringBuilder().append(Constants.AUTHENTICATED_USER_URL).append("/").append(
+                                Constants.FOLLOWING).append("/").append(map.get(Constants.ID)).toString();
+                        urlBuilder = HttpUrl.parse(url).newBuilder();
+                        break;
                     case Constants.TAB_FOLLOWING:
                         urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL).newBuilder();
                         break;

@@ -134,6 +134,12 @@
     <dimen name="settings_switch_preference_switch_layout_marginEnd">15dp</dimen>
     <dimen name="settings_switch_preference_rl_layout_marginTop">20dp</dimen>
     <dimen name="settings_switch_preference_rl_layout_marginBottom">10dp</dimen>
-
+    <dimen name="profile_follow_bt_layout_margin">20dp</dimen>
+    <dimen name="profile_follow_bt_drawable_padding">10dp</dimen>
+    <dimen name="profile_desc_tv_layout_marginTop">20dp</dimen>
+    <dimen name="profile_desc_tv_layout_marginLeft">30dp</dimen>
+    <dimen name="profile_desc_tv_layout_marginRight">30dp</dimen>
+    <dimen name="profile_avatar_iv_layout_marginTop">50dp</dimen>
+    <item name="profile_ctbl_scrimAnimationDuration" format="integer" type="dimen">300</item>
 
 </resources>

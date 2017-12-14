@@ -10,6 +10,8 @@ public class User implements Serializable {
 
     private int id;
 
+    private String name;
+
     private String username;
 
     private String html_url;
@@ -69,6 +71,14 @@ public class User implements Serializable {
 
     public void setBuckets_count(int buckets_count) {
         this.buckets_count = buckets_count;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {
@@ -143,19 +153,19 @@ public class User implements Serializable {
         this.followers_count = followers_count;
     }
 
-    public int getFollowing_count() {
+    public int getFollowings_count() {
         return followings_count;
     }
 
-    public void setFollowing_count(int followings_count) {
+    public void setFollowings_count(int followings_count) {
         this.followings_count = followings_count;
     }
 
-    public int getProject_count() {
+    public int getProjects_count() {
         return projects_count;
     }
 
-    public void setProject_count(int projects_count) {
+    public void setProjects_count(int projects_count) {
         this.projects_count = projects_count;
     }
 

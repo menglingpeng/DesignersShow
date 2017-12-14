@@ -14,44 +14,88 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/profile_ctbl"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/user_profile_ctb_layout_height"
+            android:layout_height="wrap_content"
             android:visibility="gone"
             android:background="@color/user_profile_backgroud"
             app:contentScrim="@color/colorPrimary"
+            app:scrimAnimationDuration="@dimen/profile_ctbl_scrimAnimationDuration"
             app:expandedTitleGravity="center"
+            app:expandedTitleTextAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:id="@+id/profile_backgroud_iv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_collapseMode="parallax" />
-
-            <ImageView
-                android:id="@+id/profile_avatar_iv"
-                android:layout_width="@dimen/user_profile_avatar_im_layout_width"
-                android:layout_height="@dimen/user_profile_avatar_im_layout_height"
-                android:layout_marginTop="50dp"
-                android:layout_gravity="center_horizontal|top" />
-
             <RelativeLayout
-                android:id="@+id/profile_name_desc_rl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/profile_backgroud_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_collapseMode="parallax" />
+
+                <ImageView
+                    android:id="@+id/profile_avatar_iv"
+                    android:layout_width="@dimen/user_profile_avatar_im_layout_width"
+                    android:layout_height="@dimen/user_profile_avatar_im_layout_height"
+                    android:layout_marginTop="@dimen/profile_avatar_iv_layout_marginTop"
+                    android:layout_centerHorizontal="true" />
 
                 <TextView
                     android:id="@+id/profile_name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center" />
+                    android:layout_marginTop="@dimen/profile_desc_tv_layout_marginTop"
+                    android:layout_below="@+id/profile_avatar_iv"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"/>
 
                 <TextView
                     android:id="@+id/profile_desc_tv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_name_tv"
+                    android:layout_marginTop="@dimen/profile_desc_tv_layout_marginTop"
+                    android:layout_marginLeft="@dimen/profile_desc_tv_layout_marginLeft"
+                    android:layout_marginRight="@dimen/profile_desc_tv_layout_marginRight"
+                    android:gravity="center"
+                    android:textColor="@color/profile_desc_tv"/>
 
+                <Button
+                    android:id="@+id/profile_follow_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_desc_tv"
+                    android:layout_marginTop="@dimen/profile_follow_bt_layout_margin"
+                    android:layout_marginBottom="@dimen/profile_follow_bt_layout_margin"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
+                    android:background="@drawable/dialog_login_shape_radius"
+                    android:paddingLeft="@dimen/dialog_login_bt_padding"
+                    android:paddingRight="@dimen/dialog_login_bt_padding"
+                    android:drawableLeft="@drawable/ic_person_add_white_24dp"
+                    android:text="@string/follow"
+                    android:drawablePadding="@dimen/profile_follow_bt_drawable_padding"
+                    android:textColor="@android:color/white"
+                    android:textSize="18dp"/>
+                <Button
+                    android:id="@+id/profile_unfollow_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_desc_tv"
+                    android:layout_marginTop="@dimen/profile_follow_bt_layout_margin"
+                    android:layout_marginBottom="@dimen/profile_follow_bt_layout_margin"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
+                    android:background="@drawable/button_unfollow_shape_radius"
+                    android:paddingLeft="@dimen/dialog_login_bt_padding"
+                    android:paddingRight="@dimen/dialog_login_bt_padding"
+                    android:drawableLeft="@drawable/ic_remove_white_24dp"
+                    android:text="@string/unfollow"
+                    android:drawablePadding="@dimen/profile_follow_bt_drawable_padding"
+                    android:textColor="@android:color/white"
+                    android:textSize="18dp"/>
+            </RelativeLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/profile_tb"
