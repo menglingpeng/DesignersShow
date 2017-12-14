@@ -139,6 +139,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
         profileBackgroundIv = (ImageView) findViewById(R.id.profile_backgroud_iv);
         profileAvatarIv = (ImageView) findViewById(R.id.profile_avatar_iv);
         profileTl = (TabLayout) findViewById(R.id.profile_tl);
+        profileTl.setVisibility(TabLayout.VISIBLE);
         profileVp = (ViewPager) findViewById(R.id.profile_vp);
         fragmentsList = new ArrayList<>();
         setSupportActionBar(toolbar);
@@ -186,11 +187,11 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
         titlesList.add(getText(R.string.explore_spinner_list_shots).toString());
         titlesList.add(getText(R.string.followers).toString());
         if (type.equals(Constants.REQUEST_AUTH_USER)) {
-            fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER));
+            fragmentsList.add(RecyclerFragment.newInstance(user, Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER));
             fragmentsList.add(RecyclerFragment.newInstance(user, Constants.REQUEST_LIST_SHOTS_FOR_AUTH_USER));
             fragmentsList.add(RecyclerFragment.newInstance(Constants.REQUEST_LIST_FOLLOWERS_FOR_AUTH_USER));
         } else {
-            fragmentsList.add(RecyclerFragment.newInstance(userId, Constants.REQUEST_LIST_DETAIL_FOR_A_USER));
+            fragmentsList.add(RecyclerFragment.newInstance(user, Constants.REQUEST_LIST_DETAIL_FOR_A_USER));
             fragmentsList.add(RecyclerFragment.newInstance(user, Constants.REQUEST_LIST_SHOTS_FOR_A_USER));
             fragmentsList.add(RecyclerFragment.newInstance(userId, Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER));
         }

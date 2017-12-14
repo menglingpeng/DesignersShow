@@ -66,7 +66,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String date = null;
     private String sort = null;
     private int page = 1;
-    private ArrayList jsonList;
+    private ArrayList jsonList = new ArrayList();
+    Fragment fragment = null;
     private Context context;
     private HashMap<String, String> addShotTobucketMap;
     private String text;
@@ -76,6 +77,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String id;
     private int count = 0;
     private String bucketName;
+    private User user;
 
     public static RecyclerFragment newInstance(String type) {
         Bundle bundle = new Bundle();
@@ -114,8 +116,12 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     @Override
     protected void initData() {
         initParameters();
-        presenter = new RecyclerPresenter(this, type, mRequestType, Constants.REQUEST_GET_MEIHOD, map, context);
-        presenter.loadJson();
+        if(!type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER) && !type.equals(
+                Constants.REQUEST_LIST_DETAIL_FOR_A_USER)) {
+            presenter = new RecyclerPresenter(this, type, mRequestType, Constants.REQUEST_GET_MEIHOD, map,
+                    context);
+            presenter.loadJson();
+        }
     }
 
     @Override
@@ -129,6 +135,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         recyclerView.setHasFixedSize(true);
         swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark, R.color.colorPrimary);
         swipeRefresh.setOnRefreshListener(this);
+        if(type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER) || type.equals(
+                Constants.REQUEST_LIST_DETAIL_FOR_A_USER)){
+            setUserAdapter(user);
+        }
     }
 
     private void initParameters() {
@@ -195,6 +205,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 timeframe = Constants.TIMEFRAME_EVER;
                 break;
             case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
+                user = (User)getArguments().get(Constants.USER);
                 break;
             case Constants.MENU_MY_SHOTS:
                 sort = Constants.REQUEST_SORT_RECENT;
@@ -209,6 +220,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 sort = Constants.SORT_RECENT;
                 break;
             case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
+                user = (User)getArguments().get(Constants.USER);
                 break;
             case Constants.REQUEST_LIST_SHOTS_FOR_A_BUCKET:
                 map.put(Constants.ID, getArguments().get(Constants.ID).toString());
@@ -230,8 +242,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
                 break;
             case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
-                id = getArguments().get(Constants.ID).toString();
-                map.put(Constants.ID, id);
+                user = (User)getArguments().get(Constants.USER);
                 break;
             case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
                 sort = Constants.SORT_RECENT;
@@ -303,6 +314,14 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     }
 
+    private void setUserAdapter(User user){
+        fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
+        adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
+        recyclerView.setAdapter(adapter);
+        adapter.addData(user);
+        getActivity().findViewById(R.id.progress_bar).setVisibility(ProgressBar.GONE);
+    }
+
     @Override
     public void loadFailed(String msg) {
         showRefreshProgress(false);
@@ -310,8 +329,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
 
     @Override
     public void loadSuccess(String json, String requestType) {
-        Fragment fragment = null;
-        jsonList = new ArrayList();
         if (json.indexOf(Constants.TIME_OUT) != -1) {
             SnackUI.showErrorSnackShort(context, getActivity().findViewById(R.id.drawer_layout), getString(R.string
                     .an_error_just_occurred_while_connecting_to_Dribbble_try_it_again_later));
@@ -405,10 +422,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                             startActivity(intent);
                         }
                         break;
-                    case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
-                        getActivity().findViewById(R.id.progress_bar).setVisibility(ProgressBar.GONE);
-                        jsonList.add(Json.parseJson(json, User.class));
-                        break;
                     case Constants.REQUEST_LIST_PROJECTS_FOR_AUTH_USER:
                         jsonList = Json.parseArrayJson(json, Project.class);
                         break;
@@ -417,9 +430,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                         break;
                     case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
                         jsonList = Json.parseArrayJson(json, Following.class);
-                        break;
-                    case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
-                        jsonList.add(Json.parseJson(json, User.class));
                         break;
                     case Constants.REQUEST_LIST_LIKES_FOR_A_USER:
                         jsonList = Json.parseArrayJson(json, Likes.class);
