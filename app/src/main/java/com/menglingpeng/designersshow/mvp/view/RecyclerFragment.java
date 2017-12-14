@@ -514,7 +514,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     snackbar.dismiss();
                 }
             } else if (addShotTobucketMap.size() == 1) {
-                if (snackbar != null) {
+                if (snackbar != null && snackbar.isShown()) {
                     snackbar.setText(text);
                 } else {
                     snackbar = SnackUI.showAddShotToBucketsActionSnack(context, coordinatorLayout, text, type, id,
