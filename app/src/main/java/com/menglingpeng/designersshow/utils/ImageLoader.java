@@ -41,6 +41,8 @@ import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
 import java.io.File;
 import java.security.MessageDigest;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
+
 import static com.bumptech.glide.request.target.Target.*;
 import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
 
@@ -126,6 +128,13 @@ public class ImageLoader {
                 })
                 .into(imageView);
 
+    }
+
+    public static void loadBlurImage(Context context, String url, ImageView imageView){
+        Glide.with(context)
+                .load(url)
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25)))
+                .into(imageView);
     }
 
     //清理所有磁盘缓存

@@ -370,6 +370,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             if (!json.equals(Constants.EMPTY)) {
                 switch (type) {
                     case Constants.MENU_MY_LIKES:
+                        getActivity().findViewById(R.id.progress_bar).setVisibility(ProgressBar.GONE);
                         jsonList = Json.parseArrayJson(json, Likes.class);
                         break;
                     case Constants.REQUEST_LIST_COMMENTS:
@@ -405,6 +406,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                         }
                         break;
                     case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
+                        getActivity().findViewById(R.id.progress_bar).setVisibility(ProgressBar.GONE);
                         jsonList.add(Json.parseJson(json, User.class));
                         break;
                     case Constants.REQUEST_LIST_PROJECTS_FOR_AUTH_USER:

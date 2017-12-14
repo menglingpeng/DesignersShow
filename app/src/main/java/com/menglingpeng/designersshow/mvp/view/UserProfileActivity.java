@@ -123,7 +123,6 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
 
     @Override
     public void hideProgress() {
-        progressBar.setVisibility(ProgressBar.GONE);
     }
 
     @Override
@@ -152,7 +151,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
         });
         profileNameTv.setText(user.getUsername());
         profileDescTv.setText(user.getBio());
-        ImageLoader.load(getApplicationContext(), user.getAvatar_url(), profileBackgroundIv, true, false);
+        ImageLoader.loadBlurImage(getApplicationContext(), user.getAvatar_url(), profileBackgroundIv);
         ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), profileAvatarIv);
         initTabPager();
     }
