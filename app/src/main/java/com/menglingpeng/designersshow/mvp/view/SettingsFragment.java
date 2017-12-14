@@ -1,7 +1,12 @@
 package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -65,6 +70,9 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
             case R.id.settings_switch_preference_clear_cache_rl:
                 new ClearDiskCacheTask().execute();
                 break;
+            case R.id.settings_preference_contact_me_rl:
+                sendMailToMe();
+                break;
             default:
                 break;
         }
@@ -83,5 +91,29 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
             super.onPostExecute(aVoid);
             SnackUI.showSnackShort(context, getActivity().findViewById(R.id.settings_cdl), getString(R.string.cache_successfully_cleared));
         }
+    }
+
+    private void sendMailToMe(){
+        String versionCode = null;
+        Uri uri = Uri.parse(Constants.MAIL_TO_URL);
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            versionCode = String.valueOf(info.versionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String emailText = new StringBuilder().append("-------------").append("\n")
+                .append("DEBUG INFO:").append("\n")
+                .append("Android version:").append(Build.VERSION.RELEASE).append("\n")
+                .append("App version:").append(versionCode).append("\n")
+                .append("Manufacturer:").append(Build.MANUFACTURER).append("\n")
+                .append("Brand:").append(Build.BOARD).append("\n")
+                .append("Device model:").append(Build.MODEL).append("\n")
+                .append("-------------").toString();
+        Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+        intent.putExtra(Intent.EXTRA_CC, Constants.EMAIL_CC);
+        intent.putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJECT);
+        intent.putExtra(Intent.EXTRA_TEXT, emailText).toString();
+        startActivity(Intent.createChooser(intent, getString(R.string.email_create_chooser_title)));
     }
 }

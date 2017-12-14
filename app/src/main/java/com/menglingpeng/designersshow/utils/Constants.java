@@ -161,6 +161,10 @@ public class Constants {
     public static final String DESCRIPTION = "description";
     public static final String FOLLOWERS = "followers";
     public static final String FOLLOWING = "following";
+    //联系我
+    public static final String MAIL_TO_URL = "mailto:menglingpengoffice@gmail.com";
+    public static final String EMAIL_CC = "menglingpengoffice@gmail.com";
+    public static final String EMAIL_SUBJECT = "[SHOTS]Feedback";
 
 
 }

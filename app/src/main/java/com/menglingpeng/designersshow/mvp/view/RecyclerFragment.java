@@ -510,7 +510,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     (addShotTobucketMap.size())).append(resources.getString(R.string.buckets)).toString();
             type = Constants.REQUEST_ADD_A_SHOT_TO_BUCKET;
             if (addShotTobucketMap.size() == 0) {
-                if (snackbar != null) {
+                if (snackbar.isShown()) {
                     snackbar.dismiss();
                 }
             } else if (addShotTobucketMap.size() == 1) {
