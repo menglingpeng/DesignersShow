@@ -73,9 +73,6 @@ HttpUtils {
                                 .append("/").append(Constants.COMMENTS).toString();
                         urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
-                    case Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER:
-                        urlBuilder = HttpUrl.parse(Constants.AUTHENTICATED_USER_URL).newBuilder();
-                        break;
                     case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:
                         urlBuilder = HttpUrl.parse(Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES_URL).newBuilder();
                         break;
@@ -93,11 +90,6 @@ HttpUtils {
                         break;
                     case Constants.REQUEST_LIST_FOLLOWING_FOR_AUTH_USER:
                         urlBuilder = HttpUrl.parse(Constants.LIST_FOLLOWING_FOR_AUTH_USER_URL).newBuilder();
-                        break;
-                    case Constants.REQUEST_LIST_DETAIL_FOR_A_USER:
-                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get
-                                (Constants.ID)).toString();
-                        urlBuilder = HttpUrl.parse(url).newBuilder();
                         break;
                     case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
                         url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get

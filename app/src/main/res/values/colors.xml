@@ -9,4 +9,5 @@
     <color name="tablayout_text_color">#BDBDBD</color>
     <color name="bucket_recycler_item_background">#EEEEEE</color>
     <color name="bucket_recycler_item_view_background">#BDBDBD</color>
+    <color name="user_profile_backgroud">#B39DDB</color>
 </resources>

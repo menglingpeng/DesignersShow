@@ -2,6 +2,8 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -32,6 +34,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
     private String type;
     private User user;
     private String userId;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
     private Toolbar toolbar;
     private ImageView profileBackgroundIv, profileAvatarIv;
     private TextView profileNameTv, profileDescTv;
@@ -48,13 +51,6 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
     protected void initLayoutId() {
         type = getIntent().getStringExtra(Constants.TYPE);
         userId = getIntent().getStringExtra(Constants.ID);
-        layoutId = R.layout.activity_user_profile;
-    }
-
-    @Override
-    protected void initViews() {
-        super.initViews();
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         map = new HashMap<>();
         if (type.equals(Constants.REQUEST_SINGLE_USER)) {
             map.put(Constants.ID, userId);
@@ -63,6 +59,13 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
         presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map,
                 getApplicationContext());
         presenter.loadJson();
+        layoutId = R.layout.activity_user_profile;
+    }
+
+    @Override
+    protected void initViews() {
+        super.initViews();
+        progressBar = (ProgressBar) findViewById(R.id.profile_pb);
     }
 
     @Override
@@ -133,6 +136,11 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
     @Override
     public void loadSuccess(String json, String requestType) {
         user = Json.parseJson(json, User.class);
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.profile_ctbl);
+        collapsingToolbarLayout.setVisibility(CollapsingToolbarLayout.VISIBLE);
+        collapsingToolbarLayout.setTitle(user.getUsername());
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
         toolbar = (Toolbar) findViewById(R.id.profile_tb);
         profileNameTv = (TextView) findViewById(R.id.profile_name_tv);
         profileDescTv = (TextView) findViewById(R.id.profile_desc_tv);
@@ -154,6 +162,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
         profileDescTv.setText(user.getBio());
         ImageLoader.loadBlurImage(getApplicationContext(), user.getAvatar_url(), profileBackgroundIv);
         ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), profileAvatarIv);
+        profileBackgroundIv.setAlpha(200);
         initTabPager();
     }
 

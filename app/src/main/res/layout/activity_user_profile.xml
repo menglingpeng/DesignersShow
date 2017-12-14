@@ -12,10 +12,13 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/profile_ctb"
+            android:id="@+id/profile_ctbl"
             android:layout_width="match_parent"
             android:layout_height="@dimen/user_profile_ctb_layout_height"
-            android:background="@android:color/white"
+            android:visibility="gone"
+            android:background="@color/user_profile_backgroud"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
@@ -28,6 +31,7 @@
                 android:id="@+id/profile_avatar_iv"
                 android:layout_width="@dimen/user_profile_avatar_im_layout_width"
                 android:layout_height="@dimen/user_profile_avatar_im_layout_height"
+                android:layout_marginTop="50dp"
                 android:layout_gravity="center_horizontal|top" />
 
             <RelativeLayout
@@ -71,7 +75,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/progress_bar"></include>
+    <ProgressBar
+        android:id="@+id/profile_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
 
     <android.support.v4.view.ViewPager

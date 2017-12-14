@@ -24,10 +24,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
@@ -42,6 +44,9 @@ import java.io.File;
 import java.security.MessageDigest;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.ColorFilterTransformation;
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
+import jp.wasabeef.glide.transformations.GrayscaleTransformation;
 
 import static com.bumptech.glide.request.target.Target.*;
 import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
@@ -133,7 +138,8 @@ public class ImageLoader {
     public static void loadBlurImage(Context context, String url, ImageView imageView){
         Glide.with(context)
                 .load(url)
-                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25)))
+                .apply(RequestOptions.bitmapTransform(new MultiTransformation<Bitmap>(new BlurTransformation(2,
+                        5), new CenterCrop())))
                 .into(imageView);
     }
 
