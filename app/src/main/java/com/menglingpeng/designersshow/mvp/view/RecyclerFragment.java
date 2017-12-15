@@ -319,7 +319,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
         recyclerView.setAdapter(adapter);
         adapter.addData(user);
-        //getActivity().findViewById(R.id.profile_pb).setVisibility(ProgressBar.GONE);
         progressBar.setVisibility(ProgressBar.GONE);
     }
 

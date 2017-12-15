@@ -272,7 +272,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
                     intent.putExtra(Constants.TYPE, Constants.REQUEST_AUTH_USER);
                     startActivity(intent);
-                    //SharedPreUtil.saveState(Constants.IS_LOGIN, false);
                 } else {
                     showLoginDialog();
                 }
