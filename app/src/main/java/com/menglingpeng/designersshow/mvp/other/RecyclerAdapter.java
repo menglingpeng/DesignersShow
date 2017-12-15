@@ -509,6 +509,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             int tvId = 0;
             EmptyiewHolder viewHolder = (EmptyiewHolder) holder;
             switch (type) {
+                case Constants.TAB_FOLLOWING:
+                    ivId = R.drawable.ic_image_grey_400_48dp;
+                    tvId = R.string.no_shot_here;
+                    break;
                 case Constants.MENU_MY_SHOTS:
                     ivId = R.drawable.ic_image_grey_400_48dp;
                     tvId = R.string.no_shot_here;

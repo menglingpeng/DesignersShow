@@ -205,9 +205,15 @@ HttpUtils {
                     case Constants.REQUEST_UNLIKE_A_SHOT:
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.LIKE).toString();
-                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                        break;
+                    case Constants.REQUEST_UNFOLLOWING_A_USER:
+                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get(
+                                Constants.ID)).append("/").append(Constants.FOLLOW).toString();
+                        break;
+                    default:
                         break;
                 }
+                bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
                 requestBody = bodyBuilder.build();
                 request = new Request.Builder()
                         .url(url)

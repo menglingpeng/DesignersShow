@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -26,6 +27,8 @@ import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.SnackUI;
+import com.menglingpeng.designersshow.utils.TextUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +38,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
     private String type;
     private User user = null;
     private String userId;
+    private CoordinatorLayout profileCdl;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private Toolbar toolbar;
     private ImageView profileBackgroundIv, profileAvatarIv;
@@ -61,14 +65,15 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
         if (type.equals(Constants.REQUEST_SINGLE_USER)) {
             map.put(Constants.ID, userId);
             type = Constants.CHECK_IF_YOU_ARE_FOLLOWING_A_USER;
-            presenter = new RecyclerPresenter(UserProfileActivity.this, type, Constants.REQUEST_NORMAL,
-                    Constants.REQUEST_GET_MEIHOD, map, context);
-        }else {
-            presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map,
-                    context);
         }
-        presenter.loadJson();
+        initData(Constants.REQUEST_GET_MEIHOD);
         layoutId = R.layout.activity_user_profile;
+    }
+
+    private void initData(String requestMethod){
+        presenter = new RecyclerPresenter(UserProfileActivity.this, type, Constants.REQUEST_NORMAL,
+                requestMethod, map, context);
+        presenter.loadJson();
     }
 
     @Override
@@ -152,59 +157,75 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
 
     @Override
     public void loadSuccess(String json, String requestType) {
-        if(type.equals(Constants.CHECK_IF_YOU_ARE_FOLLOWING_A_USER)){
-            type = Constants.REQUEST_SINGLE_USER;
-            invalidateOptionsMenu();
-            presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map,
-                    context);
-            presenter.loadJson();
-            if(json.equals(Constants.CODE_404_NOT_FOUND)){
-                isFollowing = false;
-            }else {
-                isFollowing = true;
-            }
-        }else {
-            progressBar.setVisibility(ProgressBar.GONE);
-            user = Json.parseJson(json, User.class);
-            collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.profile_ctbl);
-            collapsingToolbarLayout.setVisibility(CollapsingToolbarLayout.VISIBLE);
-        /*collapsingToolbarLayout.setTitle(user.getName());
-        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
-        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);*/
-            toolbar = (Toolbar) findViewById(R.id.profile_tb);
-            profileNameTv = (TextView) findViewById(R.id.profile_name_tv);
-            profileDescTv = (TextView) findViewById(R.id.profile_desc_tv);
-            profileBackgroundIv = (ImageView) findViewById(R.id.profile_backgroud_iv);
-            profileAvatarIv = (ImageView) findViewById(R.id.profile_avatar_iv);
-            followBt = (Button)findViewById(R.id.profile_follow_bt);
-            unfollowBt = (Button)findViewById(R.id.profile_unfollow_bt);
-            if(type.equals(Constants.REQUEST_SINGLE_USER)) {
-                if (isFollowing) {
-                    unfollowBt.setVisibility(Button.VISIBLE);
+        switch (type) {
+            case Constants.CHECK_IF_YOU_ARE_FOLLOWING_A_USER:
+                type = Constants.REQUEST_SINGLE_USER;
+                invalidateOptionsMenu();
+                initData(Constants.REQUEST_GET_MEIHOD);
+                if (json.equals(Constants.CODE_404_NOT_FOUND)) {
+                    isFollowing = false;
                 } else {
+                    isFollowing = true;
+                }
+                break;
+            case Constants.REQUEST_UNFOLLOWING_A_USER:
+                if(json.equals(Constants.CODE_204_NO_CONTENT)){
+                    unfollowBt.setVisibility(Button.GONE);
                     followBt.setVisibility(Button.VISIBLE);
+                    SnackUI.showSnackShort(context, profileCdl, TextUtil.setAfterBold(context, getString(
+                            R.string.unfollowed), user.getName()));
                 }
-            }
-            profileTl = (TabLayout) findViewById(R.id.profile_tl);
-            profileTl.setVisibility(TabLayout.VISIBLE);
-            profileVp = (ViewPager) findViewById(R.id.profile_vp);
-            fragmentsList = new ArrayList<>();
-            setSupportActionBar(toolbar);
-            //隐藏Toolbar的标题
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            toolbar.setNavigationIcon(R.drawable.ic_back);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
+                break;
+            default:
+                progressBar.setVisibility(ProgressBar.GONE);
+                user = Json.parseJson(json, User.class);
+                profileCdl = (CoordinatorLayout)findViewById(R.id.profile_cdl);
+                collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.profile_ctbl);
+                collapsingToolbarLayout.setVisibility(CollapsingToolbarLayout.VISIBLE);
+                /*collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+                collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);*/
+                toolbar = (Toolbar) findViewById(R.id.profile_tb);
+                profileNameTv = (TextView) findViewById(R.id.profile_name_tv);
+                profileDescTv = (TextView) findViewById(R.id.profile_desc_tv);
+                profileBackgroundIv = (ImageView) findViewById(R.id.profile_backgroud_iv);
+                profileAvatarIv = (ImageView) findViewById(R.id.profile_avatar_iv);
+                followBt = (Button) findViewById(R.id.profile_follow_bt);
+                unfollowBt = (Button) findViewById(R.id.profile_unfollow_bt);
+                if (type.equals(Constants.REQUEST_SINGLE_USER)) {
+                    if (isFollowing) {
+                        unfollowBt.setVisibility(Button.VISIBLE);
+                        unfollowBt.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                type = Constants.REQUEST_UNFOLLOWING_A_USER;
+                                initData(Constants.REQUEST_DELETE_MEIHOD);
+                            }
+                        });
+                    } else {
+                        followBt.setVisibility(Button.VISIBLE);
+                    }
                 }
-            });
-            profileNameTv.setText(user.getName());
-            profileDescTv.setText(user.getBio());
-            ImageLoader.loadBlurImage(getApplicationContext(), user.getAvatar_url(), profileBackgroundIv);
-            ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), profileAvatarIv);
-            profileBackgroundIv.setAlpha(100);
-            initTabPager();
+                profileTl = (TabLayout) findViewById(R.id.profile_tl);
+                profileTl.setVisibility(TabLayout.VISIBLE);
+                profileVp = (ViewPager) findViewById(R.id.profile_vp);
+                fragmentsList = new ArrayList<>();
+                setSupportActionBar(toolbar);
+                //隐藏Toolbar的标题
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                toolbar.setNavigationIcon(R.drawable.ic_back);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                profileNameTv.setText(user.getName());
+                profileDescTv.setText(user.getBio());
+                ImageLoader.loadBlurImage(getApplicationContext(), user.getAvatar_url(), profileBackgroundIv);
+                ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), profileAvatarIv);
+                profileBackgroundIv.setAlpha(100);
+                initTabPager();
+                break;
         }
     }
 

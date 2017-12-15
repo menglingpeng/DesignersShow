@@ -115,6 +115,6 @@
     <string name="settings_preference_contact_me_title">联系我</string>
     <string name="settings_preference_contact_me_summary">给我发送邮件</string>
     <string name="email_create_chooser_title">请选择邮件应用</string>
-
+    <string name="unfollowed">已经取消关注</string>
 
 </resources>
