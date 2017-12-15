@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +56,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
     private ArrayList<RecyclerFragment> fragmentsList;
     private Context context;
     private Boolean isFollowing;
+    private static final int SMOOTHSCROLL_TOP_POSITION = 50;
 
     @Override
     protected void initLayoutId() {
@@ -291,10 +293,23 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                scrollToTop(fragmentsList.get(tab.getPosition()).getRecyclerView());
             }
         });
 
+    }
+
+    private void scrollToTop(android.support.v7.widget.RecyclerView list) {
+        int lastPosition;
+        if (null != list) {
+            LinearLayoutManager manager = (LinearLayoutManager) list.getLayoutManager();
+            lastPosition = manager.findLastVisibleItemPosition();
+            if (lastPosition < SMOOTHSCROLL_TOP_POSITION) {
+                list.smoothScrollToPosition(0);
+            } else {
+                list.scrollToPosition(0);
+            }
+        }
     }
 
     private void initTabFragments() {

@@ -541,9 +541,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     ivId = R.drawable.ic_image_grey_400_48dp;
                     tvId = R.string.no_following_here;
                     break;
+                case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
+                    ivId = R.drawable.ic_image_grey_400_48dp;
+                    tvId = R.string.no_bucket_here;
+                    break;
+                case Constants.REQUEST_LIST_SHOTS_FOR_A_USER:
+                    ivId = R.drawable.ic_image_grey_400_48dp;
+                    tvId = R.string.no_shot_here;
+                    break;
+                case Constants.REQUEST_LIST_LIKES_FOR_A_USER:
+                    ivId = R.drawable.ic_image_grey_400_48dp;
+                    tvId = R.string.no_liked_shot_here;
+                    break;
+                case Constants.REQUEST_LIST_FOLLOWERS_FOR_A_USER:
+                    ivId = R.drawable.ic_image_grey_400_48dp;
+                    tvId = R.string.no_follower_here;
+                    break;
+                case Constants.REQUEST_LIST_FOLLOWING_FOR_A_USER:
+                    ivId = R.drawable.ic_image_grey_400_48dp;
+                    tvId = R.string.no_following_here;
+                    break;
                 case Constants.REQUEST_LIST_PROJECTS_FOR_A_USER:
                     ivId = R.drawable.ic_image_grey_400_48dp;
                     tvId = R.string.no_project_here;
+                    break;
+                default:
                     break;
             }
             viewHolder.emptyIm.setImageResource(ivId);
