@@ -193,6 +193,13 @@ HttpUtils {
                             bodyBuilder.addEncoded(key, map.get(key));
                         }
                         break;
+                    case Constants.REQUEST_FOLLOW_A_USER:
+                        url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get(
+                                Constants.ID)).append("/").append(Constants.FOLLOW).toString();
+                        bodyBuilder.addEncoded(Constants.ACCESS_TOKEN, map.get(Constants.ACCESS_TOKEN));
+                        break;
+                    default:
+                        break;
                 }
                 requestBody = bodyBuilder.build();
                 request = new Request.Builder()
@@ -206,7 +213,7 @@ HttpUtils {
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.LIKE).toString();
                         break;
-                    case Constants.REQUEST_UNFOLLOWING_A_USER:
+                    case Constants.REQUEST_UNFOLLOW_A_USER:
                         url = new StringBuilder().append(Constants.SINGLE_USER_URL).append("/").append(map.get(
                                 Constants.ID)).append("/").append(Constants.FOLLOW).toString();
                         break;

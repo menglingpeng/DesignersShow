@@ -78,8 +78,8 @@
     <string name="snack_create_a_bucket_text">作品集已创建</string>
     <string name="choose_a_bucket">选择作品集</string>
     <string name="OK">确认</string>
-    <string name="follow">FOLLOW</string>
-    <string name="unfollow">UNFOLLOW</string>
+    <string name="follow">关注用户</string>
+    <string name="unfollow">取消关注</string>
     <string name="choosed">已选择</string>
     <string name="buckets">作品集</string>
     <string name="added_to">已加入</string>
@@ -116,5 +116,8 @@
     <string name="settings_preference_contact_me_summary">给我发送邮件</string>
     <string name="email_create_chooser_title">请选择邮件应用</string>
     <string name="unfollowed">已经取消关注</string>
+    <string name="followed">已经成功关注</string>
+    <string name="unfollowed_error">取消关注出错，请重试！</string>
+    <string name="followed_error">关注用户出错，可能被用户拉黑或者超出关注上限！</string>
 
 </resources>

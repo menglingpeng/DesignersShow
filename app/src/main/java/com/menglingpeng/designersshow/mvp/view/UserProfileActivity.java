@@ -168,12 +168,38 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
                     isFollowing = true;
                 }
                 break;
-            case Constants.REQUEST_UNFOLLOWING_A_USER:
+            case Constants.REQUEST_UNFOLLOW_A_USER:
                 if(json.equals(Constants.CODE_204_NO_CONTENT)){
                     unfollowBt.setVisibility(Button.GONE);
                     followBt.setVisibility(Button.VISIBLE);
                     SnackUI.showSnackShort(context, profileCdl, TextUtil.setAfterBold(context, getString(
                             R.string.unfollowed), user.getName()));
+                    followBt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            type = Constants.REQUEST_FOLLOW_A_USER;
+                            initData(Constants.REQUEST_PUT_MEIHOD);
+                        }
+                    });
+                }else {
+                    SnackUI.showErrorSnackShort(context, profileCdl, getString(R.string.unfollowed_error));
+                }
+                break;
+            case Constants.REQUEST_FOLLOW_A_USER:
+                if(json.equals(Constants.CODE_204_NO_CONTENT)){
+                    unfollowBt.setVisibility(Button.VISIBLE);
+                    followBt.setVisibility(Button.GONE);
+                    SnackUI.showSnackShort(context, profileCdl, TextUtil.setAfterBold(context, getString(
+                            R.string.followed), user.getName()));
+                    unfollowBt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            type = Constants.REQUEST_UNFOLLOW_A_USER;
+                            initData(Constants.REQUEST_DELETE_MEIHOD);
+                        }
+                    });
+                }else {
+                    SnackUI.showErrorSnackShort(context, profileCdl, getString(R.string.followed_error));
                 }
                 break;
             default:
@@ -197,12 +223,19 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
                         unfollowBt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                type = Constants.REQUEST_UNFOLLOWING_A_USER;
+                                type = Constants.REQUEST_UNFOLLOW_A_USER;
                                 initData(Constants.REQUEST_DELETE_MEIHOD);
                             }
                         });
                     } else {
                         followBt.setVisibility(Button.VISIBLE);
+                        followBt.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                type = Constants.REQUEST_FOLLOW_A_USER;
+                                initData(Constants.REQUEST_PUT_MEIHOD);
+                            }
+                        });
                     }
                 }
                 profileTl = (TabLayout) findViewById(R.id.profile_tl);
