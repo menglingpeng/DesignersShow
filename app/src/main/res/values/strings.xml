@@ -36,6 +36,9 @@
     <string name="nav_view_desc_tx">使用你的Dribbble帐号登陆</string>
     <string name="nav_view_login_desc_tx">点击打开我的主页</string>
     <string name="profile_logout">登出</string>
+    <string name="profile_share_user_profile">分享用户资料</string>
+    <string name="check_out">查看</string>
+    <string name="user_profile">用户资料</string>
     <string name="are_you_sure_want_to_logout">确定你要退出登陆吗？</string>
     <string name="dialog_login_bt">登陆Dribbble</string>
     <string name="dialog_login_desc">登陆你的Dribbble帐号使用shots的全部功能</string>
@@ -57,7 +60,7 @@
     <string name="detail_toolbar_overflow_menu_open_in_browser">在浏览器打开</string>
     <string name="detail_toolbar_overflow_menu_download">下载</string>
     <string name="detail_toolbar_overflow_menu_share_create_chooser_title">分享</string>
-    <string name="detail_toolbar_overflow_menu_share_footer_text">来自Dribbble的分享</string>
+    <string name="detail_toolbar_overflow_menu_share_footer_text">-- 来自shots(Android APP for Dribbble)的分享</string>
     <string name="detail_toolbar_overflow_menu_open_in_browser_create_chooser_title">请选择浏览器</string>
     <string name="detail_toolbar_overflow_menu_download_snackbar_text">正在下载</string>
     <string name="detail_likes_tv_text">喜欢</string>
@@ -65,8 +68,8 @@
     <string name="detail_buckets_tv_text">作品集</string>
     <string name="detail_views_tv_text">浏览</string>
     <string name="detail_attachmets_bt_text">附件</string>
-    <string name="comment_reply_tv_text"></string>
-    <string name="comment_copy_tv_text"></string>
+    <string name="comment_reply_tv_text">回复</string>
+    <string name="comment_copy_tv_text">复制</string>
     <string name="detail_likes_im_like_a_shot_snack_text">shot liked!</string>
     <string name="detail_likes_im_unlike_a_shot_snack_text">shot unliked!</string>
     <string name="on_load_detail_image_listener_failed_msg">加载失败</string>
@@ -115,8 +118,8 @@
     <string name="settings_preference_contact_me_title">联系我</string>
     <string name="settings_preference_contact_me_summary">给我发送邮件</string>
     <string name="email_create_chooser_title">请选择邮件应用</string>
-    <string name="unfollowed">已经取消关注</string>
-    <string name="followed">已经成功关注</string>
+    <string name="unfollowed_successful">已经取消关注</string>
+    <string name="followed_successful">已经成功关注</string>
     <string name="unfollowed_error">取消关注出错，请重试！</string>
     <string name="followed_error">关注用户出错，可能被用户拉黑或者超出关注上限！</string>
 

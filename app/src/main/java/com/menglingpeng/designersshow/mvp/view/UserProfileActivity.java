@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -102,11 +103,11 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
             if (item.getItemId() == R.id.profile_logout) {
                 showLogoutDialog();
             } else {
-
+                shareUserProfile();
             }
         } else {
             if (item.getItemId() == R.id.profile_share) {
-
+                shareUserProfile();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -126,14 +127,14 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
         builder.setPositiveButton(getText(R.string.profile_logout), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                loginOut();
+                logout();
             }
         });
         dialog = builder.create();
         dialog.show();
     }
 
-    private void loginOut() {
+    private void logout() {
         SharedPreUtil.saveState(Constants.IS_LOGIN, false);
         SharedPreUtil.deleteAuthToken();
         restartApplication();
@@ -142,6 +143,16 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
     private void restartApplication() {
         Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private void shareUserProfile(){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        String text = new StringBuilder().append(getString(R.string.check_out)).append(user.getName()).append(
+                getString(R.string.s)).append(getString(R.string.user_profile)).append(user.getHtml_url()).append("\n").
+                append(getString(R.string.detail_toolbar_overflow_menu_share_footer_text)).toString();
+        intent.putExtra(Intent.EXTRA_TEXT, text);
         startActivity(intent);
     }
 
@@ -173,7 +184,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
                     unfollowBt.setVisibility(Button.GONE);
                     followBt.setVisibility(Button.VISIBLE);
                     SnackUI.showSnackShort(context, profileCdl, TextUtil.setAfterBold(context, getString(
-                            R.string.unfollowed), user.getName()));
+                            R.string.unfollowed_successful), user.getName()));
                     followBt.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -190,7 +201,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
                     unfollowBt.setVisibility(Button.VISIBLE);
                     followBt.setVisibility(Button.GONE);
                     SnackUI.showSnackShort(context, profileCdl, TextUtil.setAfterBold(context, getString(
-                            R.string.followed), user.getName()));
+                            R.string.followed_successful), user.getName()));
                     unfollowBt.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -253,7 +264,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
                     }
                 });
                 profileNameTv.setText(user.getName());
-                profileDescTv.setText(user.getBio());
+                TextUtil.setHtmlText(profileDescTv, user.getBio());
                 ImageLoader.loadBlurImage(getApplicationContext(), user.getAvatar_url(), profileBackgroundIv);
                 ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), profileAvatarIv);
                 profileBackgroundIv.setAlpha(100);

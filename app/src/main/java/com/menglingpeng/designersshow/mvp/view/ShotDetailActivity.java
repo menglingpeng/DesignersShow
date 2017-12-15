@@ -204,12 +204,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
 
         detailDescTv = (TextView) findViewById(R.id.detail_desc_tv);
         //处理HTML文本
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            detailDescTv.setText(Html.fromHtml(shot.getDescription(), Html.FROM_HTML_MODE_LEGACY));
-        } else {
-            detailDescTv.setText(Html.fromHtml(shot.getDescription()));
-        }
-        detailDescTv.setMovementMethod(LinkMovementMethod.getInstance());
+        TextUtil.setHtmlText(detailDescTv, shot.getDescription());
     }
 
     @Override

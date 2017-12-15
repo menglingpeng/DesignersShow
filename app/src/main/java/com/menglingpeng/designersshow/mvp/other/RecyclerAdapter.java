@@ -277,11 +277,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     context.startActivity(intent);
                 }
             });
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-                viewHolder.commentContentTv.setText(Html.fromHtml(comment.getBody(), Html.FROM_HTML_MODE_COMPACT));
-            }else {
-                viewHolder.commentContentTv.setText(Html.fromHtml(comment.getBody()));
-            }
+            TextUtil.setHtmlText(viewHolder.commentContentTv, comment.getBody());
             viewHolder.commentContentTv.setMovementMethod(LinkMovementMethod.getInstance());
             viewHolder.usernameTv.setText(comment.getUser().getName());
             viewHolder.commentCreateAtTv.setText(TimeUtil.getTimeDifference(comment.getCreated_at()));
@@ -642,7 +638,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .profile_tablayout_detail_followers_count_tx);
             profileTablayoutDetailFollowingsCountTx = (TextView) view.findViewById(R.id
                     .profile_tablayout_detail_followings_count_tx);
-
 
         }
     }

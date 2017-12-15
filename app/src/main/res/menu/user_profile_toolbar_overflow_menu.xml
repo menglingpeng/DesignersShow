@@ -5,7 +5,7 @@
     <item
         android:id="@+id/profile_share"
         android:icon="@drawable/ic_share"
-        android:title="@string/detail_toolbar_overflow_menu_share"
+        android:title="@string/profile_share_user_profile"
         app:showAsAction="never"></item>
 
     <item
