@@ -131,6 +131,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case Constants.MENU_MY_SHOTS:
                 toolbarTitle = getString(R.string.nav_my_shots_menu);
                 break;
+            default:
+                break;
         }
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(toolbarTitle);
@@ -243,6 +245,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.overflow_large:
                 break;
             case R.id.overflow_large_without_infos:
+                break;
+            default:
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -365,6 +369,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             break;
                         case R.id.nav_settings:
                             currentType = Constants.MENU_SETTING;
+                            break;
+                        default:
                             break;
                     }
                     initSelectedNavigationItemView(currentType);
@@ -508,6 +514,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     case 3:
                         replaceFragment(newFragment(Constants.REQUEST_SORT_VIEWS));
                         break;
+                    default:
+                        break;
                 }
             }
 
@@ -540,6 +548,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         break;
                     case 6:
                         replaceFragment(newFragment(Constants.REQUEST_LIST_TEAM));
+                        break;
+                    default:
                         break;
                 }
             }
@@ -668,6 +678,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case Constants.REQUEST_CREATE_A_BUCKET:
                 replaceFragment(newFragment(Constants.MENU_MY_BUCKETS));
+                break;
+            default:
                 break;
         }
     }

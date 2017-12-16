@@ -31,6 +31,8 @@ import com.menglingpeng.designersshow.mvp.model.Project;
 import com.menglingpeng.designersshow.mvp.model.Shot;
 import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
+import com.menglingpeng.designersshow.mvp.view.ShotCommentsActivity;
+import com.menglingpeng.designersshow.mvp.view.ShotDetailActivity;
 import com.menglingpeng.designersshow.mvp.view.UserBucketsActivity;
 import com.menglingpeng.designersshow.mvp.view.UserLikesActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProfileActivity;
@@ -267,6 +269,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else if (holder instanceof CommentViewHolder) {
             final CommentViewHolder viewHolder = (CommentViewHolder) holder;
             final Comment comment = (Comment) list.get(position);
+            String userName = comment.getUser().getName();
             ImageLoader.loadCricleImage(context, comment.getUser().getAvatar_url(), viewHolder.avatarIv);
             viewHolder.avatarIv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -279,6 +282,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
             TextUtil.setHtmlText(viewHolder.commentContentTv, comment.getBody());
             viewHolder.commentContentTv.setMovementMethod(LinkMovementMethod.getInstance());
+            if(userName.equals(ShotCommentsActivity.getShotUserName())){
+                viewHolder.usernameTv.setTextColor(context.getResources().getColor(R.color.shots_username));
+            }
             viewHolder.usernameTv.setText(comment.getUser().getName());
             viewHolder.commentCreateAtTv.setText(TimeUtil.getTimeDifference(comment.getCreated_at()));
             viewHolder.commentLikesCountTv.setText(String.valueOf(comment.getLikes_count()));

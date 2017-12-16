@@ -36,6 +36,7 @@ public class ShotCommentsActivity extends BaseActivity implements RecyclerView{
     private String id;
     private String title;
     private String type;
+    private static String shotUserName;
     private ImageView avatarIv;
     private EditText editText;
     private FloatingActionButton floatingActionButton;
@@ -52,6 +53,7 @@ public class ShotCommentsActivity extends BaseActivity implements RecyclerView{
     protected void initViews() {
         super.initViews();
         context = getApplicationContext();
+        shotUserName = getIntent().getStringExtra(Constants.USER_NAME);
         title = new StringBuilder().append(getString(R.string.detail_comments_tv_text)).append("（")
                 .append(String.valueOf(getIntent().getStringExtra(Constants.COMMENTS_COUNT))).append("）").toString();
         toolbar = (Toolbar) findViewById(R.id.comments_tb);
@@ -135,5 +137,9 @@ public class ShotCommentsActivity extends BaseActivity implements RecyclerView{
             default:
                 break;
         }
+    }
+
+    public static String getShotUserName(){
+        return shotUserName;
     }
 }

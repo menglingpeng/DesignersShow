@@ -61,7 +61,8 @@
                     android:layout_marginLeft="@dimen/profile_desc_tv_layout_marginLeft"
                     android:layout_marginRight="@dimen/profile_desc_tv_layout_marginRight"
                     android:gravity="center"
-                    android:textColor="@color/profile_desc_tv"/>
+                    android:textColor="@color/profile_desc_tv"
+                    android:textColorLink="@color/shots_username"/>
 
                 <Button
                     android:id="@+id/profile_follow_bt"

@@ -62,6 +62,7 @@ public class Constants {
     public static final String COMMENT_ID = "comment_id";
     public static final String BODY = "body";
     public static final String COMMENTS_COUNT = "comments_count";
+    public static final String USER_NAME = "user_name";
     public static final String LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL = "https://api.dribbble" +
             ".com/v1/user/following/shots";
     public static final String LIST_SHOTS_FOR_AUTH_USER_LIKES_URL = "https://api.dribbble.com/v1/user/likes";

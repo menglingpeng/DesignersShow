@@ -270,6 +270,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 id = getArguments().get(Constants.ID).toString();
                 map.put(Constants.ID, id);
                 break;
+            default:
+                break;
         }
         if (SharedPreUtil.getState(Constants.IS_LOGIN)) {
             map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
@@ -372,6 +374,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                         adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
                     }
                     recyclerView.setAdapter(adapter);
+                    break;
+                default:
                     break;
             }
             adapter.setLoadingMore(new RecyclerAdapter.onLoadingMore() {

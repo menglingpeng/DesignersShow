@@ -38,15 +38,15 @@
     <dimen name="spinner_layout_width">0dp</dimen>
     <item name="spinner_List_layout_weight" format="integer" type="dimen">1</item>
     <item name="spinner_sort_layout_weight" format="integer" type="dimen">1</item>
-    <item name="detail_im_layout_collapse_parallax_multiplier" format="float" type="dimen">0.8</item>
+    <item name="detail_im_layout_collapse_parallax_multiplier" format="float" type="dimen">0.3</item>
     <dimen name="detail_appbar_layout_height">300dp</dimen>
-    <dimen name="detail_title_rl_layout_height">200dp</dimen>
     <dimen name="detail_title_rl_paddingLeft">15dp</dimen>
     <dimen name="detail_title_rl_paddingRight">15dp</dimen>
     <dimen name="detail_update_time_tx_layout_marginTop">5dp</dimen>
     <dimen name="detail_avatar_im_layout_marginTop">10dp</dimen>
     <dimen name="detail_user_name_tx_layout_marginTop">10dp</dimen>
     <dimen name="detail_user_name_tx_layout_marginLeft">10dp</dimen>
+    <dimen name="detail_user_name_tx_text_size">18dp</dimen>
     <dimen name="detail_user_location_tx_layout_marginTop">5dp</dimen>
     <dimen name="detail_user_location_tx_layout_marginLeft">10dp</dimen>
     <dimen name="detail_desc_ll_paddingLeft">20dp</dimen>

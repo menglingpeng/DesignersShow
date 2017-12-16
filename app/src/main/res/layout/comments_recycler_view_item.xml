@@ -32,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/detail_comment_username_tv"
         android:layout_below="@+id/detail_comment_username_tv"
-        android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop" />
+        android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop"
+        android:textColorLink="@color/shots_username"/>
 
     <TextView
         android:id="@+id/detail_comment_create_at_tv"
