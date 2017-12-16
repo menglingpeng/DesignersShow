@@ -42,6 +42,7 @@
     <string name="are_you_sure_want_to_logout">确定你要退出登陆吗？</string>
     <string name="dialog_login_bt">登陆Dribbble</string>
     <string name="dialog_login_desc">登陆你的Dribbble帐号使用shots的全部功能</string>
+    <string name="login_dialog_fragment_exception">LoginDialogFragment所在的Activity必须实现回调接口！</string>
     <string name="nav_drawer_open">open drawer</string>
     <string name="nav_drawer_close">close drawer</string>
     <string name="home_popular">最热</string>
@@ -99,6 +100,7 @@
     <string name="no_project_here">没 有 项 目</string>
     <string name="no_follower_here">没 有 粉 丝</string>
     <string name="no_following_here">没 有 关 注</string>
+    <string name="no_comment_here">没有评论</string>
     <string name="an_error_just_occurred_while_connecting_to_Dribbble_try_it_again_later">在连接到Dribbble的过程中出错，请稍后重试</string>
     <string name="add_your_comment">添加评论</string>
     <string name="dialog_post_comment_text">提交评论中...</string>

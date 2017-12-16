@@ -62,6 +62,7 @@ public class Constants {
     public static final String COMMENT_ID = "comment_id";
     public static final String BODY = "body";
     public static final String COMMENTS_COUNT = "comments_count";
+    public static final String USER_NAME = "user_name";
     public static final String LIST_SHOTS_FOR_USERS_FOLLEOED_BY_A_USER_URL = "https://api.dribbble" +
             ".com/v1/user/following/shots";
     public static final String LIST_SHOTS_FOR_AUTH_USER_LIKES_URL = "https://api.dribbble.com/v1/user/likes";
@@ -143,7 +144,8 @@ public class Constants {
     public static final String REQUEST_REFRESH = "refresh";
     public static final String REQUEST_LOAD_MORE = "loadmore";
     public static final String REQUEST_AUTH_TOKEN = "auth_token";
-    public static final String REQUEST_LIST_COMMENTS = "list_comments";
+    public static final String REQUEST_LIST_COMMENTS_FOR_A_SHOT = "list_comments_for_a_shot";
+    public static final String REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT = "list_attachments_for_a_shot";
     public static final String REQUEST_CREATE_A_COMMENT = "create_a_comment";
     public static final String REQUEST_LIKE_A_COMMENT = "like_a_comment";
     public static final String REQUEST_LIST_SHOTS_FOR_A_BUCKET = "list_shots_for_a_bucket";

@@ -36,6 +36,7 @@ public class ShotCommentsActivity extends BaseActivity implements RecyclerView{
     private String id;
     private String title;
     private String type;
+    private static String shotUserName;
     private ImageView avatarIv;
     private EditText editText;
     private FloatingActionButton floatingActionButton;
@@ -52,6 +53,7 @@ public class ShotCommentsActivity extends BaseActivity implements RecyclerView{
     protected void initViews() {
         super.initViews();
         context = getApplicationContext();
+        shotUserName = getIntent().getStringExtra(Constants.USER_NAME);
         title = new StringBuilder().append(getString(R.string.detail_comments_tv_text)).append("（")
                 .append(String.valueOf(getIntent().getStringExtra(Constants.COMMENTS_COUNT))).append("）").toString();
         toolbar = (Toolbar) findViewById(R.id.comments_tb);
@@ -69,7 +71,7 @@ public class ShotCommentsActivity extends BaseActivity implements RecyclerView{
             }
         });
         id = getIntent().getStringExtra(Constants.SHOT_ID).toString();
-        fragment = RecyclerFragment.newInstance(id, Constants.REQUEST_LIST_COMMENTS);
+        fragment = RecyclerFragment.newInstance(id, Constants.REQUEST_LIST_COMMENTS_FOR_A_SHOT);
         replaceFragment(fragment);
         ImageLoader.loadCricleImage(context, SharedPreUtil.getLoginData(Constants.AUTH_USER_AVATAR_URL),
                 avatarIv);
@@ -135,5 +137,9 @@ public class ShotCommentsActivity extends BaseActivity implements RecyclerView{
             default:
                 break;
         }
+    }
+
+    public static String getShotUserName(){
+        return shotUserName;
     }
 }
