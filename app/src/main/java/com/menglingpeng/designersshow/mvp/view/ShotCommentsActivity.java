@@ -71,7 +71,7 @@ public class ShotCommentsActivity extends BaseActivity implements RecyclerView{
             }
         });
         id = getIntent().getStringExtra(Constants.SHOT_ID).toString();
-        fragment = RecyclerFragment.newInstance(id, Constants.REQUEST_LIST_COMMENTS);
+        fragment = RecyclerFragment.newInstance(id, Constants.REQUEST_LIST_COMMENTS_FOR_A_SHOT);
         replaceFragment(fragment);
         ImageLoader.loadCricleImage(context, SharedPreUtil.getLoginData(Constants.AUTH_USER_AVATAR_URL),
                 avatarIv);

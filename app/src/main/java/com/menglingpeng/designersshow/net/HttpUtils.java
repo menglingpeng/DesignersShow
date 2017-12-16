@@ -68,7 +68,7 @@ HttpUtils {
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.LIKE).toString();
                         break;
-                    case Constants.REQUEST_LIST_COMMENTS:
+                    case Constants.REQUEST_LIST_COMMENTS_FOR_A_SHOT:
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.COMMENTS).toString();
                         break;

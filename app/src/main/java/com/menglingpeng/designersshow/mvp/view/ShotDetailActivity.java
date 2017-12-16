@@ -114,7 +114,8 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
         checkIfLikeTheShot();
         detailLikesIv = (ImageView) findViewById(R.id.detail_likes_iv);
-        detailLikesIv.setOnClickListener(new View.OnClickListener() {
+        detailLikesFl = (FrameLayout)findViewById(R.id.detail_likes_fl);
+        detailLikesFl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (shotsIsLiked) {
@@ -152,8 +153,9 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         detailLikesCountTv = (TextView) findViewById(R.id.detail_likes_count_tv);
         detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shot.getLikes_count()), getResources()
                 .getString(R.string.detail_likes_tv_text)));
+        detailCommentsFl = (FrameLayout)findViewById(R.id.detail_comments_fl);
         detailCommentsIv = (ImageView) findViewById(R.id.detail_comments_iv);
-        detailCommentsIv.setOnClickListener(new View.OnClickListener() {
+        detailCommentsFl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShotDetailActivity.this, ShotCommentsActivity.class);
@@ -176,14 +178,6 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
             }
         });
         detailBucketsIv = (ImageView) findViewById(R.id.detail_buckets_iv);
-        detailBucketsIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ShotDetailActivity.this, ChooseBucketActivity.class);
-                intent.putExtra(Constants.SHOT_ID, String.valueOf(shot.getId()));
-                startActivity(intent);
-            }
-        });
         detailBucketsCountTv = (TextView) findViewById(R.id.detail_buckets_count_tv);
         detailBucketsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shot.getBuckets_count()), getResources()
                 .getString(R.string.detail_buckets_tv_text)));

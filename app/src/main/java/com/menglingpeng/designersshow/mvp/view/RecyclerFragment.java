@@ -231,7 +231,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 addShotTobucketMap = new HashMap<>();
                 id = getArguments().get(Constants.ID).toString();
                 break;
-            case Constants.REQUEST_LIST_COMMENTS:
+            case Constants.REQUEST_LIST_COMMENTS_FOR_A_SHOT:
                 id = getArguments().get(Constants.ID).toString();
                 map.put(Constants.ID, id);
                 break;
@@ -342,7 +342,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 case Constants.REQUEST_LIST_SHOTS_FOR_A_PROJECT:
                     fragment = ProjectDetailActivity.getFragment();
                     break;
-                case Constants.REQUEST_LIST_COMMENTS:
+                case Constants.REQUEST_LIST_COMMENTS_FOR_A_SHOT:
                     fragment = ShotCommentsActivity.getFragment();
                     break;
                 default:
@@ -394,7 +394,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                         getActivity().findViewById(R.id.progress_bar).setVisibility(ProgressBar.GONE);
                         jsonList = Json.parseArrayJson(json, Likes.class);
                         break;
-                    case Constants.REQUEST_LIST_COMMENTS:
+                    case Constants.REQUEST_LIST_COMMENTS_FOR_A_SHOT:
                         jsonList = Json.parseArrayJson(json, Comment.class);
                         break;
                     case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:

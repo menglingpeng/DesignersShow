@@ -191,9 +191,10 @@
                 android:layout_marginTop="@dimen/detail_attachment_bt_layout_marginTop"
                 android:background="@color/colorAccent"
                 android:drawablePadding="@dimen/detail_attachment_bt_drawablePadding"
-                android:drawableStart="@drawable/ic_attachment_24dp"
+                android:drawableStart="@drawable/ic_attachment_grey_100_24dp"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="@dimen/detail_attachment_bt_paddingLeft"
+                android:textColor="@android:color/white"
                 android:visibility="gone" />
 
             <TextView

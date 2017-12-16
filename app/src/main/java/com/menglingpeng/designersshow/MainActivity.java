@@ -46,6 +46,7 @@ import com.menglingpeng.designersshow.mvp.model.AuthToken;
 import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
+import com.menglingpeng.designersshow.mvp.view.LoginDialogFragment;
 import com.menglingpeng.designersshow.mvp.view.SettingsActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProfileActivity;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
@@ -61,7 +62,7 @@ import java.util.List;
 
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, com
-        .menglingpeng.designersshow.mvp.interf.RecyclerView {
+        .menglingpeng.designersshow.mvp.interf.RecyclerView ,LoginDialogFragment.LoginDialogListener{
 
     private String currentType;
     private String type;
@@ -82,7 +83,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private List<RecyclerFragment> fragments;
     private TabPagerFragmentAdapter adapter;
     private Spinner sortSpinner, listSpinner;
-    private Dialog dialog;
+    private Dialog loginDialog;
     private static RecyclerFragment currentFragment = null;
     private Boolean isLogin;
     private Boolean backPressed = false;
@@ -303,37 +304,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 登陆的中转页面
      */
     private void showLoginDialog() {
-        dialog = new Dialog(this, R.style.ThemeLoginDialog);
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_login, null);
-        Window window = dialog.getWindow();
-        window.setGravity(Gravity.BOTTOM);
-        window.setWindowAnimations(R.style.LoginDialog);
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
-        window.setAttributes(layoutParams);
-        dialog.setContentView(dialogView);
-        loginDialogCloseIm = (ImageView) dialogView.findViewById(R.id.dialog_login_close_im);
-        loginDialogLoginBt = (Button) dialogView.findViewById(R.id.dialog_login_bt);
-        loginDialogPb = (ProgressBar) dialogView.findViewById(R.id.dialog_login_pb);
-        dialog.show();
-        loginDialogCloseIm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-        loginDialogLoginBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                Uri uri = Uri.parse(Constants.REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL);
-                intent.setData(uri);
-                startActivity(intent);
-            }
-        });
-
+        LoginDialogFragment dialogFragment = new LoginDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "login_dialog_fragment");
     }
 
     @Override
@@ -673,7 +645,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 map.put(Constants.AUTH_USER_NAME, authUser.getUsername());
                 map.put(Constants.AUTH_USER_ID, String.valueOf(authUser.getId()));
                 SharedPreUtil.saveParameters(map);
-                dialog.cancel();
+                loginDialog.cancel();
                 initTabPager();
                 break;
             case Constants.REQUEST_CREATE_A_BUCKET:
@@ -683,4 +655,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
         }
     }
+
+    @Override
+    public void onLoginDialogLoginListener(Button button, ProgressBar progressBar, Dialog dialog) {
+        loginDialogPb = progressBar;
+        loginDialogLoginBt = button;
+        loginDialog = dialog;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse(Constants.REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL);
+        intent.setData(uri);
+        startActivity(intent);
+    }
+
 }

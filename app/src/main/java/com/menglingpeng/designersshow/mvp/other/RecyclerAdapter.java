@@ -149,7 +149,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         view = inflater.inflate(R.layout.user_shots_recycler_item, parent, false);
                         viewHolder = new ProfileShotViewHolder(view);
                         break;
-                    case Constants.REQUEST_LIST_COMMENTS:
+                    case Constants.REQUEST_LIST_COMMENTS_FOR_A_SHOT:
                         view = inflater.inflate(R.layout.comments_recycler_view_item, parent, false);
                         viewHolder = new CommentViewHolder(view);
                         break;
@@ -570,6 +570,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 case Constants.REQUEST_LIST_PROJECTS_FOR_A_USER:
                     ivId = R.drawable.ic_image_grey_400_48dp;
                     tvId = R.string.no_project_here;
+                    break;
+                case Constants.REQUEST_LIST_COMMENTS_FOR_A_SHOT:
+                    ivId = R.drawable.ic_image_grey_400_48dp;
+                    tvId = R.string.no_comment_here;
                     break;
                 default:
                     break;
