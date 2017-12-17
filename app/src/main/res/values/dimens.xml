@@ -141,5 +141,17 @@
     <dimen name="profile_desc_tv_layout_marginRight">15dp</dimen>
     <dimen name="profile_avatar_iv_layout_marginTop">50dp</dimen>
     <item name="profile_ctbl_scrimAnimationDuration" format="integer" type="dimen">300</item>
+    <dimen name="dialog_fragment_attachments_rl_layout_height">0dp</dimen>
+    <item name="dialog_fragment_attachments_close_rl_layout_weight" type="dimen" format="integer">1</item>
+    <item name="dialog_fragment_attachments_viewpager__rl_layout_weight" type="dimen" format="integer">2</item>
+    <item name="dialog_fragment_attachments_tablayout_rl_layout_weight" type="dimen" format="integer">1</item>
+    <dimen name="attachments_dialog_close_iv_layout_marginTop">10dp</dimen>
+    <dimen name="attachments_dialog_close_iv_layout_marginLeft">15dp</dimen>
+    <dimen name="attachments_dialog_share_iv_layout_marginRight">30dp</dimen>
+    <dimen name="attachments_dialog_open_in_browser_iv_layout_marginRight">30dp</dimen>
+    <dimen name="attachments_dialog_download_iv_layout_marginEnd">15dp</dimen>
+    <dimen name="attachments_dialog_vp_layout_margin_top_bottom">30dp</dimen>
+    <dimen name="attachments_dialog_vp_layout_margin_left_right">20dp</dimen>
+    <dimen name="attachments_dialog_tl_layout_height">60dp</dimen>
 
 </resources>

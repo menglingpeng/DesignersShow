@@ -101,10 +101,15 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (type.equals(Constants.REQUEST_AUTH_USER)) {
-            if (item.getItemId() == R.id.profile_logout) {
-                showLogoutDialog();
-            } else {
-                shareUserProfile();
+            switch (item.getItemId()){
+                case R.id.profile_share:
+                    shareUserProfile();
+                    break;
+                case R.id.profile_logout:
+                    showLogoutDialog();
+                    break;
+                default:
+                    break;
             }
         } else {
             if (item.getItemId() == R.id.profile_share) {

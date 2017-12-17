@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark">
+
+    <RelativeLayout
+        android:id="@+id/attachments_dialog_close_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_fragment_attachments_rl_layout_height"
+        android:layout_weight="@dimen/dialog_fragment_attachments_close_rl_layout_weight">
+        <ImageView
+            android:id="@+id/attachments_dialog_close_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/attachments_dialog_close_iv_layout_marginTop"
+            android:layout_marginLeft="@dimen/attachments_dialog_close_iv_layout_marginLeft"
+            android:src="@drawable/ic_close_white_24dp"/>
+
+        <ImageView
+            android:id="@+id/attachments_dialog_share_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/attachments_dialog_open_in_browser_iv"
+            android:layout_alignTop="@+id/attachments_dialog_open_in_browser_iv"
+            android:layout_marginRight="@dimen/attachments_dialog_share_iv_layout_marginRight"
+            android:src="@drawable/ic_share"/>
+
+        <ImageView
+            android:id="@+id/attachments_dialog_open_in_browser_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/attachments_dialog_download_iv"
+            android:layout_alignTop="@+id/attachments_dialog_download_iv"
+            android:layout_marginRight="@dimen/attachments_dialog_open_in_browser_iv_layout_marginRight"
+            android:src="@drawable/ic_open_in_browser"/>
+
+        <ImageView
+            android:id="@+id/attachments_dialog_download_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/attachments_dialog_close_iv"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/attachments_dialog_download_iv_layout_marginEnd"
+            android:src="@drawable/ic_file_download"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_fragment_attachments_rl_layout_height"
+        android:layout_weight="@dimen/dialog_fragment_attachments_viewpager__rl_layout_weight"
+        android:background="@color/user_profile_backgroud">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/attachments_dialog_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/attachments_dialog_vp_layout_margin_top_bottom"
+            android:layout_marginBottom="@dimen/attachments_dialog_vp_layout_margin_top_bottom"
+            android:layout_marginRight="@dimen/attachments_dialog_vp_layout_margin_left_right"
+            android:layout_marginLeft="@dimen/attachments_dialog_vp_layout_margin_left_right"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_fragment_attachments_rl_layout_height"
+        android:layout_weight="@dimen/dialog_fragment_attachments_tablayout_rl_layout_weight">
+
+        <TableLayout
+            android:id="@+id/attachments_dialog_tl"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/attachments_dialog_tl_layout_height"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+        </TableLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
