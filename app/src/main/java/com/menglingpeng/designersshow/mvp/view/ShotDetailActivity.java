@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow.mvp.view;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -70,6 +71,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     private Boolean shotsIsLiked = false;
     private String type;
     private Boolean isLogin;
+    private Context context;
 
     @Override
     protected void initLayoutId() {
@@ -83,6 +85,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         shot = (Shot) getIntent().getSerializableExtra(Constants.SHOTS);
         type = getIntent().getStringExtra(Constants.TYPE);
         isLogin = SharedPrefUtil.getState(Constants.IS_LOGIN);
+        context = getApplicationContext();
         if (type.equals(Constants.USER_SHOT_DETAIL)) {
             user = (User) getIntent().getSerializableExtra(Constants.USER);
         } else {
@@ -131,7 +134,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 }
             }
         });
-        ImageLoader.loadDetailImage(getApplicationContext(), imageUrl, imageView, this);
+        ImageLoader.loadDetailImage(context, imageUrl, imageView, this);
         imageView.setAlpha(225);
         initDescription();
     }
@@ -144,7 +147,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         detailAvatarIv = (ImageView) findViewById(R.id.detail_avatar_iv);
         detailUserNameTv = (TextView) findViewById(R.id.detail_user_name_tv);
         detailUserLocationTv = (TextView) findViewById(R.id.detail_user_location_tv);
-        ImageLoader.loadCricleImage(getApplicationContext(), user.getAvatar_url(), detailAvatarIv);
+        ImageLoader.loadCricleImage(context, user.getAvatar_url(), detailAvatarIv);
         detailAvatarIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,7 +175,6 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                     Intent intent = new Intent(ShotDetailActivity.this, ShotCommentsActivity.class);
                     intent.putExtra(Constants.SHOT_ID, String.valueOf(shot.getId()));
                     intent.putExtra(Constants.COMMENTS_COUNT, String.valueOf(shot.getComments_count()));
-
                     intent.putExtra(Constants.USER_NAME, shot.getUser().getName());
                     startActivity(intent);
                 }else {
@@ -213,7 +215,11 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 @Override
                 public void onClick(View v) {
                     if(isLogin){
-
+                        map.put(Constants.SHOT_ID, String.valueOf(shot.getId()));
+                        type = Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT;
+                        presenter = new RecyclerPresenter(ShotDetailActivity.this, type,
+                                Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, context);
+                        presenter.loadJson();
                     }else {
                         showLoginDialog();
                     }
@@ -309,7 +315,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 detailLikesIv.setImageResource(R.drawable.ic_favorite_red_600_24dp);
                 detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shot.getLikes_count() + 1),
                         getResources().getString(R.string.detail_likes_tv_text)));
-                SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getResources().getString(R.string
+                SnackUI.showSnackShort(context, coordinatorLayout, getResources().getString(R.string
                         .detail_likes_im_like_a_shot_snack_text));
                 break;
             case Constants.REQUEST_CHECK_IF_LIKE_SHOT:
@@ -323,7 +329,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                     detailLikesIv.setImageResource(R.drawable.ic_favorite_grey_600);
                     detailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(shot.getLikes_count() - 1),
                             getResources().getString(R.string.detail_likes_tv_text)));
-                    SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, getResources().getString(R
+                    SnackUI.showSnackShort(context, coordinatorLayout, getResources().getString(R
                             .string.detail_likes_im_unlike_a_shot_snack_text));
                     setShotIsLiked(false);
                 }
@@ -340,21 +346,21 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     private void checkIfLikeTheShot() {
         type = Constants.REQUEST_CHECK_IF_LIKE_SHOT;
         presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants
-                .REQUEST_GET_MEIHOD, map, getApplicationContext());
+                .REQUEST_GET_MEIHOD, map, context);
         presenter.loadJson();
     }
 
     private void likeTheShot() {
         type = Constants.REQUEST_LIKE_A_SHOT;
         presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants
-                .REQUEST_POST_MEIHOD, map, getApplicationContext());
+                .REQUEST_POST_MEIHOD, map, context);
         presenter.loadJson();
     }
 
     private void unlikeTheShot() {
         type = Constants.REQUEST_UNLIKE_A_SHOT;
         presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants
-                .REQUEST_DELETE_MEIHOD, map, getApplicationContext());
+                .REQUEST_DELETE_MEIHOD, map, context);
         presenter.loadJson();
 
     }

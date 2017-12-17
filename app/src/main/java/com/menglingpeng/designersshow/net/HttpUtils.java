@@ -72,6 +72,10 @@ HttpUtils {
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.COMMENTS).toString();
                         break;
+                    case Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT:
+                        url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
+                                .append("/").append(Constants.ATTACHMENTS).toString();
+                        break;
                     case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:
                         url = Constants.LIST_SHOTS_FOR_AUTH_USER_LIKES_URL;
                         break;

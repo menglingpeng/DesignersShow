@@ -139,6 +139,7 @@ public class Constants {
     public static final String SHOTS = "shots";
     public static final String BUCKETS = "buckets";
     public static final String COMMENTS = "comments";
+    public static final String ATTACHMENTS = "attachments";
     public static final String LIKES = "likes";
     public static final String PROJECTS = "projects";
     public static final String REQUEST_NORMAL = "normal";
@@ -157,7 +158,6 @@ public class Constants {
     public static final String REQUEST_LIKE_A_SHOT = "like_a_shot";
     public static final String REQUEST_UNLIKE_A_SHOT = "unlike_a_shot";
     public static final String REQUEST_CHECK_IF_LIKE_SHOT = "is_liked";
-    public static final String REQUEST_SHOTS_ATTACHMENTS = "attachments";
     public static final String REQUEST_CREATE_A_BUCKET = "create_a_bucket";
     public static final String REQUEST_CHOOSE_BUCKET = "choose_bucket";
     public static final String NAME = "name";
