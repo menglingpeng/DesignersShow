@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,10 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.BaseActivity;
@@ -37,7 +32,7 @@ import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.Json;
-import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 
 import java.util.ArrayList;
@@ -144,7 +139,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private void initParameters() {
         map = new HashMap<>();
         if (type.indexOf(Constants.EXPLORE) != -1) {
-            map = SharedPreUtil.getParameters();
+            map = SharedPrefUtil.getParameters();
         }
         switch (type) {
             case Constants.TAB_FOLLOWING:
@@ -156,7 +151,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 sort = Constants.SORT_RECENT;
                 break;
             case Constants.REQUEST_SORT_POPULAR:
-                map = SharedPreUtil.getParameters();
+                map = SharedPrefUtil.getParameters();
                 break;
             case Constants.REQUEST_SORT_COMMENTS:
                 sort = Constants.SORT_COMMENTS;
@@ -168,7 +163,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 sort = Constants.SORT_VIEWS;
                 break;
             case Constants.REQUEST_LIST_SHOTS:
-                map = SharedPreUtil.getParameters();
+                map = SharedPrefUtil.getParameters();
                 break;
             case Constants.REQUEST_LIST_ANIMTED:
                 list = Constants.LIST_ANIMTED;
@@ -189,7 +184,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 list = Constants.LIST_TEAM;
                 break;
             case Constants.REQUEST_TIMEFRAME_NOW:
-                map = SharedPreUtil.getParameters();
+                map = SharedPrefUtil.getParameters();
                 timeframe = null;
                 break;
             case Constants.REQUEST_TIMEFRAME_WEEK:
@@ -273,8 +268,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             default:
                 break;
         }
-        if (SharedPreUtil.getState(Constants.IS_LOGIN)) {
-            map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+        if (SharedPrefUtil.getState(Constants.IS_LOGIN)) {
+            map.put(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
         } else {
             map.put(Constants.ACCESS_TOKEN, Constants.APP_ACCESS_TOKEN);
         }
@@ -292,7 +287,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         }
         map.put(Constants.PAGE, String.valueOf(page));
         if (type.indexOf(Constants.EXPLORE) != -1) {
-            SharedPreUtil.saveParameters(map);
+            SharedPrefUtil.saveParameters(map);
         }
 
 

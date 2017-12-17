@@ -1,12 +1,9 @@
 package com.menglingpeng.designersshow.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-import com.menglingpeng.designersshow.BaseApplication;
-import com.menglingpeng.designersshow.MainActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerView;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
@@ -53,7 +50,7 @@ public class SnackUI {
                 for (String key : map.keySet()) {
                     HashMap<String, String> map1 = new HashMap<>();
                     map1.put(Constants.SHOT_ID, shotId);
-                    map1.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                    map1.put(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
                     map1.put(Constants.BUCKET_ID, map.get(key));
                     RecyclerPresenter presenter = new RecyclerPresenter(recyclerView, type, Constants
                             .REQUEST_ADD_A_SHOT_TO_BUCKET, Constants.REQUEST_PUT_MEIHOD, map1, context);

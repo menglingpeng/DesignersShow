@@ -1,15 +1,11 @@
 package com.menglingpeng.designersshow.mvp.view;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
-import android.text.InputType;
 import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
@@ -24,7 +20,7 @@ import com.menglingpeng.designersshow.mvp.interf.RecyclerView;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
-import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 
 import java.util.HashMap;
@@ -73,7 +69,7 @@ public class ShotCommentsActivity extends BaseActivity implements RecyclerView{
         id = getIntent().getStringExtra(Constants.SHOT_ID).toString();
         fragment = RecyclerFragment.newInstance(id, Constants.REQUEST_LIST_COMMENTS_FOR_A_SHOT);
         replaceFragment(fragment);
-        ImageLoader.loadCricleImage(context, SharedPreUtil.getLoginData(Constants.AUTH_USER_AVATAR_URL),
+        ImageLoader.loadCricleImage(context, SharedPrefUtil.getLoginData(Constants.AUTH_USER_AVATAR_URL),
                 avatarIv);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +83,7 @@ public class ShotCommentsActivity extends BaseActivity implements RecyclerView{
                     HashMap<String, String> map = new HashMap<>();
                     map.put(Constants.ID, id);
                     map.put(Constants.BODY, editText.getText().toString());
-                    map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                    map.put(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
                     type = Constants.REQUEST_CREATE_A_COMMENT;
                     RecyclerPresenter presenter = new RecyclerPresenter(ShotCommentsActivity.this, type,
                             Constants.REQUEST_NORMAL, Constants.REQUEST_POST_MEIHOD, map, context);

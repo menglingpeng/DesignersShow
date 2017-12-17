@@ -5,8 +5,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -15,7 +13,7 @@ import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.RecyclerView;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
-import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 
 import java.util.HashMap;
@@ -90,7 +88,7 @@ public class UserBucketsActivity extends BaseActivity implements RecyclerView {
                             .the_name_of_bucket_is_not_null));
                 } else {
                     HashMap<String, String> map = new HashMap<>();
-                    map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                    map.put(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
                     map.put(Constants.NAME, bucketNameEt.getText().toString());
                     map.put(Constants.DESCRIPTION, bucketDescEt.getText().toString());
                     type = Constants.REQUEST_CREATE_A_BUCKET;

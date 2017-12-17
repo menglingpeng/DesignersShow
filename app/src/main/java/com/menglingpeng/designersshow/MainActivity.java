@@ -25,13 +25,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -53,7 +49,7 @@ import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.Json;
-import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 
 import java.util.ArrayList;
@@ -93,16 +89,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void initLayoutId() {
         layoutId = R.layout.activity_main;
         //先判断是否第一次启动应用
-        if (SharedPreUtil.getState(Constants.IS_FIRST_START)) {
+        if (SharedPrefUtil.getState(Constants.IS_FIRST_START)) {
             showLoginDialog();
-            SharedPreUtil.saveState(Constants.IS_FIRST_START, false);
+            SharedPrefUtil.saveState(Constants.IS_FIRST_START, false);
         }
     }
 
     @Override
     protected void initViews() {
         super.initViews();
-        isLogin = SharedPreUtil.getState(Constants.IS_LOGIN);
+        isLogin = SharedPrefUtil.getState(Constants.IS_LOGIN);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -203,7 +199,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                             .the_name_of_bucket_is_not_null));
                 } else {
                     HashMap<String, String> map = new HashMap<>();
-                    map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                    map.put(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
                     map.put(Constants.NAME, bucketNameEt.getText().toString());
                     map.put(Constants.DESCRIPTION, bucketDescEt.getText().toString());
                     type = Constants.REQUEST_CREATE_A_BUCKET;
@@ -261,9 +257,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navNameTx = (TextView) headerView.findViewById(R.id.nav_view_name_tx);
         navDescTx = (TextView) headerView.findViewById(R.id.nav_view_desc_tx);
         if (isLogin) {
-            ImageLoader.loadCricleImage(getApplicationContext(), SharedPreUtil.getLoginData(Constants
+            ImageLoader.loadCricleImage(getApplicationContext(), SharedPrefUtil.getLoginData(Constants
                     .AUTH_USER_AVATAR_URL), navAvatarIm);
-            navNameTx.setText(SharedPreUtil.getLoginData(Constants.AUTH_USER_NAME));
+            navNameTx.setText(SharedPrefUtil.getLoginData(Constants.AUTH_USER_NAME));
             navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
         } else {
             navAvatarIm.setImageResource(R.drawable.ic_avatar);
@@ -305,7 +301,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     private void showLoginDialog() {
         LoginDialogFragment dialogFragment = new LoginDialogFragment();
-        dialogFragment.show(getSupportFragmentManager(), "login_dialog_fragment");
+        dialogFragment.show(getSupportFragmentManager(), Constants.LOGIN_DIALOG_FRAGMENT_TAG);
     }
 
     @Override
@@ -369,7 +365,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 floatingActionButton.setVisibility(FloatingActionButton.GONE);
                 tabLayout.setVisibility(TabLayout.GONE);
                 viewPager.setVisibility(ViewPager.GONE);
-                SharedPreUtil.deletedParameters();
+                SharedPrefUtil.deletedParameters();
                 initSpinner();
                 break;
             case Constants.MENU_MY_BUCKETS:
@@ -600,7 +596,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void onDestroy() {
-        SharedPreUtil.deletedParameters();
+        SharedPrefUtil.deletedParameters();
         super.onDestroy();
 
     }
@@ -627,8 +623,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     AuthToken authToken = Json.parseJson(json, AuthToken.class);
                     Log.i("authToken", authToken.getAccess_token());
                     map.put(Constants.ACCESS_TOKEN, authToken.getAccess_token());
-                    SharedPreUtil.saveParameters(map);
-                    SharedPreUtil.saveState(Constants.IS_LOGIN, true);
+                    SharedPrefUtil.saveParameters(map);
+                    SharedPrefUtil.saveState(Constants.IS_LOGIN, true);
                     isLogin = true;
                     type = Constants.REQUEST_AUTH_USER;
                     RecyclerPresenter presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL,
@@ -644,7 +640,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 map.put(Constants.AUTH_USER_AVATAR_URL, authUser.getAvatar_url());
                 map.put(Constants.AUTH_USER_NAME, authUser.getUsername());
                 map.put(Constants.AUTH_USER_ID, String.valueOf(authUser.getId()));
-                SharedPreUtil.saveParameters(map);
+                SharedPrefUtil.saveParameters(map);
                 loginDialog.cancel();
                 initTabPager();
                 break;

@@ -1,13 +1,11 @@
 package com.menglingpeng.designersshow.mvp.view;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +23,7 @@ import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
-import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
@@ -37,7 +35,7 @@ import java.util.HashMap;
  */
 
 public class ShotDetailActivity extends BaseActivity implements OnloadDetailImageListener, com.menglingpeng
-        .designersshow.mvp.interf.RecyclerView {
+        .designersshow.mvp.interf.RecyclerView, LoginDialogFragment.LoginDialogListener {
 
     private Toolbar toolbar;
     private ImageView imageView;
@@ -71,6 +69,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     private RecyclerPresenter presenter;
     private Boolean shotsIsLiked = false;
     private String type;
+    private Boolean isLogin;
 
     @Override
     protected void initLayoutId() {
@@ -83,6 +82,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         //获取序列化对象
         shot = (Shot) getIntent().getSerializableExtra(Constants.SHOTS);
         type = getIntent().getStringExtra(Constants.TYPE);
+        isLogin = SharedPrefUtil.getState(Constants.IS_LOGIN);
         if (type.equals(Constants.USER_SHOT_DETAIL)) {
             user = (User) getIntent().getSerializableExtra(Constants.USER);
         } else {
@@ -111,17 +111,23 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
             }
         });
         map.put(Constants.ID, String.valueOf(shot.getId()));
-        map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
-        checkIfLikeTheShot();
+        map.put(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
+        if(isLogin){
+            checkIfLikeTheShot();
+        }
         detailLikesIv = (ImageView) findViewById(R.id.detail_likes_iv);
         detailLikesFl = (FrameLayout)findViewById(R.id.detail_likes_fl);
         detailLikesFl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (shotsIsLiked) {
-                    unlikeTheShot();
-                } else {
-                    likeTheShot();
+                if(isLogin) {
+                    if (shotsIsLiked) {
+                        unlikeTheShot();
+                    } else {
+                        likeTheShot();
+                    }
+                }else {
+                    showLoginDialog();
                 }
             }
         });
@@ -142,10 +148,14 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         detailAvatarIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShotDetailActivity.this, UserProfileActivity.class);
-                intent.putExtra(Constants.TYPE, Constants.REQUEST_SINGLE_USER);
-                intent.putExtra(Constants.ID, String.valueOf(user.getId()));
-                startActivity(intent);
+                if(isLogin) {
+                    Intent intent = new Intent(ShotDetailActivity.this, UserProfileActivity.class);
+                    intent.putExtra(Constants.TYPE, Constants.REQUEST_SINGLE_USER);
+                    intent.putExtra(Constants.ID, String.valueOf(user.getId()));
+                    startActivity(intent);
+                }else {
+                    showLoginDialog();
+                }
             }
         });
         detailUserNameTv.setText(user.getName());
@@ -158,11 +168,16 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         detailCommentsFl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShotDetailActivity.this, ShotCommentsActivity.class);
-                intent.putExtra(Constants.SHOT_ID, String.valueOf(shot.getId()));
-                intent.putExtra(Constants.COMMENTS_COUNT, String.valueOf(shot.getComments_count()));
-                intent.putExtra(Constants.USER_NAME, shot.getUser().getName());
-                startActivity(intent);
+                if(isLogin) {
+                    Intent intent = new Intent(ShotDetailActivity.this, ShotCommentsActivity.class);
+                    intent.putExtra(Constants.SHOT_ID, String.valueOf(shot.getId()));
+                    intent.putExtra(Constants.COMMENTS_COUNT, String.valueOf(shot.getComments_count()));
+
+                    intent.putExtra(Constants.USER_NAME, shot.getUser().getName());
+                    startActivity(intent);
+                }else {
+                    showLoginDialog();
+                }
             }
         });
         detailCommentsCountTv = (TextView) findViewById(R.id.detail_comments_tv);
@@ -172,9 +187,13 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         detailBucketsFl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShotDetailActivity.this, ChooseBucketActivity.class);
-                intent.putExtra(Constants.SHOT_ID, String.valueOf(shot.getId()));
-                startActivity(intent);
+                if(isLogin) {
+                    Intent intent = new Intent(ShotDetailActivity.this, ChooseBucketActivity.class);
+                    intent.putExtra(Constants.SHOT_ID, String.valueOf(shot.getId()));
+                    startActivity(intent);
+                }else {
+                    showLoginDialog();
+                }
             }
         });
         detailBucketsIv = (ImageView) findViewById(R.id.detail_buckets_iv);
@@ -193,7 +212,11 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
             detailAttachmentsBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(isLogin){
 
+                    }else {
+                        showLoginDialog();
+                    }
                 }
             });
         }
@@ -333,6 +356,16 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         presenter = new RecyclerPresenter(ShotDetailActivity.this, type, Constants.REQUEST_NORMAL, Constants
                 .REQUEST_DELETE_MEIHOD, map, getApplicationContext());
         presenter.loadJson();
+
+    }
+
+    private void showLoginDialog(){
+        LoginDialogFragment dialogFragment = new LoginDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), Constants.LOGIN_DIALOG_FRAGMENT_TAG);
+    }
+
+    @Override
+    public void onLoginDialogLoginListener(Button button, ProgressBar progressBar, Dialog dialog) {
 
     }
 }

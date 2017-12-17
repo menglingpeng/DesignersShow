@@ -11,7 +11,7 @@ import java.util.HashMap;
  * Created by mengdroid on 2017/10/19.
  */
 
-public class SharedPreUtil {
+public class SharedPrefUtil {
 
     private static Context context = BaseApplication.getContext();
     private static SharedPreferences sp = context.getSharedPreferences("ShotsJson", Context.MODE_PRIVATE);

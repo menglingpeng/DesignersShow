@@ -1,7 +1,7 @@
 package com.menglingpeng.designersshow.net;
 
 import com.menglingpeng.designersshow.utils.Constants;
-import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -141,7 +141,7 @@ HttpUtils {
                     case Constants.REQUEST_LIKE_A_SHOT:
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.LIKE).toString();
-                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
                         break;
                     case Constants.REQUEST_CREATE_A_BUCKET:
                         for (String key : map.keySet()) {
@@ -152,14 +152,14 @@ HttpUtils {
                     case Constants.REQUEST_CREATE_A_COMMENT:
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map.get(Constants.ID))
                                 .append("/").append(Constants.COMMENTS).toString();
-                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
                         bodyBuilder.add(Constants.BODY, map.get(Constants.BODY));
                         break;
                     case Constants.REQUEST_LIKE_A_COMMENT:
                         url = new StringBuilder().append(Constants.SHOTS_URL).append("/").append(map
                                 .get(Constants.SHOT_ID)).append("/").append(Constants.COMMENTS).append("/")
                                 .append(map.get(Constants.COMMENT_ID)).append("/").append(Constants.LIKE).toString();
-                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                        bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
                         break;
                     default:
                         break;
@@ -209,7 +209,7 @@ HttpUtils {
                     default:
                         break;
                 }
-                bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+                bodyBuilder.add(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
                 requestBody = bodyBuilder.build();
                 request = new Request.Builder()
                         .url(url)

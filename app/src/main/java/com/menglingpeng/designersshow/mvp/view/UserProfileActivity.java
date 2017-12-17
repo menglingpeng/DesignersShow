@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +27,7 @@ import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.Json;
-import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
 
@@ -64,7 +63,7 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
         type = getIntent().getStringExtra(Constants.TYPE);
         userId = getIntent().getStringExtra(Constants.ID);
         map = new HashMap<>();
-        map.put(Constants.ACCESS_TOKEN, SharedPreUtil.getAuthToken());
+        map.put(Constants.ACCESS_TOKEN, SharedPrefUtil.getAuthToken());
         if (type.equals(Constants.REQUEST_SINGLE_USER)) {
             map.put(Constants.ID, userId);
             type = Constants.CHECK_IF_YOU_ARE_FOLLOWING_A_USER;
@@ -137,8 +136,8 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
     }
 
     private void logout() {
-        SharedPreUtil.saveState(Constants.IS_LOGIN, false);
-        SharedPreUtil.deleteAuthToken();
+        SharedPrefUtil.saveState(Constants.IS_LOGIN, false);
+        SharedPrefUtil.deleteAuthToken();
         restartApplication();
     }
 

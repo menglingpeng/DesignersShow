@@ -4,12 +4,10 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,9 +28,7 @@ import com.menglingpeng.designersshow.mvp.model.Following;
 import com.menglingpeng.designersshow.mvp.model.Project;
 import com.menglingpeng.designersshow.mvp.model.Shot;
 import com.menglingpeng.designersshow.mvp.model.User;
-import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.mvp.view.ShotCommentsActivity;
-import com.menglingpeng.designersshow.mvp.view.ShotDetailActivity;
 import com.menglingpeng.designersshow.mvp.view.UserBucketsActivity;
 import com.menglingpeng.designersshow.mvp.view.UserLikesActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProfileActivity;
@@ -40,7 +36,7 @@ import com.menglingpeng.designersshow.mvp.view.UserFollowingActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProjectsActivity;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
-import com.menglingpeng.designersshow.utils.SharedPreUtil;
+import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
 import com.menglingpeng.designersshow.utils.TimeUtil;
@@ -236,12 +232,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.shotTitleTx.setText(shot.getTitle());
             viewHolder.shotUserNameTx.setText(shot.getUser().getName());
             viewHolder.shotCreatedTimeTx.setText(TimeUtil.getTimeDifference(shot.getUpdated_at()));
-            if(SharedPreUtil.getState(Constants.SAVING_LOWER_IMAGE)){
+            if(SharedPrefUtil.getState(Constants.SAVING_LOWER_IMAGE)){
                 shotUrl = shot.getImages().getTeaser();
             }else {
                 shotUrl = shot.getImages().getNormal();
             }
-            if(SharedPreUtil.getState(Constants.GIFS_AUTO_PLAY)){
+            if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
                 ImageLoader.load(fragment, shotUrl, viewHolder.shotIm, false, true);
             }else {
                 ImageLoader.load(fragment, shotUrl, viewHolder.shotIm, false, false);
@@ -480,7 +476,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             int attachmentsCount = shot.getAttachments_count();
             viewHolder.profileShotTitleTx.setText(shot.getTitle());
             viewHolder.profileShotCreatedTimeTx.setText(TimeUtil.getTimeDifference(shot.getUpdated_at()));
-            if(SharedPreUtil.getState(Constants.GIFS_AUTO_PLAY)){
+            if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
                 ImageLoader.load(fragment, shot.getImages().getNormal(), viewHolder.profileShotIm, false,
                         true);
             }else {
