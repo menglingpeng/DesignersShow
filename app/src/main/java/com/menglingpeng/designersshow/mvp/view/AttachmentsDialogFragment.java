@@ -3,6 +3,7 @@ package com.menglingpeng.designersshow.mvp.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -85,6 +86,10 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         dialog.setContentView(dialogView);
         closeIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_close_iv);
         shareIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_share_iv);
+        openInBrowserIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_open_in_browser_iv);
+        closeIv.setOnClickListener(this);
+        shareIv.setOnClickListener(this);
+        openInBrowserIv.setOnClickListener(this);
         attachmentsDialogPb = (ProgressBar)dialogView.findViewById(R.id.attachments_dialog_pb);
         attachmentsDialogIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_iv);
         attachmentsDialogTl = (TabLayout)dialogView.findViewById(R.id.attachments_dialog_tl);
@@ -115,11 +120,16 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         attachments = Json.parseArrayJson(json, Attachment.class);
         if(attachments.size() == 1) {
             attachmentUrl = attachments.get(0).getUrl();
-            ImageLoader.load(context, attachments.get(0).getUrl(), attachmentsDialogIv, true,
+            currentItemType = attachments.get(0).getContent_type();
+            currentItemId = 0;
+            ImageLoader.load(context, attachmentUrl, attachmentsDialogIv, true,
                     false);
         }else {
             attachmentsDialogIv.setVisibility(ImageView.GONE);
             initTabPager();
+            currentItemId = attachmentsDialogVp.getCurrentItem();
+            currentItemType = attachments.get(currentItemId).getContent_type();
+            attachmentUrl = urls.get(currentItemId);
         }
     }
 
@@ -130,8 +140,6 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         initData();
         attachmentsDialogVp.setAdapter(adapter);
         attachmentsDialogTl.setupWithViewPager(attachmentsDialogVp);
-
-
     }
 
     private void initData(){
@@ -151,6 +159,10 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
                 dialog.dismiss();
                 break;
             case R.id.attachments_dialog_share_iv:
+                shareAttachment();
+                break;
+            case R.id.attachments_dialog_open_in_browser_iv:
+                openInBrowser();
                 break;
             default:
                 break;
@@ -160,21 +172,28 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
     private void shareAttachment(){
         Intent intent = new Intent(Intent.ACTION_SEND);
         String type;
-        currentItemId = attachmentsDialogVp.getCurrentItem();
-        currentItemType = attachments.get(currentItemId).getContent_type();
-        attachmentUrl = urls.get(currentItemId);
         if(currentItemType.equals(Constants.IMAGE_PNG)){
             type = Constants.IMAGE_PNG;
         }else {
             type = Constants.IMAGE_JPEG;
         }
         intent.setType("text/plain");
-        String text = new StringBuilder().append(String.valueOf(currentItemId)).append(type).append(".").
+        String text = new StringBuilder().append(String.valueOf(currentItemId + 1)).append(".").append(type).
                 append(attachmentUrl).append("\n")
                 .append("--").append(getResources().getString(R.string.detail_toolbar_overflow_menu_share_footer_text))
                 .toString();
         intent.putExtra(Intent.EXTRA_TEXT, text);
         startActivity(Intent.createChooser(intent, getResources().getString(R.string
                 .detail_toolbar_overflow_menu_share_create_chooser_title)));
+    }
+
+    private void openInBrowser() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse(attachmentUrl);
+        intent.setData(uri);
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            startActivity(Intent.createChooser(intent, getResources().getString(R.string
+                    .detail_toolbar_overflow_menu_open_in_browser_create_chooser_title)));
+        }
     }
 }
