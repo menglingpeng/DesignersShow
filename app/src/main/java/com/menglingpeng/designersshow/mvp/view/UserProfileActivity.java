@@ -27,6 +27,7 @@ import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.Json;
+import com.menglingpeng.designersshow.utils.ShareAndOpenInBrowserUtil;
 import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
@@ -153,13 +154,10 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
     }
 
     private void shareUserProfile(){
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
         String text = new StringBuilder().append(getString(R.string.check_out)).append(user.getName()).append(
                 getString(R.string.s)).append(getString(R.string.user_profile)).append(user.getHtml_url()).append("\n").
                 append(getString(R.string.detail_toolbar_overflow_menu_share_footer_text)).toString();
-        intent.putExtra(Intent.EXTRA_TEXT, text);
-        startActivity(intent);
+        ShareAndOpenInBrowserUtil.share(context, text);
     }
 
 

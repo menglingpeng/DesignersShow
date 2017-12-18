@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.R;
@@ -25,6 +26,7 @@ import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.Json;
+import com.menglingpeng.designersshow.utils.ShareAndOpenInBrowserUtil;
 import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
     private Context context;
     private String shotsId;
     private String type;
+    private LinearLayout attachmentsDialogLl;
     private ImageView closeIv;
     private ImageView shareIv;
     private ImageView openInBrowserIv;
@@ -56,6 +59,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
     private String attachmentUrl;
     private String currentItemType;
     private int currentItemId;
+    private String attachmentName;
 
     public static AttachmentsDialogFragment newInstance(String shotsId){
         Bundle bundle = new Bundle();
@@ -84,12 +88,15 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(layoutParams);
         dialog.setContentView(dialogView);
+        attachmentsDialogLl = (LinearLayout) dialogView.findViewById(R.id.attachments_dialog_ll);
         closeIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_close_iv);
         shareIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_share_iv);
         openInBrowserIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_open_in_browser_iv);
+        downloadIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_download_iv);
         closeIv.setOnClickListener(this);
         shareIv.setOnClickListener(this);
         openInBrowserIv.setOnClickListener(this);
+        downloadIv.setOnClickListener(this);
         attachmentsDialogPb = (ProgressBar)dialogView.findViewById(R.id.attachments_dialog_pb);
         attachmentsDialogIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_iv);
         attachmentsDialogTl = (TabLayout)dialogView.findViewById(R.id.attachments_dialog_tl);
@@ -120,6 +127,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         attachments = Json.parseArrayJson(json, Attachment.class);
         if(attachments.size() == 1) {
             attachmentUrl = attachments.get(0).getUrl();
+
             currentItemType = attachments.get(0).getContent_type();
             currentItemId = 0;
             ImageLoader.load(context, attachmentUrl, attachmentsDialogIv, true,
@@ -131,6 +139,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
             currentItemType = attachments.get(currentItemId).getContent_type();
             attachmentUrl = urls.get(currentItemId);
         }
+        attachmentName = getAttachmentName(attachmentUrl);
     }
 
     private void initTabPager(){
@@ -146,7 +155,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         for (int i = 0 ; i < attachments.size() ; i++){
             urls.add(attachments.get(i).getThumbnail_url());
             titles.add(String.valueOf(i+1));
-            fragments.add(RecyclerFragment.newInstance(attachments.get(i).getThumbnail_url(), new StringBuilder().
+            fragments.add(RecyclerFragment.newInstance(attachments.get(i).getUrl(), new StringBuilder().
                     append(Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT).append(String.valueOf(i+1)).toString()));
         }
         adapter.setFragments(fragments, titles);
@@ -162,7 +171,10 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
                 shareAttachment();
                 break;
             case R.id.attachments_dialog_open_in_browser_iv:
-                openInBrowser();
+                ShareAndOpenInBrowserUtil.openInBrowser(context, attachmentUrl);
+                break;
+            case R.id.attachments_dialog_download_iv:
+                ImageLoader.downloadImage(context, attachmentsDialogLl, attachmentUrl, attachmentName);
                 break;
             default:
                 break;
@@ -170,30 +182,17 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
     }
 
     private void shareAttachment(){
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        String type;
-        if(currentItemType.equals(Constants.IMAGE_PNG)){
-            type = Constants.IMAGE_PNG;
-        }else {
-            type = Constants.IMAGE_JPEG;
-        }
-        intent.setType("text/plain");
-        String text = new StringBuilder().append(String.valueOf(currentItemId + 1)).append(".").append(type).
+        String text = new StringBuilder().append(attachmentName).
                 append(attachmentUrl).append("\n")
                 .append("--").append(getResources().getString(R.string.detail_toolbar_overflow_menu_share_footer_text))
                 .toString();
-        intent.putExtra(Intent.EXTRA_TEXT, text);
-        startActivity(Intent.createChooser(intent, getResources().getString(R.string
-                .detail_toolbar_overflow_menu_share_create_chooser_title)));
+        ShareAndOpenInBrowserUtil.share(context, text);
     }
 
-    private void openInBrowser() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = Uri.parse(attachmentUrl);
-        intent.setData(uri);
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            startActivity(Intent.createChooser(intent, getResources().getString(R.string
-                    .detail_toolbar_overflow_menu_open_in_browser_create_chooser_title)));
-        }
+    private String getAttachmentName(String url){
+        int lastIndex = url.lastIndexOf("/");
+        String name = url.substring(lastIndex + 1, url.length());
+        return name;
     }
+
 }

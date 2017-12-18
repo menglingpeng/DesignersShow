@@ -17,6 +17,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -148,7 +149,7 @@ public class ImageLoader {
         Glide.get(context).clearDiskCache();
     }
 
-    public static void downloadImage(Context context, CoordinatorLayout coordinatorLayout, String url, String
+    public static void downloadImage(Context context, View rootView, String url, String
             imageName) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         /*// 设置允许在何种网络下进行下载任务,默认所有网络都允许
@@ -183,7 +184,7 @@ public class ImageLoader {
                 case DownloadManager.STATUS_PENDING:
                     String text = new StringBuilder().append(context.getResources().getString(R.string
                             .detail_toolbar_overflow_menu_download_snackbar_text)).append(imageName).toString();
-                    SnackUI.showSnackShort(context, coordinatorLayout, text);
+                    SnackUI.showSnackShort(context, rootView, text);
                     break;
                 case DownloadManager.STATUS_RUNNING:
                     break;

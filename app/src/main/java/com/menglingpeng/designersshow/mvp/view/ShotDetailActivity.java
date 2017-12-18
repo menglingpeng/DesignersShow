@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.ShareAndOpenInBrowserUtil;
 import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 import com.menglingpeng.designersshow.utils.TextUtil;
@@ -242,7 +244,7 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 shareShots();
                 break;
             case R.id.open_in_browser:
-                openInBrowser();
+                ShareAndOpenInBrowserUtil.openInBrowser(context, htmlUrl);
                 break;
             case R.id.download:
                 download();
@@ -254,26 +256,13 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     }
 
     private void shareShots() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
         String text = new StringBuilder().append(imageName).append("\n")
                 .append(htmlUrl).append("\n")
                 .append(getResources().getString(R.string.detail_toolbar_overflow_menu_share_footer_text))
                 .toString();
-        intent.putExtra(Intent.EXTRA_TEXT, text);
-        startActivity(Intent.createChooser(intent, getResources().getString(R.string
-                .detail_toolbar_overflow_menu_share_create_chooser_title)));
+        ShareAndOpenInBrowserUtil.share(context, text);
     }
 
-    private void openInBrowser() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = Uri.parse(htmlUrl);
-        intent.setData(uri);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(Intent.createChooser(intent, getResources().getString(R.string
-                    .detail_toolbar_overflow_menu_open_in_browser_create_chooser_title)));
-        }
-    }
 
     private void download() {
         ImageLoader.downloadImage(getApplicationContext(), coordinatorLayout, imageUrl, imageName);
