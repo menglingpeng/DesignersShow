@@ -2,6 +2,7 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -32,12 +33,16 @@ import java.util.HashMap;
  * Created by mengdroid on 2017/12/17.
  */
 
-public class AttachmentsDialogFragment extends AppCompatDialogFragment implements RecyclerView {
+public class AttachmentsDialogFragment extends AppCompatDialogFragment implements RecyclerView, View.OnClickListener{
 
     private Dialog dialog;
     private Context context;
     private String shotsId;
     private String type;
+    private ImageView closeIv;
+    private ImageView shareIv;
+    private ImageView openInBrowserIv;
+    private ImageView downloadIv;
     private ProgressBar attachmentsDialogPb;
     private ImageView attachmentsDialogIv;
     private TabLayout attachmentsDialogTl;
@@ -45,7 +50,11 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
     private ArrayList<Attachment> attachments;
     private ArrayList<String> titles;
     private ArrayList<RecyclerFragment> fragments;
-    TabPagerFragmentAdapter adapter;
+    private ArrayList<String> urls;
+    private TabPagerFragmentAdapter adapter;
+    private String attachmentUrl;
+    private String currentItemType;
+    private int currentItemId;
 
     public static AttachmentsDialogFragment newInstance(String shotsId){
         Bundle bundle = new Bundle();
@@ -63,6 +72,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         attachments = new ArrayList<>();
         titles = new ArrayList<>();
         fragments = new ArrayList<>();
+        urls = new ArrayList<>();
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_fragment_attachments, null);
         Window window = dialog.getWindow();
         window.setGravity(Gravity.BOTTOM);
@@ -73,6 +83,8 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(layoutParams);
         dialog.setContentView(dialogView);
+        closeIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_close_iv);
+        shareIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_share_iv);
         attachmentsDialogPb = (ProgressBar)dialogView.findViewById(R.id.attachments_dialog_pb);
         attachmentsDialogIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_iv);
         attachmentsDialogTl = (TabLayout)dialogView.findViewById(R.id.attachments_dialog_tl);
@@ -84,7 +96,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         type = Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT;
         RecyclerPresenter presenter = new RecyclerPresenter(this, type,
                                 Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, context);
-                        presenter.loadJson();
+        presenter.loadJson();
         return dialog;
     }
 
@@ -102,6 +114,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
     public void loadSuccess(String json, String requestType) {
         attachments = Json.parseArrayJson(json, Attachment.class);
         if(attachments.size() == 1) {
+            attachmentUrl = attachments.get(0).getUrl();
             ImageLoader.load(context, attachments.get(0).getUrl(), attachmentsDialogIv, true,
                     false);
         }else {
@@ -123,6 +136,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
 
     private void initData(){
         for (int i = 0 ; i < attachments.size() ; i++){
+            urls.add(attachments.get(i).getThumbnail_url());
             titles.add(String.valueOf(i+1));
             fragments.add(RecyclerFragment.newInstance(attachments.get(i).getThumbnail_url(), new StringBuilder().
                     append(Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT).append(String.valueOf(i+1)).toString()));
@@ -130,4 +144,37 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         adapter.setFragments(fragments, titles);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.attachments_dialog_close_iv:
+                dialog.dismiss();
+                break;
+            case R.id.attachments_dialog_share_iv:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void shareAttachment(){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        String type;
+        currentItemId = attachmentsDialogVp.getCurrentItem();
+        currentItemType = attachments.get(currentItemId).getContent_type();
+        attachmentUrl = urls.get(currentItemId);
+        if(currentItemType.equals(Constants.IMAGE_PNG)){
+            type = Constants.IMAGE_PNG;
+        }else {
+            type = Constants.IMAGE_JPEG;
+        }
+        intent.setType("text/plain");
+        String text = new StringBuilder().append(String.valueOf(currentItemId)).append(type).append(".").
+                append(attachmentUrl).append("\n")
+                .append("--").append(getResources().getString(R.string.detail_toolbar_overflow_menu_share_footer_text))
+                .toString();
+        intent.putExtra(Intent.EXTRA_TEXT, text);
+        startActivity(Intent.createChooser(intent, getResources().getString(R.string
+                .detail_toolbar_overflow_menu_share_create_chooser_title)));
+    }
 }

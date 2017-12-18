@@ -28,6 +28,8 @@ public class Constants {
     public static final String SETTINGS_ABOUT_PREF = "settings_data_pref";
     public static final String LOGIN_DIALOG_FRAGMENT_TAG = "login_dialog_fragment";
     public static final String ATTACHMENTS_DIALOG_FRAGMENT_TAG = "attachments_dialog_fragment";
+    public static final String IMAGE_JPEG = "jpg";
+    public static final String IMAGE_PNG = "png";
     /**
      * Dribbble API
      */
