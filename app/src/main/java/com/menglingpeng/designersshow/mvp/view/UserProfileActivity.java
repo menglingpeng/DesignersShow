@@ -284,6 +284,9 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
         initTabFragments();
         profileVp.setAdapter(adapter);
         profileTl.setupWithViewPager(profileVp);
+        if(user.getShots_count() != 0){
+            profileVp.setCurrentItem(1);
+        }
         profileTl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

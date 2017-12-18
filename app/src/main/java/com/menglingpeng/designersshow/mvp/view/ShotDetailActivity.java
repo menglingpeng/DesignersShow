@@ -215,11 +215,8 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                 @Override
                 public void onClick(View v) {
                     if(isLogin){
-                        map.put(Constants.SHOT_ID, String.valueOf(shot.getId()));
-                        type = Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT;
-                        presenter = new RecyclerPresenter(ShotDetailActivity.this, type,
-                                Constants.REQUEST_NORMAL, Constants.REQUEST_GET_MEIHOD, map, context);
-                        presenter.loadJson();
+                        AttachmentsDialogFragment dialogFragment = AttachmentsDialogFragment.newInstance(String.valueOf(shot.getId()));
+                        dialogFragment.show(getSupportFragmentManager(), Constants.ATTACHMENTS_DIALOG_FRAGMENT_TAG);
                     }else {
                         showLoginDialog();
                     }

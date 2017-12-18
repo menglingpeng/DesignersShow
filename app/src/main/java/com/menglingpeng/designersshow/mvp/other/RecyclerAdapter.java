@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
@@ -133,7 +134,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (viewType) {
             case TYPE_ITEM_EMPTY:
                 view = inflater.inflate(R.layout.recycler_item_empty, parent, false);
-                viewHolder = new EmptyiewHolder(view);
+                viewHolder = new EmptyViewHolder(view);
                 break;
             case TYPE_ITEM_FOOTER:
                 view = inflater.inflate(R.layout.recycler_item_footer_loading, parent, false);
@@ -202,8 +203,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         viewHolder = new FollowOfUserViewHolder(view);
                         break;
                     default:
-                        view = inflater.inflate(R.layout.recycler_item, parent, false);
-                        viewHolder = new ShotViewHolder(view);
+                        if(type.indexOf(Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT) != -1){
+                            view = inflater.inflate(R.layout.attachments_dialog_fragment_viewpager_item, parent,
+                                    false);
+                            viewHolder = new AttachmentViewHolder(view);
+                        }else {
+                            view = inflater.inflate(R.layout.recycler_item, parent, false);
+                            viewHolder = new ShotViewHolder(view);
+                        }
                         break;
                 }
                 break;
@@ -400,6 +407,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else if (holder instanceof DetailOfUserViewHolder) {
             final DetailOfUserViewHolder viewHolder = (DetailOfUserViewHolder) holder;
             final User user = (User) list.get(position);
+            final ViewPager viewPager = fragment.getActivity().findViewById(R.id.profile_vp);
             viewHolder.profileTablayoutDetailShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
             viewHolder.profileTablayoutDetailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
@@ -412,6 +420,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .getFollowers_count()), context.getString(R.string.followers)));
             viewHolder.profileTablayoutDetailFollowingsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getFollowings_count()), context.getString(R.string.following)));
+            viewHolder.profileTablayoutDetailShotsRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewPager.setCurrentItem(1);
+                }
+            });
+            viewHolder.profileTablayoutDetailFollowersRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewPager.setCurrentItem(2);
+                }
+            });
             viewHolder.profileTablayoutDetailBucketsRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -502,10 +522,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             });
-        } else if (holder instanceof EmptyiewHolder) {
+        } else if(holder instanceof AttachmentViewHolder){
+            AttachmentViewHolder viewHolder = (AttachmentViewHolder)holder;
+            String url = (String)list.get(position);
+            ImageLoader.load(fragment, url, viewHolder.attachmentIv, false, false);
+        } else if (holder instanceof EmptyViewHolder) {
             int ivId = 0;
             int tvId = 0;
-            EmptyiewHolder viewHolder = (EmptyiewHolder) holder;
+            EmptyViewHolder viewHolder = (EmptyViewHolder) holder;
             switch (type) {
                 case Constants.TAB_FOLLOWING:
                     ivId = R.drawable.ic_image_grey_400_48dp;
@@ -746,11 +770,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public class EmptyiewHolder extends RecyclerView.ViewHolder {
+    public class AttachmentViewHolder extends RecyclerView.ViewHolder{
+
+        private final ImageView attachmentIv;
+        public AttachmentViewHolder(View view) {
+            super(view);
+            attachmentIv = (ImageView)view.findViewById(R.id.attachments_dialog_viewpager_item_iv);
+        }
+    }
+
+    public class EmptyViewHolder extends RecyclerView.ViewHolder {
         public final ImageView emptyIm;
         public final TextView emptyTx;
 
-        public EmptyiewHolder(View view) {
+        public EmptyViewHolder(View view) {
             super(view);
             emptyIm = (ImageView) view.findViewById(R.id.recycler_item_empty_im);
             emptyTx = (TextView) view.findViewById(R.id.recycler_item_empty_tx);

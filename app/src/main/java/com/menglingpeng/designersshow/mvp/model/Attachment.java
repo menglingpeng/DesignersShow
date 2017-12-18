@@ -4,7 +4,7 @@ package com.menglingpeng.designersshow.mvp.model;
  * Created by mengdroid on 2017/12/17.
  */
 
-public class attachment {
+public class Attachment {
 
     private int id;
 

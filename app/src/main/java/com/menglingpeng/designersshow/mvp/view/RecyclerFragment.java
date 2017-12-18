@@ -73,6 +73,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private int count = 0;
     private String bucketName;
     private User user;
+    private String attachmentUrl;
 
     public static RecyclerFragment newInstance(String type) {
         Bundle bundle = new Bundle();
@@ -112,9 +113,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     protected void initData() {
         initParameters();
         if(!type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER) && !type.equals(
-                Constants.REQUEST_LIST_DETAIL_FOR_A_USER)) {
-            presenter = new RecyclerPresenter(this, type, mRequestType, Constants.REQUEST_GET_MEIHOD, map,
-                    context);
+                Constants.REQUEST_LIST_DETAIL_FOR_A_USER) &&
+                !(type.contains(Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT)) ) {
+            presenter = new RecyclerPresenter(this, type, mRequestType, Constants.REQUEST_GET_MEIHOD,
+                    map, context);
             presenter.loadJson();
         }
     }
@@ -133,6 +135,8 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         if(type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER) || type.equals(
                 Constants.REQUEST_LIST_DETAIL_FOR_A_USER)){
             setUserAdapter(user);
+        }else if(type.indexOf(Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT) != -1){
+            setAttachmentAdapter(attachmentUrl);
         }
     }
 
@@ -266,6 +270,9 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 map.put(Constants.ID, id);
                 break;
             default:
+                if(type.indexOf(Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT) != -1){
+                    attachmentUrl = getArguments().getString(Constants.ID);
+                }
                 break;
         }
         if (SharedPrefUtil.getState(Constants.IS_LOGIN)) {
@@ -289,8 +296,21 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         if (type.indexOf(Constants.EXPLORE) != -1) {
             SharedPrefUtil.saveParameters(map);
         }
+    }
 
+    private void setUserAdapter(User user){
+        fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
+        adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
+        recyclerView.setAdapter(adapter);
+        adapter.addData(user);
+        progressBar.setVisibility(ProgressBar.GONE);
+    }
 
+    private void setAttachmentAdapter(String url){
+        fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
+        adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
+        recyclerView.setAdapter(adapter);
+        adapter.addData(url);
     }
 
     @Override
@@ -309,14 +329,6 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     public void hideProgress() {
         progressBar.setVisibility(ProgressBar.GONE);
 
-    }
-
-    private void setUserAdapter(User user){
-        fragment = TabPagerFragmentAdapter.getCurrentPagerViewFragment();
-        adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
-        recyclerView.setAdapter(adapter);
-        adapter.addData(user);
-        progressBar.setVisibility(ProgressBar.GONE);
     }
 
     @Override
