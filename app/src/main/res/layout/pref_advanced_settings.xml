@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/settings_preference_category_advanced_settings_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settings_preference_category_data_title_tv_layout_margin_top_bottom"
+            android:layout_marginBottom="@dimen/settings_preference_category_data_title_tv_layout_margin_top_bottom"
+            android:layout_marginLeft="@dimen/settings_preference_category_data_title_tv_layout_marginLeft"
+            android:text="@string/settings_preference_category_data_title"
+            android:textColor="@color/colorAccent"/>
+
+        <RelativeLayout
+            android:id="@+id/settings_switch_preference_night_mode_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/settings_preference_category_advanced_settings_tv">
+
+            <TextView
+                android:id="@+id/settings_switch_preference_night_mode_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/settings_switch_preference_title_tv_layout_marginTop"
+                android:layout_marginLeft="@dimen/settings_switch_preference_title_tv_layout_marginLeft"
+                android:text="@string/settings_switch_preference_night_mode_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Notification.Title"/>
+
+            <TextView
+                android:id="@+id/settings_switch_preference_night_mode_summary_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings_switch_preference_night_mode_title_tv"
+                android:layout_alignLeft="@+id/settings_switch_preference_night_mode_title_tv"
+                android:layout_marginTop="@dimen/settings_switch_preference_summary_tv__layout_marginTop"
+                android:layout_marginEnd="@dimen/settings_switch_preference_summary_tv__layout_marginEnd"
+                android:text="@string/settings_switch_preference_night_mode_summary"/>
+
+            <Switch
+                android:id="@+id/settings_switch_preference_night_mode_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/settings_switch_preference_switch_layout_marginEnd" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -107,6 +107,9 @@
     <string name="add_your_comment_403_forbidden_error_text">提交评论发生错误：账号权限需要player或则team!</string>
     <string name="comment_text_copied_in_clipboard">评论已经复制到剪贴板中</string>
     <string name="title_activity_settings">设置</string>
+    <string name="settings_preference_category_advanced_settings_title"></string>
+    <string name="settings_switch_preference_night_mode_title">夜间模式</string>
+    <string name="settings_switch_preference_night_mode_summary">降低视线中的白色</string>
     <string name="settings_preference_category_data_title">数据</string>
     <string name="settings_switch_preference_data_saving_mode_title">数据保存模式</string>
     <string name="settings_switch_preference_data_saving_mode_summary">在图片列表上加载低分辨率的图片以节省数据流量</string>
