@@ -20,11 +20,13 @@ import android.widget.TextView;
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
+import com.menglingpeng.designersshow.mvp.model.AuthToken;
 import com.menglingpeng.designersshow.mvp.model.Shot;
 import com.menglingpeng.designersshow.mvp.model.User;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.Json;
 import com.menglingpeng.designersshow.utils.ShareAndOpenInBrowserUtil;
 import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
@@ -74,6 +76,9 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     private String type;
     private Boolean isLogin;
     private Context context;
+    private Button loginDialogLoginBt;
+    private ProgressBar loginDialogPb;
+    private Dialog loginDialog;
 
     @Override
     protected void initLayoutId() {
@@ -271,8 +276,27 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, intent.getStringExtra(Constants
-                .SNACKBAR_TEXT));
+        if(intent.getStringExtra(Constants.SNACKBAR_TEXT) != null) {
+            SnackUI.showSnackShort(getApplicationContext(), coordinatorLayout, intent.getStringExtra(Constants
+
+                    .SNACKBAR_TEXT));
+        }
+        if(intent.getData() != null){
+            HashMap<String, String> map = new HashMap<>();
+            loginDialogLoginBt.setVisibility(Button.GONE);
+            loginDialogPb.setVisibility(ProgressBar.VISIBLE);
+            Uri uri = intent.getData();
+            //接收传递过来URL中的参数code
+            String code = uri.getQuery();
+            map.put(Constants.CLIENT_ID, Constants.CLIENT_ID_VALUE);
+            map.put(Constants.CLIENT_SECRET, Constants.CLIENT_SECRET_VALUE);
+            //code字符串前面带有code=,需要去掉。
+            map.put(Constants.CODE, code.replace("code=", ""));
+            type = Constants.REQUEST_AUTH_TOKEN;
+            RecyclerPresenter presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL, Constants
+                    .REQUEST_POST_MEIHOD, map, this);
+            presenter.loadJson();
+        }
     }
 
     @Override
@@ -320,6 +344,31 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
                     setShotIsLiked(false);
                 }
                 break;
+            case Constants.REQUEST_AUTH_TOKEN:
+                loginDialogPb.setVisibility(ProgressBar.VISIBLE);
+                if (json.indexOf("error") != -1) {
+
+                } else {
+                    AuthToken authToken = Json.parseJson(json, AuthToken.class);
+                    Log.i("authToken", authToken.getAccess_token());
+                    map.put(Constants.ACCESS_TOKEN, authToken.getAccess_token());
+                    SharedPrefUtil.saveParameters(map);
+                    SharedPrefUtil.saveState(Constants.IS_LOGIN, true);
+                    isLogin = true;
+                    type = Constants.REQUEST_AUTH_USER;
+                    RecyclerPresenter presenter = new RecyclerPresenter(this, type, Constants.REQUEST_NORMAL,
+                            Constants.REQUEST_GET_MEIHOD, map, this);
+                    presenter.loadJson();
+                }
+                break;
+            case Constants.REQUEST_AUTH_USER:
+                User authUser = Json.parseJson(json, User.class);
+                map.put(Constants.AUTH_USER_AVATAR_URL, authUser.getAvatar_url());
+                map.put(Constants.AUTH_USER_NAME, authUser.getUsername());
+                map.put(Constants.AUTH_USER_ID, String.valueOf(authUser.getId()));
+                SharedPrefUtil.saveParameters(map);
+                loginDialog.cancel();
+                break;
             default:
                 break;
         }
@@ -358,6 +407,12 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
 
     @Override
     public void onLoginDialogLoginListener(Button button, ProgressBar progressBar, Dialog dialog) {
-
+        loginDialogPb = progressBar;
+        loginDialogLoginBt = button;
+        loginDialog = dialog;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse(Constants.REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL);
+        intent.setData(uri);
+        startActivity(intent);
     }
 }

@@ -70,7 +70,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private RelativeLayout navHeaderRl;
     private ImageView navAvatarIm;
     private TextView navNameTx, navDescTx;
-    private ImageView loginDialogCloseIm;
     private Button loginDialogLoginBt;
     private ProgressBar loginDialogPb;
     private TabLayout tabLayout;
