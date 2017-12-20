@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 
 import com.menglingpeng.designersshow.R;
@@ -25,12 +27,15 @@ import com.menglingpeng.designersshow.utils.SnackUI;
 public class SettingsFragment extends PreferenceFragment implements View.OnClickListener {
     private DataPreference dataPreference;
     private AboutPreference aboutPreference;
+    private AdvancedSettingsPreference advancedSettingsPreference;
     private Context context;
+    private CoordinatorLayout coordinatorLayout;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_settings);
         context = getActivity().getApplicationContext();
+        coordinatorLayout = (CoordinatorLayout)getActivity().findViewById(R.id.settings_cdl);
         initPreference();
     }
 
@@ -38,8 +43,11 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
     private void initPreference(){
         dataPreference = (DataPreference) findPreference(Constants.SETTINGS_DATA_PREF);
         aboutPreference = (AboutPreference)findPreference(Constants.SETTINGS_ABOUT_PREF);
+        advancedSettingsPreference = (AdvancedSettingsPreference)findPreference(Constants.
+                SETTINGS_ADVANCED_SETTINGS_PREF);
         dataPreference.setOnclickListerner(this);
         aboutPreference.setOnclickListerner(this);
+        advancedSettingsPreference.setOnclickListerner(this);
     }
 
     @Override
@@ -68,6 +76,9 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
                 break;
             case R.id.settings_preference_contact_me_rl:
                 sendMailToMe();
+                break;
+            case R.id.settings_switch_preference_night_mode_rl:
+                setNightMode();
                 break;
             default:
                 break;
@@ -111,5 +122,18 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
         intent.putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJECT);
         intent.putExtra(Intent.EXTRA_TEXT, emailText).toString();
         startActivity(Intent.createChooser(intent, getString(R.string.email_create_chooser_title)));
+    }
+
+    private void setNightMode() {
+        if (SharedPrefUtil.getState(Constants.NIGHT_MODE)) {
+            SharedPrefUtil.saveState(Constants.NIGHT_MODE, false);
+            advancedSettingsPreference.getNightModlSwitch().setChecked(false);
+            coordinatorLayout.setBackgroundColor(Color.WHITE);
+        } else{
+            SharedPrefUtil.saveState(Constants.NIGHT_MODE, true);
+            advancedSettingsPreference.getNightModlSwitch().setChecked(true);
+            coordinatorLayout.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+
+    }
     }
 }

@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 
 import com.menglingpeng.designersshow.R;
 
@@ -16,6 +18,9 @@ import com.menglingpeng.designersshow.R;
 public class AdvancedSettingsPreference extends Preference {
 
     private View contentView;
+    private RelativeLayout nightModeRl;
+    private Switch nightModlSwitch;
+    private View.OnClickListener listener;
 
     public AdvancedSettingsPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -28,4 +33,22 @@ public class AdvancedSettingsPreference extends Preference {
         return contentView;
     }
 
+    @Override
+    protected void onBindView(View view) {
+        nightModeRl = (RelativeLayout)view.findViewById(R.id.settings_switch_preference_night_mode_rl);
+        nightModlSwitch = (Switch)view.findViewById(R.id.settings_switch_preference_night_mode_switch);
+        nightModeRl.setOnClickListener(listener);
+    }
+
+    public void setOnclickListerner(View.OnClickListener listerner){
+        this.listener = listerner;
+    }
+
+    public RelativeLayout getNightModeRl(){
+        return nightModeRl;
+    }
+
+    public Switch getNightModlSwitch(){
+        return nightModlSwitch;
+    }
 }
