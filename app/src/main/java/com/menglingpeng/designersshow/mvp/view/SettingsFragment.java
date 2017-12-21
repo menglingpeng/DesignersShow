@@ -80,6 +80,9 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
             case R.id.settings_switch_preference_night_mode_rl:
                 setNightMode();
                 break;
+            case R.id.settings_switch_preference_double_press_to_exit_rl:
+                setDoubleBackToExit();
+                break;
             default:
                 break;
         }
@@ -133,7 +136,16 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
             SharedPrefUtil.saveState(Constants.NIGHT_MODE, true);
             advancedSettingsPreference.getNightModlSwitch().setChecked(true);
             coordinatorLayout.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
-
     }
+    }
+
+    private void setDoubleBackToExit(){
+        if(SharedPrefUtil.getState(Constants.DOUBLE_BACK_TO_EXIT)){
+            advancedSettingsPreference.getDoubleBacktoExitSwitch().setChecked(false);
+            SharedPrefUtil.saveState(Constants.DOUBLE_BACK_TO_EXIT, false);
+        }else {
+            advancedSettingsPreference.getDoubleBacktoExitSwitch().setChecked(true);
+            SharedPrefUtil.saveState(Constants.DOUBLE_BACK_TO_EXIT, true);
+        }
     }
 }

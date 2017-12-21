@@ -549,7 +549,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            doubleBackToQuit();
+            if(SharedPrefUtil.getState(Constants.DOUBLE_BACK_TO_EXIT)) {
+                doubleBackToQuit();
+            }
         }
     }
 

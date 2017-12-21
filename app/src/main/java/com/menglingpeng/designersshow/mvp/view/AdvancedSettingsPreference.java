@@ -20,6 +20,8 @@ public class AdvancedSettingsPreference extends Preference {
     private View contentView;
     private RelativeLayout nightModeRl;
     private Switch nightModlSwitch;
+    private RelativeLayout doubleBackToExitRl;
+    private Switch doubleBackToExitSwitch;
     private View.OnClickListener listener;
 
     public AdvancedSettingsPreference(Context context, AttributeSet attrs) {
@@ -37,7 +39,11 @@ public class AdvancedSettingsPreference extends Preference {
     protected void onBindView(View view) {
         nightModeRl = (RelativeLayout)view.findViewById(R.id.settings_switch_preference_night_mode_rl);
         nightModlSwitch = (Switch)view.findViewById(R.id.settings_switch_preference_night_mode_switch);
+        doubleBackToExitRl = (RelativeLayout)view.findViewById(R.id.
+                settings_switch_preference_double_press_to_exit_rl);
+        doubleBackToExitSwitch = (Switch)view.findViewById(R.id.settings_switch_preference_double_press_to_exit_switch);
         nightModeRl.setOnClickListener(listener);
+        doubleBackToExitRl.setOnClickListener(listener);
     }
 
     public void setOnclickListerner(View.OnClickListener listerner){
@@ -50,5 +56,13 @@ public class AdvancedSettingsPreference extends Preference {
 
     public Switch getNightModlSwitch(){
         return nightModlSwitch;
+    }
+
+    public RelativeLayout getDoubleBacktoExitRl(){
+        return doubleBackToExitRl;
+    }
+
+    public Switch getDoubleBacktoExitSwitch(){
+        return doubleBackToExitSwitch;
     }
 }
