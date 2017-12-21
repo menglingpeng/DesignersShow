@@ -2,6 +2,8 @@ package com.menglingpeng.designersshow.mvp.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.Gravity;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.menglingpeng.designersshow.R;
+import com.menglingpeng.designersshow.utils.Constants;
 
 /**
  * Created by mengdroid on 2017/12/16.
@@ -54,6 +57,10 @@ public class LoginDialogFragment extends AppCompatDialogFragment {
             @Override
             public void onClick(View v) {
                 listener.onLoginDialogLoginListener(loginDialogLoginBt, loginDialogPb, dialog);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Uri uri = Uri.parse(Constants.REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL);
+                intent.setData(uri);
+                startActivity(intent);
             }
         });
 

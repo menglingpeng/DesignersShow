@@ -410,9 +410,5 @@ public class ShotDetailActivity extends BaseActivity implements OnloadDetailImag
         loginDialogPb = progressBar;
         loginDialogLoginBt = button;
         loginDialog = dialog;
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = Uri.parse(Constants.REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL);
-        intent.setData(uri);
-        startActivity(intent);
     }
 }
