@@ -38,7 +38,7 @@ public class SharedPrefUtil {
             is = sp.getBoolean(Constants.IS_FIRST_START, true);
         } else {
             //is不存在则是没有登陆，值为false
-            is = sp.getBoolean(Constants.IS_LOGIN, false);
+            is = sp.getBoolean(key, false);
         }
         return is;
     }

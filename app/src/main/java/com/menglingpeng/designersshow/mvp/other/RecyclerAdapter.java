@@ -50,7 +50,7 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int TYPE_ITEM = 0;
+    public static final int TYPE_ITEM = 0;
     private static final int TYPE_ITEM_FOOTER = 1;
     private static final int TYPE_ITEM_EMPTY = 2;
     private OnRecyclerListItemListener mListener;
@@ -62,7 +62,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     onLoadingMore loadingMore;
     //加载更多的提前量
     private int visibleThreshold = 2;
-
+    private int viewType;
 
     public RecyclerAdapter(RecyclerView recyclerView, Context context, Fragment fragment, final String type,
                            OnRecyclerListItemListener listener) {
@@ -108,17 +108,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        int type = 0;
         if (list.isEmpty()) {
-            type = TYPE_ITEM_EMPTY;
+            viewType = TYPE_ITEM_EMPTY;
         } else {
             if (position == list.size()) {
-                type = TYPE_ITEM_FOOTER;
+                viewType = TYPE_ITEM_FOOTER;
             } else {
-                type = TYPE_ITEM;
+                viewType = TYPE_ITEM;
             }
         }
-        return type;
+        return viewType;
     }
 
     @Override
@@ -626,6 +625,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class CommentViewHolder extends RecyclerView.ViewHolder {
+        public final RelativeLayout commentsItemRl;
         public final ImageView avatarIv;
         public final TextView usernameTv;
         public final TextView commentContentTv;
@@ -635,6 +635,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public CommentViewHolder(View view) {
             super(view);
+            commentsItemRl = (RelativeLayout)view.findViewById(R.id.detial_comments_item_rl);
             avatarIv = (ImageView) view.findViewById(R.id.detail_comment_avatar_iv);
             usernameTv = (TextView) view.findViewById(R.id.detail_comment_username_tv);
             commentContentTv = (TextView) view.findViewById(R.id.detail_comment_content_tv);
@@ -801,7 +802,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         list.add(d);
         notifyDataSetChanged();
     }
-
 
     public void setLoading(boolean isLoading) {
         this.isLoading = isLoading;

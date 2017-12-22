@@ -1,71 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/detial_comments_rl"
+    android:id="@+id/detial_comments_item_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/detial_comments_rl_layout_marginRight"
-    android:background="#EEEEEE"
-    >
+    android:background="#EEEEEE">
 
-    <ImageView
-        android:id="@+id/detail_comment_avatar_iv"
-        android:layout_width="@dimen/detail_comments_avatar_im_layout_width"
-        android:layout_height="@dimen/detail_comments_avatar_im_layout_height"
-        android:layout_marginStart="@dimen/recycler_view_item_avatar_layout_marginLeft"
-        android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop"
-        android:src="@drawable/ic_avatar" />
+        <ImageView
+            android:id="@+id/detail_comment_avatar_iv"
+            android:layout_width="@dimen/detail_comments_avatar_im_layout_width"
+            android:layout_height="@dimen/detail_comments_avatar_im_layout_height"
+            android:layout_marginStart="@dimen/recycler_view_item_avatar_layout_marginLeft"
+            android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop"
+            android:src="@drawable/ic_avatar" />
 
-    <TextView
-        android:id="@+id/detail_comment_username_tv"
-        style="@style/TextAppearance.AppCompat.Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/recycler_view_item_avatar_layout_marginLeft"
-        android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop"
-        android:layout_toRightOf="@+id/detail_comment_avatar_iv"
-        android:ellipsize="end"
-        android:singleLine="true" />
+        <TextView
+            android:id="@+id/detail_comment_username_tv"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/recycler_view_item_avatar_layout_marginLeft"
+            android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop"
+            android:layout_toRightOf="@+id/detail_comment_avatar_iv"
+            android:ellipsize="end"
+            android:singleLine="true" />
 
-    <TextView
-        android:id="@+id/detail_comment_content_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/detail_comment_username_tv"
-        android:layout_below="@+id/detail_comment_username_tv"
-        android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop"
-        android:textColorLink="@color/shots_username"/>
+        <TextView
+            android:id="@+id/detail_comment_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/detail_comment_username_tv"
+            android:layout_below="@+id/detail_comment_username_tv"
+            android:layout_marginTop="@dimen/detail_comments_tx_layout_marginTop"
+            android:textColorLink="@color/shots_username"/>
 
-    <TextView
-        android:id="@+id/detail_comment_create_at_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/detail_comment_username_tv"
-        android:layout_below="@+id/detail_comment_content_tv" />
+        <TextView
+            android:id="@+id/detail_comment_create_at_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/detail_comment_username_tv"
+            android:layout_below="@+id/detail_comment_content_tv" />
 
-    <ImageView
-        android:id="@+id/detail_comment_likes_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/detail_comment_create_at_tv"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/detail_comments_likes_im_layout_marginEnd"
-        android:src="@drawable/ic_favorite_grey_600_18dp" />
+        <ImageView
+            android:id="@+id/detail_comment_likes_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/detail_comment_create_at_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/detail_comments_likes_im_layout_marginEnd"
+            android:src="@drawable/ic_favorite_grey_600_18dp" />
 
-    <View
-        android:id="@+id/detail_comment_dividing_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/detail_comments_dividing_line_layout_height"
-        android:layout_alignLeft="@+id/detail_comment_username_tv"
-        android:layout_alignParentBottom="true"
-        android:background="#757575"></View>
+        <View
+            android:id="@+id/detail_comment_dividing_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/detail_comments_dividing_line_layout_height"
+            android:layout_alignLeft="@+id/detail_comment_username_tv"
+            android:layout_alignParentBottom="true"
+            android:background="#757575"></View>
 
-    <TextView
-        android:id="@+id/detail_comment_likes_count_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/detail_comment_create_at_tv"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/detail_comments_likes_count_tx_layout_marginEnd" />
-
+        <TextView
+            android:id="@+id/detail_comment_likes_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/detail_comment_create_at_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/detail_comments_likes_count_tx_layout_marginEnd" />
 
 </RelativeLayout>

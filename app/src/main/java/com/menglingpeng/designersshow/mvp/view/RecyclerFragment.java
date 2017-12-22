@@ -1,5 +1,6 @@
 package com.menglingpeng.designersshow.mvp.view;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -12,7 +13,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.BaseFragment;
@@ -62,7 +71,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String sort = null;
     private int page = 1;
     private ArrayList jsonList = new ArrayList();
-    Fragment fragment = null;
+    private Fragment fragment = null;
     private Context context;
     private HashMap<String, String> addShotTobucketMap;
     private String text;
@@ -74,6 +83,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     private String bucketName;
     private User user;
     private String attachmentUrl;
+    private Dialog operateCommentDilaog = null;
 
     public static RecyclerFragment newInstance(String type) {
         Bundle bundle = new Bundle();
@@ -487,6 +497,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             intent.putExtra(Constants.TYPE, Constants.SHOT_DETAIL);
             startActivity(intent);
         } else if(viewHolder instanceof RecyclerAdapter.CommentViewHolder){
+            if(operateCommentDilaog != null) {
+                operateCommentDilaog.dismiss();
+            }
+            showOperateDialog(((RecyclerAdapter.CommentViewHolder) viewHolder).commentsItemRl.getHeight(), (Comment) t);
         } else if (viewHolder instanceof RecyclerAdapter.ProfileShotViewHolder) {
             intent = new Intent(getActivity(), ShotDetailActivity.class);
             intent.putExtra(Constants.SHOTS, (Shot) t);
@@ -550,6 +564,50 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         }
     }
 
+    private void showOperateDialog(int height, Comment comment){
+        operateCommentDilaog = new Dialog(getContext(), R.style.ThemeOperateCommentDialog);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_operate_comment_, null);
+        Window window = operateCommentDilaog.getWindow();
+        window.setWindowAnimations(R.style.operateCommentDialog);
+        window.setGravity(Gravity.LEFT);
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = height;
+        window.setAttributes(layoutParams);
+        operateCommentDilaog.setContentView(view);
+        operateCommentDilaog.show();
+        LinearLayout operateCommentLl = (LinearLayout)view.findViewById(R.id.operate_comment_ll);
+        RelativeLayout likeCommentRl = (RelativeLayout)view.findViewById(R.id.like_comment_rl);
+        RelativeLayout replyCommentRl = (RelativeLayout)view.findViewById(R.id.reply_comment_rl);
+        RelativeLayout copyCommentRl = (RelativeLayout)view.findViewById(R.id.copy_comment_rl);
+        operateCommentLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                operateCommentDilaog.dismiss();
+            }
+        });
+        likeCommentRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        replyCommentRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        copyCommentRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
 
     public void showRefreshProgress(final boolean refreshState) {
         if (swipeRefresh != null) {
@@ -560,5 +618,4 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     public RecyclerView getRecyclerView() {
         return recyclerView;
     }
-
 }

@@ -11,4 +11,5 @@
     <color name="bucket_recycler_item_view_background">#BDBDBD</color>
     <color name="user_profile_backgroud">#B39DDB</color>
     <color name="profile_desc_tv">#F5F5F5</color>
+    <color name="operate_comment_dialog_backgroud">#9E9E9E</color>
 </resources>

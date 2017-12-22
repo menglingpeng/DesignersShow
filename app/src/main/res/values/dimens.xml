@@ -73,6 +73,7 @@
     <dimen name="detail_comments_likes_im_layout_marginEnd">28dp</dimen>
     <dimen name="detail_comments_likes_count_tx_layout_marginEnd">10dp</dimen>
     <dimen name="detail_comments_dividing_line_layout_height">1dp</dimen>
+    <dimen name="comments_operate_recycler_item_rl_layout_margin_top_bottom">10dp</dimen>
     <dimen name="comments_operate_recycler_item_rl_layout_width">0dp</dimen>
     <item name="comments_operate_recycler_item_rl_layout_weight" type="dimen" format="integer">1</item>
     <dimen name="comments_operate_recycler_item_tv_layout_marginTop">15dp</dimen>
@@ -153,5 +154,8 @@
     <dimen name="attachments_dialog_vp_layout_margin_top_bottom">30dp</dimen>
     <dimen name="attachments_dialog_vp_layout_margin_left_right">20dp</dimen>
     <dimen name="attachments_dialog_tl_layout_height">60dp</dimen>
+    <dimen name="app_version_tv_layout_marginTop">15dp</dimen>
+    <dimen name="app_version_tv_layout_marginBottom">20dp</dimen>
+    <dimen name="app_desc_tv_layout_marginTop">10dp</dimen>
 
 </resources>

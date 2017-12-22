@@ -58,6 +58,20 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="operateCommentDialog" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_operate_comment_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_operate_comment_exit</item>
+    </style>
+
+    <style name="ThemeOperateCommentDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/operate_comment_dialog_backgroud</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

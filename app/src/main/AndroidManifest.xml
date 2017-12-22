@@ -30,6 +30,7 @@
             android:name=".mvp.view.ShotDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop">
+
             <!-- URL Scheme启动 -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -40,8 +41,8 @@
                 <!-- 协议部分 -->
                 <data
                     android:host="@string/login_call_back"
-                    android:scheme="@string/app_name"
-                    android:path="/shotDetail" />
+                    android:path="/shotDetail"
+                    android:scheme="@string/app_name" />
             </intent-filter>
         </activity>
         <activity android:name=".mvp.view.ShotCommentsActivity" />
@@ -53,7 +54,7 @@
         <activity android:name=".mvp.view.UserLikesActivity" />
         <activity android:name=".mvp.view.UserProjectsActivity" />
         <activity android:name=".mvp.view.ProjectDetailActivity" />
-        <activity android:name=".mvp.view.SettingsActivity"></activity>
+        <activity android:name=".mvp.view.SettingsActivity" />
     </application>
 
 </manifest>
