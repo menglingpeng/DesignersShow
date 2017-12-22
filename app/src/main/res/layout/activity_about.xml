@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/about_cdl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.menglingpeng.designersshow.mvp.view.AboutActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/profile_ctbl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@color/user_profile_backgroud"
+            app:contentScrim="@color/colorPrimary"
+            app:scrimAnimationDuration="@dimen/profile_ctbl_scrimAnimationDuration"
+            app:expandedTitleGravity="center"
+            app:expandedTitleTextAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/app_icon_iv"
+                    android:layout_width="@dimen/user_profile_avatar_im_layout_width"
+                    android:layout_height="@dimen/user_profile_avatar_im_layout_height"
+                    android:layout_marginTop="@dimen/profile_avatar_iv_layout_marginTop"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/ic_launcher_round"/>
+
+                <TextView
+                    android:id="@+id/app_name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_desc_tv_layout_marginTop"
+                    android:layout_below="@+id/app_icon_iv"
+                    android:gravity="center"
+                    android:text="@string/app_name"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"/>
+
+                <TextView
+                    android:id="@+id/app_desc_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/app_name_tv"
+                    android:layout_marginTop="@dimen/app_desc_tv_layout_marginTop"
+                    android:text="@string/app_desc"
+                    android:gravity="center"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/app_version_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_version_tv_layout_marginTop"
+                    android:layout_marginBottom="@dimen/app_version_tv_layout_marginBottom"
+                    android:gravity="center"/>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/about_tb"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_collapseMode="pin"></android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.constraint.ConstraintLayout>

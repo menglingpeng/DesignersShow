@@ -55,6 +55,7 @@
         <activity android:name=".mvp.view.UserProjectsActivity" />
         <activity android:name=".mvp.view.ProjectDetailActivity" />
         <activity android:name=".mvp.view.SettingsActivity" />
+        <activity android:name=".mvp.view.AboutActivity"></activity>
     </application>
 
 </manifest>
