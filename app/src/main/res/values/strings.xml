@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">shots</string>
-    <string name="app_desc">更好的Dribbble客户端</>
+    <string name="app_desc">更好的Dribbble客户端</string>
     <string name="login_call_back">dribbble-login-callback</string>
     <string name="nav_home_menu">首页</string>
     <string name="nav_explore_menu">发现</string>
@@ -130,5 +130,6 @@
     <string name="followed_successful">已经成功关注</string>
     <string name="unfollowed_error">取消关注出错，请重试！</string>
     <string name="followed_error">关注用户出错，可能被用户拉黑或者超出关注上限！</string>
+    <string name="open_source_licenses">开源框架</string>
 
 </resources>

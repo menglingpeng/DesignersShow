@@ -157,5 +157,15 @@
     <dimen name="app_version_tv_layout_marginTop">15dp</dimen>
     <dimen name="app_version_tv_layout_marginBottom">20dp</dimen>
     <dimen name="app_desc_tv_layout_marginTop">10dp</dimen>
+    <dimen name="about_open_source_licenses_view_layout_margin_right_left">10dp</dimen>
+    <dimen name="open_source_licenses_tv_layout_marginTop">15dp</>
+    <dimen name="open_source_licenses_tv_layout_marginBottom">25dp</dimen>
+    <dimen name="about_open_source_licenses_cv_layout_marginBottom">10dp</dimen>
+    <dimen name="about_open_source_licenses_cv_layout_margin_left_right">20dp</dimen>
+    <dimen name="about_open_source_name_tv_layout_marginTop">15dp</dimen>
+    <dimen name="about_open_source_name_tv_textSize">22dp</dimen>
+    <dimen name="about_open_source_author_tv_layout_marginTop">10dp</dimen>
+    <dimen name="about_open_source_author_tv_textSize">18dp</dimen>
+    <dimen name="about_open_source_licenses_name_tv_layout_margin_top_bottom">10dp</dimen>
 
 </resources>

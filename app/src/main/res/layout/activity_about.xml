@@ -6,6 +6,7 @@
     android:id="@+id/about_cdl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.menglingpeng.designersshow.mvp.view.AboutActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -81,6 +82,32 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/about_open_source_licenses_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/user_buckets_recycler_item_view_layout_height"
+                android:background="@color/bucket_recycler_item_view_background"
+                android:layout_marginLeft="@dimen/about_open_source_licenses_view_layout_margin_right_left"
+                android:layout_marginRight="@dimen/about_open_source_licenses_view_layout_margin_right_left" />
+
+            <TextView
+                android:id="@+id/open_source_licenses_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/open_source_licenses_tv_layout_marginTop"
+                android:layout_marginBottom="@dimen/open_source_licenses_tv_layout_marginBottom"
+                android:layout_alignLeft="@+id/about_open_source_licenses_view"
+                android:text="@string/open_source_licenses"
+                android:textColor="@color/colorAccent"/>
+
+            <include layout="@layout/container"></include>
+
+        </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
