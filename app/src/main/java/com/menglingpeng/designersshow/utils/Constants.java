@@ -18,6 +18,7 @@ public class Constants {
     public static final String CODE_404_NOT_FOUND = "404";
     public static final String CODE_204_NO_CONTENT = "204";
     public static final String CODE_403_FORBIDDEN = "403";
+    public static final String CODE_201_CREATED = "201";
     public static final String TIME_OUT = "timed out";
     public static final String EMPTY = "[]";
     public static final String SNACKBAR_TEXT = "snackbar_text";

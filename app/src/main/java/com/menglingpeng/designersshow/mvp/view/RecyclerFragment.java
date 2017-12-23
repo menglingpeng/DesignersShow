@@ -1,6 +1,8 @@
 package com.menglingpeng.designersshow.mvp.view;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -18,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -414,6 +418,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     case Constants.REQUEST_LIST_COMMENTS_FOR_A_SHOT:
                         jsonList = Json.parseArrayJson(json, Comment.class);
                         break;
+                    case Constants.REQUEST_LIKE_A_COMMENT:
+                        if(json.equals(Constants.CODE_201_CREATED)){
+                            
+                        }
+                        break;
                     case Constants.REQUEST_LIST_LIKES_FOR_AUTH_USER:
                         jsonList = Json.parseArrayJson(json, Likes.class);
                         break;
@@ -564,7 +573,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         }
     }
 
-    private void showOperateDialog(int height, Comment comment){
+    private void showOperateDialog(int height, final Comment comment){
         operateCommentDilaog = new Dialog(getContext(), R.style.ThemeOperateCommentDialog);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_operate_comment_, null);
         Window window = operateCommentDilaog.getWindow();
@@ -587,23 +596,41 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 operateCommentDilaog.dismiss();
             }
         });
+        final EditText editText = (EditText)fragment.getActivity().findViewById(R.id.add_comment_et);
         likeCommentRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                type = Constants.REQUEST_LIKE_A_COMMENT;
+                map.put(Constants.SHOT_ID, id);
+                map.put(Constants.COMMENT_ID, String.valueOf(comment.getId()));
+                presenter = new RecyclerPresenter(RecyclerFragment.this, type, Constants.REQUEST_NORMAL,
+                        Constants.REQUEST_POST_MEIHOD, map, context);
+                presenter.loadJson();
             }
         });
         replyCommentRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                editText.setFocusable(true);
+                editText.setFocusableInTouchMode(true);
+                editText.requestFocus();
+                editText.setText(new StringBuilder().append("@").append(comment.getUser().getUsername().toString()
+                ));
+                editText.setSelection(editText.getText().toString().length());
+                InputMethodManager imm = (InputMethodManager)editText.getContext().getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput( editText, 0);
             }
         });
 
         copyCommentRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("copy comment", comment.getBody());
+                cm.setPrimaryClip(clipData);
+                SnackUI.showSnackShort(context, fragment.getActivity().findViewById(R.id.comments_cdl), context
+                        .getString(R.string.comment_text_copied_in_clipboard));
             }
         });
     }
