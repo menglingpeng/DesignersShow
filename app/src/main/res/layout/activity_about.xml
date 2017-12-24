@@ -105,7 +105,12 @@
                 android:text="@string/open_source_licenses"
                 android:textColor="@color/colorAccent"/>
 
-            <include layout="@layout/container"></include>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/about_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
 
         </RelativeLayout>
 

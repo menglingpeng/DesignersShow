@@ -32,6 +32,8 @@ public class Constants {
     public static final String SETTINGS_ADVANCED_SETTINGS_PREF = "settings_advanced_settings_pref";
     public static final String LOGIN_DIALOG_FRAGMENT_TAG = "login_dialog_fragment";
     public static final String ATTACHMENTS_DIALOG_FRAGMENT_TAG = "attachments_dialog_fragment";
+    /*public static final String OPEN_RESOURCE_LICENSES_JSON = "{"\"name\"" : "\"OkHttp\"", "\"author\"" : "\"Square\"",
+    "\"license\"" : "\"Apache License, Version 2.0\""}"*/
     /**
      * Dribbble API
      */
