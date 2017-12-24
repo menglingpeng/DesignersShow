@@ -51,6 +51,9 @@ import com.menglingpeng.designersshow.utils.SnackUI;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
+
 
 /**
  * Created by mengdroid on 2017/10/13.
@@ -144,6 +147,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         recyclerView.setLayoutManager(linearLayoutManager);
         //确保item大小固定，可以提升性能
         recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new LandingAnimator());
         swipeRefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark, R.color.colorPrimary);
         swipeRefresh.setOnRefreshListener(this);
         if(type.equals(Constants.REQUEST_LIST_DETAIL_FOR_AUTH_USER) || type.equals(
@@ -383,7 +387,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                 case Constants.REQUEST_REFRESH:
                     showRefreshProgress(false);
                     adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
-                    recyclerView.setAdapter(adapter);
+                    recyclerView.setAdapter(setItemAnimation(adapter));
                     break;
                 case Constants.REQUEST_LOAD_MORE:
                     adapter.setLoading(false);
@@ -394,7 +398,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                     } else {
                         adapter = new RecyclerAdapter(recyclerView, context, fragment, type, this);
                     }
-                    recyclerView.setAdapter(adapter);
+                    recyclerView.setAdapter(setItemAnimation(adapter));
                     break;
                 default:
                     break;
@@ -495,6 +499,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
         }
     }
 
+    private AlphaInAnimationAdapter setItemAnimation(RecyclerAdapter adapter){
+        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(adapter);
+        alphaInAnimationAdapter.setDuration(1000);
+        return alphaInAnimationAdapter;
+    }
 
     @Override
     public <T> void onRecyclerFragmentListListener(RecyclerView.ViewHolder viewHolder, T t) {
