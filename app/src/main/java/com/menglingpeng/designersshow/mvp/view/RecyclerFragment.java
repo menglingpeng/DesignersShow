@@ -123,7 +123,11 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
     protected void initLayoutId() {
         layoutId = R.layout.fragment_recycler;
         type = getArguments().get(Constants.TYPE).toString();
-        context = getActivity().getApplicationContext();
+        if(type.indexOf(Constants.REQUEST_LIST_ATTACHMENTS_FOR_A_SHOT) != -1) {
+            context = getParentFragment().getActivity().getApplicationContext();
+        }else {
+            context = getActivity().getApplicationContext();
+        }
     }
 
     @Override

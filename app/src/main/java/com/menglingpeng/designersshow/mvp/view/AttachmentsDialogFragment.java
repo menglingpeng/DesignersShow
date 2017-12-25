@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnloadDetailImageListener;
@@ -51,6 +52,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
     private ImageView attachmentsDialogIv;
     private TabLayout attachmentsDialogTl;
     private ViewPager attachmentsDialogVp;
+    private RelativeLayout attachmentsDialogTlRl;
     private ArrayList<Attachment> attachments;
     private ArrayList<String> titles;
     private ArrayList<RecyclerFragment> fragments;
@@ -101,6 +103,7 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
         attachmentsDialogIv = (ImageView)dialogView.findViewById(R.id.attachments_dialog_iv);
         attachmentsDialogTl = (TabLayout)dialogView.findViewById(R.id.attachments_dialog_tl);
         attachmentsDialogVp = (ViewPager)dialogView.findViewById(R.id.attachments_dialog_vp);
+        attachmentsDialogTlRl = (RelativeLayout)dialogView.findViewById(R.id.attachments_dialog_tl_rl);
         dialog.show();
         HashMap<String, String> map = new HashMap<>();
         map.put(Constants.ID, shotsId);
@@ -143,9 +146,9 @@ public class AttachmentsDialogFragment extends AppCompatDialogFragment implement
     }
 
     private void initTabPager(){
-        attachmentsDialogTl.setVisibility(TabLayout.VISIBLE);
-        attachmentsDialogVp.setVisibility(ViewPager.VISIBLE);
-        adapter = new TabPagerFragmentAdapter(getFragmentManager());
+        attachmentsDialogTlRl.setVisibility(RelativeLayout.VISIBLE);
+        //attachmentsDialogVp.setVisibility(ViewPager.VISIBLE);
+        adapter = new TabPagerFragmentAdapter(getChildFragmentManager());
         initData();
         attachmentsDialogVp.setAdapter(adapter);
         attachmentsDialogTl.setupWithViewPager(attachmentsDialogVp);
