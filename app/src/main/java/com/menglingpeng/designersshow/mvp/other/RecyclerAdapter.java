@@ -235,29 +235,29 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     context.startActivity(intent);
                 }
             });
-            viewHolder.shotTitleTx.setText(shot.getTitle());
-            viewHolder.shotUserNameTx.setText(shot.getUser().getName());
-            viewHolder.shotCreatedTimeTx.setText(TimeUtil.getTimeDifference(shot.getUpdated_at()));
+            viewHolder.shotTitleTv.setText(shot.getTitle());
+            viewHolder.shotUserNameTv.setText(shot.getUser().getName());
+            viewHolder.shotCreatedTimeTv.setText(TimeUtil.getTimeDifference(shot.getUpdated_at()));
             if(SharedPrefUtil.getState(Constants.SAVING_LOWER_IMAGE)){
                 shotUrl = shot.getImages().getTeaser();
             }else {
                 shotUrl = shot.getImages().getNormal();
             }
             if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
-                ImageLoader.load(fragment, shotUrl, viewHolder.shotIm, false, true);
+                ImageLoader.load(fragment, shotUrl, viewHolder.shotIv, false, true);
             }else {
-                ImageLoader.load(fragment, shotUrl, viewHolder.shotIm, false, false);
+                ImageLoader.load(fragment, shotUrl, viewHolder.shotIv, false, false);
             }
             if (isGif) {
-                viewHolder.shotGifIm.setVisibility(TextView.VISIBLE);
+                viewHolder.shotGifIv.setVisibility(TextView.VISIBLE);
             }
-            viewHolder.shotLikesCountTx.setText(String.valueOf(shot.getLikes_count()));
-            viewHolder.shotCommentsCountTx.setText(String.valueOf(shot.getComments_count()));
-            viewHolder.shotViewsCountTx.setText(String.valueOf(shot.getViews_count()));
+            viewHolder.shotLikesCountTv.setText(String.valueOf(shot.getLikes_count()));
+            viewHolder.shotCommentsCountTv.setText(String.valueOf(shot.getComments_count()));
+            viewHolder.shotViewsCountTv.setText(String.valueOf(shot.getViews_count()));
             if (attachmentsCount != 0) {
-                viewHolder.shotAttachmentsCountIm.setVisibility(ImageView.VISIBLE);
-                viewHolder.shotAttachmentsCountTx.setVisibility(TextView.VISIBLE);
-                viewHolder.shotAttachmentsCountTx.setText(String.valueOf(attachmentsCount));
+                viewHolder.shotAttachmentsCountIv.setVisibility(ImageView.VISIBLE);
+                viewHolder.shotAttachmentsCountTv.setVisibility(TextView.VISIBLE);
+                viewHolder.shotAttachmentsCountTv.setText(String.valueOf(attachmentsCount));
             }
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -267,8 +267,34 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             });
-
-        } else if (holder instanceof CommentViewHolder) {
+        } else if(holder instanceof ShotOfLargeWithoutInfosViewHolder){
+            final ShotViewHolder viewHolder = (ShotViewHolder) holder;
+            final Shot shot = (Shot) list.get(position);
+            String shotUrl = null;
+            boolean isGif = shot.isAnimated();
+            if(SharedPrefUtil.getState(Constants.SAVING_LOWER_IMAGE)){
+                shotUrl = shot.getImages().getTeaser();
+            }else {
+                shotUrl = shot.getImages().getNormal();
+            }
+            if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
+                ImageLoader.load(fragment, shotUrl, viewHolder.shotIv, false, true);
+            }else {
+                ImageLoader.load(fragment, shotUrl, viewHolder.shotIv, false, false);
+            }
+            if (isGif) {
+                viewHolder.shotGifIv.setVisibility(TextView.VISIBLE);
+            }
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onRecyclerFragmentListListener(viewHolder, shot);
+                    }
+                }
+            });
+        }
+        else if (holder instanceof CommentViewHolder) {
             final CommentViewHolder viewHolder = (CommentViewHolder) holder;
             final Comment comment = (Comment) list.get(position);
             String userName = comment.getUser().getName();
@@ -604,23 +630,42 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class ShotViewHolder extends RecyclerView.ViewHolder {
         public final ImageView avatarIv;
-        public final TextView shotTitleTx, shotUserNameTx, shotCreatedTimeTx;
-        public final ImageView shotIm, shotGifIm, shotAttachmentsCountIm;
-        public final TextView shotLikesCountTx, shotCommentsCountTx, shotViewsCountTx, shotAttachmentsCountTx;
+        public final TextView shotTitleTv;
+        public final TextView shotUserNameTv;
+        public final TextView shotCreatedTimeTv;
+        public final ImageView shotIv;
+        public final ImageView shotGifIv;
+        public final ImageView shotAttachmentsCountIv;
+        public final TextView shotLikesCountTv;
+        public final TextView shotCommentsCountTv;
+        public final TextView shotViewsCountTv;
+        public final TextView shotAttachmentsCountTv;
 
         public ShotViewHolder(View view) {
             super(view);
             avatarIv = (ImageView) view.findViewById(R.id.avatar_im);
-            shotTitleTx = (TextView) view.findViewById(R.id.shot_title_tx);
-            shotUserNameTx = (TextView) view.findViewById(R.id.shot_user_name_tx);
-            shotCreatedTimeTx = (TextView) view.findViewById(R.id.shot_create_time_tx);
-            shotIm = (ImageView) view.findViewById(R.id.shot_im);
-            shotGifIm = (ImageView) view.findViewById(R.id.shot_gif_im);
-            shotLikesCountTx = (TextView) view.findViewById(R.id.shot_likes_count_tx);
-            shotCommentsCountTx = (TextView) view.findViewById(R.id.shot_comments_count_tx);
-            shotViewsCountTx = (TextView) view.findViewById(R.id.shot_views_count_tx);
-            shotAttachmentsCountIm = (ImageView) view.findViewById(R.id.shot_attachments_count_im);
-            shotAttachmentsCountTx = (TextView) view.findViewById(R.id.shot_attachments_count_tx);
+            shotTitleTv = (TextView) view.findViewById(R.id.shot_title_tx);
+            shotUserNameTv = (TextView) view.findViewById(R.id.shot_user_name_tx);
+            shotCreatedTimeTv = (TextView) view.findViewById(R.id.shot_create_time_tx);
+            shotIv = (ImageView) view.findViewById(R.id.shot_im);
+            shotGifIv = (ImageView) view.findViewById(R.id.shot_gif_im);
+            shotLikesCountTv = (TextView) view.findViewById(R.id.shot_likes_count_tx);
+            shotCommentsCountTv = (TextView) view.findViewById(R.id.shot_comments_count_tx);
+            shotViewsCountTv = (TextView) view.findViewById(R.id.shot_views_count_tx);
+            shotAttachmentsCountIv = (ImageView) view.findViewById(R.id.shot_attachments_count_im);
+            shotAttachmentsCountTv = (TextView) view.findViewById(R.id.shot_attachments_count_tx);
+        }
+    }
+
+    public class ShotOfLargeWithoutInfosViewHolder extends RecyclerView.ViewHolder{
+
+        public final ImageView shotIv;
+        public final ImageView shotGifIv;
+
+        public ShotOfLargeWithoutInfosViewHolder(View view) {
+            super(view);
+            shotIv = (ImageView)view.findViewById(R.id.large_without_infos_shot_im);
+            shotGifIv = (ImageView)view.findViewById(R.id.large_without_infos_shot_gif_im);
         }
     }
 
