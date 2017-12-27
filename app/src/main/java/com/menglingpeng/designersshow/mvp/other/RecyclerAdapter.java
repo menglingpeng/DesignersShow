@@ -643,17 +643,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public ShotViewHolder(View view) {
             super(view);
-            avatarIv = (ImageView) view.findViewById(R.id.avatar_im);
-            shotTitleTv = (TextView) view.findViewById(R.id.shot_title_tx);
-            shotUserNameTv = (TextView) view.findViewById(R.id.shot_user_name_tx);
-            shotCreatedTimeTv = (TextView) view.findViewById(R.id.shot_create_time_tx);
-            shotIv = (ImageView) view.findViewById(R.id.shot_im);
-            shotGifIv = (ImageView) view.findViewById(R.id.shot_gif_im);
-            shotLikesCountTv = (TextView) view.findViewById(R.id.shot_likes_count_tx);
-            shotCommentsCountTv = (TextView) view.findViewById(R.id.shot_comments_count_tx);
-            shotViewsCountTv = (TextView) view.findViewById(R.id.shot_views_count_tx);
-            shotAttachmentsCountIv = (ImageView) view.findViewById(R.id.shot_attachments_count_im);
-            shotAttachmentsCountTv = (TextView) view.findViewById(R.id.shot_attachments_count_tx);
+            avatarIv = (ImageView) view.findViewById(R.id.avatar_iv);
+            shotTitleTv = (TextView) view.findViewById(R.id.shot_title_tv);
+            shotUserNameTv = (TextView) view.findViewById(R.id.shot_user_name_tv);
+            shotCreatedTimeTv = (TextView) view.findViewById(R.id.shot_create_time_tv);
+            shotIv = (ImageView) view.findViewById(R.id.shot_iv);
+            shotGifIv = (ImageView) view.findViewById(R.id.shot_gif_iv);
+            shotLikesCountTv = (TextView) view.findViewById(R.id.shot_likes_count_tv);
+            shotCommentsCountTv = (TextView) view.findViewById(R.id.shot_comments_count_tv);
+            shotViewsCountTv = (TextView) view.findViewById(R.id.shot_views_count_tv);
+            shotAttachmentsCountIv = (ImageView) view.findViewById(R.id.shot_attachments_count_iv);
+            shotAttachmentsCountTv = (TextView) view.findViewById(R.id.shot_attachments_count_tv);
         }
     }
 

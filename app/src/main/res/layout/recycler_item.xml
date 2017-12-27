@@ -71,7 +71,7 @@
             android:id="@+id/shot_fl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/desc_layout">
+            android:layout_below="@+id/desc_rl">
 
             <ImageView
                 android:id="@+id/shot_iv"
