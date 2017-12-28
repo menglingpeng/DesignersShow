@@ -296,6 +296,32 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
 
+        }else if(holder instanceof ShotOfSmallWithoutInfosViewHolder){
+            final ShotViewHolder viewHolder = (ShotViewHolder) holder;
+            final Shot shot = (Shot) list.get(position);
+            String shotUrl = null;
+            boolean isGif = shot.isAnimated();
+            if(SharedPrefUtil.getState(Constants.SAVING_LOWER_IMAGE)){
+                shotUrl = shot.getImages().getTeaser();
+            }else {
+                shotUrl = shot.getImages().getNormal();
+            }
+            if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
+                ImageLoader.load(fragment, shotUrl, viewHolder.shotIv, false, true);
+            }else {
+                ImageLoader.load(fragment, shotUrl, viewHolder.shotIv, false, false);
+            }
+            if (isGif) {
+                viewHolder.shotGifIv.setVisibility(ImageView.VISIBLE);
+            }
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onRecyclerFragmentListListener(viewHolder, shot);
+                    }
+                }
+            });
         }
         else if(holder instanceof ShotOfLargeWithoutInfosViewHolder){
             final ShotViewHolder viewHolder = (ShotViewHolder) holder;
@@ -712,6 +738,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             shotGifIv = (ImageView)view.findViewById(R.id.small_with_infos_shot_gif_iv);
             shotLikesCountTv = (TextView) view.findViewById(R.id.small_with_infos_shot_likes_count_tv);
             shotCommentsCountTv = (TextView) view.findViewById(R.id.small_with_infos_shot_comments_count_tv);
+        }
+    }
+
+    public class ShotOfSmallWithoutInfosViewHolder extends RecyclerView.ViewHolder{
+
+        public final ImageView shotIv;
+        public final ImageView shotGifIv;
+
+        public ShotOfSmallWithoutInfosViewHolder(View view) {
+            super(view);
+            shotIv = (ImageView)view.findViewById(R.id.small_without_infos_shot_iv);
+            shotGifIv = (ImageView)view.findViewById(R.id.small_without_infos_shot_gif_iv);
         }
     }
 
