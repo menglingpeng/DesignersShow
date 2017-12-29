@@ -131,5 +131,10 @@
     <string name="unfollowed_error">取消关注出错，请重试！</string>
     <string name="followed_error">关注用户出错，可能被用户拉黑或者超出关注上限！</string>
     <string name="open_source_licenses">开源框架</string>
+    <string name="gifs_auto_play_dialog_title">测试中的选项</string>
+    <string name="gifs_auto_play_dialog_message">这个选项现在还不稳定，还可能造成由内存溢出引起的应用崩溃。你确定想要激活
+        这个选项吗？</string>
+    <string name="gifs_auto_play_dialog_negative_button_text">关闭</string>
+    <string name="gifs_auto_play_dialog_positive_button_text">是的，激活</string>
 
 </resources>

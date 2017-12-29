@@ -1,6 +1,7 @@
 package com.menglingpeng.designersshow.mvp.view;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -13,6 +14,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.menglingpeng.designersshow.R;
@@ -55,22 +57,10 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.settings_switch_preference_data_saving_mode_rl:
-                if(SharedPrefUtil.getState(Constants.SAVING_LOWER_IMAGE)){
-                    dataPreference.getSavingDataModeSwitch().setChecked(false);
-                    SharedPrefUtil.saveState(Constants.SAVING_LOWER_IMAGE, false);
-                }else {
-                    dataPreference.getSavingDataModeSwitch().setChecked(true);
-                    SharedPrefUtil.saveState(Constants.SAVING_LOWER_IMAGE, true);
-                }
+                setDataSavingMode();
                 break;
             case R.id.settings_switch_preference_gifs_autoplay_rl:
-                if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
-                    dataPreference.getGifsAutoplaySwitch().setChecked(false);
-                    SharedPrefUtil.saveState(Constants.GIFS_AUTO_PLAY, false);
-                }else {
-                    dataPreference.getGifsAutoplaySwitch().setChecked(true);
-                    SharedPrefUtil.saveState(Constants.GIFS_AUTO_PLAY, true);
-                }
+                setGifsAutoPlay();
                 break;
             case R.id.settings_switch_preference_clear_cache_rl:
                 new ClearDiskCacheTask().execute();
@@ -86,6 +76,25 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
                 break;
             default:
                 break;
+        }
+    }
+
+    private void setDataSavingMode(){
+        if(SharedPrefUtil.getState(Constants.SAVING_LOWER_IMAGE)){
+            dataPreference.getSavingDataModeSwitch().setChecked(false);
+            SharedPrefUtil.saveState(Constants.SAVING_LOWER_IMAGE, false);
+        }else {
+            dataPreference.getSavingDataModeSwitch().setChecked(true);
+            SharedPrefUtil.saveState(Constants.SAVING_LOWER_IMAGE, true);
+        }
+    }
+
+    private void setGifsAutoPlay(){
+        if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
+            dataPreference.getGifsAutoplaySwitch().setChecked(false);
+            SharedPrefUtil.saveState(Constants.GIFS_AUTO_PLAY, false);
+        }else {
+            showGifsAutoPlayDialog();
         }
     }
 
@@ -148,5 +157,30 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
             advancedSettingsPreference.getDoubleBacktoExitSwitch().setChecked(true);
             SharedPrefUtil.saveState(Constants.DOUBLE_BACK_TO_EXIT, true);
         }
+    }
+
+
+    private void showGifsAutoPlayDialog(){
+        AlertDialog dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(context.getString(R.string.gifs_auto_play_dialog_title));
+        builder.setMessage(context.getString(R.string.gifs_auto_play_dialog_message));
+        builder.setNegativeButton(context.getString(R.string.gifs_auto_play_dialog_negative_button_text),
+                new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton(context.getString(R.string.gifs_auto_play_dialog_positive_button_text),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dataPreference.getGifsAutoplaySwitch().setChecked(true);
+                        SharedPrefUtil.saveState(Constants.GIFS_AUTO_PLAY, true);
+                    }
+                });
+        dialog = builder.create();
+        dialog.show();
     }
 }
