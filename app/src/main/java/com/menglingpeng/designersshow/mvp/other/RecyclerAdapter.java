@@ -243,7 +243,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else {
                 shotUrl = shot.getImages().getNormal();
             }
-            if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
+            if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY) && isGif){
                 ImageLoader.load(fragment, shotUrl, viewHolder.shotIv, false, true);
             }else {
                 ImageLoader.load(fragment, shotUrl, viewHolder.shotIv, false, false);

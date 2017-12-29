@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
@@ -25,9 +26,9 @@ import com.menglingpeng.designersshow.utils.SnackUI;
  */
 
 public class SettingsFragment extends PreferenceFragment implements View.OnClickListener {
+    private AdvancedSettingsPreference advancedSettingsPreference;
     private DataPreference dataPreference;
     private AboutPreference aboutPreference;
-    private AdvancedSettingsPreference advancedSettingsPreference;
     private Context context;
     private CoordinatorLayout coordinatorLayout;
     @Override
@@ -36,15 +37,15 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
         addPreferencesFromResource(R.xml.pref_settings);
         context = getActivity().getApplicationContext();
         coordinatorLayout = (CoordinatorLayout)getActivity().findViewById(R.id.settings_cdl);
-        initPreference();
+        initPreference(getPreferenceManager());
     }
 
 
-    private void initPreference(){
-        dataPreference = (DataPreference) findPreference(Constants.SETTINGS_DATA_PREF);
-        aboutPreference = (AboutPreference)findPreference(Constants.SETTINGS_ABOUT_PREF);
-        advancedSettingsPreference = (AdvancedSettingsPreference)findPreference(Constants.
+    private void initPreference(PreferenceManager manager){
+        advancedSettingsPreference = (AdvancedSettingsPreference)manager.findPreference(Constants.
                 SETTINGS_ADVANCED_SETTINGS_PREF);
+        dataPreference = (DataPreference) manager.findPreference(Constants.SETTINGS_DATA_PREF);
+        aboutPreference = (AboutPreference)manager.findPreference(Constants.SETTINGS_ABOUT_PREF);
         dataPreference.setOnclickListerner(this);
         aboutPreference.setOnclickListerner(this);
         advancedSettingsPreference.setOnclickListerner(this);

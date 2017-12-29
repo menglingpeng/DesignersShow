@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 
 import com.menglingpeng.designersshow.R;
+import com.menglingpeng.designersshow.utils.Constants;
+import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 
 /**
  * Created by mengdroid on 2017/12/19.
@@ -42,6 +44,16 @@ public class AdvancedSettingsPreference extends Preference {
         doubleBackToExitRl = (RelativeLayout)view.findViewById(R.id.
                 settings_switch_preference_double_press_to_exit_rl);
         doubleBackToExitSwitch = (Switch)view.findViewById(R.id.settings_switch_preference_double_press_to_exit_switch);
+        if(SharedPrefUtil.getState(Constants.NIGHT_MODE)){
+            nightModlSwitch.setChecked(true);
+        }else {
+            nightModlSwitch.setChecked(false);
+        }
+        if(SharedPrefUtil.getState(Constants.DOUBLE_BACK_TO_EXIT)){
+            doubleBackToExitSwitch.setChecked(true);
+        }else {
+            doubleBackToExitSwitch.setChecked(false);
+        }
         nightModeRl.setOnClickListener(listener);
         doubleBackToExitRl.setOnClickListener(listener);
     }

@@ -57,7 +57,8 @@
             android:id="@+id/settings_switch_preference_double_press_to_exit_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/settings_switch_preference_night_mode_rl">
+            android:layout_below="@id/settings_switch_preference_night_mode_rl"
+            android:layout_marginBottom="@dimen/settings_switch_preference_rl_layout_marginBottom">
 
             <TextView
                 android:id="@+id/settings_switch_preference_double_press_to_exit_title_tv"

@@ -58,11 +58,11 @@ import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
 
 public class ImageLoader {
 
-    public static <T> void load(T t, String url, ImageView imageView, Boolean isContext, Boolean gifsAutoplay) {
+    public static <T> void load(T t, String url, ImageView imageView, Boolean isContext, Boolean gifsAutoPlay) {
         RequestBuilder<Bitmap> requestBuilder = null;
         RequestOptions requestOptions = new RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy
                 .AUTOMATIC);
-        if(gifsAutoplay){
+        if(gifsAutoPlay){
             if (isContext) {
                 Context context = (Context) t;
                 Glide.with(context)
@@ -84,7 +84,6 @@ public class ImageLoader {
                 Fragment fragment = (Fragment) t;
                 requestBuilder = Glide.with(fragment).asBitmap();
             }
-            //第一次加载GIF图片时不播放
             requestBuilder.apply(requestOptions);
             requestBuilder.load(url).apply(requestOptions).into(imageView);
         }

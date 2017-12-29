@@ -28,7 +28,7 @@ public class Constants {
     public static final String GIFS_AUTO_PLAY = "gifs_auto_play";
     public static final String NIGHT_MODE = "night_mode";
     public static final String DOUBLE_BACK_TO_EXIT = "double_back_to_exit";
-    public static final String SETTINGS_ABOUT_PREF = "settings_data_pref";
+    public static final String SETTINGS_ABOUT_PREF = "settings_about_pref";
     public static final String SETTINGS_ADVANCED_SETTINGS_PREF = "settings_advanced_settings_pref";
     public static final String LOGIN_DIALOG_FRAGMENT_TAG = "login_dialog_fragment";
     public static final String ATTACHMENTS_DIALOG_FRAGMENT_TAG = "attachments_dialog_fragment";

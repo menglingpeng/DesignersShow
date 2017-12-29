@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 
 import com.menglingpeng.designersshow.R;
+import com.menglingpeng.designersshow.utils.Constants;
+import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 
 /**
  * Created by mengdroid on 2017/12/11.
@@ -55,6 +57,16 @@ public class DataPreference extends Preference {
         gifsAutoplayRl = (RelativeLayout)view.findViewById(R.id.settings_switch_preference_gifs_autoplay_rl);
         gifsAutoplaySwitch = (Switch)view.findViewById(R.id.settings_switch_preference_gifs_autoplay_switch);
         clearCacheRl = (RelativeLayout)view.findViewById(R.id.settings_switch_preference_clear_cache_rl);
+        if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
+            gifsAutoplaySwitch.setChecked(true);
+        }else {
+            getGifsAutoplaySwitch().setChecked(false);
+        }
+        if(SharedPrefUtil.getState(Constants.SAVING_LOWER_IMAGE)){
+            savingDataModeSwitch.setChecked(true);
+        }else {
+            savingDataModeSwitch.setChecked(false);
+        }
         savingDataModeRl.setOnClickListener(listener);
         gifsAutoplayRl.setOnClickListener(listener);
         clearCacheRl.setOnClickListener(listener);
