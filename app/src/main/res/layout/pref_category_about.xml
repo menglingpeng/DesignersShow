@@ -38,10 +38,38 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/settings_preference_contact_me_rl"
+            android:id="@+id/settings_preference_share_the_app_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/settings_preference_about_app_rl"
+            android:layout_marginBottom="@dimen/settings_switch_preference_rl_layout_marginBottom"
+            android:layout_marginTop="@dimen/settings_switch_preference_rl_layout_marginTop">
+
+            <TextView
+                android:id="@+id/settings_preference_share_the_app_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/settings_switch_preference_title_tv_layout_marginLeft"
+                android:text="@string/settings_preference_share_the_app_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Notification.Title" />
+
+            <TextView
+                android:id="@+id/settings_preference_share_the_app_summary_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/settings_preference_share_the_app_title_tv"
+                android:layout_below="@+id/settings_preference_share_the_app_title_tv"
+                android:layout_marginEnd="@dimen/settings_switch_preference_summary_tv__layout_marginEnd"
+                android:layout_marginTop="@dimen/settings_switch_preference_summary_tv__layout_marginTop"
+                android:text="@string/settings_preference_share_the_app_summary" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/settings_preference_contact_me_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/settings_preference_share_the_app_rl"
             android:layout_marginBottom="@dimen/settings_switch_preference_rl_layout_marginBottom"
             android:layout_marginTop="@dimen/settings_switch_preference_rl_layout_marginTop">
 

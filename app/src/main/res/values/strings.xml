@@ -123,6 +123,10 @@
     <string name="cache_successfully_cleared">成功清除缓存！</string>
     <string name="settings_preference_category_about_title">关于</string>
     <string name="settings_preference_about_the_app_title">关于应用</string>
+    <string name="settings_preference_share_the_app_title">传播爱心</string>
+    <string name="settings_preference_share_the_app_summary">如果你喜欢Shots,请帮忙分享给他人！</string>
+    <string name="settings_preference_share_the_app_share_text">强烈建议你试用下Shots-The Dribbble app for Andorid
+    ,它确实不错</string>
     <string name="settings_preference_contact_me_title">联系我</string>
     <string name="settings_preference_contact_me_summary">给我发送邮件</string>
     <string name="email_create_chooser_title">请选择邮件应用</string>

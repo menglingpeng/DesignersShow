@@ -20,6 +20,7 @@ import android.view.View;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.utils.Constants;
 import com.menglingpeng.designersshow.utils.ImageLoader;
+import com.menglingpeng.designersshow.utils.ShareAndOpenInBrowserUtil;
 import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 import com.menglingpeng.designersshow.utils.SnackUI;
 
@@ -65,14 +66,17 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
             case R.id.settings_preference_clear_cache_rl:
                 new ClearDiskCacheTask().execute();
                 break;
-            case R.id.settings_preference_contact_me_rl:
-                sendMailToMe();
-                break;
             case R.id.settings_switch_preference_night_mode_rl:
                 setNightMode();
                 break;
             case R.id.settings_switch_preference_double_press_to_exit_rl:
                 setDoubleBackToExit();
+                break;
+            case R.id.settings_preference_contact_me_rl:
+                sendMailToMe();
+                break;
+            case R.id.settings_preference_share_the_app_rl:
+                shareTheApp();
                 break;
             default:
                 break;
@@ -111,6 +115,12 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
             super.onPostExecute(aVoid);
             SnackUI.showSnackShort(context, getActivity().findViewById(R.id.settings_cdl), getString(R.string.cache_successfully_cleared));
         }
+    }
+
+    private void shareTheApp(){
+        String text = new StringBuilder().append(context.getString(R.string.
+                settings_preference_share_the_app_share_text)).append("\n").append(Constants.APP_URL).toString();
+        ShareAndOpenInBrowserUtil.share(context, text);
     }
 
     private void sendMailToMe(){

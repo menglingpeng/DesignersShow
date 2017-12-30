@@ -18,6 +18,7 @@ public class AboutPreference  extends Preference{
 
     private View contentView;
     private RelativeLayout aboutAppRl;
+    private RelativeLayout shareTheAppRl;
     private RelativeLayout contactMeRl;
     private View.OnClickListener listener;
 
@@ -37,8 +38,10 @@ public class AboutPreference  extends Preference{
     protected void onBindView(View view) {
         super.onBindView(view);
         aboutAppRl = (RelativeLayout)view.findViewById(R.id.settings_preference_about_app_rl);
+        shareTheAppRl = (RelativeLayout)view.findViewById(R.id.settings_preference_share_the_app_rl);
         contactMeRl = (RelativeLayout)view.findViewById(R.id.settings_preference_contact_me_rl);
         aboutAppRl.setOnClickListener(listener);
+        shareTheAppRl.setOnClickListener(listener);
         contactMeRl.setOnClickListener(listener);
     }
 
@@ -48,6 +51,10 @@ public class AboutPreference  extends Preference{
 
     public RelativeLayout getAboutAppRl(){
         return  aboutAppRl;
+    }
+
+    public RelativeLayout getShareTheAppRl(){
+        return shareTheAppRl;
     }
 
     public RelativeLayout getContactMeRl(){
