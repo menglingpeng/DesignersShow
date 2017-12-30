@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.utils.Constants;
+import com.menglingpeng.designersshow.utils.ImageLoader;
 import com.menglingpeng.designersshow.utils.SharedPrefUtil;
 
 /**
@@ -25,6 +27,7 @@ public class DataPreference extends Preference {
     private RelativeLayout gifsAutoplayRl;
     private Switch gifsAutoplaySwitch;
     private RelativeLayout clearCacheRl;
+    private TextView cacheSizeTv;
     private View.OnClickListener listener;
 
     public DataPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -56,7 +59,8 @@ public class DataPreference extends Preference {
         savingDataModeSwitch = (Switch)view.findViewById(R.id.settings_switch_preference_data_saving_mode_switch);
         gifsAutoplayRl = (RelativeLayout)view.findViewById(R.id.settings_switch_preference_gifs_autoplay_rl);
         gifsAutoplaySwitch = (Switch)view.findViewById(R.id.settings_switch_preference_gifs_autoplay_switch);
-        clearCacheRl = (RelativeLayout)view.findViewById(R.id.settings_switch_preference_clear_cache_rl);
+        clearCacheRl = (RelativeLayout)view.findViewById(R.id.settings_preference_clear_cache_rl);
+        cacheSizeTv = (TextView)view.findViewById(R.id.settings_preference_cache_size_tv);
         if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
             gifsAutoplaySwitch.setChecked(true);
         }else {
@@ -67,6 +71,7 @@ public class DataPreference extends Preference {
         }else {
             savingDataModeSwitch.setChecked(false);
         }
+        cacheSizeTv.setText(ImageLoader.getDiskCacheSize(getContext()));
         savingDataModeRl.setOnClickListener(listener);
         gifsAutoplayRl.setOnClickListener(listener);
         clearCacheRl.setOnClickListener(listener);

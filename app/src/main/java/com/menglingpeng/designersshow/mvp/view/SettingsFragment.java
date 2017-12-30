@@ -62,7 +62,7 @@ public class SettingsFragment extends PreferenceFragment implements View.OnClick
             case R.id.settings_switch_preference_gifs_autoplay_rl:
                 setGifsAutoPlay();
                 break;
-            case R.id.settings_switch_preference_clear_cache_rl:
+            case R.id.settings_preference_clear_cache_rl:
                 new ClearDiskCacheTask().execute();
                 break;
             case R.id.settings_preference_contact_me_rl:

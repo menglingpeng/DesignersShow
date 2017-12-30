@@ -92,7 +92,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/settings_switch_preference_clear_cache_rl"
+            android:id="@+id/settings_preference_clear_cache_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/settings_switch_preference_gifs_autoplay_rl"
@@ -100,7 +100,7 @@
             android:layout_marginBottom="@dimen/settings_switch_preference_rl_layout_marginBottom">
 
             <TextView
-                android:id="@+id/settings_switch_preference_clear_cache_title_tv"
+                android:id="@+id/settings_preference_clear_cache_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/settings_switch_preference_title_tv_layout_marginTop"
@@ -109,14 +109,22 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Notification.Title"/>
 
             <TextView
-                android:id="@+id/settings_switch_preference_clear_cache_summary_tv"
+                android:id="@+id/settings_preference_clear_cache_summary_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settings_switch_preference_clear_cache_title_tv"
-                android:layout_alignLeft="@+id/settings_switch_preference_clear_cache_title_tv"
+                android:layout_below="@+id/settings_preference_clear_cache_title_tv"
+                android:layout_alignLeft="@+id/settings_preference_clear_cache_title_tv"
                 android:layout_marginTop="@dimen/settings_switch_preference_summary_tv__layout_marginTop"
                 android:layout_marginEnd="@dimen/settings_switch_preference_summary_tv__layout_marginEnd"
                 android:text="@string/settings_switch_preference_clear_cache_summary"/>
+
+            <TextView
+                android:id="@+id/settings_preference_cache_size_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/settings_preference_clear_cache_summary_tv"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/settings_switch_preference_switch_layout_marginEnd"/>
 
         </RelativeLayout>
 

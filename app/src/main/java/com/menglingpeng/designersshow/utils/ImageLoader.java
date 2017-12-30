@@ -143,9 +143,18 @@ public class ImageLoader {
                 .into(imageView);
     }
 
+    //获取图片缓存大小
+    public static String getDiskCacheSize(Context context){
+        long size = Glide.getPhotoCacheDir(context).getFreeSpace();
+        double sizeMb = (double) (size/(1024*1024*8));
+        String diskCacheSize = new StringBuilder().append(String.valueOf(sizeMb)).append("M").toString();
+        return diskCacheSize;
+    }
+
     //清理所有磁盘缓存
     public static void clearDiskCache(Context context){
-        Glide.get(context).clearDiskCache();
+        Glide glide = Glide.get(context);
+        glide.clearDiskCache();
     }
 
     public static void downloadImage(Context context, View rootView, String url, String
