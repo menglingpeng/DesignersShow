@@ -551,6 +551,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             if(SharedPrefUtil.getState(Constants.DOUBLE_BACK_TO_EXIT)) {
                 doubleBackToQuit();
+            }else {
+                super.onBackPressed();
             }
         }
     }
