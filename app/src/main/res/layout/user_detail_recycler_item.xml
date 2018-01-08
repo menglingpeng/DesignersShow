@@ -21,18 +21,18 @@
             android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight">
 
             <ImageView
-                android:id="@+id/profile_tablayout_detail_shots_im"
+                android:id="@+id/profile_tablayout_detail_shots_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
                 android:src="@drawable/ic_shots_grey_600_24dp" />
 
             <TextView
-                android:id="@+id/profile_tablayout_detail_shots_count_tx"
+                android:id="@+id/profile_tablayout_detail_shots_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_shots_im" />
+                android:layout_toRightOf="@+id/profile_tablayout_detail_shots_iv" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -42,18 +42,18 @@
             android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight">
 
             <ImageView
-                android:id="@+id/profile_tablayout_detail_likes_im"
+                android:id="@+id/profile_tablayout_detail_likes_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
                 android:src="@drawable/ic_favorite_grey_600" />
 
             <TextView
-                android:id="@+id/profile_tablayout_detail_likes_count_tx"
+                android:id="@+id/profile_tablayout_detail_likes_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_likes_im" />
+                android:layout_toRightOf="@+id/profile_tablayout_detail_likes_iv" />
         </RelativeLayout>
 
 
@@ -76,18 +76,18 @@
             android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight">
 
             <ImageView
-                android:id="@+id/profile_tablayout_detail_buckets_im"
+                android:id="@+id/profile_tablayout_detail_buckets_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
                 android:src="@drawable/ic_buckets_grey_600_24dp" />
 
             <TextView
-                android:id="@+id/profile_tablayout_detail_buckets_count_tx"
+                android:id="@+id/profile_tablayout_detail_buckets_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_buckets_im" />
+                android:layout_toRightOf="@+id/profile_tablayout_detail_buckets_iv" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -97,18 +97,18 @@
             android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight">
 
             <ImageView
-                android:id="@+id/profile_tablayout_detail_projects_im"
+                android:id="@+id/profile_tablayout_detail_projects_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
                 android:src="@drawable/ic_folder_grey_600_24dp" />
 
             <TextView
-                android:id="@+id/profile_tablayout_detail_projects_count_tx"
+                android:id="@+id/profile_tablayout_detail_projects_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_projects_im" />
+                android:layout_toRightOf="@+id/profile_tablayout_detail_projects_iv" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -130,18 +130,18 @@
             android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight">
 
             <ImageView
-                android:id="@+id/profile_tablayout_detail_followers_im"
+                android:id="@+id/profile_tablayout_detail_followers_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
                 android:src="@drawable/ic_person_grey_600_24dp" />
 
             <TextView
-                android:id="@+id/profile_tablayout_detail_followers_count_tx"
+                android:id="@+id/profile_tablayout_detail_followers_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_followers_im" />
+                android:layout_toRightOf="@+id/profile_tablayout_detail_followers_iv" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -151,18 +151,18 @@
             android:layout_weight="@dimen/profile_tablayout_detail_shots_rl_layout_weight">
 
             <ImageView
-                android:id="@+id/profile_tablayout_detail_followings_im"
+                android:id="@+id/profile_tablayout_detail_followings_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_im_layout_marginLeft"
                 android:src="@drawable/ic_person_outline_grey_600_24dp" />
 
             <TextView
-                android:id="@+id/profile_tablayout_detail_followings_count_tx"
+                android:id="@+id/profile_tablayout_detail_followings_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/profile_tablayout_detail_shots_count_tx_layout_marginLeft"
-                android:layout_toRightOf="@+id/profile_tablayout_detail_followings_im" />
+                android:layout_toRightOf="@+id/profile_tablayout_detail_followings_iv" />
         </RelativeLayout>
 
     </LinearLayout>

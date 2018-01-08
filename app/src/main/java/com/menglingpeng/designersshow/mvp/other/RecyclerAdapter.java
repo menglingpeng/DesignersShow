@@ -425,8 +425,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             });
-            viewHolder.bucketNameTx.setText(bucket.getName());
-            viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(bucket.getShots_count()),
+            viewHolder.bucketNameTv.setText(bucket.getName());
+            viewHolder.bucketShotsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(bucket.getShots_count()),
                     context.getString(R.string.explore_spinner_list_shots)));
 
         } else if (holder instanceof ChooseBucketViewHolder) {
@@ -440,8 +440,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             });
-            viewHolder.bucketNameTx.setText(bucket.getName());
-            viewHolder.bucketShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(bucket.getShots_count()),
+            viewHolder.bucketNameTv.setText(bucket.getName());
+            viewHolder.bucketShotsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(bucket.getShots_count()),
                     context.getString(R.string.explore_spinner_list_shots)));
 
         } else if(holder instanceof ProjectOfUserViewHolder){
@@ -469,12 +469,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 user = follower.getFollower();
             }
             final User userFollow = user;
-            ImageLoader.loadCricleImage(context, userFollow.getAvatar_url(), viewHolder.followerAvatarIm);
-            viewHolder.followerNameTx.setText(userFollow.getName());
-            viewHolder.followerLocationTx.setText(userFollow.getLocation());
-            viewHolder.followerShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(userFollow.getShots_count()
+            ImageLoader.loadCricleImage(context, userFollow.getAvatar_url(), viewHolder.followerAvatarIv);
+            viewHolder.followerNameTv.setText(userFollow.getName());
+            viewHolder.followerLocationTv.setText(userFollow.getLocation());
+            viewHolder.followerShotsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(userFollow.getShots_count()
             ), context.getString(R.string.explore_spinner_list_shots)));
-            viewHolder.followersOfFollowerCountTx.setText(TextUtil.setBeforeBold(String.valueOf(userFollow
+            viewHolder.followersOfFollowerCountTv.setText(TextUtil.setBeforeBold(String.valueOf(userFollow
                     .getFollowers_count()), context.getText(R.string.followers).toString()));
             viewHolder.followerRl.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -489,17 +489,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             final DetailOfUserViewHolder viewHolder = (DetailOfUserViewHolder) holder;
             final User user = (User) list.get(position);
             final ViewPager viewPager = fragment.getActivity().findViewById(R.id.profile_vp);
-            viewHolder.profileTablayoutDetailShotsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
+            viewHolder.profileTablayoutDetailShotsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getShots_count()), context.getString(R.string.explore_spinner_list_shots)));
-            viewHolder.profileTablayoutDetailLikesCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
+            viewHolder.profileTablayoutDetailLikesCountTv.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getLikes_count()), context.getString(R.string.detail_likes_tv_text)));
-            viewHolder.profileTablayoutDetailBucketsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
+            viewHolder.profileTablayoutDetailBucketsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getBuckets_count()), context.getString(R.string.detail_buckets_tv_text)));
-            viewHolder.profileTablayoutDetailProjectsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
+            viewHolder.profileTablayoutDetailProjectsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getProjects_count()), context.getString(R.string.project)));
-            viewHolder.profileTablayoutDetailFollowersCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
+            viewHolder.profileTablayoutDetailFollowersCountTv.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getFollowers_count()), context.getString(R.string.followers)));
-            viewHolder.profileTablayoutDetailFollowingsCountTx.setText(TextUtil.setBeforeBold(String.valueOf(user
+            viewHolder.profileTablayoutDetailFollowingsCountTv.setText(TextUtil.setBeforeBold(String.valueOf(user
                     .getFollowings_count()), context.getString(R.string.following)));
             viewHolder.profileTablayoutDetailShotsRl.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -575,25 +575,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             final Shot shot = (Shot) list.get(position);
             boolean isGif = shot.isAnimated();
             int attachmentsCount = shot.getAttachments_count();
-            viewHolder.profileShotTitleTx.setText(shot.getTitle());
-            viewHolder.profileShotCreatedTimeTx.setText(TimeUtil.getTimeDifference(shot.getUpdated_at()));
+            viewHolder.profileShotTitleTv.setText(shot.getTitle());
+            viewHolder.profileShotCreatedTimeTv.setText(TimeUtil.getTimeDifference(shot.getUpdated_at()));
             if(SharedPrefUtil.getState(Constants.GIFS_AUTO_PLAY)){
-                ImageLoader.load(fragment, shot.getImages().getNormal(), viewHolder.profileShotIm, false,
+                ImageLoader.load(fragment, shot.getImages().getNormal(), viewHolder.profileShotIv, false,
                         true);
             }else {
-                ImageLoader.load(fragment, shot.getImages().getNormal(), viewHolder.profileShotIm, false,
+                ImageLoader.load(fragment, shot.getImages().getNormal(), viewHolder.profileShotIv, false,
                         false);
             }
             if (isGif) {
-                viewHolder.profileShotGifIm.setVisibility(TextView.VISIBLE);
+                viewHolder.profileShotGifIv.setVisibility(TextView.VISIBLE);
             }
-            viewHolder.profileShotLikesCountTx.setText(String.valueOf(shot.getLikes_count()));
-            viewHolder.profileShotCommentsCountTx.setText(String.valueOf(shot.getComments_count()));
-            viewHolder.profileShotViewsCountTx.setText(String.valueOf(shot.getViews_count()));
+            viewHolder.profileShotLikesCountTv.setText(String.valueOf(shot.getLikes_count()));
+            viewHolder.profileShotCommentsCountTv.setText(String.valueOf(shot.getComments_count()));
+            viewHolder.profileShotViewsCountTv.setText(String.valueOf(shot.getViews_count()));
             if (attachmentsCount != 0) {
-                viewHolder.profileShotAttachmentsCountIm.setVisibility(ImageView.VISIBLE);
-                viewHolder.profileShotAttachmentsCountTx.setVisibility(TextView.VISIBLE);
-                viewHolder.profileShotAttachmentsCountTx.setText(String.valueOf(attachmentsCount));
+                viewHolder.profileShotAttachmentsCountIv.setVisibility(ImageView.VISIBLE);
+                viewHolder.profileShotAttachmentsCountTv.setVisibility(TextView.VISIBLE);
+                viewHolder.profileShotAttachmentsCountTv.setText(String.valueOf(attachmentsCount));
             }
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -679,8 +679,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 default:
                     break;
             }
-            viewHolder.emptyIm.setImageResource(ivId);
-            viewHolder.emptyTx.setText(context.getString(tvId));
+            viewHolder.emptyIv.setImageResource(ivId);
+            viewHolder.emptyTv.setText(context.getString(tvId));
         }
     }
 
@@ -788,13 +788,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class DetailOfUserViewHolder extends RecyclerView.ViewHolder {
-        public final RelativeLayout profileTablayoutDetailShotsRl, profileTablayoutDetailLikesRl,
-                profileTablayoutDetailBucketsRl,
-                profileTablayoutDetailProjectsRl, profileTablayoutDetailFollowersRl, profileTablayoutDetailFollowingsRl;
-        public final TextView profileTablayoutDetailShotsCountTx, profileTablayoutDetailLikesCountTx,
-                profileTablayoutDetailBucketsCountTx,
-                profileTablayoutDetailProjectsCountTx, profileTablayoutDetailFollowersCountTx,
-                profileTablayoutDetailFollowingsCountTx;
+        public final RelativeLayout profileTablayoutDetailShotsRl;
+        public final RelativeLayout profileTablayoutDetailLikesRl;
+        public final RelativeLayout profileTablayoutDetailBucketsRl;
+        public final RelativeLayout profileTablayoutDetailProjectsRl;
+        public final RelativeLayout profileTablayoutDetailFollowersRl;
+        public final RelativeLayout profileTablayoutDetailFollowingsRl;
+        public final TextView profileTablayoutDetailShotsCountTv;
+        public final TextView profileTablayoutDetailLikesCountTv;
+        public final TextView profileTablayoutDetailBucketsCountTv;
+        public final TextView profileTablayoutDetailProjectsCountTv;
+        public final TextView profileTablayoutDetailFollowersCountTv;
+        public final TextView  profileTablayoutDetailFollowingsCountTv;
 
         public DetailOfUserViewHolder(View view) {
             super(view);
@@ -808,64 +813,71 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .profile_tablayout_detail_followers_rl);
             profileTablayoutDetailFollowingsRl = (RelativeLayout) view.findViewById(R.id
                     .profile_tablayout_detail_followings_rl);
-            profileTablayoutDetailShotsCountTx = (TextView) view.findViewById(R.id
-                    .profile_tablayout_detail_shots_count_tx);
-            profileTablayoutDetailLikesCountTx = (TextView) view.findViewById(R.id
-                    .profile_tablayout_detail_likes_count_tx);
-            profileTablayoutDetailBucketsCountTx = (TextView) view.findViewById(R.id
-                    .profile_tablayout_detail_buckets_count_tx);
-            profileTablayoutDetailProjectsCountTx = (TextView) view.findViewById(R.id
-                    .profile_tablayout_detail_projects_count_tx);
-            profileTablayoutDetailFollowersCountTx = (TextView) view.findViewById(R.id
-                    .profile_tablayout_detail_followers_count_tx);
-            profileTablayoutDetailFollowingsCountTx = (TextView) view.findViewById(R.id
-                    .profile_tablayout_detail_followings_count_tx);
+            profileTablayoutDetailShotsCountTv = (TextView) view.findViewById(R.id
+                    .profile_tablayout_detail_shots_count_tv);
+            profileTablayoutDetailLikesCountTv = (TextView) view.findViewById(R.id
+                    .profile_tablayout_detail_likes_count_tv);
+            profileTablayoutDetailBucketsCountTv = (TextView) view.findViewById(R.id
+                    .profile_tablayout_detail_buckets_count_tv);
+            profileTablayoutDetailProjectsCountTv = (TextView) view.findViewById(R.id
+                    .profile_tablayout_detail_projects_count_tv);
+            profileTablayoutDetailFollowersCountTv = (TextView) view.findViewById(R.id
+                    .profile_tablayout_detail_followers_count_tv);
+            profileTablayoutDetailFollowingsCountTv = (TextView) view.findViewById(R.id
+                    .profile_tablayout_detail_followings_count_tv);
 
         }
     }
 
     public class ProfileShotViewHolder extends RecyclerView.ViewHolder {
-        public final TextView profileShotTitleTx, profileShotCreatedTimeTx;
-        public final ImageView profileShotIm, profileShotGifIm, profileShotAttachmentsCountIm;
-        public final TextView profileShotLikesCountTx, profileShotCommentsCountTx, profileShotViewsCountTx,
-                profileShotAttachmentsCountTx;
+        public final TextView profileShotTitleTv;
+        public final TextView profileShotCreatedTimeTv;
+        public final ImageView profileShotIv;
+        public final ImageView profileShotGifIv;
+        public final ImageView profileShotAttachmentsCountIv;
+        public final TextView profileShotLikesCountTv;
+        public final TextView profileShotCommentsCountTv;
+        public final TextView profileShotViewsCountTv;
+        public final TextView  profileShotAttachmentsCountTv;
 
         public ProfileShotViewHolder(View view) {
             super(view);
-            profileShotTitleTx = (TextView) view.findViewById(R.id.profile_shot_title_tx);
-            profileShotCreatedTimeTx = (TextView) view.findViewById(R.id.profile_shot_create_time_tx);
-            profileShotIm = (ImageView) view.findViewById(R.id.profile_shot_im);
-            profileShotGifIm = (ImageView) view.findViewById(R.id.profile_shot_gif_im);
-            profileShotLikesCountTx = (TextView) view.findViewById(R.id.profile_shot_likes_count_tx);
-            profileShotCommentsCountTx = (TextView) view.findViewById(R.id.profile_shot_comments_count_tx);
-            profileShotViewsCountTx = (TextView) view.findViewById(R.id.profile_shot_views_count_tx);
-            profileShotAttachmentsCountIm = (ImageView) view.findViewById(R.id.profile_shot_attachments_count_im);
-            profileShotAttachmentsCountTx = (TextView) view.findViewById(R.id.profile_shot_attachments_count_tx);
+            profileShotTitleTv = (TextView) view.findViewById(R.id.profile_shot_title_tv);
+            profileShotCreatedTimeTv = (TextView) view.findViewById(R.id.profile_shot_create_time_tv);
+            profileShotIv = (ImageView) view.findViewById(R.id.profile_shot_iv);
+            profileShotGifIv = (ImageView) view.findViewById(R.id.profile_shot_gif_iv);
+            profileShotLikesCountTv = (TextView) view.findViewById(R.id.profile_shot_likes_count_tv);
+            profileShotCommentsCountTv = (TextView) view.findViewById(R.id.profile_shot_comments_count_tv);
+            profileShotViewsCountTv = (TextView) view.findViewById(R.id.profile_shot_views_count_tv);
+            profileShotAttachmentsCountIv = (ImageView) view.findViewById(R.id.profile_shot_attachments_count_iv);
+            profileShotAttachmentsCountTv = (TextView) view.findViewById(R.id.profile_shot_attachments_count_tv);
         }
     }
 
     public class BucketsViewHolder extends RecyclerView.ViewHolder {
         public final RelativeLayout bucketRl;
-        public final TextView bucketNameTx, bucketShotsCountTx;
+        public final TextView bucketNameTv;
+        public final TextView bucketShotsCountTv;
 
         public BucketsViewHolder(View view) {
             super(view);
             bucketRl = (RelativeLayout) view.findViewById(R.id.bucket_rl);
-            bucketNameTx = (TextView) view.findViewById(R.id.bucket_name_tx);
-            bucketShotsCountTx = (TextView) view.findViewById(R.id.bucket_shots_count_tx);
+            bucketNameTv = (TextView) view.findViewById(R.id.bucket_name_tx);
+            bucketShotsCountTv = (TextView) view.findViewById(R.id.bucket_shots_count_tx);
         }
     }
 
     public class ChooseBucketViewHolder extends RecyclerView.ViewHolder {
         public final RelativeLayout bucketRl;
-        public final TextView bucketNameTx, bucketShotsCountTx;
+        public final TextView bucketNameTv;
+        public final TextView bucketShotsCountTv;
         public final FloatingActionButton chooseBucketFab;
 
         public ChooseBucketViewHolder(View view) {
             super(view);
             bucketRl = (RelativeLayout) view.findViewById(R.id.bucket_rl);
-            bucketNameTx = (TextView) view.findViewById(R.id.bucket_name_tx);
-            bucketShotsCountTx = (TextView) view.findViewById(R.id.bucket_shots_count_tx);
+            bucketNameTv = (TextView) view.findViewById(R.id.bucket_name_tv);
+            bucketShotsCountTv = (TextView) view.findViewById(R.id.bucket_shots_count_tv);
             chooseBucketFab = (FloatingActionButton) view.findViewById(R.id.buckets_recycer_item_fab);
         }
     }
@@ -885,18 +897,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class FollowOfUserViewHolder extends RecyclerView.ViewHolder {
         public final RelativeLayout followerRl;
-        public final ImageView followerAvatarIm;
-        public final TextView followerNameTx, followerLocationTx, followerShotsCountTx, followersOfFollowerCountTx;
+        public final ImageView followerAvatarIv;
+        public final TextView followerNameTv;
+        public final TextView followerLocationTv;
+        public final TextView followerShotsCountTv;
+        public final TextView followersOfFollowerCountTv;
 
         public FollowOfUserViewHolder(View view) {
             super(view);
             followerRl = (RelativeLayout) view.findViewById(R.id.profile_tablayout_follow_rl);
-            followerAvatarIm = (ImageView) view.findViewById(R.id.profile_tablayout_follow_avatar_im);
-            followerLocationTx = (TextView) view.findViewById(R.id.profile_tablayout_follow_location_tx);
-            followerNameTx = (TextView) view.findViewById(R.id.profile_tablayout_follow_name_tx);
-            followerShotsCountTx = (TextView) view.findViewById(R.id.profile_tablayout_follow_shots_count_tx);
-            followersOfFollowerCountTx = (TextView) view.findViewById(R.id
-                    .profile_tablayout_followers_of_follow_count_tx);
+            followerAvatarIv = (ImageView) view.findViewById(R.id.profile_tablayout_follow_avatar_iv);
+            followerLocationTv = (TextView) view.findViewById(R.id.profile_tablayout_follow_location_tv);
+            followerNameTv = (TextView) view.findViewById(R.id.profile_tablayout_follow_name_tv);
+            followerShotsCountTv = (TextView) view.findViewById(R.id.profile_tablayout_follow_shots_count_tv);
+            followersOfFollowerCountTv = (TextView) view.findViewById(R.id
+                    .profile_tablayout_followers_of_follow_count_tv);
         }
     }
 
@@ -910,13 +925,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class EmptyViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView emptyIm;
-        public final TextView emptyTx;
+        public final ImageView emptyIv;
+        public final TextView emptyTv;
 
         public EmptyViewHolder(View view) {
             super(view);
-            emptyIm = (ImageView) view.findViewById(R.id.recycler_item_empty_im);
-            emptyTx = (TextView) view.findViewById(R.id.recycler_item_empty_tx);
+            emptyIv = (ImageView) view.findViewById(R.id.recycler_item_empty_iv);
+            emptyTv = (TextView) view.findViewById(R.id.recycler_item_empty_tv);
         }
     }
 

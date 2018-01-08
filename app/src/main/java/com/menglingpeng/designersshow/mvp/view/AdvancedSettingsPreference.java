@@ -52,7 +52,7 @@ public class AdvancedSettingsPreference extends Preference {
         if(SharedPrefUtil.getState(Constants.DOUBLE_BACK_TO_EXIT)){
             doubleBackToExitSwitch.setChecked(true);
         }else {
-            doubleBackToExitSwitch.setChecked(false);
+            doubleBackToExitSwitch.setChecked(false );
         }
         nightModeRl.setOnClickListener(listener);
         doubleBackToExitRl.setOnClickListener(listener);
