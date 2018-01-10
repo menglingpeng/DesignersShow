@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/shot_title_tv"
-                android:layout_marginLeft="@dimen/recycler_view_item_shots_create_time_tx_layout_marginLeft"
+                android:layout_marginLeft="@dimen/recycler_view_item_shots_create_time_tv_layout_marginLeft"
                 android:layout_toRightOf="@+id/comma_tv" />
 
         </RelativeLayout>
@@ -76,7 +76,7 @@
             <ImageView
                 android:id="@+id/shot_iv"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/recycler_view_item_shots_im__layout_height"
+                android:layout_height="@dimen/recycler_view_item_shots_iv__layout_height"
                 android:background="@color/colorPrimary"
                 android:scaleType="centerCrop" />
 

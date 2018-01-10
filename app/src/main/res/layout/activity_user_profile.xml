@@ -37,8 +37,8 @@
 
                 <ImageView
                     android:id="@+id/profile_avatar_iv"
-                    android:layout_width="@dimen/user_profile_avatar_im_layout_width"
-                    android:layout_height="@dimen/user_profile_avatar_im_layout_height"
+                    android:layout_width="@dimen/user_profile_avatar_iv_layout_width"
+                    android:layout_height="@dimen/user_profile_avatar_iv_layout_height"
                     android:layout_marginTop="@dimen/profile_avatar_iv_layout_marginTop"
                     android:layout_centerHorizontal="true" />
 

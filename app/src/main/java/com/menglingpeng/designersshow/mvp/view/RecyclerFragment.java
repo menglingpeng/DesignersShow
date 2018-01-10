@@ -22,7 +22,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -32,7 +31,7 @@ import com.menglingpeng.designersshow.BaseFragment;
 import com.menglingpeng.designersshow.MainActivity;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
-import com.menglingpeng.designersshow.mvp.model.Buckets;
+import com.menglingpeng.designersshow.mvp.model.Bucket;
 import com.menglingpeng.designersshow.mvp.model.Comment;
 import com.menglingpeng.designersshow.mvp.model.Follower;
 import com.menglingpeng.designersshow.mvp.model.Following;
@@ -435,10 +434,10 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                         jsonList = Json.parseArrayJson(json, Likes.class);
                         break;
                     case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
-                        jsonList = Json.parseArrayJson(json, Buckets.class);
+                        jsonList = Json.parseArrayJson(json, Bucket.class);
                         break;
                     case Constants.REQUEST_CHOOSE_BUCKET:
-                        jsonList = Json.parseArrayJson(json, Buckets.class);
+                        jsonList = Json.parseArrayJson(json, Bucket.class);
                         break;
                     case Constants.REQUEST_ADD_A_SHOT_TO_BUCKET:
                         //添加到多个bucket
@@ -473,7 +472,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
                         jsonList = Json.parseArrayJson(json, Likes.class);
                         break;
                     case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
-                        jsonList = Json.parseArrayJson(json, Buckets.class);
+                        jsonList = Json.parseArrayJson(json, Bucket.class);
                         break;
                     case Constants.REQUEST_LIST_PROJECTS_FOR_A_USER:
                         jsonList = Json.parseArrayJson(json, Project.class);
@@ -531,7 +530,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             startActivity(intent);
         } else if (viewHolder instanceof RecyclerAdapter.BucketsViewHolder) {
             intent = new Intent(getActivity(), BucketDetailActivity.class);
-            intent.putExtra(Constants.BUCKETS, (Buckets) t);
+            intent.putExtra(Constants.BUCKETS, (Bucket) t);
             startActivity(intent);
         } else if (viewHolder instanceof RecyclerAdapter.ProjectOfUserViewHolder) {
             intent = new Intent(getActivity(), ProjectDetailActivity.class);
@@ -543,7 +542,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             intent.putExtra(Constants.ID, (String) t);
             startActivity(intent);
         } else if (viewHolder instanceof RecyclerAdapter.ChooseBucketViewHolder) {
-            Buckets buckets = (Buckets) t;
+            Bucket buckets = (Bucket) t;
             bucketName = buckets.getName();
             String itemId = String.valueOf(viewHolder.getLayoutPosition());
             coordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.choose_bucket_cdl);

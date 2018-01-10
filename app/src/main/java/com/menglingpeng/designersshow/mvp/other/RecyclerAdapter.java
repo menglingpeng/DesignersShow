@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.mvp.interf.OnRecyclerListItemListener;
-import com.menglingpeng.designersshow.mvp.model.Buckets;
+import com.menglingpeng.designersshow.mvp.model.Bucket;
 import com.menglingpeng.designersshow.mvp.model.Comment;
 import com.menglingpeng.designersshow.mvp.model.Follower;
 import com.menglingpeng.designersshow.mvp.model.Following;
@@ -151,7 +151,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         break;
                     case Constants.REQUEST_LIST_BUCKETS_FOR_AUTH_USER:
                         view = inflater.inflate(R.layout.user_buckets_recycler_item, parent, false);
-                        viewHolder = new BucketsViewHolder(view);
+                        viewHolder = new BucketViewHolder(view);
                         break;
                     case Constants.REQUEST_CHOOSE_BUCKET:
                         view = inflater.inflate(R.layout.user_buckets_recycler_item, parent, false);
@@ -187,7 +187,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         break;
                     case Constants.REQUEST_LIST_BUCKETS_FOR_A_USER:
                         view = inflater.inflate(R.layout.user_buckets_recycler_item, parent, false);
-                        viewHolder = new BucketsViewHolder(view);
+                        viewHolder = new BucketViewHolder(view);
                         break;
                     case Constants.REQUEST_LIST_PROJECTS_FOR_A_USER:
                         view = inflater.inflate(R.layout.user_projects_recycler_item, parent, false);
@@ -414,9 +414,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
         }
-        else if (holder instanceof BucketsViewHolder) {
-            final BucketsViewHolder viewHolder = (BucketsViewHolder) holder;
-            final Buckets bucket = (Buckets) list.get(position);
+        else if (holder instanceof BucketViewHolder) {
+            final BucketViewHolder viewHolder = (BucketViewHolder) holder;
+            final Bucket bucket = (Bucket) list.get(position);
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -431,7 +431,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         } else if (holder instanceof ChooseBucketViewHolder) {
             final ChooseBucketViewHolder viewHolder = (ChooseBucketViewHolder) holder;
-            final Buckets bucket = (Buckets) list.get(position);
+            final Bucket bucket = (Bucket) list.get(position);
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -854,16 +854,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public class BucketsViewHolder extends RecyclerView.ViewHolder {
+    public class BucketViewHolder extends RecyclerView.ViewHolder {
         public final RelativeLayout bucketRl;
         public final TextView bucketNameTv;
         public final TextView bucketShotsCountTv;
 
-        public BucketsViewHolder(View view) {
+        public BucketViewHolder(View view) {
             super(view);
             bucketRl = (RelativeLayout) view.findViewById(R.id.bucket_rl);
-            bucketNameTv = (TextView) view.findViewById(R.id.bucket_name_tx);
-            bucketShotsCountTv = (TextView) view.findViewById(R.id.bucket_shots_count_tx);
+            bucketNameTv = (TextView) view.findViewById(R.id.bucket_name_tv);
+            bucketShotsCountTv = (TextView) view.findViewById(R.id.bucket_shots_count_tv);
         }
     }
 

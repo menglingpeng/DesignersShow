@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/user_buckets_recycler_item_text_view_layout_marginBottom"
-        android:layout_marginLeft="@dimen/user_buckets_recycler_item_bucket_name_tx_ayout_marginLeft"
-        android:layout_marginTop="@dimen/user_buckets_recycler_item_bucket_name_tx_ayout_marginTop"
+        android:layout_marginLeft="@dimen/user_buckets_recycler_item_bucket_name_tv_ayout_marginLeft"
+        android:layout_marginTop="@dimen/user_buckets_recycler_item_bucket_name_tv_ayout_marginTop"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
     <TextView

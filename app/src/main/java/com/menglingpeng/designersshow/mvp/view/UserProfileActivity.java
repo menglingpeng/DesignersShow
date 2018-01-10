@@ -43,8 +43,10 @@ public class UserProfileActivity extends BaseActivity implements RecyclerView {
     private CoordinatorLayout profileCdl;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private Toolbar toolbar;
-    private ImageView profileBackgroundIv, profileAvatarIv;
-    private TextView profileNameTv, profileDescTv;
+    private ImageView profileBackgroundIv;
+    private ImageView profileAvatarIv;
+    private TextView profileNameTv;
+    private TextView profileDescTv;
     private RecyclerPresenter presenter;
     private ProgressBar progressBar;
     private TabLayout profileTl;

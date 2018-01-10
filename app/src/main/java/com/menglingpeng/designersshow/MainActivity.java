@@ -68,8 +68,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private RelativeLayout navHeaderRl;
-    private ImageView navAvatarIm;
-    private TextView navNameTx, navDescTx;
+    private ImageView navAvatarIv;
+    private TextView navNameTv;
+    private TextView navDescTv;
     private Button loginDialogLoginBt;
     private ProgressBar loginDialogPb;
     private TabLayout tabLayout;
@@ -252,18 +253,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void initNavigationView() {
         View headerView = navigationView.getHeaderView(0);
         navHeaderRl = (RelativeLayout) headerView.findViewById(R.id.nav_view_header_rl);
-        navAvatarIm = (ImageView) headerView.findViewById(R.id.login_avatar_im);
-        navNameTx = (TextView) headerView.findViewById(R.id.nav_view_name_tx);
-        navDescTx = (TextView) headerView.findViewById(R.id.nav_view_desc_tx);
+        navAvatarIv = (ImageView) headerView.findViewById(R.id.login_avatar_im);
+        navNameTv = (TextView) headerView.findViewById(R.id.nav_view_name_tx);
+        navDescTv = (TextView) headerView.findViewById(R.id.nav_view_desc_tx);
         if (isLogin) {
             ImageLoader.loadCricleImage(getApplicationContext(), SharedPrefUtil.getLoginData(Constants
-                    .AUTH_USER_AVATAR_URL), navAvatarIm);
-            navNameTx.setText(SharedPrefUtil.getLoginData(Constants.AUTH_USER_NAME));
-            navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
+                    .AUTH_USER_AVATAR_URL), navAvatarIv);
+            navNameTv.setText(SharedPrefUtil.getLoginData(Constants.AUTH_USER_NAME));
+            navDescTv.setText(getResources().getString(R.string.nav_view_login_desc_tx));
         } else {
-            navAvatarIm.setImageResource(R.drawable.ic_avatar);
-            navNameTx.setText(getResources().getString(R.string.nav_view_name_tx));
-            navDescTx.setText(getResources().getString(R.string.nav_view_desc_tx));
+            navAvatarIv.setImageResource(R.drawable.ic_avatar);
+            navNameTv.setText(getResources().getString(R.string.nav_view_name_tx));
+            navDescTv.setText(getResources().getString(R.string.nav_view_desc_tx));
         }
         navHeaderRl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -637,9 +638,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case Constants.REQUEST_AUTH_USER:
                 User authUser = Json.parseJson(json, User.class);
-                ImageLoader.loadCricleImage(getApplicationContext(), authUser.getAvatar_url(), navAvatarIm);
-                navNameTx.setText(authUser.getUsername());
-                navDescTx.setText(getResources().getString(R.string.nav_view_login_desc_tx));
+                ImageLoader.loadCricleImage(getApplicationContext(), authUser.getAvatar_url(), navAvatarIv);
+                navNameTv.setText(authUser.getUsername());
+                navDescTv.setText(getResources().getString(R.string.nav_view_login_desc_tx));
                 map.put(Constants.AUTH_USER_AVATAR_URL, authUser.getAvatar_url());
                 map.put(Constants.AUTH_USER_NAME, authUser.getUsername());
                 map.put(Constants.AUTH_USER_ID, String.valueOf(authUser.getId()));

@@ -25,7 +25,7 @@ import com.menglingpeng.designersshow.utils.Constants;
 public class LoginDialogFragment extends AppCompatDialogFragment {
 
     private Dialog dialog;
-    private ImageView loginDialogCloseIm;
+    private ImageView loginDialogCloseIv;
     private Button loginDialogLoginBt;
     private ProgressBar loginDialogPb;
     private LoginDialogListener listener;
@@ -43,11 +43,11 @@ public class LoginDialogFragment extends AppCompatDialogFragment {
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(layoutParams);
         dialog.setContentView(dialogView);
-        loginDialogCloseIm = (ImageView) dialogView.findViewById(R.id.dialog_login_close_im);
+        loginDialogCloseIv = (ImageView) dialogView.findViewById(R.id.dialog_login_close_iv);
         loginDialogLoginBt = (Button) dialogView.findViewById(R.id.dialog_login_bt);
         loginDialogPb = (ProgressBar) dialogView.findViewById(R.id.dialog_login_pb);
         dialog.show();
-        loginDialogCloseIm.setOnClickListener(new View.OnClickListener() {
+        loginDialogCloseIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();

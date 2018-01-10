@@ -23,7 +23,7 @@
             <ImageView
                 android:id="@+id/detail_iv"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/recycler_view_item_shots_im__layout_height"
+                android:layout_height="@dimen/recycler_view_item_shots_iv__layout_height"
                 android:background="@color/colorPrimary"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"

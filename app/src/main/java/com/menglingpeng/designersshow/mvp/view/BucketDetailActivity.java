@@ -1,8 +1,6 @@
 package com.menglingpeng.designersshow.mvp.view;
 
-import android.app.Fragment;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
@@ -10,13 +8,13 @@ import android.view.View;
 
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
-import com.menglingpeng.designersshow.mvp.model.Buckets;
+import com.menglingpeng.designersshow.mvp.model.Bucket;
 import com.menglingpeng.designersshow.utils.Constants;
 
 public class BucketDetailActivity extends BaseActivity {
 
     private Toolbar toolbar;
-    private Buckets buckets;
+    private Bucket buckets;
     private static RecyclerFragment fragment;
 
     @Override
@@ -28,7 +26,7 @@ public class BucketDetailActivity extends BaseActivity {
     protected void initViews() {
         super.initViews();
         toolbar = (Toolbar) findViewById(R.id.bucket_detail_tb);
-        buckets = (Buckets) getIntent().getSerializableExtra(Constants.BUCKETS);
+        buckets = (Bucket) getIntent().getSerializableExtra(Constants.BUCKETS);
         toolbar.setTitle(buckets.getName());
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
