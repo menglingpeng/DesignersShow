@@ -1,6 +1,6 @@
 ﻿# 简介
   
-  目前正在开发中，目标是符合[MaterialDesign](https://material.io/guidelines/material-design/)风格和MVP模式的第三方Dribbble客户端
+  shots是一个符合[MaterialDesign](https://material.io/guidelines/material-design/)风格和MVP模式的第三方Dribbble客户端
 
 ## 使用技术（目前）
    

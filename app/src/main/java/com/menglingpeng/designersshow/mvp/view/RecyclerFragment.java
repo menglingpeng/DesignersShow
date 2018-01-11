@@ -528,7 +528,7 @@ public class RecyclerFragment extends BaseFragment implements com.menglingpeng.d
             intent.putExtra(Constants.TYPE, Constants.USER_SHOT_DETAIL);
             intent.putExtra(Constants.USER, (User) getArguments().getSerializable(Constants.USER));
             startActivity(intent);
-        } else if (viewHolder instanceof RecyclerAdapter.BucketsViewHolder) {
+        } else if (viewHolder instanceof RecyclerAdapter.BucketViewHolder) {
             intent = new Intent(getActivity(), BucketDetailActivity.class);
             intent.putExtra(Constants.BUCKETS, (Bucket) t);
             startActivity(intent);

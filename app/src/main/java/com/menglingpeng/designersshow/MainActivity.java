@@ -253,9 +253,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void initNavigationView() {
         View headerView = navigationView.getHeaderView(0);
         navHeaderRl = (RelativeLayout) headerView.findViewById(R.id.nav_view_header_rl);
-        navAvatarIv = (ImageView) headerView.findViewById(R.id.login_avatar_im);
-        navNameTv = (TextView) headerView.findViewById(R.id.nav_view_name_tx);
-        navDescTv = (TextView) headerView.findViewById(R.id.nav_view_desc_tx);
+        navAvatarIv = (ImageView) headerView.findViewById(R.id.login_avatar_iv);
+        navNameTv = (TextView) headerView.findViewById(R.id.nav_view_name_tv);
+        navDescTv = (TextView) headerView.findViewById(R.id.nav_view_desc_tv);
         if (isLogin) {
             ImageLoader.loadCricleImage(getApplicationContext(), SharedPrefUtil.getLoginData(Constants
                     .AUTH_USER_AVATAR_URL), navAvatarIv);
