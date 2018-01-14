@@ -2,12 +2,12 @@
   
   shots是一个符合[MaterialDesign](https://material.io/guidelines/material-design/)风格和MVP模式的第三方Dribbble客户端
 
-## 使用技术（目前）
+## 使用技术
    
 * Android Design库的使用
 * 应用MVP模式
-* Rxjava的使用
-* Glide4的使用
+* Okhttp稳定处理网络请求
+* Glide4高效加载网络图片
 * 内存优化
 * Fragment的管理
 * 自定义Spinner
