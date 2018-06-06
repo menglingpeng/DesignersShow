@@ -30,6 +30,12 @@
             android:icon="@mipmap/ic_action_buckets"
             android:title="@string/nav_my_buckets_menu" />
 
+        <item
+            android:id="@+id/nav_favorites"
+            android:icon="@drawable/ic_favorite_border_grey_600_36dp"
+            android:title="@string/nav_my_favorites"/>
+
+
     </group>
 
     <group android:id="@+id/group2">

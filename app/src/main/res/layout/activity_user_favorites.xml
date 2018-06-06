@@ -14,7 +14,7 @@
         tools:context="com.menglingpeng.designersshow.mvp.view.BucketDetailActivity">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/user_likes_tb"
+            android:id="@+id/user_favorites_tb"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"

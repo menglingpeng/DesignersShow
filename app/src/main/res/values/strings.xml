@@ -8,6 +8,7 @@
     <string name="nav_my_likes_menu">喜欢</string>
     <string name="nav_my_buckets_menu">我的作品集</string>
     <string name="nav_my_shots_menu">我的作品</string>
+    <string name="nav_my_favorites">收藏夹</string>
     <string name="nav_settings_menu">设置</string>
     <string name="recycler_item_footer_more_loading_text">正在加载更多。。。</string>
     <string name="title_activity_base">BaseActivity</string>

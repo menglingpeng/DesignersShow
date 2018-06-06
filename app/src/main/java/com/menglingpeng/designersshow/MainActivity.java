@@ -44,6 +44,7 @@ import com.menglingpeng.designersshow.mvp.other.TabPagerFragmentAdapter;
 import com.menglingpeng.designersshow.mvp.presenter.RecyclerPresenter;
 import com.menglingpeng.designersshow.mvp.view.LoginDialogFragment;
 import com.menglingpeng.designersshow.mvp.view.SettingsActivity;
+import com.menglingpeng.designersshow.mvp.view.UserFavoritesActivity;
 import com.menglingpeng.designersshow.mvp.view.UserProfileActivity;
 import com.menglingpeng.designersshow.mvp.view.RecyclerFragment;
 import com.menglingpeng.designersshow.utils.Constants;
@@ -127,6 +128,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case Constants.MENU_MY_SHOTS:
                 toolbarTitle = getString(R.string.nav_my_shots_menu);
+                break;
+            case Constants.MENU_MY_FAVORITES:
+                toolbarTitle = getString(R.string.nav_my_favorites);
                 break;
             default:
                 break;
@@ -335,6 +339,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         case R.id.nav_shots:
                             currentType = Constants.MENU_MY_SHOTS;
                             break;
+                        case R.id.nav_favorites:
+                            currentType = Constants.MENU_MY_FAVORITES;
+                            break;
                         case R.id.nav_settings:
                             currentType = Constants.MENU_SETTING;
                             break;
@@ -352,6 +359,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void initSelectedNavigationItemView(String menuType) {
         initToolbar();
         invalidateOptionsMenu();
+        Intent intent = null;
         switch (menuType) {
             case Constants.MENU_HOME:
                 floatingActionButton.setVisibility(FloatingActionButton.GONE);
@@ -381,8 +389,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 exploreLl.setVisibility(LinearLayout.GONE);
                 replaceFragment(newFragment(menuType));
                 break;
+            case Constants.MENU_MY_FAVORITES:
+                intent = new Intent(MainActivity.this, UserFavoritesActivity.class);
+                startActivity(intent);
+                break;
             case Constants.MENU_SETTING:
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 break;
             default:

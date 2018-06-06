@@ -97,6 +97,7 @@ public class Constants {
     public static final String MENU_MY_LIKES = "my_likes";
     public static final String MENU_MY_BUCKETS = "list_buckets_for_auth_user";
     public static final String MENU_MY_SHOTS = "my_shots";
+    public static final String MENU_MY_FAVORITES = "my_favorites";
     public static final String MENU_SETTING = "setting";
     public static final String TAB_POPULAR = "Popular";
     public static final String TAB_RECENT = "Recent";
