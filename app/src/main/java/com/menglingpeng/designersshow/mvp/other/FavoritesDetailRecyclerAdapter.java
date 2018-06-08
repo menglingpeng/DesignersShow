@@ -1,12 +1,10 @@
 package com.menglingpeng.designersshow.mvp.other;
 
-
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+public class FavoritesDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
-public class FavoritesRecyclerAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public int getItemViewType(int position) {

@@ -42,7 +42,7 @@
         <activity
             android:name=".mvp.view.ShotDetailActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
         <activity android:name=".mvp.view.ShotCommentsActivity" />
         <activity android:name=".mvp.view.BucketDetailActivity" />
         <activity android:name=".mvp.view.ChooseBucketActivity" />
@@ -54,7 +54,8 @@
         <activity android:name=".mvp.view.ProjectDetailActivity" />
         <activity android:name=".mvp.view.SettingsActivity" />
         <activity android:name=".mvp.view.AboutActivity" />
-        <activity android:name=".mvp.view.UserFavoritesActivity"></activity>
+        <activity android:name=".mvp.view.UserFavoritesActivity" />
+        <activity android:name=".mvp.view.UserFavoritesDetailActivity"></activity>
     </application>
 
 </manifest>
