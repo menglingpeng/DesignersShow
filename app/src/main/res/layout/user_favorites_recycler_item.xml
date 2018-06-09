@@ -23,6 +23,11 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/favorites_shot_author_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
                 android:id="@+id/favorites_shot_title_tv"
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"

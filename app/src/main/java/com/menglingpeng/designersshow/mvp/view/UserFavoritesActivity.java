@@ -52,4 +52,6 @@ public class UserFavoritesActivity extends BaseActivity {
         return fragment;
     }
 
+
+
 }
