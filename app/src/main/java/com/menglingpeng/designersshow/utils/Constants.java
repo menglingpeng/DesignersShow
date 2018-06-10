@@ -183,5 +183,8 @@ public class Constants {
     public static final String EMAIL_CC = "menglingpengoffice@gmail.com";
     public static final String EMAIL_SUBJECT = "[SHOTS]Feedback";
 
+    public static final String FAVORITES_DETAIL_BASE_TYPE = "favorites_detail_base_type";
+    public static final String FAVORITES_DETAIL_BOOK_TYPE = "favorites_detail_book_type";
+
 
 }

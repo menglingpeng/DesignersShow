@@ -17,13 +17,13 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/favorites_detail_base_item_desc_layout"
+            android:id="@+id/favorites_detail_book_item_desc_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recycler_view_item_desc_layout_layout_height"
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/favorites_detail_base_item_shot_title_tv"
+                android:id="@+id/favorites_detail_book_item_shot_title_tv"
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,30 +32,30 @@
                 android:singleLine="true" />
 
             <TextView
-                android:id="@+id/favorites_detail_base_item_shot_create_time_tv"
+                android:id="@+id/favorites_detail_book_item_shot_create_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/favorites_detail_base_item_shot_title_tv"
-                android:layout_below="@+id/favorites_detail_base_item_shot_title_tv"
+                android:layout_alignLeft="@+id/favorites_detail_book_item_shot_title_tv"
+                android:layout_below="@+id/favorites_detail_book_item_shot_title_tv"
                 android:layout_marginLeft="@dimen/recycler_view_item_shots_create_time_tv_layout_marginLeft" />
 
         </RelativeLayout>
 
         <FrameLayout
-            android:id="@+id/favorites_item_shot_fl"
+            android:id="@+id/favorites_detail_book_item_shot_fl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_desc_layout">
 
             <ImageView
-                android:id="@+id/favorites_item_shot_iv"
+                android:id="@+id/favorites_detail_book_item_shot_iv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/recycler_view_item_shots_iv__layout_height"
                 android:background="@color/colorPrimary"
                 android:scaleType="centerCrop" />
 
             <ImageView
-                android:id="@+id/favorites_detail_base_item_shot_gif_iv"
+                android:id="@+id/favorites_detail_book_item_shot_gif_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -67,68 +67,68 @@
             android:id="@+id/comments_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recycler_view_item_comments_layout_layout_height"
-            android:layout_below="@+id/profile_shot_fl"
+            android:layout_below="@+id/favorites_detail_book_item_shot_fl"
             android:gravity="center_vertical">
 
             <ImageView
-                android:id="@+id/favorites_detail_base_item_shot_likes_count_iv"
+                android:id="@+id/favorites_detail_book_item_shot_likes_count_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
                 android:src="@drawable/ic_favorite_grey_600" />
 
             <TextView
-                android:id="@+id/favorites_detail_base_item_shot_likes_count_tv"
+                android:id="@+id/favorites_detail_book_item_shot_likes_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
-                android:layout_toRightOf="@+id/profile_shot_likes_count_iv" />
+                android:layout_toRightOf="@+id/favorites_detail_book_item_shot_likes_count_iv" />
 
             <ImageView
-                android:id="@+id/favorites_detail_base_item_shot_comments_count_iv"
+                android:id="@+id/favorites_detail_book_item_shot_comments_count_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
-                android:layout_toRightOf="@+id/favorites_detail_base_item_shot_likes_count_tv"
+                android:layout_toRightOf="@+id/favorites_detail_book_item_shot_likes_count_tv"
                 android:src="@drawable/ic_mode_comment_grey_600" />
 
             <TextView
-                android:id="@+id/favorites_detail_base_item_shot_comments_count_tv"
+                android:id="@+id/favorites_detail_book_item_shot_comments_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
-                android:layout_toRightOf="@+id/favorites_detail_base_item_shot_comments_count_iv" />
+                android:layout_toRightOf="@+id/favorites_detail_book_item_shot_comments_count_iv" />
 
             <ImageView
-                android:id="@+id/favorites_detail_base_item_shot_views_count_iv"
+                android:id="@+id/favorites_detail_book_item_shot_views_count_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
-                android:layout_toRightOf="@+id/favorites_detail_base_item_shot_comments_count_tv"
+                android:layout_toRightOf="@+id/favorites_detail_book_item_shot_comments_count_tv"
                 android:src="@drawable/ic_view" />
 
             <TextView
-                android:id="@+id/favorites_detail_base_item_shot_views_count_tv"
+                android:id="@+id/favorites_detail_book_item_shot_views_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
-                android:layout_toRightOf="@+id/favorites_detail_base_item_shot_views_count_iv" />
+                android:layout_toRightOf="@+id/favorites_detail_book_item_shot_views_count_iv" />
 
             <ImageView
-                android:id="@+id/favorites_detail_base_item_shot_attachments_count_iv"
+                android:id="@+id/favorites_detail_book_item_shot_attachments_count_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_imageview_layout_marginLeft"
-                android:layout_toRightOf="@+id/favorites_detail_base_item_shot_views_count_tv"
+                android:layout_toRightOf="@+id/favorites_detail_book_item_shot_views_count_tv"
                 android:src="@drawable/ic_attachment_24dp"
                 android:visibility="gone" />
 
             <TextView
-                android:id="@+id/favorites_detail_base_item_shot_attachments_count_tv"
+                android:id="@+id/favorites_detail_book_item_shot_attachments_count_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/recycler_view_item_comments_layout_layout_textview_layout_marginLeft"
-                android:layout_toRightOf="@+id/favorites_detail_base_item_shot_attachments_count_iv"
+                android:layout_toRightOf="@+id/favorites_detail_book_item_shot_attachments_count_iv"
                 android:visibility="gone" />
 
         </RelativeLayout>
