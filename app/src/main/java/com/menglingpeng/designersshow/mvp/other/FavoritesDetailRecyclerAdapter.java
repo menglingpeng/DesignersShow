@@ -65,14 +65,6 @@ public class FavoritesDetailRecyclerAdapter extends RecyclerView.Adapter<Recycle
         return list.size();
     }
 
-    public class BookDetailViewHolder extends RecyclerView.ViewHolder {
-
-
-        public BookDetailViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
-
     public class BaseDetailViewHolder extends RecyclerView.ViewHolder {
 
         public final TextView authorTv;
@@ -87,6 +79,36 @@ public class FavoritesDetailRecyclerAdapter extends RecyclerView.Adapter<Recycle
         public final TextView shotAttachmentsCountTv;
 
         public BaseDetailViewHolder(View view) {
+            super(view);
+            authorTv = (TextView) view.findViewById(R.id.favorites_detail_base_item_shot_author_tv);
+            shotTitleTv = (TextView) view.findViewById(R.id.favorites_detail_base_item_shot_title_tv);
+            shotCreatedTimeTv = (TextView) view.findViewById(R.id.favorites_detail_base_item_shot_create_time_tv);
+            shotIv = (ImageView) view.findViewById(R.id.favorites_detail_base_item_shot_iv);
+            shotGifIv = (ImageView) view.findViewById(R.id.favorites_detail_base_item_shot_gif_iv);
+            shotLikesCountTv = (TextView) view.findViewById(R.id.favorites_detail_base_item_shot_likes_count_tv);
+            shotCommentsCountTv = (TextView) view.findViewById(R.id.favorites_detail_base_item_shot_comments_count_tv);
+            shotViewsCountTv = (TextView) view.findViewById(R.id.favorites_detail_base_item_shot_views_count_tv);
+            shotAttachmentsCountIv = (ImageView) view.findViewById(
+                    R.id.favorites_detail_base_item_shot_attachments_count_iv);
+            shotAttachmentsCountTv = (TextView) view.findViewById(
+                    R.id.favorites_detail_base_item_shot_attachments_count_tv);
+        }
+    }
+
+    public class BookDetailViewHolder extends RecyclerView.ViewHolder {
+
+        public final TextView authorTv;
+        public final TextView shotTitleTv;
+        public final TextView shotCreatedTimeTv;
+        public final ImageView shotIv;
+        public final ImageView shotGifIv;
+        public final ImageView shotAttachmentsCountIv;
+        public final TextView shotLikesCountTv;
+        public final TextView shotCommentsCountTv;
+        public final TextView shotViewsCountTv;
+        public final TextView shotAttachmentsCountTv;
+
+        public BookDetailViewHolder(View view) {
             super(view);
             authorTv = (TextView) view.findViewById(R.id.favorites_detail_base_item_shot_author_tv);
             shotTitleTv = (TextView) view.findViewById(R.id.favorites_detail_base_item_shot_title_tv);
