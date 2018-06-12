@@ -185,6 +185,7 @@ public class Constants {
 
     public static final String FAVORITES_DETAIL_BASE_TYPE = "favorites_detail_base_type";
     public static final String FAVORITES_DETAIL_BOOK_TYPE = "favorites_detail_book_type";
+    public static final String FAVORITES_DETAIL_THIRD_TYPE = "favorites_detail_third_type";
 
 
 }
