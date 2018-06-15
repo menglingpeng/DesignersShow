@@ -18,19 +18,18 @@ import android.widget.ProgressBar;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.utils.Constants;
 
-public class FavoritesDetailSettingsDialogFragment extends AppCompatDialogFragment {
+public class FavoritesDetailBackgroundSettingsDialogFragment extends AppCompatDialogFragment{
 
     private Dialog dialog;
-    private ImageView settingsDialogCloseIv;
-    private Button settingsDialogBt;
-    private ProgressBar settingsDialogPb;
+    private ImageView backgroundSettingsDialogCloseIv;
+    private Button backgroundSettingsDialogBt;
+    private ProgressBar backgroundSettingsDialogPb;
     private FavoritesDetailBackgroundSettingsDialogFragment.FavoritesDetailBackgroundSettingsDialogListener listener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         dialog = new Dialog(getContext(), R.style.ThemeLoginDialog);
-        View dialogView = LayoutInflater.from(getContext()).inflate(
-                R.layout.dialog_favorites_detail_background_settings, null);
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_fragment_login, null);
         Window window = dialog.getWindow();
         window.setGravity(Gravity.BOTTOM);
         window.setWindowAnimations(R.style.LoginDialog);
@@ -40,20 +39,20 @@ public class FavoritesDetailSettingsDialogFragment extends AppCompatDialogFragme
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(layoutParams);
         dialog.setContentView(dialogView);
-        settingsDialogCloseIv = (ImageView) dialogView.findViewById(R.id.dialog_login_close_iv);
-        settingsDialogBt = (Button) dialogView.findViewById(R.id.dialog_login_bt);
-        settingsDialogPb = (ProgressBar) dialogView.findViewById(R.id.dialog_login_pb);
+        backgroundSettingsDialogCloseIv = (ImageView) dialogView.findViewById(R.id.dialog_login_close_iv);
+        backgroundSettingsDialogBt = (Button) dialogView.findViewById(R.id.dialog_login_bt);
+        backgroundSettingsDialogPb = (ProgressBar) dialogView.findViewById(R.id.dialog_login_pb);
         dialog.show();
-        settingsDialogCloseIv.setOnClickListener(new View.OnClickListener() {
+        backgroundSettingsDialogCloseIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
             }
         });
-        settingsDialogBt.setOnClickListener(new View.OnClickListener() {
+        backgroundSettingsDialogBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onLoginDialogLoginListener(settingsDialogBt, settingsDialogPb, dialog);
+                listener.onLoginDialogLoginListener(backgroundSettingsDialogBt, backgroundSettingsDialogPb, dialog);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 Uri uri = Uri.parse(Constants.REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL);
                 intent.setData(uri);

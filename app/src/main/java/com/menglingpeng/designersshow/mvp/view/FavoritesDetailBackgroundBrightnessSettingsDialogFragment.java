@@ -18,13 +18,13 @@ import android.widget.ProgressBar;
 import com.menglingpeng.designersshow.R;
 import com.menglingpeng.designersshow.utils.Constants;
 
-public class FavoritesDetailBackgroundSettingsDialogFargment extends AppCompatDialogFragment{
+public class FavoritesDetailBackgroundBrightnessSettingsDialogFragment extends AppCompatDialogFragment {
 
     private Dialog dialog;
     private ImageView backgroundSettingsDialogCloseIv;
     private Button backgroundSettingsDialogBt;
     private ProgressBar backgroundSettingsDialogPb;
-    private FavoritesDetailBackgroundSettingsDialogFargment.FavoritesDetailBackgroundSettingsDialogListener listener;
+    private FavoritesDetailBackgroundBrightnessSettingsDialogListener listener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -52,7 +52,8 @@ public class FavoritesDetailBackgroundSettingsDialogFargment extends AppCompatDi
         backgroundSettingsDialogBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onLoginDialogLoginListener(backgroundSettingsDialogBt, backgroundSettingsDialogPb, dialog);
+                listener.onBackgroundBrightnessSettingsDialogListener(backgroundSettingsDialogBt,
+                        backgroundSettingsDialogPb, dialog);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 Uri uri = Uri.parse(Constants.REDIRECT_USERS_TO_REQUEST_DRIBBBLE_ACCESS_URL);
                 intent.setData(uri);
@@ -63,8 +64,8 @@ public class FavoritesDetailBackgroundSettingsDialogFargment extends AppCompatDi
         return dialog;
     }
 
-    public interface FavoritesDetailBackgroundSettingsDialogListener{
-        void onLoginDialogLoginListener(Button button, ProgressBar progressBar, Dialog dialog);
+    public interface FavoritesDetailBackgroundBrightnessSettingsDialogListener{
+        void onBackgroundBrightnessSettingsDialogListener(Button button, ProgressBar progressBar, Dialog dialog);
     }
 
 
@@ -75,7 +76,7 @@ public class FavoritesDetailBackgroundSettingsDialogFargment extends AppCompatDi
         if(!(getActivity() instanceof LoginDialogFragment.LoginDialogListener)){
             throw new IllegalStateException(context.getString(R.string.login_dialog_fragment_exception));
         }
-        listener = (FavoritesDetailBackgroundSettingsDialogFargment.FavoritesDetailBackgroundSettingsDialogListener)
+        listener = (FavoritesDetailBackgroundBrightnessSettingsDialogListener)
                 getActivity();
     }
 }
