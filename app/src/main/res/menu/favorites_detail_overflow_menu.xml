@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/more_menu"
+        android:icon="@drawable/ic_more"
+        android:title=""
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/share"
+                android:icon="@drawable/ic_share"
+                android:title="@string/detail_toolbar_overflow_menu_share"
+                app:showAsAction="never"></item>
+
+            <item
+                android:id="@+id/open_in_browser"
+                android:icon="@drawable/ic_open_in_browser"
+                android:title="@string/detail_toolbar_overflow_menu_open_in_browser"
+                app:showAsAction="never"></item>
+
+            <item
+                android:id="@+id/download"
+                android:icon="@drawable/ic_file_download"
+                android:title="@string/detail_toolbar_overflow_menu_download"
+                app:showAsAction="never"></item>
+        </menu>
+
+    </item>
+
+</menu>

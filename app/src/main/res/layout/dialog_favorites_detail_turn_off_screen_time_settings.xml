@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/dialog_favorites_detail_turn_off_screen_time_close_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dialog_login_close_iv_layout_margin"
+        android:layout_marginTop="@dimen/dialog_login_close_iv_layout_margin"
+        android:src="@drawable/ic_close_white_24dp" />
+
+    <ImageView
+        android:id="@+id/dialog_favorites_detail_turn_off_screen_time_iv"
+        android:layout_width="@dimen/dialog_login_app_icon_iv_ayout_width"
+        android:layout_height="@dimen/dialog_login_app_icon_iv_layout_height"
+        android:layout_above="@+id/dialog_favorites_detail_background_brightness_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dialog_login_app_icon_iv_layout_marginBottom"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/dialog_favorites_detail_turn_off_screen_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/dialog_login_app_name_tv_layout_marginBottom"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/dialog_login_app_name_tv_text_size" />
+
+    <TextView
+        android:id="@+id/dialog_favorites_detail_turn_off_screen_time_desc_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_favorites_detail_turn_off_screen_time_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dialog_login_desc_layout_marginBottom"
+        android:layout_marginLeft="@dimen/dialog_login_desc_layout_margin"
+        android:layout_marginRight="@dimen/dialog_login_desc_layout_margin"
+        android:gravity="center"
+        android:text="@string/dialog_login_desc"
+        android:textColor="@color/nav_header_desc_tv" />
+
+    <Button
+        android:id="@+id/dialog_favorites_detail_turn_off_screen_time_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_favorites_detail_turn_off_screen_time_desc_tv"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/dialog_login_shape_radius"
+        android:paddingLeft="@dimen/dialog_login_bt_padding"
+        android:paddingRight="@dimen/dialog_login_bt_padding"
+        android:text="@string/dialog_login_bt"
+        android:textColor="@android:color/white" />
+
+    <ProgressBar
+        android:id="@+id/dialog_favorites_detail_turn_off_screen_time_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_favorites_detail_turn_off_screen_time_desc_tv"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
+</RelativeLayout>
