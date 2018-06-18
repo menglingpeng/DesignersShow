@@ -1,12 +1,15 @@
 package com.menglingpeng.designersshow.mvp.view;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.menglingpeng.designersshow.BaseActivity;
 import com.menglingpeng.designersshow.R;
@@ -19,6 +22,7 @@ public class UserFavoritesDetailActivity extends BaseActivity implements OnRecyc
     private String type;
     private String title;
     private static RecyclerFragment fragment;
+    private AlertDialog dialog;
 
     @Override
     protected void initLayoutId() {
@@ -65,5 +69,33 @@ public class UserFavoritesDetailActivity extends BaseActivity implements OnRecyc
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSyncTextDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_favorites_detail_synchronize_text, null);
+        builder.setView(dialogView);
+        dialog = builder.create();
+        dialog.show();
+        WindowManager wm = getWindowManager();
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+    }
+
+    private void showSyncProgressDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_favorites_detail_synchronize_progress, null);
+        builder.setView(dialogView);
+        dialog = builder.create();
+        dialog.show();
+        WindowManager wm = getWindowManager();
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
     }
 }
